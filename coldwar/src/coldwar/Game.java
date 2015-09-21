@@ -2,9 +2,11 @@ package coldwar;
 
 public class Game {
 
+	static Renderer renderer;
+	
 	public static void main(String[] args) {
-		System.out.println("Hello, World!");
-		System.out.println("GLORIOUS SOVIET PROGRAM WILL VANQUISH CAPITALISM");
+		renderer = new Renderer();
+		renderer.TestUpdate("Hello, Capitalist World!");
 	}
 
 }
