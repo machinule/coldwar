@@ -5,6 +5,8 @@ package coldwar;
 import "Province.proto";
 import "UnitedStates.proto";
 import "SovietUnion.proto";
+import "Player.proto";
+import "TurnLog.proto";
 
 message GameState {
   optional string version = 1;
