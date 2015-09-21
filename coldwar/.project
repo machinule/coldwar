@@ -20,4 +20,11 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>java</name>
+			<type>2</type>
+			<location>C:/Users/willi_000/Documents/protobuf-master/protobuf-master/java/src/main/java</location>
+		</link>
+	</linkedResources>
 </projectDescription>

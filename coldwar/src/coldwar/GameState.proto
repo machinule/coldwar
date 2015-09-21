@@ -6,7 +6,7 @@ import "Province.proto";
 import "UnitedStates.proto";
 import "SovietUnion.proto";
 import "Player.proto";
-import "TurnLog.proto";
+import "TurnLogEntry.proto";
 
 message GameState {
   optional string version = 1;
@@ -18,5 +18,5 @@ message GameState {
   optional Player ussr_player = 7;
   optional int64 seed = 8;
   optional int32 turn = 9;
-  repeated TurnLog log = 10;
+  optional TurnLogEntry turn_log = 10;
 }

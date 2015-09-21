@@ -1,6 +1,0 @@
-syntax = "proto2";
-
-package coldwar;
-
-message TurnLog {
-}
