@@ -2,15 +2,19 @@ syntax = "proto2";
 
 package coldwar;
 
+import "province.proto";
+import "unitedStates.proto";
+import "sovietUnion.proto";
+
 message GameState {
   optional string version = 1;
   optional int32 heat = 2; // 0 - 100
   repeated Province provinces = 3;
-  UnitedStates usa= 4;
-  SovietUnion ussr = 5;
+  unitedStates usa= 4;
+  sovietUnion ussr = 5;
   Player usa_player = 6;
   Player ussr_player = 7;
   int64 seed = 8;
   int32 turn = 9;
-  repeated TurnLog log = 10;
+  repeated turnLogEntry log = 10;
 }
