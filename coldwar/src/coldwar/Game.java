@@ -42,6 +42,7 @@ public class Game {
 	public static void main(String[] args) throws InterruptedException, IOException {
 		Scanner s = new Scanner(System.in);
 		String ip, port;
+		boolean host;
 		Logger.Start();
 		
 		Logger.Dbg("Starting");
@@ -50,14 +51,24 @@ public class Game {
 		renderer = new Renderer();
 		renderer.TestUpdate("Hello, Capitalist World!");
 		System.out.println(TextFormat.printToString(initialGameState));
-		renderer.TestUpdate("Enter IP: ");
-		ip = s.next();
-		Logger.Info("Recieved IP: " + ip);
+		
+		Peer peer = new Peer(new LwjglNet());
+		
 		renderer.TestUpdate("Enter port: ");
 		port = s.next();
 		Logger.Info("Recieved port: " + port);
-		Peer peer = new Peer(new LwjglNet());
-		if (args[0].equals("connect")) {
+		
+		renderer.TestUpdate("Host(Y/N)?");
+		if(s.next().equals("Y")) {
+			host = true;
+			peer.Host(Integer.valueOf(port));
+			MoveList moveList = peer.getMoveList();
+			System.out.println(TextFormat.printToString(moveList));
+		} else {
+			host = false;
+			renderer.TestUpdate("Enter IP: ");
+			ip = s.next();
+			Logger.Info("Recieved IP: " + ip);
 			peer.Connect(ip, Integer.valueOf(port));
 			Builder moveList = MoveList.newBuilder();
 			renderer.TestUpdate("Move 1:");
@@ -65,10 +76,12 @@ public class Game {
 			renderer.TestUpdate("Move 2:");
 			moveList.addMovesBuilder().setType(s.next());
 			peer.sendMoveList(moveList.build());
-		} else if (args[0].equals("host")) {
-			peer.Host(Integer.valueOf(args[1]));
-			MoveList moveList = peer.getMoveList();
-			System.out.println(TextFormat.printToString(moveList));
+		}
+
+		if (!host) {
+			
+		} else if (host) {
+			
 		}
 		
 		Logger.Close();
