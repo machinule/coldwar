@@ -14,26 +14,6 @@ import com.google.protobuf.TextFormat;
 // Specific libGDX backend implementation imports.
 import com.badlogic.gdx.backends.lwjgl.*;
 
-final class Pipe extends Thread {
-	public Pipe(InputStream in, OutputStream out) {
-		super(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					int b = 0;
-					while (b != -1) {
-						b = in.read();
-						out.write(b);
-					}					
-				} catch (IOException ex) {
-					System.out.println("Oops");
-					return;
-				}
-			}
-		});
-		start();
-	}
-}
 
 public class Game {
 
