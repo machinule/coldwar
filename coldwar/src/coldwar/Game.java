@@ -6,6 +6,9 @@ import java.util.Scanner;
 import java.io.IOException;
 
 import coldwar.GameStateOuterClass.GameState;
+import coldwar.MoveListOuterClass.MoveList;
+import coldwar.MoveListOuterClass.MoveList.Builder;
+
 import com.google.protobuf.TextFormat;
 
 // Specific libGDX backend implementation imports.
@@ -52,13 +55,18 @@ public class Game {
 		Peer peer = new Peer(new LwjglNet());
 		if (args[0].equals("connect")) {
 			peer.Connect(ip, Integer.valueOf(port));
+			Builder moveList = MoveList.newBuilder();
+			renderer.TestUpdate("Move 1:");
+			moveList.addMovesBuilder().setType(s.next());
+			renderer.TestUpdate("Move 2:");
+			moveList.addMovesBuilder().setType(s.next());
+			peer.sendMoveList(moveList.build());
 		} else if (args[0].equals("host")) {
 			peer.Host(Integer.valueOf(args[1]));
+			MoveList moveList = peer.getMoveList();
+			System.out.println(TextFormat.printToString(moveList));
 		}
-		Thread in = new Pipe(System.in, peer.getOutputStream());
-		Thread out = new Pipe(peer.getInputStream(), System.out);
-		in.join();
-		out.join();
+
 	}
 
 }
