@@ -42,6 +42,9 @@ public class Game {
 	public static void main(String[] args) throws InterruptedException, IOException {
 		Scanner s = new Scanner(System.in);
 		String ip, port;
+		Logger.Start();
+		
+		Logger.Dbg("Starting");
 		
 		GameState initialGameState = GameState.newBuilder().setTurn(0).build();
 		renderer = new Renderer();
@@ -49,9 +52,10 @@ public class Game {
 		System.out.println(TextFormat.printToString(initialGameState));
 		renderer.TestUpdate("Enter IP: ");
 		ip = s.next();
+		Logger.Info("Recieved IP: " + ip);
 		renderer.TestUpdate("Enter port: ");
 		port = s.next();
-		renderer.TestUpdate(ip);
+		Logger.Info("Recieved port: " + port);
 		Peer peer = new Peer(new LwjglNet());
 		if (args[0].equals("connect")) {
 			peer.Connect(ip, Integer.valueOf(port));
@@ -66,7 +70,8 @@ public class Game {
 			MoveList moveList = peer.getMoveList();
 			System.out.println(TextFormat.printToString(moveList));
 		}
-
+		
+		Logger.Close();
 	}
 
 }
