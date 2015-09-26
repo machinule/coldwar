@@ -2,6 +2,7 @@ package coldwar;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Scanner;
 import java.io.IOException;
 
 import coldwar.GameStateOuterClass.GameState;
@@ -36,13 +37,21 @@ public class Game {
 	static Renderer renderer;
 	
 	public static void main(String[] args) throws InterruptedException, IOException {
+		Scanner s = new Scanner(System.in);
+		String ip, port;
+		
 		GameState initialGameState = GameState.newBuilder().setTurn(0).build();
 		renderer = new Renderer();
 		renderer.TestUpdate("Hello, Capitalist World!");
 		System.out.println(TextFormat.printToString(initialGameState));
+		renderer.TestUpdate("Enter IP: ");
+		ip = s.next();
+		renderer.TestUpdate("Enter port: ");
+		port = s.next();
+		renderer.TestUpdate(ip);
 		Peer peer = new Peer(new LwjglNet());
 		if (args[0].equals("connect")) {
-			peer.Connect(args[1], Integer.valueOf(args[2]));
+			peer.Connect(ip, Integer.valueOf(port));
 		} else if (args[0].equals("host")) {
 			peer.Host(Integer.valueOf(args[1]));
 		}
