@@ -90,7 +90,7 @@ public class Peer {
 			CRC32 checksum = new CRC32();
 			checksum.update(serialized);
 			if (checksum.getValue() != checksumVal) {
-				System.out.println("Checksum mismatch.");
+				Logger.Err("Checksum mismatch.");
 			}
 			return message.getParserForType().parseFrom(serialized);
 		} catch (IOException e) {

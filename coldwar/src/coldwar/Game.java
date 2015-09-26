@@ -77,12 +77,6 @@ public class Game {
 			moveList.addMovesBuilder().setType(s.next());
 			peer.sendMoveList(moveList.build());
 		}
-
-		if (!host) {
-			
-		} else if (host) {
-			
-		}
 		
 		Logger.Close();
 	}
