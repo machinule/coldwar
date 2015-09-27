@@ -38,6 +38,9 @@ public class Logger {
 	public static void Err(String in) {
 		Log(TmStmp() + ": ERROR: " + in);
 	}
+	public static void Vrb(String in) {
+		Log(TmStmp() + ": VERBOSE: " + in);
+	}
 	
 	private static void Log(String log) {
 		writer.println(log);
