@@ -25,7 +25,7 @@ public class Game {
 		boolean host;
 		Logger.Start();
 		
-		Logger.Dbg("Starting");
+		Logger.Dbg("Starting ColdWar!");
 		
 		GameState initialGameState = GameState.newBuilder().setTurn(0).build();
 		renderer = new Renderer();
@@ -36,7 +36,7 @@ public class Game {
 		
 		renderer.TestUpdate("Enter port: ");
 		port = s.next();
-		Logger.Info("Recieved port: " + port);
+		Logger.Info("Received port: " + port);
 		
 		renderer.TestUpdate("Host(Y/N)?");
 		if(s.next().equals("Y")) {
@@ -48,13 +48,11 @@ public class Game {
 			host = false;
 			renderer.TestUpdate("Enter IP: ");
 			ip = s.next();
-			Logger.Info("Recieved IP: " + ip);
+			Logger.Info("Received IP: " + ip);
 			peer.Connect(ip, Integer.valueOf(port));
 			Builder moveList = MoveList.newBuilder();
 			renderer.TestUpdate("Move 1:");
-			moveList.addMovesBuilder().setType(s.next());
-			renderer.TestUpdate("Move 2:");
-			moveList.addMovesBuilder().setType(s.next());
+			moveList.addMovesBuilder().getFoundNatoMoveBuilder();
 			peer.sendMoveList(moveList.build());
 		}
 		

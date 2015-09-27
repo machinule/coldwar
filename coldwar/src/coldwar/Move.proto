@@ -2,6 +2,20 @@ syntax = "proto2";
 
 package coldwar;
 
+//Proto variable names need to be VERBATIM same as message type
 message Move {
-  optional string type = 1;  // for testing only, to be removed.
+	optional InfluenceMove influence_move = 1;
+	optional FoundNATOMove found_nato_move = 2;
+	optional FoundPactMove found_pact_move = 3;
+}
+
+message InfluenceMove {
+	optional int32 province_id = 1;
+	optional int32 amount = 2;
+}
+
+message FoundNATOMove {
+}
+
+message FoundPactMove {
 }

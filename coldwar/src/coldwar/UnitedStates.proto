@@ -3,4 +3,7 @@ syntax = "proto2";
 package coldwar;
 
 message UnitedStates {
+	optional bool found_nato = 1;
+	optional int32 unrest = 2;
 }
+
