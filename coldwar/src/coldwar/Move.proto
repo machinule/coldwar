@@ -2,16 +2,36 @@ syntax = "proto2";
 
 package coldwar;
 
+import "Province.proto";
+
 //Proto variable names need to be VERBATIM same as message type
 message Move {
-	optional InfluenceMove influence_move = 1;
-	optional FoundNATOMove found_nato_move = 2;
-	optional FoundPactMove found_pact_move = 3;
+	// Direct influence actions
+	optional DiplomacyMove dia_dip_move = 1;
+	optional ArmsSalesMove dia_mil_move = 2;
+	optional DiplomacyMove dia_cov_move = 3;
+	optional FoundNATOMove found_nato_move = 1001;
+	optional FoundPactMove found_pact_move = 1002;
 }
 
-message InfluenceMove {
-	optional int32 province_id = 1;
-	optional int32 amount = 2;
+// ========== DIRECT INFLUENCE ACTIONS ==========
+
+// Influence by spending DIP points
+message DiplomacyMove {
+	optional Province.Id province_id = 1;
+	optional int32 magnitude = 2;
+}
+
+// Influence by spending MIL points
+message ArmsSalesMove {
+	optional Province.Id province_id = 1;
+	optional int32 magnitude = 2;
+}
+
+// Influence by spending COV points
+message InfiltrateMove {
+	optional Province.Id province_id = 1;
+	optional int32 magnitude = 2;
 }
 
 message FoundNATOMove {

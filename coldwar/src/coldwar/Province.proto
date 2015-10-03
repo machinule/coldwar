@@ -3,4 +3,22 @@ syntax = "proto2";
 package coldwar;
 
 message Province {
+	enum Id {
+		// EUROPE
+		UK = 01;
+		FRANCE = 02;
+		WEST_GER = 03;
+		//EAST_GER = 4;
+		//POLAND = 5;
+		// SOUTH ASIA
+		INDIA = 11;
+		PAKISTAN = 12;
+		VIETNAM = 13;
+		// MIDDLE EAST
+		IRAN = 21;
+		ISRAEL = 22;
+		IRAQ = 23;
+	}
+	optional Id id = 1;
+	optional int32 influence = 2;
 }

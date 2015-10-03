@@ -1,9 +1,16 @@
 package coldwar;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.GameStateOuterClass.GameStateOrBuilder;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
+import coldwar.ProvinceOuterClass.Province;
+import coldwar.ProvinceOuterClass.Province.Builder;
 
 public class Client {
 	
@@ -20,18 +27,36 @@ public class Client {
 		
 		GameState.Builder state = GameState.newBuilder().mergeFrom(in_state);
 		
+		// Update turn-based critical state values
 		state
 		 .setTurn(state.getTurn()+1);
 		
-		// USA		
+		// Extract the province builders into a hashmap (key = Province.Id)
+		Map<Province.Id, Province.Builder> provinceMap = new HashMap<Province.Id, Province.Builder>();
+		
+		for(Province.Builder province : state.getProvincesBuilderList()) {
+			provinceMap.put(province.getId(), province);
+		}
+		
+		// USA moves
 		for(Move move : usa.getMovesList()) {
 			if(move.hasFoundNatoMove()) {
 				state.getUsaBuilder().setFoundNato(true);
 				state.getUsaBuilder().setUnrest(state.getUsa().getUnrest()+1);
 			}
+			// Direct influence actions
+			if(move.hasDiaDipMove()) {
+				provinceMap.get(move.getDiaDipMove().getProvinceId()).setInfluence(move.getDiaDipMove().getMagnitude());
+			}
+			if(move.hasDiaMilMove()) {
+				provinceMap.get(move.getDiaMilMove().getProvinceId()).setInfluence(move.getDiaMilMove().getMagnitude());
+			}
+			if(move.hasDiaCovMove()) {
+				provinceMap.get(move.getDiaCovMove().getProvinceId()).setInfluence(move.getDiaCovMove().getMagnitude());
+			}
 		}
 		
-		// USSR
+		// USSR moves
 		/*
 		
 		for(Move move : ussr.getMovesList()) {
@@ -42,7 +67,7 @@ public class Client {
 		}
 	
 		*/
-		
+				
 		return state.build();
 	}
 }
