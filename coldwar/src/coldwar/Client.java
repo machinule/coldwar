@@ -1,16 +1,12 @@
 package coldwar;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import coldwar.GameStateOuterClass.GameState;
-import coldwar.GameStateOuterClass.GameStateOrBuilder;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
-import coldwar.ProvinceOuterClass.Province.Builder;
 
 public class Client {
 	
