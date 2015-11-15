@@ -25,13 +25,13 @@ public abstract class AbstractScreen implements Screen {
 
 	@Override
 	public void show(){
-	    Gdx.app.log(ColdWarGame.LOG, "Showing screen: " + getName());
+	    Logger.Dbg("Showing screen: " + getName());
 	    Gdx.input.setInputProcessor(stage);
 	}
 	
 	@Override
 	public void resize(int width, int height){
-	    Gdx.app.log(ColdWarGame.LOG, "Resizing screen: " + getName() + " to: " + width + " x " + height);
+	    Logger.Dbg("Resizing screen: " + getName() + " to: " + width + " x " + height);
 	}
 	
 	@Override
@@ -44,23 +44,23 @@ public abstract class AbstractScreen implements Screen {
 	
 	@Override
 	public void hide(){
-	    Gdx.app.log(ColdWarGame.LOG, "Hiding screen: " + getName());
+		 Logger.Dbg("Hiding screen: " + getName());
 	    dispose();
 	}
 	
 	@Override
 	public void pause(){
-	    Gdx.app.log(ColdWarGame.LOG, "Pausing screen: " + getName());
+		 Logger.Dbg("Pausing screen: " + getName());
 	}
 	
 	@Override
 	public void resume(){
-	    Gdx.app.log(ColdWarGame.LOG, "Resuming screen: " + getName());
+		 Logger.Dbg("Resuming screen: " + getName());
 	}
 	
 	@Override
 	public void dispose(){
-	    Gdx.app.log(ColdWarGame.LOG, "Disposing screen: " + getName());
+		 Logger.Dbg("Disposing screen: " + getName());
 	    stage.dispose();
 	}
 }

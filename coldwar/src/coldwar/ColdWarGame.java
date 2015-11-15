@@ -9,7 +9,6 @@ public class ColdWarGame extends Game {
 	@Override
 	public void create() {
         this.setScreen(new SplashScreen(this));
-        Logger.Start();
 	}
 
     public void render() {
