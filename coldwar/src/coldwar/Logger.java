@@ -46,33 +46,33 @@ public class Logger {
 	}
 	
 	public static void Dbg(String in) {
-		if(lvl.compareTo(LogLvl.DBG) <= 0) {
+		if(lvl.compareTo(LogLvl.DBG) >= 0) {
 			Log(TmStmp() + ": DEBUG: " + in);
 			Gdx.app.log(ColdWarGame.LOG, TmStmp() + ": DEBUG: " + in);
 		}
 	}
 	public static void Info(String in) {
-		if(lvl.compareTo(LogLvl.INFO) <= 0) {
+		if(lvl.compareTo(LogLvl.INFO) >= 0) {
 			Log(TmStmp() + ": INFO: " + in);
-			Gdx.app.log(ColdWarGame.LOG, TmStmp() + ": DEBUG: " + in);
+			Gdx.app.log(ColdWarGame.LOG, TmStmp() + ": INFO: " + in);
 		}
 	}
 	public static void Warn(String in) {
-		if(lvl.compareTo(LogLvl.DBG) <= 0) {
+		if(lvl.compareTo(LogLvl.DBG) >= 0) {
 			Log(TmStmp() + ": WARN: " + in);
-			Gdx.app.log(ColdWarGame.LOG, TmStmp() + ": DEBUG: " + in);
+			Gdx.app.log(ColdWarGame.LOG, TmStmp() + ": WARN: " + in);
 		}
 	}
 	public static void Err(String in) {
-		if(lvl.compareTo(LogLvl.INFO) <= 0) {
+		if(lvl.compareTo(LogLvl.INFO) >= 0) {
 			Log(TmStmp() + ": ERROR: " + in);
-			Gdx.app.log(ColdWarGame.LOG, TmStmp() + ": DEBUG: " + in);
+			Gdx.app.log(ColdWarGame.LOG, TmStmp() + ": ERROR: " + in);
 		}
 	}
 	public static void Vrb(String in) {
-		if(lvl.compareTo(LogLvl.VRB) <= 0) {
+		if(lvl.compareTo(LogLvl.VRB) >= 0) {
 			Log(TmStmp() + ": VERBOSE: " + in);
-			Gdx.app.log(ColdWarGame.LOG, TmStmp() + ": DEBUG: " + in);
+			Gdx.app.log(ColdWarGame.LOG, TmStmp() + ": VERBOSE: " + in);
 		}
 	}
 	
