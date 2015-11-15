@@ -14,6 +14,7 @@ public class DesktopLauncher  {
       config.title = "Cold War";
       config.width = 800;
       config.height = 480;
+      Logger.SetLevel("debug"); //none, info, debug, verbose
       new LwjglApplication(new ColdWarGame(), config);
    }
 }

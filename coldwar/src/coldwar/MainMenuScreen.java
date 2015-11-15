@@ -22,14 +22,15 @@ public class MainMenuScreen extends AbstractScreen {
         Table table = new Table(skin);
         table.setFillParent(true);
         stage.addActor(table);
-
-        table.add("Brink").spaceBottom(50);
+        
+        table.add("A Love Story Between Two Superpowers").spaceBottom(50);
         table.row();
 
         TextButton hostGameButton = new TextButton("Host a Game", skin);
         hostGameButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-        	    Gdx.app.log(ColdWarGame.LOG, "\"Host a Game\" button pressed.");
+        	    Logger.Dbg("\"Host a Game\" button pressed.");
+                game.setScreen(new MapScreen(game));
             }
         });
         table.add(hostGameButton).size( 300, 60 ).uniform().spaceBottom( 10 );
@@ -38,7 +39,7 @@ public class MainMenuScreen extends AbstractScreen {
         TextButton connectGameButton = new TextButton("Connect to a Game", skin);
         connectGameButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-        	    Gdx.app.log(ColdWarGame.LOG, "\"Connect to a Game\" button pressed.");
+            	Logger.Dbg("\"Connect to a Game\" button pressed.");
             }
         });
         table.add(connectGameButton).uniform().fill().spaceBottom( 10 );
@@ -47,16 +48,16 @@ public class MainMenuScreen extends AbstractScreen {
         TextButton optionsButton = new TextButton("Options", skin);
         optionsButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-        	    Gdx.app.log(ColdWarGame.LOG, "\"Options\" button pressed.");
+            	Logger.Dbg("\"Options\" button pressed.");
             }
         });
         table.add(optionsButton).uniform().fill().spaceBottom( 10 );
         table.row();
-
+        
         TextButton quitButton = new TextButton("Quit", skin);
        quitButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-        	    Gdx.app.log(ColdWarGame.LOG, "\"Quit\" button pressed.");
+            	Logger.Dbg("\"Quit\" button pressed.");
             	Gdx.app.exit();
             }
         });
