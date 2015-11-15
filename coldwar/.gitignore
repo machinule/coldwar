@@ -2,4 +2,5 @@
 /src-gen/
 /.settings/
 /.classpath
-/.project/log.txt
+/.project
+/log.txt
