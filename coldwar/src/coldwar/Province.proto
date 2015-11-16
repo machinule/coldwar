@@ -5,9 +5,9 @@ package coldwar;
 message Province {
 	enum Id {
 		// EUROPE
-		UK = 01;
+		GREAT_BRITAIN = 01;
 		FRANCE = 02;
-		WEST_GER = 03;
+		WEST_GERMANY = 03;
 		//EAST_GER = 4;
 		//POLAND = 5;
 		// SOUTH ASIA

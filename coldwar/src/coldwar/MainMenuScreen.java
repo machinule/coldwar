@@ -55,7 +55,7 @@ public class MainMenuScreen extends AbstractScreen {
         table.row();
         
         TextButton quitButton = new TextButton("Quit", skin);
-       quitButton.addListener(new ChangeListener() {
+        quitButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
             	Logger.Dbg("\"Quit\" button pressed.");
             	Gdx.app.exit();
