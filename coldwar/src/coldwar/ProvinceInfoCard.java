@@ -29,7 +29,8 @@ public class ProvinceInfoCard extends Table {
         TextButton reduceButton = new TextButton("-", skin);
         reduceButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-            	Logger.Dbg("\"Reduce\" button pressed on " + province.getId().getValueDescriptor().getName());
+            	Logger.Info("\"Reduce\" button pressed on " + province.getId().getValueDescriptor().getName());
+            	MoveBuilder.DecreaseInfluence(province.getId());
             }
         });
         this.add(reduceButton);
@@ -38,7 +39,8 @@ public class ProvinceInfoCard extends Table {
         TextButton increaseButton = new TextButton("+", skin);
         increaseButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-            	Logger.Dbg("\"Increase\" button pressed on " + province.getId().getValueDescriptor().getName());
+            	Logger.Info("\"Increase\" button pressed on " + province.getId().getValueDescriptor().getName());
+            	MoveBuilder.IncreaseInfluence(province.getId());
             }
         });
         this.add(increaseButton);

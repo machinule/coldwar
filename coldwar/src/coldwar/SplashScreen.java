@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
@@ -33,6 +34,7 @@ public class SplashScreen extends AbstractScreen {
         Image splashImage = new Image(splashDrawable, Scaling.none);
         splashImage.setFillParent(true);
         splashImage.getColor().a = 0f;
+        
         splashImage.addAction(sequence(
         	fadeIn( 0.75f ),
         	delay( 1.75f ),
@@ -44,12 +46,14 @@ public class SplashScreen extends AbstractScreen {
                     return true;
                 }
             }));
-        stage.addActor(splashImage);
-        stage.addListener(new ClickListener() {
-            public void clicked (ChangeEvent event, Actor actor) {
-            	Logger.Dbg("Skipping splash screen");
+        
+        splashImage.addListener(new ClickListener() {
+            public void clicked (InputEvent event, float x, float y) {
+            	Logger.Dbg("Splash image clicked - skipping");
+            	game.setScreen( new MainMenuScreen( game ) );
             }
         });
+        stage.addActor(splashImage);
 	}
 
 }
