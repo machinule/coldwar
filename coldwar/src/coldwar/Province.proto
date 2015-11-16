@@ -3,6 +3,7 @@ syntax = "proto2";
 package coldwar;
 
 message Province {
+
 	enum Id {
 		// EUROPE
 		GREAT_BRITAIN = 01;
@@ -19,6 +20,20 @@ message Province {
 		ISRAEL = 22;
 		IRAQ = 23;
 	}
+
+	enum Government {
+		REPUBLIC = 0;
+		DEMOCRACY = 1;
+		SOCIALISM = 2;
+		COMMUNISM = 3;
+		AUTOCRACY = 4;
+		COLONY = 5;
+		OCCUPIED = 6;
+	}
+
 	optional Id id = 1;
 	optional int32 influence = 2;
+	optional Government Gov = 3;
+	optional Id Occupier = 4;
+
 }
