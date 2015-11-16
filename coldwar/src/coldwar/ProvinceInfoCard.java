@@ -34,7 +34,8 @@ public class ProvinceInfoCard extends Table {
             }
         });
         this.add(reduceButton);
-		this.add(new Label("Influence: 0", this.skin));
+		this.add(new Label("Influence:", this.skin));
+		this.add(new InfluenceLabel(province.getId(), moveBuilder, this.skin));
         TextButton increaseButton = new TextButton("+", skin);
         increaseButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
