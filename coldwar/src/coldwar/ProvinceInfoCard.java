@@ -29,15 +29,16 @@ public class ProvinceInfoCard extends Table {
         TextButton reduceButton = new TextButton("-", skin);
         reduceButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-            	Logger.Info("\"Reduce\" button pressed on " + province.getId().getValueDescriptor().getName());
+            	Logger.Dbg("\"Reduce\" button pressed on " + province.getId().getValueDescriptor().getName());
             }
         });
         this.add(reduceButton);
-		this.add(new Label("Influence: 0", this.skin));
+		this.add(new Label("Influence:", this.skin));
+		this.add(new InfluenceLabel(province.getId(), moveBuilder, this.skin));
         TextButton increaseButton = new TextButton("+", skin);
         increaseButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-            	Logger.Info("\"Increase\" button pressed on " + province.getId().getValueDescriptor().getName());
+            	Logger.Dbg("\"Increase\" button pressed on " + province.getId().getValueDescriptor().getName());
             }
         });
         this.add(increaseButton);
