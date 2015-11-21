@@ -10,8 +10,12 @@ message Move {
 	optional DiplomacyMove dia_dip_move = 1;
 	optional ArmsSalesMove dia_mil_move = 2;
 	optional DiplomacyMove dia_cov_move = 3;
+
+	optional FundDissidentsMove fund_dissidents_move = 101;
+
 	optional FoundNATOMove found_nato_move = 1001;
 	optional FoundPactMove found_pact_move = 1002;
+
 }
 
 // ========== DIRECT INFLUENCE ACTIONS ==========
@@ -32,6 +36,10 @@ message ArmsSalesMove {
 message InfiltrateMove {
 	optional Province.Id province_id = 1;
 	optional int32 magnitude = 2;
+}
+
+message FundDissidentsMove {
+	optional Province.Id province_id = 1;
 }
 
 message FoundNATOMove {

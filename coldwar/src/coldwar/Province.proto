@@ -35,4 +35,5 @@ message Province {
 	optional int32 influence = 2;
 	optional Government Gov = 3;
 	optional Id Occupier = 4;
+	optional bool dissidents = 5;
 }

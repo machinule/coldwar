@@ -2,6 +2,7 @@ package coldwar;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl.LwjglNet;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
 public class DesktopLauncher  {
@@ -16,6 +17,10 @@ public class DesktopLauncher  {
       config.height = 480;
       Logger.Start();
       Logger.SetLevel("verbose"); //none, info, debug, verbose
-      new LwjglApplication(new ColdWarGame(), config);
+      new LwjglApplication(new ColdWarGame(new LwjglNet()), config);
+      
+      Settings.initConstants();
+      Settings.initPreferences();
+      Logger.Info("Settings loaded: " + Settings.consts.getString("Is this working?"));
    }
 }

@@ -30,7 +30,7 @@ public class MainMenuScreen extends AbstractScreen {
         hostGameButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
         	    Logger.Dbg("\"Host a Game\" button pressed.");
-                game.setScreen(new MapScreen(game));
+                game.setScreen(new HostScreen(game));
             }
         });
         table.add(hostGameButton).size( 300, 60 ).uniform().spaceBottom( 10 );
@@ -40,6 +40,7 @@ public class MainMenuScreen extends AbstractScreen {
         connectGameButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
             	Logger.Dbg("\"Connect to a Game\" button pressed.");
+                game.setScreen(new ConnectScreen(game));
             }
         });
         table.add(connectGameButton).uniform().fill().spaceBottom( 10 );
