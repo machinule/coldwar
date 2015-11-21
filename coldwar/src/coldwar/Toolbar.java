@@ -14,7 +14,7 @@ public class Toolbar extends Table {
 
 	protected MoveBuilder moveBuilder;
 	protected Skin skin;
-	protected ColdWarGame game;
+	private ColdWarGame game;
 	
 	public Toolbar(ColdWarGame game, MoveBuilder moveBuilder, Skin skin) {
 		super();
@@ -27,9 +27,11 @@ public class Toolbar extends Table {
 	public void onSelect(Province province) {
 		TextButton increaseButton;
 		TextButton decreaseButton;
+		TextButton dissidentsButton;
 		
 		increaseButton = new TextButton("+", skin);
         decreaseButton = new TextButton("-", skin);
+        dissidentsButton = new TextButton("Fund Dissidents", skin);
         
         decreaseButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
@@ -53,6 +55,17 @@ public class Toolbar extends Table {
             }
         });
         
+        dissidentsButton.addListener(new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+            	Logger.Info("\"Dissidents\" button pressed on " + province.getId().getValueDescriptor().getName());
+            	moveBuilder.FundDissidents(province.getId());
+            	/* if(!moveBuilder.CanDecreaseInfluence(province.getId())) {
+            		actor.setVisible(false);
+            	}
+            	increaseButton.setVisible(true); */
+            }
+        });
+        
         TextButton endTurnButton = new TextButton("end Turn", skin);
         endTurnButton.addListener(new ChangeListener() {
         	public void changed (ChangeEvent event, Actor actor) {
@@ -60,17 +73,18 @@ public class Toolbar extends Table {
         		game.endTurn(moveBuilder);
         	}
         });
-        
+		
 		this.clearChildren();
 		this.add(endTurnButton);
 		this.add(new Label(province.getId().getValueDescriptor().getName(), this.skin));this.row();
         
+		this.add(increaseButton);
         this.add(decreaseButton);
+        this.add(dissidentsButton);
 		this.add(new Label("Influence:", this.skin));
 		this.add(new InfluenceLabel(province.getId(), moveBuilder, this.skin));
-        
-        this.add(increaseButton);
+		this.add(new Label("Dissidents:", this.skin));
+		this.add(new DissidentsLabel(province.getId(), moveBuilder, this.skin));
 	}
-		
 	
 }

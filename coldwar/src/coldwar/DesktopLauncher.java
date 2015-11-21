@@ -18,5 +18,9 @@ public class DesktopLauncher  {
       Logger.Start();
       Logger.SetLevel("verbose"); //none, info, debug, verbose
       new LwjglApplication(new ColdWarGame(new Peer(new LwjglNet())), config);
+      
+      Settings.initConstants();
+      Settings.initPreferences();
+      Logger.Info("Settings loaded: " + Settings.consts.getString("Is this working?"));
    }
 }

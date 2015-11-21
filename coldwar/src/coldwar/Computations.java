@@ -27,6 +27,7 @@ public class Computations {
 			return this.getClass().hashCode() + paramAsInt(param0);
 		}
 	}
+	
 	static private class GetInfluenceComputation extends OneParameterComputation<Province.Id> implements IntegerComputation {
 		public GetInfluenceComputation(Id param0) {
 			super(param0);
@@ -46,17 +47,13 @@ public class Computations {
 				}
 			}
 			for (Move m : usa.getMovesList()) {
-				if (m.hasDiaDipMove()) {
-					if (m.getDiaDipMove().getProvinceId() == param0) {						
-						infl += m.getDiaDipMove().getMagnitude();
-					}
+				if (m.hasDiaDipMove() && m.getDiaDipMove().getProvinceId() == param0) {
+					infl += m.getDiaDipMove().getMagnitude();
 				}
 			}
 			for (Move m : ussr.getMovesList()) {
-				if (m.hasDiaDipMove()) {
-					if (m.getDiaDipMove().getProvinceId() == param0) {						
-						infl += m.getDiaDipMove().getMagnitude();
-					}
+				if (m.hasDiaDipMove() && m.getDiaDipMove().getProvinceId() == param0) {
+					infl += m.getDiaDipMove().getMagnitude();
 				}
 			}
 			return infl;
@@ -64,5 +61,44 @@ public class Computations {
 	}
 	static public int getInfluence(ComputationCache cache, Province.Id provinceId) {
 		return cache.computeInteger(new GetInfluenceComputation(provinceId));
+	}
+	
+	// Add dissidents to a province
+	static private class HasDissidentsComputation extends OneParameterComputation<Province.Id> implements IntegerComputation {
+		public HasDissidentsComputation(Id param0) {
+			super(param0);
+		}
+		@Override
+		protected int paramAsInt(Province.Id p) {
+			return p.getNumber();
+		}
+		@Override
+		public int compute(GameState state, MoveList usa, MoveList ussr) {
+			Logger.Dbg("Computing dissidents...");
+			boolean hasDissidents = false;
+			for (Province p : state.getProvincesList()) {
+				if (p.getId() == param0) {
+					hasDissidents = p.getDissidents();
+					break;
+				}
+			}
+			for (Move m : usa.getMovesList()) {
+				if (m.hasFundDissidentsMove() && m.getFundDissidentsMove().getProvinceId() == param0) {
+					hasDissidents = true;
+				}
+			}
+			for (Move m : ussr.getMovesList()) {
+				if (m.hasFundDissidentsMove() && m.getFundDissidentsMove().getProvinceId() == param0) {
+					hasDissidents = true;
+				}
+			}
+			if ( hasDissidents ) {
+				return 1;
+			}
+			return 0;
+		}
+	}
+	static public int getHasDissidents(ComputationCache cache, Province.Id provinceId) {
+		return cache.computeInteger(new HasDissidentsComputation(provinceId));
 	}
 }

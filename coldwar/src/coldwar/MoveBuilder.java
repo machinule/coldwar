@@ -6,6 +6,7 @@ import java.util.function.Function;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.DiplomacyMove;
+import coldwar.MoveOuterClass.FundDissidentsMove;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
@@ -22,7 +23,7 @@ public class MoveBuilder {
 	private int INFL_MIN = -3;
 	
 	public MoveBuilder() {
-		this.isUSA = true;
+		this.isUSA = true; //Remove on turns
 		this.state = GameState.newBuilder();
 		this.moves = MoveList.newBuilder();
 		if (this.isUSA) {
@@ -42,6 +43,10 @@ public class MoveBuilder {
 		
 	public int getInfluence(Province.Id provinceId) {
 		return Computations.getInfluence(cache, provinceId);
+	}
+	
+	public boolean hasDissidents(Province.Id provinceId) {
+		return Computations.getHasDissidents(cache, provinceId) == 1;
 	}
 	
 	public void Undo() {
@@ -72,6 +77,14 @@ public class MoveBuilder {
 	public MoveList getMoveList() {
 		return moves.build();
 	}
-
 	
+	public void FundDissidents(Province.Id id) {
+		moves.addMoves(Move.newBuilder()
+				.setFundDissidentsMove(FundDissidentsMove.newBuilder()
+						.setProvinceId(id))
+				.build());
+		Logger.Vrb("Funding dissidents in " + id);
+		setMoves();
+	}
+
 }

@@ -33,10 +33,11 @@ public class ColdWarGame extends Game {
 	public void host(int parseInt) {
 		this.peer.Host(parseInt);
 	}
-
+	
 	public void endTurn(MoveBuilder moveBuilder) {
 		MoveList local = moveBuilder.getMoveList();
 		this.peer.sendMoveList(local);
 		MoveList other = this.peer.getMoveList();
 	}
+
 }
