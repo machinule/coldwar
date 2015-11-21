@@ -30,7 +30,7 @@ public class ProvinceInfoCard extends Table {
         reduceButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
             	Logger.Info("\"Reduce\" button pressed on " + province.getId().getValueDescriptor().getName());
-            	MoveBuilder.DecreaseInfluence(province.getId());
+            	moveBuilder.DecreaseInfluence(province.getId());
             }
         });
         this.add(reduceButton);
@@ -40,7 +40,7 @@ public class ProvinceInfoCard extends Table {
         increaseButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
             	Logger.Info("\"Increase\" button pressed on " + province.getId().getValueDescriptor().getName());
-            	MoveBuilder.IncreaseInfluence(province.getId());
+            	moveBuilder.IncreaseInfluence(province.getId());
             }
         });
         this.add(increaseButton);
