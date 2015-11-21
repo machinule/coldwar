@@ -37,6 +37,7 @@ public class Computations {
 		}
 		@Override
 		public int compute(GameState state, MoveList usa, MoveList ussr) {
+			Logger.Dbg("Computing...");
 			int infl = 0;
 			for (Province p : state.getProvincesList()) {
 				if (p.getId() == param0) {

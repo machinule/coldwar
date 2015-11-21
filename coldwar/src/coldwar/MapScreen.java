@@ -23,9 +23,11 @@ public class MapScreen extends AbstractScreen {
         table.setDebug(true);
         stage.addActor(table);
         MoveBuilder moveBuilder = new MoveBuilder();
+        Toolbar toolbar = new Toolbar(moveBuilder, skin);
         for (Province.Id id : Province.Id.values()) {
-            table.add(new ProvinceInfoCard(Province.newBuilder().setId(id).build(), moveBuilder, skin));
-            table.row();        	
+            table.add(new ProvinceInfoCard(Province.newBuilder().setId(id).build(), moveBuilder, toolbar, skin));
+            table.row();
         }
+        table.add(toolbar);
 	}    
 }

@@ -20,6 +20,7 @@ public class InfluenceLabel extends Label {
 	void updateText() {
 		setText(Integer.toString(moveBuilder.getInfluence(this.provinceId)));		
 	}
+	
 	@Override
 	public void act(float delta) {
 		updateText();
