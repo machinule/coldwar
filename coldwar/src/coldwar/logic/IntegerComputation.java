@@ -1,5 +1,7 @@
-package coldwar;
+package coldwar.logic;
 
+import coldwar.GameStateOuterClass;
+import coldwar.MoveListOuterClass;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.MoveListOuterClass.MoveList;
 

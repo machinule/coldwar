@@ -1,4 +1,4 @@
-package coldwar;
+package coldwar.ui;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
@@ -9,7 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
+import coldwar.Logger;
+import coldwar.ProvinceOuterClass;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.logic.MoveBuilder;
 
 
 public class ProvinceInfoCard extends Table {

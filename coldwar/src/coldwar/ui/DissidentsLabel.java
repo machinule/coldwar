@@ -1,9 +1,12 @@
-package coldwar;
+package coldwar.ui;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+import coldwar.ProvinceOuterClass;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.ProvinceOuterClass.Province.Id;
+import coldwar.logic.MoveBuilder;
 
 public class DissidentsLabel extends Label {
 

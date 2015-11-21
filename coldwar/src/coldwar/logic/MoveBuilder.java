@@ -1,15 +1,22 @@
-package coldwar;
+package coldwar.logic;
 import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
+import coldwar.GameStateOuterClass;
+import coldwar.Logger;
+import coldwar.MoveListOuterClass;
+import coldwar.MoveOuterClass;
+import coldwar.ProvinceOuterClass;
 import coldwar.GameStateOuterClass.GameState;
+import coldwar.GameStateOuterClass.GameState.Builder;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.DiplomacyMove;
 import coldwar.MoveOuterClass.FundDissidentsMove;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.ProvinceOuterClass.Province.Id;
 
 public class MoveBuilder {
 

@@ -1,11 +1,15 @@
-package coldwar;
+package coldwar.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+import coldwar.ColdWarGame;
+import coldwar.ProvinceOuterClass;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.ProvinceOuterClass.Province.Id;
+import coldwar.logic.MoveBuilder;
 
 public class MapScreen extends AbstractScreen {
 		

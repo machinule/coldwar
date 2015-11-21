@@ -1,7 +1,9 @@
-package coldwar;
+package coldwar.logic;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import coldwar.GameStateOuterClass;
+import coldwar.MoveListOuterClass;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.MoveListOuterClass.MoveList;
 

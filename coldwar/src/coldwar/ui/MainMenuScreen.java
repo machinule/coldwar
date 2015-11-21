@@ -1,4 +1,4 @@
-package coldwar;
+package coldwar.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -7,6 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+
+import coldwar.ColdWarGame;
+import coldwar.Logger;
 
 public class MainMenuScreen extends AbstractScreen {
 	

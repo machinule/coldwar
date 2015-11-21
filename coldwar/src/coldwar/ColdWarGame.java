@@ -3,6 +3,8 @@ package coldwar;
 import com.badlogic.gdx.Game;
 
 import coldwar.MoveListOuterClass.MoveList;
+import coldwar.logic.MoveBuilder;
+import coldwar.ui.SplashScreen;
 
 public class ColdWarGame extends Game {
 	
