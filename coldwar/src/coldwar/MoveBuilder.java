@@ -1,5 +1,4 @@
 package coldwar;
-
 import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -7,6 +6,7 @@ import java.util.function.Function;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.DiplomacyMove;
+import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
 
@@ -16,6 +16,10 @@ public class MoveBuilder {
 	private GameState.Builder state;
 	private MoveList.Builder moves;
 	private ComputationCache cache;
+	
+	private MoveList.Builder pending = MoveList.newBuilder();
+	private int INFL_MAX = 3;
+	private int INFL_MIN = -3;
 	
 	public MoveBuilder() {
 		this.isUSA = true;
@@ -35,7 +39,7 @@ public class MoveBuilder {
 			cache.setUSSRMove(moves.build());
 		}
 	}
-	
+		
 	public int getInfluence(Province.Id provinceId) {
 		return Computations.getInfluence(cache, provinceId);
 	}
@@ -51,18 +55,19 @@ public class MoveBuilder {
 						.setProvinceId(id)
 						.setMagnitude(1))
 				.build());
+		Logger.Vrb("Increasing influence in " + id);
 		setMoves();
-		Logger.Dbg("Increasing influence in province ID: " + id);
 	}
-	
+		
 	public void DecreaseInfluence(Province.Id id) {
 		moves.addMoves(Move.newBuilder()
 				.setDiaDipMove(DiplomacyMove.newBuilder()
 						.setProvinceId(id)
 						.setMagnitude(-1))
 				.build());
+		Logger.Vrb("Decreasing influence in " + id);
 		setMoves();
-		Logger.Dbg("Decreasing influence in province ID: " + id);
 	}
 
+	
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 import coldwar.ProvinceOuterClass.Province;
 
@@ -16,34 +17,25 @@ public class ProvinceInfoCard extends Table {
 	protected Province province;
 	protected MoveBuilder moveBuilder;
 	protected Skin skin;
+	protected Toolbar toolbar;
 	
-	public ProvinceInfoCard(Province province, MoveBuilder moveBuilder, Skin skin) {
+	public ProvinceInfoCard(Province province, MoveBuilder moveBuilder, Toolbar toolbar, Skin skin) {
 		super();
 		this.province = province;
 		this.moveBuilder = moveBuilder;
 		this.skin = skin;
 		this.setDebug(true);
 		
+		TextButton infoButton = new TextButton("INFO", skin);
+		
 		this.add(new Label(province.getId().getValueDescriptor().getName(), this.skin));
-		this.row();
-        TextButton reduceButton = new TextButton("-", skin);
-        reduceButton.addListener(new ChangeListener() {
+		infoButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-            	Logger.Info("\"Reduce\" button pressed on " + province.getId().getValueDescriptor().getName());
-            	moveBuilder.DecreaseInfluence(province.getId());
+            	Logger.Info("\"Info\" button pressed on " + province.getId().getValueDescriptor().getName());
+            	toolbar.onSelect(province);
             }
         });
-        this.add(reduceButton);
-		this.add(new Label("Influence:", this.skin));
-		this.add(new InfluenceLabel(province.getId(), moveBuilder, this.skin));
-        TextButton increaseButton = new TextButton("+", skin);
-        increaseButton.addListener(new ChangeListener() {
-            public void changed (ChangeEvent event, Actor actor) {
-            	Logger.Info("\"Increase\" button pressed on " + province.getId().getValueDescriptor().getName());
-            	moveBuilder.IncreaseInfluence(province.getId());
-            }
-        });
-        this.add(increaseButton);
+		this.add(infoButton);
 	}
 	
 	
