@@ -69,7 +69,7 @@ public class Computations {
 	}
 	
 	// Add dissidents to a province
-	static private class HasDissidentsComputation extends OneParameterComputation<Province.Id> implements IntegerComputation {
+	static private class HasDissidentsComputation extends OneParameterComputation<Province.Id> implements BooleanComputation {
 		public HasDissidentsComputation(Id param0) {
 			super(param0);
 		}
@@ -78,32 +78,27 @@ public class Computations {
 			return p.getNumber();
 		}
 		@Override
-		public int compute(GameState state, MoveList usa, MoveList ussr) {
+		public boolean compute(GameState state, MoveList usa, MoveList ussr) {
 			Logger.Dbg("Computing dissidents...");
-			boolean hasDissidents = false;
 			for (Province p : state.getProvincesList()) {
 				if (p.getId() == param0) {
-					hasDissidents = p.getDissidents();
-					break;
+					return true;
 				}
 			}
 			for (Move m : usa.getMovesList()) {
 				if (m.hasFundDissidentsMove() && m.getFundDissidentsMove().getProvinceId() == param0) {
-					hasDissidents = true;
+					return true;
 				}
 			}
 			for (Move m : ussr.getMovesList()) {
 				if (m.hasFundDissidentsMove() && m.getFundDissidentsMove().getProvinceId() == param0) {
-					hasDissidents = true;
+					return true;
 				}
 			}
-			if ( hasDissidents ) {
-				return 1;
-			}
-			return 0;
+			return false;
 		}
 	}
 	static public int getHasDissidents(ComputationCache cache, Province.Id provinceId) {
-		return cache.computeInteger(new HasDissidentsComputation(provinceId));
+		return cache.computeBoolean(new HasDissidentsComputation(provinceId));
 	}
 }

@@ -11,22 +11,29 @@ public class ComputationCache {
 	
   public ComputationCache(GameState state, MoveList usa, MoveList ussr) {
 	  this.intCache = new ConcurrentHashMap<IntegerComputation, Integer>();
+	  this.boolCache = new ConcurrentHashMap<BooleanComputation, Integer>();
 	  this.state = state;
 	  this.usa = usa;
 	  this.ussr = ussr;
   }
 	
   private ConcurrentHashMap<IntegerComputation, Integer> intCache;
+  private ConcurrentHashMap<BooleanComputation, Integer> boolCache;
   private GameState state;
   private MoveList usa;
   private MoveList ussr;
   
   public void clearCaches() {
 	  intCache.clear();
+	  boolCache.clear();
   }
   
   public int computeInteger(IntegerComputation ic) {
 	  return intCache.computeIfAbsent(ic, c -> c.compute(getState(), getUSAMove(), getUSSRMove()));
+  }
+
+  public int computeBoolean(BooleanComputation ic) {
+	  return boolCache.computeIfAbsent(ic, c -> c.compute(getState(), getUSAMove(), getUSSRMove()));
   }
   
   public GameState getState() {
