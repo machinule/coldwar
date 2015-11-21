@@ -69,5 +69,9 @@ public class MoveBuilder {
 		setMoves();
 	}
 
+	public MoveList getMoveList() {
+		return moves.build();
+	}
+
 	
 }

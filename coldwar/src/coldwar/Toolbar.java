@@ -14,9 +14,11 @@ public class Toolbar extends Table {
 
 	protected MoveBuilder moveBuilder;
 	protected Skin skin;
+	protected ColdWarGame game;
 	
-	public Toolbar(MoveBuilder moveBuilder, Skin skin) {
+	public Toolbar(ColdWarGame game, MoveBuilder moveBuilder, Skin skin) {
 		super();
+		this.game = game;
 		this.moveBuilder = moveBuilder;
 		this.skin = skin;
 		this.setDebug(true);
@@ -50,8 +52,17 @@ public class Toolbar extends Table {
             	decreaseButton.setVisible(true); */
             }
         });
-		
+        
+        TextButton endTurnButton = new TextButton("end Turn", skin);
+        endTurnButton.addListener(new ChangeListener() {
+        	public void changed (ChangeEvent event, Actor actor) {
+        		Logger.Info("\"CEnd Turn\" button pressed.");
+        		game.endTurn(moveBuilder);
+        	}
+        });
+        
 		this.clearChildren();
+		this.add(endTurnButton);
 		this.add(new Label(province.getId().getValueDescriptor().getName(), this.skin));this.row();
         
         this.add(decreaseButton);

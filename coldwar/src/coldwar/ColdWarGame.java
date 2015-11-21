@@ -2,6 +2,8 @@ package coldwar;
 
 import com.badlogic.gdx.Game;
 
+import coldwar.MoveListOuterClass.MoveList;
+
 public class ColdWarGame extends Game {
 	
     public static final String LOG = ColdWarGame.class.getSimpleName();
@@ -30,5 +32,11 @@ public class ColdWarGame extends Game {
 
 	public void host(int parseInt) {
 		this.peer.Host(parseInt);
+	}
+
+	public void endTurn(MoveBuilder moveBuilder) {
+		MoveList local = moveBuilder.getMoveList();
+		this.peer.sendMoveList(local);
+		MoveList other = this.peer.getMoveList();
 	}
 }
