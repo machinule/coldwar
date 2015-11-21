@@ -1,17 +1,15 @@
 package coldwar;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Net;
-import com.badlogic.gdx.backends.lwjgl.LwjglNet;
 
 public class ColdWarGame extends Game {
 	
     public static final String LOG = ColdWarGame.class.getSimpleName();
-	public Net net;
+	public Peer peer;
     
-	public ColdWarGame(Net net) {
+	public ColdWarGame(Peer peer) {
 		super();
-		this.net = net;
+		this.peer = peer;
 	}
 	
 	@Override
@@ -25,4 +23,12 @@ public class ColdWarGame extends Game {
 
     public void dispose() {
     }
+
+	public void connect(String host, int port) {
+		this.peer.Connect(host, port);		
+	}
+
+	public void host(int parseInt) {
+		this.peer.Host(parseInt);
+	}
 }

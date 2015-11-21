@@ -38,8 +38,7 @@ public class ConnectScreen extends AbstractScreen {
         connectGameButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
         	    Logger.Dbg("\"Connect a Game\" button pressed.");
-        	    Peer p = new Peer(game.net);
-        	    p.Connect(hostField.getText(), Integer.parseInt(portField.getText()));
+        	    game.connect(hostField.getText(), Integer.parseInt(portField.getText()));
                 game.setScreen(new MapScreen(game));
             }
         });

@@ -34,8 +34,7 @@ public class HostScreen extends AbstractScreen {
         hostGameButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
         	    Logger.Dbg("\"Host a Game\" button pressed.");
-        	    Peer p = new Peer(game.net);
-        	    p.Host(Integer.parseInt(portField.getText()));
+        	    game.host(Integer.parseInt(portField.getText()));
                 game.setScreen(new MapScreen(game));
             }
         });

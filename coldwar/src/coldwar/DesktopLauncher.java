@@ -17,7 +17,7 @@ public class DesktopLauncher  {
       config.height = 480;
       Logger.Start();
       Logger.SetLevel("verbose"); //none, info, debug, verbose
-      new LwjglApplication(new ColdWarGame(new LwjglNet()), config);
+      new LwjglApplication(new ColdWarGame(new Peer(new LwjglNet())), config);
       
       Settings.initConstants();
       Settings.initPreferences();
