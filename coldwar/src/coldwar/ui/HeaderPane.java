@@ -27,16 +27,19 @@ public class HeaderPane extends Table {
 	}
 	
 	public void show() {
+		PlayerLabel playerLabel = new PlayerLabel(this.client, this.skin);
+		
 		final TextButton endTurnButton = new TextButton("end Turn", this.skin);
 		endTurnButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
-				Logger.Info("\"CEnd Turn\" button pressed.");
+				Logger.Info("\"End Turn\" button pressed.");
 				HeaderPane.this.client.endTurn();
 			}
 		});
 
 		this.clearChildren();
+		this.add(playerLabel);
 		this.add(endTurnButton);
 		this.row();
 	}
