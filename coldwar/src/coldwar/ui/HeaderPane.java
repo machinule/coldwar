@@ -24,6 +24,7 @@ public class HeaderPane extends Table {
 	
 	public void show() {
 		PlayerLabel playerLabel = new PlayerLabel(this.client, this.skin);
+		YearLabel yearLabel = new YearLabel(this.client, this.skin);
 		
 		final TextButton endTurnButton = new TextButton("end Turn", this.skin);
 		endTurnButton.addListener(new ChangeListener() {
@@ -35,6 +36,7 @@ public class HeaderPane extends Table {
 		});
 
 		this.clearChildren();
+		this.add(yearLabel);
 		this.add(playerLabel);
 		this.add(endTurnButton);
 		this.row();

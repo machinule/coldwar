@@ -252,5 +252,16 @@ public class Computations {
 	}
 	static public GameState getNextGameState(final ComputationCache cache) {
 		return cache.computeGameState(new NextGameStateComputation());
+	}
+	static private class YearComputation extends ZeroParameterComputation implements IntegerComputation {
+		
+		@Override
+		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
+			Logger.Vrb("Computing year...");
+			return state.getTurn() + 1947;
+		}
+	}
+	public static int getYear(ComputationCache cache) {
+		return cache.computeInteger(new YearComputation());
 	}	
 }

@@ -15,17 +15,17 @@ public class MoveBuilder {
 
 	private ComputationCache cache;
 	private final MoveList.Builder moves;
-	private final GameState.Builder state;
+	private final GameState state;
 	private final Player player;
 
-	public MoveBuilder(Player player) {
+	public MoveBuilder(Player player, GameState state) {
 		this.player = player;
-		this.state = GameState.newBuilder();
+		this.state = state;
 		this.moves = MoveList.newBuilder();
 		if (this.player == Player.USA) {
-			this.cache = new ComputationCache(this.state.build(), this.moves.build(), MoveList.getDefaultInstance());
+			this.cache = new ComputationCache(this.state, this.moves.build(), MoveList.getDefaultInstance());
 		} else {
-			this.cache = new ComputationCache(this.state.build(), MoveList.getDefaultInstance(), this.moves.build());
+			this.cache = new ComputationCache(this.state, MoveList.getDefaultInstance(), this.moves.build());
 		}
 	}
 
@@ -80,6 +80,10 @@ public class MoveBuilder {
 	public void Undo() {
 		this.moves.removeMoves(this.moves.getMovesCount());
 		this.setMoves();
+	}
+
+	public int getYear() {
+		return Computations.getYear(this.cache);
 	}
 
 }

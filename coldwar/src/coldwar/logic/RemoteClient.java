@@ -21,8 +21,8 @@ public class RemoteClient extends Client {
 		this.peer.Connect(host, port);
 		this.isHost = false;
 		this.player = Player.USSR;
-		this.currentMoveBuilder = new MoveBuilder(this.player);
 		this.state = this.getInitialGameState().build();
+		this.currentMoveBuilder = new MoveBuilder(this.player, this.state);
 		Logger.Info("Starting game with initial game state:\n" + this.state.toString());
 	}
 
@@ -32,8 +32,8 @@ public class RemoteClient extends Client {
 		this.peer.Host(port);
 		this.isHost = true;
 		this.player = Player.USA;
-		this.currentMoveBuilder = new MoveBuilder(this.player);
 		this.state = this.getInitialGameState().build();
+		this.currentMoveBuilder = new MoveBuilder(this.player, this.state);
 		Logger.Info("Starting game with initial game state:\n" + this.state.toString());
 	}
 	
@@ -84,8 +84,8 @@ public class RemoteClient extends Client {
 			this.ussr = this.currentMoveBuilder.getMoveList();
 			this.peer.sendMoveList(this.ussr);
 		}
-		this.currentMoveBuilder = new MoveBuilder(this.player);
 		this.nextTurn();
+		this.currentMoveBuilder = new MoveBuilder(this.player, this.state);
 	}
 
 }
