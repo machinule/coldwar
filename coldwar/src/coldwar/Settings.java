@@ -6,27 +6,27 @@ import com.badlogic.gdx.Preferences;
 public class Settings {
 	static Preferences consts = Gdx.app.getPreferences("Constants");
 	static Preferences prefs = Gdx.app.getPreferences("Preferences");
-	
+
 	public static void initPreferences() {
-		prefs.putString("Player", "Player");
-		
-		prefs.flush();
+		Settings.prefs.putString("Player", "Player");
+
+		Settings.prefs.flush();
 	}
-	
+
 	public static void initConstants() {
-		consts.putBoolean("Init", true);
-		consts.putInteger("Heat - Starting", 40);
-		consts.putInteger("Heat - Min", 0);
-		consts.putInteger("Heat - Max", 100);
-		
-		consts.flush();
+		Settings.consts.putBoolean("Init", true);
+		Settings.consts.putInteger("Heat - Starting", 40);
+		Settings.consts.putInteger("Heat - Min", 0);
+		Settings.consts.putInteger("Heat - Max", 100);
+
+		Settings.consts.flush();
 	}
-	
-	public static boolean getConstBool(String key) {
-		return consts.getBoolean(key);
+
+	public static boolean getConstBool(final String key) {
+		return Settings.consts.getBoolean(key);
 	}
-	
-	public static int getConstInt(String key) {
-		return consts.getInteger(key);
+
+	public static int getConstInt(final String key) {
+		return Settings.consts.getInteger(key);
 	}
 }

@@ -24,21 +24,21 @@ public class Logger {
 	public static void Dbg(final String in) {
 		if (Logger.lvl.compareTo(LogLvl.DBG) >= 0) {
 			Logger.Log(Logger.TmStmp() + ": DEBUG: " + in);
-			Gdx.app.log(ColdWarGame.LOG, Logger.TmStmp() + ": DEBUG: " + in);
+			Gdx.app.log("ColdWarGame", Logger.TmStmp() + ": DEBUG: " + in);
 		}
 	}
 
 	public static void Err(final String in) {
 		if (Logger.lvl.compareTo(LogLvl.INFO) >= 0) {
 			Logger.Log(Logger.TmStmp() + ": ERROR: " + in);
-			Gdx.app.log(ColdWarGame.LOG, Logger.TmStmp() + ": ERROR: " + in);
+			Gdx.app.log("ColdWarGame", Logger.TmStmp() + ": ERROR: " + in);
 		}
 	}
 
 	public static void Info(final String in) {
 		if (Logger.lvl.compareTo(LogLvl.INFO) >= 0) {
 			Logger.Log(Logger.TmStmp() + ": INFO: " + in);
-			Gdx.app.log(ColdWarGame.LOG, Logger.TmStmp() + ": INFO: " + in);
+			Gdx.app.log("ColdWarGame", Logger.TmStmp() + ": INFO: " + in);
 		}
 	}
 
@@ -80,14 +80,14 @@ public class Logger {
 	public static void Vrb(final String in) {
 		if (Logger.lvl.compareTo(LogLvl.VRB) >= 0) {
 			Logger.Log(Logger.TmStmp() + ": VERBOSE: " + in);
-			Gdx.app.log(ColdWarGame.LOG, Logger.TmStmp() + ": VERBOSE: " + in);
+			Gdx.app.log("ColdWarGame", Logger.TmStmp() + ": VERBOSE: " + in);
 		}
 	}
 
 	public static void Warn(final String in) {
 		if (Logger.lvl.compareTo(LogLvl.DBG) >= 0) {
 			Logger.Log(Logger.TmStmp() + ": WARN: " + in);
-			Gdx.app.log(ColdWarGame.LOG, Logger.TmStmp() + ": WARN: " + in);
+			Gdx.app.log("ColdWarGame", Logger.TmStmp() + ": WARN: " + in);
 		}
 	}
 }
