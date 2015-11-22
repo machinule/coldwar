@@ -24,7 +24,6 @@ public class ProvinceInfoCard extends Table {
 		this.province = province;
 		this.moveBuilder = moveBuilder;
 		this.skin = skin;
-		this.setDebug(true);
 
 		final TextButton infoButton = new TextButton("INFO", skin);
 

@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import coldwar.ColdWarGame;
 import coldwar.Logger;
+import coldwar.Settings;
 
 public class ConnectScreen extends AbstractScreen {
 
@@ -27,7 +28,7 @@ public class ConnectScreen extends AbstractScreen {
 		final Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
 		final Table table = new Table(skin);
 		table.setFillParent(true);
-		table.setDebug(true);
+		table.setDebug(Settings.isDebug());
 		this.stage.addActor(table);
 		final Label hostLabel = new Label("Host:", skin);
 		table.add(hostLabel);
