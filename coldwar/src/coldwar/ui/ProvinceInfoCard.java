@@ -16,9 +16,9 @@ public class ProvinceInfoCard extends Table {
 	protected MoveBuilder moveBuilder;
 	protected Province province;
 	protected Skin skin;
-	protected Toolbar toolbar;
+	protected ActionPane toolbar;
 
-	public ProvinceInfoCard(final Province province, final MoveBuilder moveBuilder, final Toolbar toolbar,
+	public ProvinceInfoCard(final Province province, final MoveBuilder moveBuilder, final ActionPane toolbar,
 			final Skin skin) {
 		super();
 		this.province = province;

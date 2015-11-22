@@ -20,16 +20,34 @@ public class MapScreen extends AbstractScreen {
 		super.show();
 		final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/uiskin.atlas"));
 		final Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
-		final Table table = new Table(skin);
-		table.setFillParent(true);
-		table.setDebug(true);
-		this.stage.addActor(table);
+		
+		// Nations
+		
+		final Table nations = new Table(skin);
+		nations.setFillParent(true);
+		nations.setDebug(true);
+		this.stage.addActor(nations);
 		final MoveBuilder moveBuilder = new MoveBuilder();
-		final Toolbar toolbar = new Toolbar(this.game, moveBuilder, skin);
+		final ActionPane actionPane = new ActionPane(this.game, moveBuilder, skin);
+		final HeaderPane headerPane = new HeaderPane(this.game, moveBuilder, skin);
 		for (final Province.Id id : Province.Id.values()) {
-			table.add(new ProvinceInfoCard(Province.newBuilder().setId(id).build(), moveBuilder, toolbar, skin));
-			table.row();
+			nations.add(new ProvinceInfoCard(Province.newBuilder().setId(id).build(), moveBuilder, actionPane, skin));
+			nations.row();
 		}
-		table.add(toolbar);
+		
+		// Top Pane
+		
+		headerPane.setFillParent(true);
+		headerPane.setDebug(true);
+		this.stage.addActor(headerPane);
+		headerPane.top();
+		headerPane.show();
+		
+		// Bottom Pane
+		
+		actionPane.setFillParent(true);
+		actionPane.setDebug(true);
+		this.stage.addActor(actionPane);
+		actionPane.bottom();
 	}
 }

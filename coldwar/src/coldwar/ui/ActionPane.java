@@ -12,13 +12,13 @@ import coldwar.Logger;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.MoveBuilder;
 
-public class Toolbar extends Table {
+public class ActionPane extends Table {
 
 	private final ColdWarGame game;
 	protected MoveBuilder moveBuilder;
 	protected Skin skin;
 
-	public Toolbar(final ColdWarGame game, final MoveBuilder moveBuilder, final Skin skin) {
+	public ActionPane(final ColdWarGame game, final MoveBuilder moveBuilder, final Skin skin) {
 		super();
 		this.game = game;
 		this.moveBuilder = moveBuilder;
@@ -39,7 +39,7 @@ public class Toolbar extends Table {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Reduce\" button pressed on " + province.getId().getValueDescriptor().getName());
-				Toolbar.this.moveBuilder.DecreaseInfluence(province.getId());
+				ActionPane.this.moveBuilder.DecreaseInfluence(province.getId());
 				/*
 				 * if(!moveBuilder.CanDecreaseInfluence(province.getId())) {
 				 * actor.setVisible(false); } increaseButton.setVisible(true);
@@ -51,7 +51,7 @@ public class Toolbar extends Table {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Increase\" button pressed on " + province.getId().getValueDescriptor().getName());
-				Toolbar.this.moveBuilder.IncreaseInfluence(province.getId());
+				ActionPane.this.moveBuilder.IncreaseInfluence(province.getId());
 				/*
 				 * if(!moveBuilder.CanIncreaseInfluence(province.getId())) {
 				 * actor.setVisible(false); } decreaseButton.setVisible(true);
@@ -63,7 +63,7 @@ public class Toolbar extends Table {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Dissidents\" button pressed on " + province.getId().getValueDescriptor().getName());
-				Toolbar.this.moveBuilder.FundDissidents(province.getId());
+				ActionPane.this.moveBuilder.FundDissidents(province.getId());
 				/*
 				 * if(!moveBuilder.CanDecreaseInfluence(province.getId())) {
 				 * actor.setVisible(false); } increaseButton.setVisible(true);
@@ -71,17 +71,7 @@ public class Toolbar extends Table {
 			}
 		});
 
-		final TextButton endTurnButton = new TextButton("end Turn", this.skin);
-		endTurnButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(final ChangeEvent event, final Actor actor) {
-				Logger.Info("\"CEnd Turn\" button pressed.");
-				Toolbar.this.game.endTurn(Toolbar.this.moveBuilder);
-			}
-		});
-
 		this.clearChildren();
-		this.add(endTurnButton);
 		this.add(new Label(province.getId().getValueDescriptor().getName(), this.skin));
 		this.row();
 
