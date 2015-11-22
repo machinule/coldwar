@@ -8,15 +8,18 @@ import coldwar.ProvinceOuterClass.Province;
 import coldwar.ProvinceOuterClass.Province.Id;
 
 public class Computations {
-	static private class GetInfluenceComputation extends OneParameterComputation<Province.Id>
+	
+	// DIRECT INFLUENCE ACTIONS
+	
+	static private class GetDiplomacyInfluenceComputation extends OneParameterComputation<Province.Id>
 			implements IntegerComputation {
-		public GetInfluenceComputation(final Id param0) {
+		public GetDiplomacyInfluenceComputation(final Id param0) {
 			super(param0);
 		}
 
 		@Override
 		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
-			Logger.Dbg("Computing...");
+			Logger.Vrb("Computing diplomatic influence...");
 			int infl = 0;
 			for (final Province p : state.getProvincesList()) {
 				if (p.getId() == this.param0) {
@@ -43,6 +46,78 @@ public class Computations {
 		}
 	}
 
+	static private class GetMilitaryInfluenceComputation extends OneParameterComputation<Province.Id>
+			implements IntegerComputation {
+		public GetMilitaryInfluenceComputation(final Id param0) {
+			super(param0);
+		}
+		
+		@Override
+		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
+			Logger.Vrb("Computing military influence...");
+			int infl = 0;
+			for (final Province p : state.getProvincesList()) {
+				if (p.getId() == this.param0) {
+					infl = p.getInfluence();
+					break;
+				}
+			}
+			for (final Move m : usa.getMovesList()) {
+				if (m.hasDiaMilMove() && m.getDiaMilMove().getProvinceId() == this.param0) {
+					infl += m.getDiaMilMove().getMagnitude();
+				}
+			}
+			for (final Move m : ussr.getMovesList()) {
+				if (m.hasDiaMilMove() && m.getDiaMilMove().getProvinceId() == this.param0) {
+					infl += m.getDiaMilMove().getMagnitude();
+				}
+			}
+			return infl;
+		}
+		
+		@Override
+		protected int paramAsInt(final Province.Id p) {
+			return p.getNumber();
+		}
+	}
+	
+	static private class GetCovertInfluenceComputation extends OneParameterComputation<Province.Id>
+			implements IntegerComputation {
+		public GetCovertInfluenceComputation(final Id param0) {
+			super(param0);
+		}
+		
+		@Override
+		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
+			Logger.Vrb("Computing covert influence...");
+			int infl = 0;
+			for (final Province p : state.getProvincesList()) {
+				if (p.getId() == this.param0) {
+					infl = p.getInfluence();
+					break;
+				}
+			}
+			for (final Move m : usa.getMovesList()) {
+				if (m.hasDiaCovMove() && m.getDiaCovMove().getProvinceId() == this.param0) {
+					infl += m.getDiaCovMove().getMagnitude();
+				}
+			}
+			for (final Move m : ussr.getMovesList()) {
+				if (m.hasDiaCovMove() && m.getDiaCovMove().getProvinceId() == this.param0) {
+					infl += m.getDiaCovMove().getMagnitude();
+				}
+			}
+			return infl;
+		}
+		
+		@Override
+		protected int paramAsInt(final Province.Id p) {
+			return p.getNumber();
+		}
+	}
+	
+	// TARGETED ACTIONS
+	
 	// Add dissidents to a province
 	static private class HasDissidentsComputation extends OneParameterComputation<Province.Id>
 			implements BooleanComputation {
@@ -52,7 +127,7 @@ public class Computations {
 
 		@Override
 		public boolean compute(final GameState state, final MoveList usa, final MoveList ussr) {
-			Logger.Dbg("Computing dissidents...");
+			Logger.Vrb("Computing dissidents...");
 			for (final Province p : state.getProvincesList()) {
 				if (p.getId() == this.param0) {
 					return true;
@@ -108,6 +183,8 @@ public class Computations {
 	}
 
 	static public int getInfluence(final ComputationCache cache, final Province.Id provinceId) {
-		return cache.computeInteger(new GetInfluenceComputation(provinceId));
+		return cache.computeInteger(new GetDiplomacyInfluenceComputation(provinceId)) +
+			   cache.computeInteger(new GetMilitaryInfluenceComputation(provinceId)) +
+			   cache.computeInteger(new GetCovertInfluenceComputation(provinceId));
 	}
 }

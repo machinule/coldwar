@@ -27,35 +27,37 @@ public class ActionPane extends Table {
 	}
 
 	public void onSelect(final Province province) {
-		TextButton increaseButton;
-		TextButton decreaseButton;
+		TextButton diplomaticInfluenceButton;
+		TextButton militaryInfluenceButton;
+		TextButton covertInfluenceButton;
 		TextButton dissidentsButton;
 
-		increaseButton = new TextButton("+", this.skin);
-		decreaseButton = new TextButton("-", this.skin);
+		diplomaticInfluenceButton = new TextButton("Diplomatic Outreach", this.skin);
+		militaryInfluenceButton = new TextButton("Arms Sales", this.skin);
+		covertInfluenceButton = new TextButton("Support Party", this.skin);
 		dissidentsButton = new TextButton("Fund Dissidents", this.skin);
 
-		decreaseButton.addListener(new ChangeListener() {
+		diplomaticInfluenceButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
-				Logger.Info("\"Reduce\" button pressed on " + province.getId().getValueDescriptor().getName());
-				ActionPane.this.moveBuilder.DecreaseInfluence(province.getId());
-				/*
-				 * if(!moveBuilder.CanDecreaseInfluence(province.getId())) {
-				 * actor.setVisible(false); } increaseButton.setVisible(true);
-				 */
+				Logger.Info("\"Diplomatic Outreatch\" button pressed on " + province.getId().getValueDescriptor().getName());
+				ActionPane.this.moveBuilder.Influence_Dip(province.getId(), 1);
 			}
 		});
 
-		increaseButton.addListener(new ChangeListener() {
+		militaryInfluenceButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
-				Logger.Info("\"Increase\" button pressed on " + province.getId().getValueDescriptor().getName());
-				ActionPane.this.moveBuilder.IncreaseInfluence(province.getId());
-				/*
-				 * if(!moveBuilder.CanIncreaseInfluence(province.getId())) {
-				 * actor.setVisible(false); } decreaseButton.setVisible(true);
-				 */
+				Logger.Info("\"Arms Sales\" button pressed on " + province.getId().getValueDescriptor().getName());
+				ActionPane.this.moveBuilder.Influence_Mil(province.getId(), 1);
+			}
+		});
+		
+		covertInfluenceButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				Logger.Info("\"Support Party\" button pressed on " + province.getId().getValueDescriptor().getName());
+				ActionPane.this.moveBuilder.Influence_Cov(province.getId(), 1);
 			}
 		});
 
@@ -75,8 +77,9 @@ public class ActionPane extends Table {
 		this.add(new Label(province.getId().getValueDescriptor().getName(), this.skin));
 		this.row();
 
-		this.add(increaseButton);
-		this.add(decreaseButton);
+		this.add(diplomaticInfluenceButton);
+		this.add(militaryInfluenceButton);
+		this.add(covertInfluenceButton);
 		this.add(dissidentsButton);
 		this.add(new Label("Influence:", this.skin));
 		this.add(new InfluenceLabel(province.getId(), this.moveBuilder, this.skin));

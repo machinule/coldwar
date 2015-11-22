@@ -3,8 +3,10 @@ package coldwar.logic;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.Logger;
 import coldwar.MoveListOuterClass.MoveList;
+import coldwar.MoveOuterClass.CovertMove;
 import coldwar.MoveOuterClass.DiplomacyMove;
 import coldwar.MoveOuterClass.FundDissidentsMove;
+import coldwar.MoveOuterClass.MilitaryMove;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
 
@@ -26,17 +28,31 @@ public class MoveBuilder {
 		}
 	}
 
-	public void DecreaseInfluence(final Province.Id id) {
+	public void Influence_Dip(final Province.Id id, int magnitude) {
 		this.moves.addMoves(
-				Move.newBuilder().setDiaDipMove(DiplomacyMove.newBuilder().setProvinceId(id).setMagnitude(-1)).build());
-		Logger.Vrb("Decreasing influence in " + id);
+				Move.newBuilder().setDiaDipMove(DiplomacyMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
+		Logger.Dbg("Adding influence from political points in " + id + " with magnitude " + magnitude);
+		this.setMoves();
+	}
+	
+	public void Influence_Mil(final Province.Id id, int magnitude) {
+		this.moves.addMoves(
+				Move.newBuilder().setDiaMilMove(MilitaryMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
+		Logger.Dbg("Adding influence from military points in " + id + " with magnitude " + magnitude);
+		this.setMoves();
+	}
+	
+	public void Influence_Cov(final Province.Id id, int magnitude) {
+		this.moves.addMoves(
+				Move.newBuilder().setDiaCovMove(CovertMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
+		Logger.Dbg("Adding influence from covert points in " + id + " with magnitude " + magnitude);
 		this.setMoves();
 	}
 
 	public void FundDissidents(final Province.Id id) {
 		this.moves.addMoves(
 				Move.newBuilder().setFundDissidentsMove(FundDissidentsMove.newBuilder().setProvinceId(id)).build());
-		Logger.Vrb("Funding dissidents in " + id);
+		Logger.Dbg("Funding dissidents in " + id);
 		this.setMoves();
 	}
 
@@ -50,13 +66,6 @@ public class MoveBuilder {
 
 	public boolean hasDissidents(final Province.Id provinceId) {
 		return Computations.getHasDissidents(this.cache, provinceId);
-	}
-
-	public void IncreaseInfluence(final Province.Id id) {
-		this.moves.addMoves(
-				Move.newBuilder().setDiaDipMove(DiplomacyMove.newBuilder().setProvinceId(id).setMagnitude(1)).build());
-		Logger.Vrb("Increasing influence in " + id);
-		this.setMoves();
 	}
 
 	private void setMoves() {

@@ -8,14 +8,13 @@ import "Province.proto";
 message Move {
 	// Direct influence actions
 	optional DiplomacyMove dia_dip_move = 1;
-	optional ArmsSalesMove dia_mil_move = 2;
-	optional DiplomacyMove dia_cov_move = 3;
+	optional MilitaryMove dia_mil_move = 2;
+	optional CovertMove dia_cov_move = 3;
 
 	optional FundDissidentsMove fund_dissidents_move = 101;
 
 	optional FoundNATOMove found_nato_move = 1001;
 	optional FoundPactMove found_pact_move = 1002;
-
 }
 
 // ========== DIRECT INFLUENCE ACTIONS ==========
@@ -27,20 +26,24 @@ message DiplomacyMove {
 }
 
 // Influence by spending MIL points
-message ArmsSalesMove {
+message MilitaryMove {
 	optional Province.Id province_id = 1;
 	optional int32 magnitude = 2;
 }
 
 // Influence by spending COV points
-message InfiltrateMove {
+message CovertMove {
 	optional Province.Id province_id = 1;
 	optional int32 magnitude = 2;
 }
 
+// ========== TARGETED ACTIONS ==========
+
 message FundDissidentsMove {
 	optional Province.Id province_id = 1;
 }
+
+// ========== SPECIAL ACTIONS ==========
 
 message FoundNATOMove {
 }
