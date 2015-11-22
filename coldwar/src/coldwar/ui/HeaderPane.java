@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import coldwar.Logger;
 import coldwar.logic.Client;
 import coldwar.logic.MoveBuilder;
+import coldwar.logic.Client.Player;
 
 public class HeaderPane extends Table {
 
@@ -23,8 +24,8 @@ public class HeaderPane extends Table {
 	}
 	
 	public void show() {
-		PlayerLabel playerLabel = new PlayerLabel(this.client, this.skin);
-		YearLabel yearLabel = new YearLabel(this.client, this.skin);
+		DynamicLabel playerLabel = new DynamicLabel(this.client, c -> c.getPlayer() == Player.USA ? "USA" : "USSR", this.skin);
+		DynamicLabel yearLabel = new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getYear()), this.skin);
 		
 		final TextButton endTurnButton = new TextButton("end Turn", this.skin);
 		endTurnButton.addListener(new ChangeListener() {

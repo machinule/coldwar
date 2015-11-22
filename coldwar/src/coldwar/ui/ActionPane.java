@@ -108,10 +108,10 @@ public class ActionPane extends Table {
 			.padLeft(10);
 		innerBottom.row();
 		innerBottom.add(new Label("Dissidents:", this.skin));
-		innerBottom.add(new DissidentsLabel(province.getId(), this.client, this.skin));
+		innerBottom.add(new DynamicLabel(this.client, c -> c.getMoveBuilder().hasDissidents(province.getId()) ? "True" : "False", this.skin));
 		innerBottom.row();
 		innerBottom.add(new Label("Influence:", this.skin));
-		innerBottom.add(new InfluenceLabel(province.getId(), this.client, this.skin));
+		innerBottom.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getInfluence(province.getId())), this.skin));
 		innerBottom.row();
 		
 		this.add(innerTop);

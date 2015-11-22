@@ -1,20 +1,21 @@
 package coldwar.ui;
 
+import java.util.function.Function;
+
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.Client;
 
-public class InfluenceLabel extends Label {
+public class DynamicLabel extends Label {
 
 	protected Client client;
-	protected Province.Id provinceId;
+	protected Function<Client, String> fn;
 
-	public InfluenceLabel(final Province.Id provinceId, final Client client, final Skin skin) {
+	public DynamicLabel(final Client client, Function<Client, String> fn, final Skin skin) {
 		super("", skin);
-		this.provinceId = provinceId;
 		this.client = client;
+		this.fn = fn;
 		this.updateText();
 	}
 
@@ -24,6 +25,6 @@ public class InfluenceLabel extends Label {
 	}
 
 	void updateText() {
-		this.setText(Integer.toString(this.client.getMoveBuilder().getInfluence(this.provinceId)));
+		this.setText(fn.apply(this.client));
 	}
 }
