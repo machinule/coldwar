@@ -9,12 +9,24 @@ public class Settings {
 	
 	public static void initPreferences() {
 		prefs.putString("Player", "Player");
-		String name = prefs.getString("name", "No name stored");
-		consts.flush();
+		
+		prefs.flush();
 	}
 	
 	public static void initConstants() {
-		consts.putBoolean("Is this working?", true);
+		consts.putBoolean("Init", true);
+		consts.putInteger("Heat - Starting", 40);
+		consts.putInteger("Heat - Min", 0);
+		consts.putInteger("Heat - Max", 100);
+		
 		consts.flush();
+	}
+	
+	public static boolean getConstBool(String key) {
+		return consts.getBoolean(key);
+	}
+	
+	public static int getConstInt(String key) {
+		return consts.getInteger(key);
 	}
 }

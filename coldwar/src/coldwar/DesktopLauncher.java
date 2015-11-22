@@ -21,6 +21,6 @@ public class DesktopLauncher  {
       
       Settings.initConstants();
       Settings.initPreferences();
-      Logger.Info("Settings loaded: " + Settings.consts.getString("Is this working?"));
+      Logger.Info("Settings loaded: " + Settings.consts.getString("Successful Initialization"));
    }
 }

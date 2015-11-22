@@ -13,15 +13,14 @@ import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.ProvinceOuterClass.Province.Builder;
 import coldwar.ProvinceOuterClass.Province.Id;
+import coldwar.Settings;
 
 public class Client {
 	
-	String ver = "0.0.1";
-	
 	public void Init() {
 		GameState.Builder baseState = GameState.newBuilder();
-		baseState.setVersion("0.01")
-				 .setHeat(20)
+		baseState.setVersion("0.0.1")
+				 .setHeat(Settings.getConstInt("Starting Heat"))
 				 .setTurn(0);
 	}
 	
