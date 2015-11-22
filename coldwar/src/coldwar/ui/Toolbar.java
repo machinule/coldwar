@@ -6,11 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 import coldwar.ColdWarGame;
 import coldwar.Logger;
-import coldwar.ProvinceOuterClass;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.MoveBuilder;
 

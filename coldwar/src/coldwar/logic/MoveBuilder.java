@@ -1,22 +1,11 @@
 package coldwar.logic;
-import java.lang.reflect.Method;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-
-import coldwar.GameStateOuterClass;
 import coldwar.Logger;
-import coldwar.MoveListOuterClass;
-import coldwar.MoveOuterClass;
-import coldwar.ProvinceOuterClass;
 import coldwar.GameStateOuterClass.GameState;
-import coldwar.GameStateOuterClass.GameState.Builder;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.DiplomacyMove;
 import coldwar.MoveOuterClass.FundDissidentsMove;
-import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
-import coldwar.ProvinceOuterClass.Province.Id;
 
 public class MoveBuilder {
 
@@ -24,11 +13,7 @@ public class MoveBuilder {
 	private GameState.Builder state;
 	private MoveList.Builder moves;
 	private ComputationCache cache;
-	
-	private MoveList.Builder pending = MoveList.newBuilder();
-	private int INFL_MAX = 3;
-	private int INFL_MIN = -3;
-	
+		
 	public MoveBuilder() {
 		this.isUSA = true; //Remove on turns
 		this.state = GameState.newBuilder();
@@ -53,7 +38,7 @@ public class MoveBuilder {
 	}
 	
 	public boolean hasDissidents(Province.Id provinceId) {
-		return Computations.getHasDissidents(cache, provinceId) == 1;
+		return Computations.getHasDissidents(cache, provinceId);
 	}
 	
 	public void Undo() {

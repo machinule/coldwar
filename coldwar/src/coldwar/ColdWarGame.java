@@ -39,7 +39,6 @@ public class ColdWarGame extends Game {
 	public void endTurn(MoveBuilder moveBuilder) {
 		MoveList local = moveBuilder.getMoveList();
 		this.peer.sendMoveList(local);
-		MoveList other = this.peer.getMoveList();
 	}
 
 }

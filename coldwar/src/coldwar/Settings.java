@@ -9,7 +9,6 @@ public class Settings {
 	
 	public static void initPreferences() {
 		prefs.putString("Player", "Player");
-		String name = prefs.getString("name", "No name stored");
 		consts.flush();
 	}
 	

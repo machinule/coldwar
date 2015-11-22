@@ -1,10 +1,6 @@
 package coldwar.logic;
 
-import coldwar.GameStateOuterClass;
 import coldwar.Logger;
-import coldwar.MoveListOuterClass;
-import coldwar.MoveOuterClass;
-import coldwar.ProvinceOuterClass;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
@@ -98,7 +94,7 @@ public class Computations {
 			return false;
 		}
 	}
-	static public int getHasDissidents(ComputationCache cache, Province.Id provinceId) {
+	static public boolean getHasDissidents(ComputationCache cache, Province.Id provinceId) {
 		return cache.computeBoolean(new HasDissidentsComputation(provinceId));
 	}
 }

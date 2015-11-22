@@ -2,8 +2,6 @@ package coldwar.logic;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import coldwar.GameStateOuterClass;
-import coldwar.MoveListOuterClass;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.MoveListOuterClass.MoveList;
 
@@ -11,14 +9,14 @@ public class ComputationCache {
 	
   public ComputationCache(GameState state, MoveList usa, MoveList ussr) {
 	  this.intCache = new ConcurrentHashMap<IntegerComputation, Integer>();
-	  this.boolCache = new ConcurrentHashMap<BooleanComputation, Integer>();
+	  this.boolCache = new ConcurrentHashMap<BooleanComputation, Boolean>();
 	  this.state = state;
 	  this.usa = usa;
 	  this.ussr = ussr;
   }
 	
   private ConcurrentHashMap<IntegerComputation, Integer> intCache;
-  private ConcurrentHashMap<BooleanComputation, Integer> boolCache;
+  private ConcurrentHashMap<BooleanComputation, Boolean> boolCache;
   private GameState state;
   private MoveList usa;
   private MoveList ussr;
@@ -32,8 +30,8 @@ public class ComputationCache {
 	  return intCache.computeIfAbsent(ic, c -> c.compute(getState(), getUSAMove(), getUSSRMove()));
   }
 
-  public int computeBoolean(BooleanComputation ic) {
-	  return boolCache.computeIfAbsent(ic, c -> c.compute(getState(), getUSAMove(), getUSSRMove()));
+  public boolean computeBoolean(BooleanComputation bc) {
+	  return boolCache.computeIfAbsent(bc, c -> c.compute(getState(), getUSAMove(), getUSSRMove()));
   }
   
   public GameState getState() {
