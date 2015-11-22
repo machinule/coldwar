@@ -4,17 +4,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import coldwar.ProvinceOuterClass.Province;
-import coldwar.logic.MoveBuilder;
+import coldwar.logic.Client;
 
 public class DissidentsLabel extends Label {
 
-	protected MoveBuilder moveBuilder;
+	protected Client client;
 	protected Province.Id provinceId;
 
-	public DissidentsLabel(final Province.Id provinceId, final MoveBuilder moveBuilder, final Skin skin) {
+	public DissidentsLabel(final Province.Id provinceId, final Client client, final Skin skin) {
 		super("", skin);
 		this.provinceId = provinceId;
-		this.moveBuilder = moveBuilder;
+		this.client = client;
 		this.updateText();
 	}
 
@@ -24,6 +24,6 @@ public class DissidentsLabel extends Label {
 	}
 
 	void updateText() {
-		this.setText(this.moveBuilder.hasDissidents(this.provinceId) ? "true" : "false");
+		this.setText(this.client.getMoveBuilder().hasDissidents(this.provinceId) ? "true" : "false");
 	}
 }

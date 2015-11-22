@@ -8,12 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import coldwar.ColdWarGame;
 import coldwar.Settings;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.logic.Client;
 import coldwar.logic.MoveBuilder;
 
 public class MapScreen extends AbstractScreen {
 
-	public MapScreen(final ColdWarGame game) {
+	private Client client;
+	
+	public MapScreen(final ColdWarGame game, Client client) {
 		super(game);
+		this.client = client;
 	}
 
 	@Override
@@ -28,13 +32,12 @@ public class MapScreen extends AbstractScreen {
 		nations.setFillParent(true);
 		nations.setDebug(Settings.isDebug());
 		this.stage.addActor(nations);
-		final MoveBuilder moveBuilder = new MoveBuilder();
-		final ActionPane actionPane = new ActionPane(this.game, moveBuilder, skin);
+		final ActionPane actionPane = new ActionPane(this.client, skin);
 		actionPane.setDebug(Settings.isDebug());
-		final HeaderPane headerPane = new HeaderPane(this.game, moveBuilder, skin);
+		final HeaderPane headerPane = new HeaderPane(this.client, skin);
 		headerPane.setDebug(Settings.isDebug());
 		for (final Province.Id id : Province.Id.values()) {
-			ProvinceInfoCard card = new ProvinceInfoCard(Province.newBuilder().setId(id).build(), moveBuilder, actionPane, skin);
+			ProvinceInfoCard card = new ProvinceInfoCard(Province.newBuilder().setId(id).build(), actionPane, skin);
 			card.setDebug(Settings.isDebug());
 			nations.add(card);
 			nations.row();

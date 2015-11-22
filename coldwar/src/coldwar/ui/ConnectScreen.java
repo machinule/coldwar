@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import coldwar.ColdWarGame;
 import coldwar.Logger;
 import coldwar.Settings;
+import coldwar.logic.Client;
+import coldwar.logic.RemoteClient;
 
 public class ConnectScreen extends AbstractScreen {
 
@@ -43,8 +45,8 @@ public class ConnectScreen extends AbstractScreen {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Dbg("\"Connect a Game\" button pressed.");
-				ConnectScreen.this.game.connect(hostField.getText(), Integer.parseInt(portField.getText()));
-				ConnectScreen.this.game.setScreen(new MapScreen(ConnectScreen.this.game));
+				Client client = new RemoteClient(hostField.getText(), Integer.parseInt(portField.getText()));
+				ConnectScreen.this.game.setScreen(new MapScreen(ConnectScreen.this.game, client));
 			}
 		});
 		table.add(connectGameButton).size(300, 60).uniform().spaceBottom(10);

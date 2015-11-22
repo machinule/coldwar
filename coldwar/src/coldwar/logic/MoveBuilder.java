@@ -9,19 +9,20 @@ import coldwar.MoveOuterClass.FundDissidentsMove;
 import coldwar.MoveOuterClass.MilitaryMove;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.logic.Client.Player;
 
 public class MoveBuilder {
 
 	private ComputationCache cache;
-	private final boolean isUSA;
 	private final MoveList.Builder moves;
 	private final GameState.Builder state;
+	private final Player player;
 
-	public MoveBuilder() {
-		this.isUSA = true; // Remove on turns
+	public MoveBuilder(Player player) {
+		this.player = player;
 		this.state = GameState.newBuilder();
 		this.moves = MoveList.newBuilder();
-		if (this.isUSA) {
+		if (this.player == Player.USA) {
 			this.cache = new ComputationCache(this.state.build(), this.moves.build(), MoveList.getDefaultInstance());
 		} else {
 			this.cache = new ComputationCache(this.state.build(), MoveList.getDefaultInstance(), this.moves.build());
@@ -69,7 +70,7 @@ public class MoveBuilder {
 	}
 
 	private void setMoves() {
-		if (this.isUSA) {
+		if (this.player == Player.USA) {
 			this.cache.setUSAMove(this.moves.build());
 		} else {
 			this.cache.setUSSRMove(this.moves.build());

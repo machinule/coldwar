@@ -10,18 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import coldwar.ColdWarGame;
 import coldwar.Logger;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.logic.Client;
 import coldwar.logic.MoveBuilder;
 
 public class ActionPane extends Table {
 
-	private final ColdWarGame game;
-	protected MoveBuilder moveBuilder;
+	private final Client client;
 	protected Skin skin;
 
-	public ActionPane(final ColdWarGame game, final MoveBuilder moveBuilder, final Skin skin) {
+	public ActionPane(final Client client, final Skin skin) {
 		super();
-		this.game = game;
-		this.moveBuilder = moveBuilder;
+		this.client = client;
 		this.skin = skin;
 		this.setDebug(true);
 	}
@@ -47,7 +46,7 @@ public class ActionPane extends Table {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Diplomatic Outreatch\" button pressed on " + province.getId().getValueDescriptor().getName());
-				ActionPane.this.moveBuilder.Influence_Dip(province.getId(), 1);
+				ActionPane.this.client.getMoveBuilder().Influence_Dip(province.getId(), 1);
 			}
 		});
 
@@ -55,7 +54,7 @@ public class ActionPane extends Table {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Arms Sales\" button pressed on " + province.getId().getValueDescriptor().getName());
-				ActionPane.this.moveBuilder.Influence_Mil(province.getId(), 1);
+				ActionPane.this.client.getMoveBuilder().Influence_Mil(province.getId(), 1);
 			}
 		});
 		
@@ -63,7 +62,7 @@ public class ActionPane extends Table {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Support Party\" button pressed on " + province.getId().getValueDescriptor().getName());
-				ActionPane.this.moveBuilder.Influence_Cov(province.getId(), 1);
+				ActionPane.this.client.getMoveBuilder().Influence_Cov(province.getId(), 1);
 			}
 		});
 
@@ -71,7 +70,7 @@ public class ActionPane extends Table {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Dissidents\" button pressed on " + province.getId().getValueDescriptor().getName());
-				ActionPane.this.moveBuilder.FundDissidents(province.getId());
+				ActionPane.this.client.getMoveBuilder().FundDissidents(province.getId());
 				/*
 				 * if(!moveBuilder.CanDecreaseInfluence(province.getId())) {
 				 * actor.setVisible(false); } increaseButton.setVisible(true);
@@ -113,10 +112,10 @@ public class ActionPane extends Table {
 			.padLeft(10);
 		innerBottom.row();
 		innerBottom.add(new Label("Dissidents:", this.skin));
-		innerBottom.add(new DissidentsLabel(province.getId(), this.moveBuilder, this.skin));
+		innerBottom.add(new DissidentsLabel(province.getId(), this.client, this.skin));
 		innerBottom.row();
 		innerBottom.add(new Label("Influence:", this.skin));
-		innerBottom.add(new InfluenceLabel(province.getId(), this.moveBuilder, this.skin));
+		innerBottom.add(new InfluenceLabel(province.getId(), this.client, this.skin));
 		innerBottom.row();
 		
 		this.add(innerTop);

@@ -1,6 +1,10 @@
 package coldwar.logic;
 
 import coldwar.GameStateOuterClass.GameState;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import coldwar.Logger;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
@@ -151,7 +155,17 @@ public class Computations {
 			return p.getNumber();
 		}
 	}
+	static private abstract class ZeroParameterComputation {
+		@Override
+		public boolean equals(final Object obj) {
+			return this.getClass() == obj.getClass();
+		}
 
+		@Override
+		public int hashCode() {
+			return this.getClass().hashCode();
+		}
+	}
 	static private abstract class OneParameterComputation<T> {
 		protected T param0;
 
@@ -187,4 +201,56 @@ public class Computations {
 			   cache.computeInteger(new GetMilitaryInfluenceComputation(provinceId)) +
 			   cache.computeInteger(new GetCovertInfluenceComputation(provinceId));
 	}
+	
+	static private class NextGameStateComputation extends ZeroParameterComputation implements GameStateComputation {
+		
+		@Override
+		public GameState compute(final GameState prevState, final MoveList usa, final MoveList ussr) {
+			Logger.Vrb("Computing next game state...");
+			final GameState.Builder state = GameState.newBuilder().mergeFrom(prevState);
+
+			// Update turn-based critical state values
+			state.setTurn(state.getTurn() + 1);
+
+			// Extract the province builders into a hashmap (key = Province.Id)
+			final Map<Province.Id, Province.Builder> provinceMap = new HashMap<Province.Id, Province.Builder>();
+
+			for (final Province.Builder province : state.getProvincesBuilderList()) {
+				provinceMap.put(province.getId(), province);
+			}
+
+			// USA moves
+			for (final Move move : usa.getMovesList()) {
+				if (move.hasFoundNatoMove()) {
+					state.getUsaBuilder().setFoundNato(true);
+					state.getUsaBuilder().setUnrest(state.getUsa().getUnrest() + 1);
+				}
+				// Direct influence actions
+				if (move.hasDiaDipMove()) {
+					provinceMap.get(move.getDiaDipMove().getProvinceId()).setInfluence(move.getDiaDipMove().getMagnitude());
+				}
+				if (move.hasDiaMilMove()) {
+					provinceMap.get(move.getDiaMilMove().getProvinceId()).setInfluence(move.getDiaMilMove().getMagnitude());
+				}
+				if (move.hasDiaCovMove()) {
+					provinceMap.get(move.getDiaCovMove().getProvinceId()).setInfluence(move.getDiaCovMove().getMagnitude());
+				}
+			}
+
+			// USSR moves
+			/*
+			 *
+			 * for(Move move : ussr.getMovesList()) { if(move.hasFoundPactMove()) {
+			 * state.getUssrBuilder().setFoundPact(true);
+			 *
+			 * } }
+			 *
+			 */
+
+			return state.build();
+		}
+	}
+	static public GameState getNextGameState(final ComputationCache cache) {
+		return cache.computeGameState(new NextGameStateComputation());
+	}	
 }

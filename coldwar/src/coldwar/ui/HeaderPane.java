@@ -11,20 +11,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import coldwar.ColdWarGame;
 import coldwar.Logger;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.logic.Client;
 import coldwar.logic.MoveBuilder;
 
 public class HeaderPane extends Table {
 
-	private final ColdWarGame game;
+	private final Client client;
 	protected MoveBuilder moveBuilder;
 	protected Skin skin;
 
-	public HeaderPane(final ColdWarGame game, final MoveBuilder moveBuilder, final Skin skin) {
+	public HeaderPane(final Client client, final Skin skin) {
 		super();
-		this.game = game;
-		this.moveBuilder = moveBuilder;
+		this.client = client;
 		this.skin = skin;
-		this.setDebug(true);
 	}
 	
 	public void show() {
@@ -33,7 +32,7 @@ public class HeaderPane extends Table {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"CEnd Turn\" button pressed.");
-				HeaderPane.this.game.endTurn(HeaderPane.this.moveBuilder);
+				HeaderPane.this.client.endTurn();
 			}
 		});
 

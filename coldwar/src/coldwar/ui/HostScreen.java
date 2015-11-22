@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import coldwar.ColdWarGame;
 import coldwar.Logger;
 import coldwar.Settings;
+import coldwar.logic.Client;
+import coldwar.logic.RemoteClient;
 
 public class HostScreen extends AbstractScreen {
 
@@ -39,8 +41,8 @@ public class HostScreen extends AbstractScreen {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Dbg("\"Host a Game\" button pressed.");
-				HostScreen.this.game.host(Integer.parseInt(portField.getText()));
-				HostScreen.this.game.setScreen(new MapScreen(HostScreen.this.game));
+				Client client = new RemoteClient(Integer.parseInt(portField.getText()));
+				HostScreen.this.game.setScreen(new MapScreen(HostScreen.this.game, client));
 			}
 		});
 		table.add(hostGameButton).size(300, 60).uniform().spaceBottom(10);

@@ -16,8 +16,6 @@ import coldwar.ui.SplashScreen;
  * @see com.badlogic.gdx.Game
  */
 public class ColdWarGame extends Game {
-
-	public Peer peer;
 	
 	/**
 	 * Called when the application is created. Immediately enters the splash
@@ -41,7 +39,6 @@ public class ColdWarGame extends Game {
 				Settings.prefs.getInteger("resolution_width"),
 				Settings.prefs.getInteger("resolution_height"),
 				Settings.prefs.getBoolean("fullscreen"));
-		this.peer = new Peer(Gdx.app.getNet());
 		this.setScreen(new SplashScreen(this));
 	}
 
@@ -63,35 +60,6 @@ public class ColdWarGame extends Game {
 	@Override
 	public void dispose() {
 		// TODO: clean up application elements.
-	}
-
-	/**
-	 * End the current turn.
-	 * 
-	 * @param moveBuilder
-	 */
-	public void endTurn(final MoveBuilder moveBuilder) {
-		final MoveList local = moveBuilder.getMoveList();
-		this.peer.sendMoveList(local);
-	}
-
-	/**
-	 * Host a game.
-	 * 
-	 * @param parseInt
-	 */
-	public void host(final int parseInt) {
-		this.peer.Host(parseInt);
-	}
-
-	/**
-	 * Connect to a remote game.
-	 * 
-	 * @param host
-	 * @param port
-	 */
-	public void connect(final String host, final int port) {
-		this.peer.Connect(host, port);
 	}
 
 }

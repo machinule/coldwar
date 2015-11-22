@@ -8,8 +8,8 @@ import coldwar.MoveListOuterClass.MoveList;
 public class ComputationCache {
 
 	private final ConcurrentHashMap<BooleanComputation, Boolean> boolCache;
-
 	private final ConcurrentHashMap<IntegerComputation, Integer> intCache;
+	private final ConcurrentHashMap<GameStateComputation, GameState> stateCache;
 	private GameState state;
 	private MoveList usa;
 	private MoveList ussr;
@@ -17,6 +17,7 @@ public class ComputationCache {
 	public ComputationCache(final GameState state, final MoveList usa, final MoveList ussr) {
 		this.intCache = new ConcurrentHashMap<IntegerComputation, Integer>();
 		this.boolCache = new ConcurrentHashMap<BooleanComputation, Boolean>();
+		this.stateCache = new ConcurrentHashMap<GameStateComputation, GameState>();
 		this.state = state;
 		this.usa = usa;
 		this.ussr = ussr;
@@ -37,6 +38,11 @@ public class ComputationCache {
 				c -> c.compute(this.getState(), this.getUSAMove(), this.getUSSRMove()));
 	}
 
+	public GameState computeGameState(final GameStateComputation sc) {
+		return this.stateCache.computeIfAbsent(sc,
+				c -> c.compute(this.getState(), this.getUSAMove(), this.getUSSRMove()));
+	}
+	
 	public GameState getState() {
 		return this.state;
 	}

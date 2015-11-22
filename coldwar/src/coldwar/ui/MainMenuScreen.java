@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import coldwar.ColdWarGame;
 import coldwar.Logger;
 import coldwar.Settings;
+import coldwar.logic.Client;
+import coldwar.logic.HotseatClient;
 
 public class MainMenuScreen extends AbstractScreen {
 
@@ -30,7 +32,19 @@ public class MainMenuScreen extends AbstractScreen {
 
 		table.add("A Love Story Between Two Superpowers").spaceBottom(50);
 		table.row();
-
+		
+		final TextButton hotseatGameButton = new TextButton("Start a Hotseat Game", skin);
+		hotseatGameButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				Logger.Dbg("\"Host a Game\" button pressed.");
+				Client client = new HotseatClient();
+				MainMenuScreen.this.game.setScreen(new MapScreen(MainMenuScreen.this.game, client));
+			}
+		});
+		table.add(hotseatGameButton).size(300, 60).uniform().spaceBottom(10);
+		table.row();
+		
 		final TextButton hostGameButton = new TextButton("Host a Game", skin);
 		hostGameButton.addListener(new ChangeListener() {
 			@Override
