@@ -14,12 +14,13 @@ import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 
+import coldwar.GameStateOuterClass.GameState;
 import coldwar.MoveListOuterClass.MoveList;
 
 public class Peer {
 
 	public enum MessageType {
-		MOVELIST
+		MOVELIST, GAME_STATE
 	}
 
 	private final Net net;
@@ -49,6 +50,10 @@ public class Peer {
 
 	public MoveList getMoveList() {
 		return (MoveList) this.readProto(MessageType.MOVELIST, MoveList.getDefaultInstance());
+	}
+
+	public GameState getGameState() {
+		return (GameState) this.readProto(MessageType.GAME_STATE, GameState.getDefaultInstance());
 	}
 
 	public OutputStream getOutputStream() {
@@ -98,6 +103,10 @@ public class Peer {
 		this.writeProto(MessageType.MOVELIST, moveList);
 	}
 
+	public void sendGameState(final GameState gameState) {
+		this.writeProto(MessageType.GAME_STATE, gameState);
+	}
+	
 	public void writeProto(final MessageType type, final com.google.protobuf.Message message) {
 		if (this.socket == null) {
 			return;

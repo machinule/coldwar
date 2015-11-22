@@ -12,6 +12,7 @@ public class HotseatClient extends Client {
 		super();
 		this.player = Player.USA;
 		this.currentMoveBuilder = new MoveBuilder(this.player);
+		this.state = this.getInitialGameState().build();
 	}
 	
 	@Override

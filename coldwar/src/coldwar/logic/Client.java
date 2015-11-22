@@ -1,6 +1,7 @@
 package coldwar.logic;
 
 import coldwar.GameStateOuterClass.GameState;
+import coldwar.Logger;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.Settings;
 
@@ -15,13 +16,7 @@ public abstract class Client {
 
 	protected GameState state;
 	protected Player player;
-	ComputationCache cache;
-	
-	public Client() {
-		this.state = this.getInitialGameState().build();
-		this.cache = new ComputationCache(this.state, MoveList.getDefaultInstance(), MoveList.getDefaultInstance());
-	}
-	
+		
 	protected GameState.Builder getInitialGameState() {
 		return GameState.newBuilder()
 				.setVersion("0.0.1")
@@ -32,23 +27,16 @@ public abstract class Client {
 	public Player getPlayer() {
 		return this.player;
 	}
-	
-	public void endTurn() {
-		cache.setState(state);
-		cache.setUSAMove(this.getUSAMove());
-		cache.setUSSRMove(this.getUSSRMove());
-	}
-	
+		
 	public void nextTurn() {
-		state = this.getNextState();
+		Logger.Info("Proceeding to the next turn.");
+		ComputationCache cache = new ComputationCache(this.state, this.getUSAMove(), this.getUSSRMove());
+		this.state = Computations.getNextGameState(cache);
+		Logger.Info("Next game state: " + this.state.toString());
 	}
-	
+
+	public abstract void endTurn();
 	public abstract MoveList getUSAMove();
 	public abstract MoveList getUSSRMove();
-	public abstract MoveBuilder getMoveBuilder();
-	
-	public GameState getNextState() {
-		return Computations.getNextGameState(this.cache);
-	}
-	
+	public abstract MoveBuilder getMoveBuilder();	
 }
