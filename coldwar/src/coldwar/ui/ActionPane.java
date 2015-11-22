@@ -30,13 +30,19 @@ public class ActionPane extends Table {
 		TextButton diplomaticInfluenceButton;
 		TextButton militaryInfluenceButton;
 		TextButton covertInfluenceButton;
+		
 		TextButton dissidentsButton;
+		TextButton coupButton;
+		TextButton establishBaseButton;
 
 		diplomaticInfluenceButton = new TextButton("Diplomatic Outreach", this.skin);
 		militaryInfluenceButton = new TextButton("Arms Sales", this.skin);
 		covertInfluenceButton = new TextButton("Support Party", this.skin);
+		
 		dissidentsButton = new TextButton("Fund Dissidents", this.skin);
-
+		coupButton = new TextButton("Organize Coup", this.skin);
+		establishBaseButton = new TextButton("Establish Military Base", this.skin);
+		
 		diplomaticInfluenceButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
@@ -74,17 +80,51 @@ public class ActionPane extends Table {
 		});
 
 		this.clearChildren();
-		this.add(new Label(province.getId().getValueDescriptor().getName(), this.skin));
+		
+		Table innerTop = new Table();
+		innerTop.add(new Label(province.getId().getValueDescriptor().getName(), this.skin));
+		
+		Table innerMid = new Table();
+		
+		Table innerBottom = new Table();
+		
+		innerBottom.add(diplomaticInfluenceButton)
+			.right()
+			.padTop(5);
+		innerBottom.add(dissidentsButton)
+			.left()
+			.padTop(5)
+			.padLeft(10);
+		innerBottom.row();
+		innerBottom.add(militaryInfluenceButton)
+			.right()
+			.padTop(5);
+		innerBottom.add(coupButton)
+			.left()
+			.padTop(5)
+			.padLeft(10);
+		innerBottom.row();
+		innerBottom.add(covertInfluenceButton)
+			.right()
+			.padTop(5);
+		innerBottom.add(establishBaseButton)
+			.left()
+			.padTop(5)
+			.padLeft(10);
+		innerBottom.row();
+		innerBottom.add(new Label("Dissidents:", this.skin));
+		innerBottom.add(new DissidentsLabel(province.getId(), this.moveBuilder, this.skin));
+		innerBottom.row();
+		innerBottom.add(new Label("Influence:", this.skin));
+		innerBottom.add(new InfluenceLabel(province.getId(), this.moveBuilder, this.skin));
+		innerBottom.row();
+		
+		this.add(innerTop);
 		this.row();
-
-		this.add(diplomaticInfluenceButton);
-		this.add(militaryInfluenceButton);
-		this.add(covertInfluenceButton);
-		this.add(dissidentsButton);
-		this.add(new Label("Influence:", this.skin));
-		this.add(new InfluenceLabel(province.getId(), this.moveBuilder, this.skin));
-		this.add(new Label("Dissidents:", this.skin));
-		this.add(new DissidentsLabel(province.getId(), this.moveBuilder, this.skin));
+		this.add(innerBottom);
+		this.row();
+		this.add(innerBottom);
+		this.row();
 	}
 
 }
