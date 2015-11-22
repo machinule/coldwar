@@ -18,30 +18,30 @@ public class HostScreen extends AbstractScreen {
 	public HostScreen(final ColdWarGame game) {
 		super(game);
 	}
-	
+
 	@Override
 	public void show() {
 		super.show();
-		
+
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/uiskin.atlas"));
 		Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
-        Table table = new Table(skin);
-        table.setFillParent(true);
-        table.setDebug(true);
-        stage.addActor(table);
-        Label portLabel = new Label("Port:", skin);
-        table.add(portLabel);
-        TextField portField = new TextField("7588", skin);
-        table.add(portField);
-        TextButton hostGameButton = new TextButton("Host", skin);
-        hostGameButton.addListener(new ChangeListener() {
-            public void changed (ChangeEvent event, Actor actor) {
-        	    Logger.Dbg("\"Host a Game\" button pressed.");
-        	    game.host(Integer.parseInt(portField.getText()));
-                game.setScreen(new MapScreen(game));
-            }
-        });
-        table.add(hostGameButton).size( 300, 60 ).uniform().spaceBottom( 10 );
-        table.row();
-   	}
+		Table table = new Table(skin);
+		table.setFillParent(true);
+		table.setDebug(true);
+		stage.addActor(table);
+		Label portLabel = new Label("Port:", skin);
+		table.add(portLabel);
+		TextField portField = new TextField("7588", skin);
+		table.add(portField);
+		TextButton hostGameButton = new TextButton("Host", skin);
+		hostGameButton.addListener(new ChangeListener() {
+			public void changed(ChangeEvent event, Actor actor) {
+				Logger.Dbg("\"Host a Game\" button pressed.");
+				game.host(Integer.parseInt(portField.getText()));
+				game.setScreen(new MapScreen(game));
+			}
+		});
+		table.add(hostGameButton).size(300, 60).uniform().spaceBottom(10);
+		table.row();
+	}
 }

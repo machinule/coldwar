@@ -1,4 +1,5 @@
 package coldwar.logic;
+
 import coldwar.Logger;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.MoveListOuterClass.MoveList;
@@ -13,9 +14,9 @@ public class MoveBuilder {
 	private GameState.Builder state;
 	private MoveList.Builder moves;
 	private ComputationCache cache;
-		
+
 	public MoveBuilder() {
-		this.isUSA = true; //Remove on turns
+		this.isUSA = true; // Remove on turns
 		this.state = GameState.newBuilder();
 		this.moves = MoveList.newBuilder();
 		if (this.isUSA) {
@@ -32,36 +33,30 @@ public class MoveBuilder {
 			cache.setUSSRMove(moves.build());
 		}
 	}
-		
+
 	public int getInfluence(Province.Id provinceId) {
 		return Computations.getInfluence(cache, provinceId);
 	}
-	
+
 	public boolean hasDissidents(Province.Id provinceId) {
 		return Computations.getHasDissidents(cache, provinceId);
 	}
-	
+
 	public void Undo() {
 		moves.removeMoves(moves.getMovesCount());
 		setMoves();
 	}
-	
+
 	public void IncreaseInfluence(Province.Id id) {
-		moves.addMoves(Move.newBuilder()
-				.setDiaDipMove(DiplomacyMove.newBuilder()
-						.setProvinceId(id)
-						.setMagnitude(1))
-				.build());
+		moves.addMoves(
+				Move.newBuilder().setDiaDipMove(DiplomacyMove.newBuilder().setProvinceId(id).setMagnitude(1)).build());
 		Logger.Vrb("Increasing influence in " + id);
 		setMoves();
 	}
-		
+
 	public void DecreaseInfluence(Province.Id id) {
-		moves.addMoves(Move.newBuilder()
-				.setDiaDipMove(DiplomacyMove.newBuilder()
-						.setProvinceId(id)
-						.setMagnitude(-1))
-				.build());
+		moves.addMoves(
+				Move.newBuilder().setDiaDipMove(DiplomacyMove.newBuilder().setProvinceId(id).setMagnitude(-1)).build());
 		Logger.Vrb("Decreasing influence in " + id);
 		setMoves();
 	}
@@ -69,12 +64,10 @@ public class MoveBuilder {
 	public MoveList getMoveList() {
 		return moves.build();
 	}
-	
+
 	public void FundDissidents(Province.Id id) {
-		moves.addMoves(Move.newBuilder()
-				.setFundDissidentsMove(FundDissidentsMove.newBuilder()
-						.setProvinceId(id))
-				.build());
+		moves.addMoves(
+				Move.newBuilder().setFundDissidentsMove(FundDissidentsMove.newBuilder().setProvinceId(id)).build());
 		Logger.Vrb("Funding dissidents in " + id);
 		setMoves();
 	}

@@ -10,7 +10,7 @@ public class DissidentsLabel extends Label {
 
 	protected Province.Id provinceId;
 	protected MoveBuilder moveBuilder;
-	
+
 	public DissidentsLabel(Province.Id provinceId, MoveBuilder moveBuilder, Skin skin) {
 		super("", skin);
 		this.provinceId = provinceId;
@@ -19,9 +19,9 @@ public class DissidentsLabel extends Label {
 	}
 
 	void updateText() {
-		setText(moveBuilder.hasDissidents(this.provinceId)?"true":"false");		
+		setText(moveBuilder.hasDissidents(this.provinceId) ? "true" : "false");
 	}
-	
+
 	@Override
 	public void act(float delta) {
 		updateText();

@@ -10,7 +10,7 @@ public class InfluenceLabel extends Label {
 
 	protected Province.Id provinceId;
 	protected MoveBuilder moveBuilder;
-	
+
 	public InfluenceLabel(Province.Id provinceId, MoveBuilder moveBuilder, Skin skin) {
 		super("", skin);
 		this.provinceId = provinceId;
@@ -19,9 +19,9 @@ public class InfluenceLabel extends Label {
 	}
 
 	void updateText() {
-		setText(Integer.toString(moveBuilder.getInfluence(this.provinceId)));		
+		setText(Integer.toString(moveBuilder.getInfluence(this.provinceId)));
 	}
-	
+
 	@Override
 	public void act(float delta) {
 		updateText();

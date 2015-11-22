@@ -16,13 +16,13 @@ import coldwar.MoveListOuterClass.MoveList;
 public class Peer {
 
 	private Net.Protocol protocol;
-	private Socket socket;  // TODO(hesswill): dispose.
+	private Socket socket; // TODO(hesswill): dispose.
 	private Net net;
-	
+
 	public enum MessageType {
 		MOVELIST
 	}
-	
+
 	public Peer(Net networkImpl) {
 		protocol = Net.Protocol.TCP;
 		net = networkImpl;
@@ -36,7 +36,7 @@ public class Peer {
 		hints.acceptTimeout = 0;
 		socket = net.newServerSocket(protocol, port, hints).accept(new SocketHints());
 	}
-	
+
 	public synchronized void Connect(String host, int port) {
 		if (socket != null) {
 			return;
@@ -44,7 +44,7 @@ public class Peer {
 		// TODO(machinule): timeouts, error handling.
 		socket = net.newClientSocket(protocol, host, port, new SocketHints());
 	}
-	
+
 	public void sendMoveList(MoveList moveList) {
 		writeProto(MessageType.MOVELIST, moveList);
 	}
@@ -52,13 +52,12 @@ public class Peer {
 	public MoveList getMoveList() {
 		return (MoveList) readProto(MessageType.MOVELIST, MoveList.getDefaultInstance());
 	}
-	
+
 	public void writeProto(MessageType type, com.google.protobuf.Message message) {
 		if (socket == null) {
 			return;
 		}
-		DataOutputStream stream = new DataOutputStream(
-			     new BufferedOutputStream(socket.getOutputStream()));
+		DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 		byte[] serialized = message.toByteArray();
 		CRC32 checksum = new CRC32();
 		checksum.update(serialized);
@@ -72,15 +71,16 @@ public class Peer {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public com.google.protobuf.Message readProto(MessageType type, com.google.protobuf.Message message) {
 		if (socket == null) {
 			return null;
 		}
-		DataInputStream stream = new DataInputStream(
-			     new BufferedInputStream(socket.getInputStream()));
+		DataInputStream stream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 		try {
-			while (stream.readInt() != type.ordinal()) {};  // oh god oh god why.
+			while (stream.readInt() != type.ordinal()) {
+			}
+			; // oh god oh god why.
 			int remaining = stream.readInt();
 			byte[] serialized = new byte[remaining];
 			while (remaining > 0) {
@@ -98,14 +98,14 @@ public class Peer {
 		}
 		return null;
 	}
-	
+
 	public InputStream getInputStream() {
 		if (socket == null) {
 			return null;
 		}
 		return socket.getInputStream();
 	}
-	
+
 	public OutputStream getOutputStream() {
 		if (socket == null) {
 			return null;
