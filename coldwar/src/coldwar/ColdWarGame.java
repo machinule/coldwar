@@ -1,6 +1,9 @@
 package coldwar;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.logic.MoveBuilder;
@@ -14,13 +17,8 @@ import coldwar.ui.SplashScreen;
  */
 public class ColdWarGame extends Game {
 
-	private final Peer peer;
-
-	public ColdWarGame(final Peer peer) {
-		super();
-		this.peer = peer;
-	}
-
+	public Peer peer;
+	
 	/**
 	 * Called when the application is created. Immediately enters the splash
 	 * screen.
@@ -29,6 +27,17 @@ public class ColdWarGame extends Game {
 	 */
 	@Override
 	public void create() {
+		// Set the logger to DEBUG for initialization. It will be reset based on preferences later.
+		Logger.setLogLevel(Application.LOG_DEBUG);
+		Settings.init();
+		Logger.setLogLevel(Settings.getLogLevel());
+		if (Settings.getConstBool("pack_textures")) {
+			final TexturePacker.Settings settings = new TexturePacker.Settings();
+			settings.maxWidth = 16384;
+			settings.maxHeight = 8192;
+			TexturePacker.process(settings, "assets", "textures", "pack");	
+		}
+		this.peer = new Peer(Gdx.app.getNet());
 		this.setScreen(new SplashScreen(this));
 	}
 
