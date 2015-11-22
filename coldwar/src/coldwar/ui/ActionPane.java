@@ -7,11 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import coldwar.ColdWarGame;
 import coldwar.Logger;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.Client;
-import coldwar.logic.MoveBuilder;
 
 public class ActionPane extends Table {
 
@@ -82,8 +80,6 @@ public class ActionPane extends Table {
 		
 		Table innerTop = new Table();
 		innerTop.add(new Label(province.getId().getValueDescriptor().getName(), this.skin));
-		
-		Table innerMid = new Table();
 		
 		Table innerBottom = new Table();
 		

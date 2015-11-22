@@ -5,8 +5,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
-import coldwar.MoveListOuterClass.MoveList;
-import coldwar.logic.MoveBuilder;
 import coldwar.ui.SplashScreen;
 
 /**

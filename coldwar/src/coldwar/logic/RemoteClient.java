@@ -3,10 +3,8 @@ package coldwar.logic;
 import com.badlogic.gdx.Gdx;
 
 import coldwar.MoveListOuterClass.MoveList;
-import coldwar.logic.Client.Player;
 import coldwar.Logger;
 import coldwar.Peer;
-import coldwar.Settings;
 import coldwar.GameStateOuterClass.GameState;
 
 public class RemoteClient extends Client {

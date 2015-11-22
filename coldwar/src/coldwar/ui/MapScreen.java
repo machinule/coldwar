@@ -9,7 +9,6 @@ import coldwar.ColdWarGame;
 import coldwar.Settings;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.Client;
-import coldwar.logic.MoveBuilder;
 
 public class MapScreen extends AbstractScreen {
 
