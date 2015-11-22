@@ -3,29 +3,27 @@ package coldwar.ui;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import coldwar.ProvinceOuterClass;
 import coldwar.ProvinceOuterClass.Province;
-import coldwar.ProvinceOuterClass.Province.Id;
 import coldwar.logic.MoveBuilder;
 
 public class DissidentsLabel extends Label {
 
-	protected Province.Id provinceId;
 	protected MoveBuilder moveBuilder;
-	
-	public DissidentsLabel(Province.Id provinceId, MoveBuilder moveBuilder, Skin skin) {
+	protected Province.Id provinceId;
+
+	public DissidentsLabel(final Province.Id provinceId, final MoveBuilder moveBuilder, final Skin skin) {
 		super("", skin);
 		this.provinceId = provinceId;
 		this.moveBuilder = moveBuilder;
-		updateText();
+		this.updateText();
+	}
+
+	@Override
+	public void act(final float delta) {
+		this.updateText();
 	}
 
 	void updateText() {
-		setText(moveBuilder.hasDissidents(this.provinceId)?"true":"false");		
-	}
-	
-	@Override
-	public void act(float delta) {
-		updateText();
+		this.setText(this.moveBuilder.hasDissidents(this.provinceId) ? "true" : "false");
 	}
 }

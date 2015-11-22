@@ -7,39 +7,40 @@ import coldwar.logic.MoveBuilder;
 import coldwar.ui.SplashScreen;
 
 public class ColdWarGame extends Game {
-	
-    public static final String LOG = ColdWarGame.class.getSimpleName();
+
+	public static final String LOG = ColdWarGame.class.getSimpleName();
 	public Peer peer;
-    
-	public ColdWarGame(Peer peer) {
+
+	public ColdWarGame(final Peer peer) {
 		super();
 		this.peer = peer;
 	}
-	
+
+	public void connect(final String host, final int port) {
+		this.peer.Connect(host, port);
+	}
+
 	@Override
 	public void create() {
-        this.setScreen(new SplashScreen(this));
+		this.setScreen(new SplashScreen(this));
 	}
 
-    public void render() {
-        super.render(); //important!
-    }
-
-    public void dispose() {
-    }
-
-	public void connect(String host, int port) {
-		this.peer.Connect(host, port);		
+	@Override
+	public void dispose() {
 	}
 
-	public void host(int parseInt) {
+	public void endTurn(final MoveBuilder moveBuilder) {
+		final MoveList local = moveBuilder.getMoveList();
+		this.peer.sendMoveList(local);
+	}
+
+	public void host(final int parseInt) {
 		this.peer.Host(parseInt);
 	}
-	
-	public void endTurn(MoveBuilder moveBuilder) {
-		MoveList local = moveBuilder.getMoveList();
-		this.peer.sendMoveList(local);
-		MoveList other = this.peer.getMoveList();
+
+	@Override
+	public void render() {
+		super.render(); // important!
 	}
 
 }

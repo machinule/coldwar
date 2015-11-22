@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
 public class Settings {
-	static Preferences prefs = Gdx.app.getPreferences("Preferences");
 	static Preferences consts = Gdx.app.getPreferences("Constants");
+	static Preferences prefs = Gdx.app.getPreferences("Preferences");
 	
 	public static void initPreferences() {
 		prefs.putString("Player", "Player");

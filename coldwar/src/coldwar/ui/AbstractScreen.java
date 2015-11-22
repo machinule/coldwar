@@ -12,58 +12,58 @@ import coldwar.Logger;
 
 public abstract class AbstractScreen implements Screen {
 	protected final ColdWarGame game;
-	
-	private Viewport viewport;
+
 	protected Stage stage;
-	
+	private final Viewport viewport;
+
 	public AbstractScreen(final ColdWarGame game) {
-	    this.game = game;
-	    this.viewport = new ScreenViewport();
-	    this.stage = new Stage(this.viewport);
+		this.game = game;
+		this.viewport = new ScreenViewport();
+		this.stage = new Stage(this.viewport);
 	}
-	
-    protected String getName(){
-        return getClass().getSimpleName();
-    }
 
 	@Override
-	public void show(){
-	    Logger.Dbg("Showing screen: " + getName());
-	    Gdx.input.setInputProcessor(stage);
+	public void dispose() {
+		Logger.Dbg("Disposing screen: " + this.getName());
+		this.stage.dispose();
 	}
-	
-	@Override
-	public void resize(int width, int height){
-	    Logger.Dbg("Resizing screen: " + getName() + " to: " + width + " x " + height);
+
+	protected String getName() {
+		return this.getClass().getSimpleName();
 	}
-	
+
 	@Override
-	public void render(float delta){
-	    stage.act(delta);
-	    Gdx.gl.glClearColor( 1.0f, 1.0f, 1.0f, 1f );
-	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	    stage.draw();
+	public void hide() {
+		Logger.Dbg("Hiding screen: " + this.getName());
+		this.dispose();
 	}
-	
+
 	@Override
-	public void hide(){
-		 Logger.Dbg("Hiding screen: " + getName());
-	    dispose();
+	public void pause() {
+		Logger.Dbg("Pausing screen: " + this.getName());
 	}
-	
+
 	@Override
-	public void pause(){
-		 Logger.Dbg("Pausing screen: " + getName());
+	public void render(final float delta) {
+		this.stage.act(delta);
+		Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		this.stage.draw();
 	}
-	
+
 	@Override
-	public void resume(){
-		 Logger.Dbg("Resuming screen: " + getName());
+	public void resize(final int width, final int height) {
+		Logger.Dbg("Resizing screen: " + this.getName() + " to: " + width + " x " + height);
 	}
-	
+
 	@Override
-	public void dispose(){
-		 Logger.Dbg("Disposing screen: " + getName());
-	    stage.dispose();
+	public void resume() {
+		Logger.Dbg("Resuming screen: " + this.getName());
+	}
+
+	@Override
+	public void show() {
+		Logger.Dbg("Showing screen: " + this.getName());
+		Gdx.input.setInputProcessor(this.stage);
 	}
 }

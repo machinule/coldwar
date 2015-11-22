@@ -18,34 +18,35 @@ public class ConnectScreen extends AbstractScreen {
 	public ConnectScreen(final ColdWarGame game) {
 		super(game);
 	}
-	
+
 	@Override
 	public void show() {
 		super.show();
-		
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/uiskin.atlas"));
-		Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
-        Table table = new Table(skin);
-        table.setFillParent(true);
-        table.setDebug(true);
-        stage.addActor(table);
-        Label hostLabel = new Label("Host:", skin);
-        table.add(hostLabel);
-        TextField hostField = new TextField("localhost", skin);
-        table.add(hostField);
-        Label portLabel = new Label("Port:", skin);
-        table.add(portLabel);
-        TextField portField = new TextField("7588", skin);
-        table.add(portField);
-        TextButton connectGameButton = new TextButton("Connect", skin);
-        connectGameButton.addListener(new ChangeListener() {
-            public void changed (ChangeEvent event, Actor actor) {
-        	    Logger.Dbg("\"Connect a Game\" button pressed.");
-        	    game.connect(hostField.getText(), Integer.parseInt(portField.getText()));
-                game.setScreen(new MapScreen(game));
-            }
-        });
-        table.add(connectGameButton).size( 300, 60 ).uniform().spaceBottom( 10 );
-        table.row();
-   	}
+
+		final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/uiskin.atlas"));
+		final Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
+		final Table table = new Table(skin);
+		table.setFillParent(true);
+		table.setDebug(true);
+		this.stage.addActor(table);
+		final Label hostLabel = new Label("Host:", skin);
+		table.add(hostLabel);
+		final TextField hostField = new TextField("localhost", skin);
+		table.add(hostField);
+		final Label portLabel = new Label("Port:", skin);
+		table.add(portLabel);
+		final TextField portField = new TextField("7588", skin);
+		table.add(portField);
+		final TextButton connectGameButton = new TextButton("Connect", skin);
+		connectGameButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				Logger.Dbg("\"Connect a Game\" button pressed.");
+				ConnectScreen.this.game.connect(hostField.getText(), Integer.parseInt(portField.getText()));
+				ConnectScreen.this.game.setScreen(new MapScreen(ConnectScreen.this.game));
+			}
+		});
+		table.add(connectGameButton).size(300, 60).uniform().spaceBottom(10);
+		table.row();
+	}
 }

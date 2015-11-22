@@ -1,36 +1,22 @@
 package coldwar.logic;
-import java.lang.reflect.Method;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 
-import coldwar.GameStateOuterClass;
-import coldwar.Logger;
-import coldwar.MoveListOuterClass;
-import coldwar.MoveOuterClass;
-import coldwar.ProvinceOuterClass;
 import coldwar.GameStateOuterClass.GameState;
-import coldwar.GameStateOuterClass.GameState.Builder;
+import coldwar.Logger;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.DiplomacyMove;
 import coldwar.MoveOuterClass.FundDissidentsMove;
-import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
-import coldwar.ProvinceOuterClass.Province.Id;
 
 public class MoveBuilder {
 
-	private boolean isUSA;
-	private GameState.Builder state;
-	private MoveList.Builder moves;
 	private ComputationCache cache;
-	
-	private MoveList.Builder pending = MoveList.newBuilder();
-	private int INFL_MAX = 3;
-	private int INFL_MIN = -3;
-	
+	private final boolean isUSA;
+	private final MoveList.Builder moves;
+	private final GameState.Builder state;
+
 	public MoveBuilder() {
-		this.isUSA = true; //Remove on turns
+		this.isUSA = true; // Remove on turns
 		this.state = GameState.newBuilder();
 		this.moves = MoveList.newBuilder();
 		if (this.isUSA) {
@@ -40,58 +26,50 @@ public class MoveBuilder {
 		}
 	}
 
-	private void setMoves() {
-		if (isUSA) {
-			cache.setUSAMove(moves.build());
-		} else {
-			cache.setUSSRMove(moves.build());
-		}
-	}
-		
-	public int getInfluence(Province.Id provinceId) {
-		return Computations.getInfluence(cache, provinceId);
-	}
-	
-	public boolean hasDissidents(Province.Id provinceId) {
-		return Computations.getHasDissidents(cache, provinceId) == 1;
-	}
-	
-	public void Undo() {
-		moves.removeMoves(moves.getMovesCount());
-		setMoves();
-	}
-	
-	public void IncreaseInfluence(Province.Id id) {
-		moves.addMoves(Move.newBuilder()
-				.setDiaDipMove(DiplomacyMove.newBuilder()
-						.setProvinceId(id)
-						.setMagnitude(1))
-				.build());
-		Logger.Vrb("Increasing influence in " + id);
-		setMoves();
-	}
-		
-	public void DecreaseInfluence(Province.Id id) {
-		moves.addMoves(Move.newBuilder()
-				.setDiaDipMove(DiplomacyMove.newBuilder()
-						.setProvinceId(id)
-						.setMagnitude(-1))
-				.build());
+	public void DecreaseInfluence(final Province.Id id) {
+		this.moves.addMoves(
+				Move.newBuilder().setDiaDipMove(DiplomacyMove.newBuilder().setProvinceId(id).setMagnitude(-1)).build());
 		Logger.Vrb("Decreasing influence in " + id);
-		setMoves();
+		this.setMoves();
+	}
+
+	public void FundDissidents(final Province.Id id) {
+		this.moves.addMoves(
+				Move.newBuilder().setFundDissidentsMove(FundDissidentsMove.newBuilder().setProvinceId(id)).build());
+		Logger.Vrb("Funding dissidents in " + id);
+		this.setMoves();
+	}
+
+	public int getInfluence(final Province.Id provinceId) {
+		return Computations.getInfluence(this.cache, provinceId);
 	}
 
 	public MoveList getMoveList() {
-		return moves.build();
+		return this.moves.build();
 	}
-	
-	public void FundDissidents(Province.Id id) {
-		moves.addMoves(Move.newBuilder()
-				.setFundDissidentsMove(FundDissidentsMove.newBuilder()
-						.setProvinceId(id))
-				.build());
-		Logger.Vrb("Funding dissidents in " + id);
-		setMoves();
+
+	public boolean hasDissidents(final Province.Id provinceId) {
+		return Computations.getHasDissidents(this.cache, provinceId);
+	}
+
+	public void IncreaseInfluence(final Province.Id id) {
+		this.moves.addMoves(
+				Move.newBuilder().setDiaDipMove(DiplomacyMove.newBuilder().setProvinceId(id).setMagnitude(1)).build());
+		Logger.Vrb("Increasing influence in " + id);
+		this.setMoves();
+	}
+
+	private void setMoves() {
+		if (this.isUSA) {
+			this.cache.setUSAMove(this.moves.build());
+		} else {
+			this.cache.setUSSRMove(this.moves.build());
+		}
+	}
+
+	public void Undo() {
+		this.moves.removeMoves(this.moves.getMovesCount());
+		this.setMoves();
 	}
 
 }
