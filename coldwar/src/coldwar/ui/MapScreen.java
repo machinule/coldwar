@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import coldwar.ColdWarGame;
+import coldwar.Settings;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.MoveBuilder;
 
@@ -25,20 +26,23 @@ public class MapScreen extends AbstractScreen {
 		
 		final Table nations = new Table(skin);
 		nations.setFillParent(true);
-		nations.setDebug(true);
+		nations.setDebug(Settings.isDebug());
 		this.stage.addActor(nations);
 		final MoveBuilder moveBuilder = new MoveBuilder();
 		final ActionPane actionPane = new ActionPane(this.game, moveBuilder, skin);
+		actionPane.setDebug(Settings.isDebug());
 		final HeaderPane headerPane = new HeaderPane(this.game, moveBuilder, skin);
+		headerPane.setDebug(Settings.isDebug());
 		for (final Province.Id id : Province.Id.values()) {
-			nations.add(new ProvinceInfoCard(Province.newBuilder().setId(id).build(), moveBuilder, actionPane, skin));
+			ProvinceInfoCard card = new ProvinceInfoCard(Province.newBuilder().setId(id).build(), moveBuilder, actionPane, skin);
+			card.setDebug(Settings.isDebug());
+			nations.add(card);
 			nations.row();
 		}
 		
 		// Top Pane
 		
 		headerPane.setFillParent(true);
-		headerPane.setDebug(true);
 		this.stage.addActor(headerPane);
 		headerPane.top();
 		headerPane.show();
@@ -46,7 +50,6 @@ public class MapScreen extends AbstractScreen {
 		// Bottom Pane
 		
 		actionPane.setFillParent(true);
-		actionPane.setDebug(true);
 		this.stage.addActor(actionPane);
 		actionPane.bottom();
 	}

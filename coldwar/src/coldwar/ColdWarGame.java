@@ -13,7 +13,7 @@ import coldwar.ui.SplashScreen;
  * ColdWarGame coordinates the application life cycle. It should not contain
  * game logic.
  * 
- * @see com.badlogix.gdx.Game
+ * @see com.badlogic.gdx.Game
  */
 public class ColdWarGame extends Game {
 
@@ -37,6 +37,10 @@ public class ColdWarGame extends Game {
 			settings.maxHeight = 8192;
 			TexturePacker.process(settings, "assets", "textures", "pack");	
 		}
+		Gdx.app.getGraphics().setDisplayMode(
+				Settings.prefs.getInteger("resolution_width"),
+				Settings.prefs.getInteger("resolution_height"),
+				Settings.prefs.getBoolean("fullscreen"));
 		this.peer = new Peer(Gdx.app.getNet());
 		this.setScreen(new SplashScreen(this));
 	}
