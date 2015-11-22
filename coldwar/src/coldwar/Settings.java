@@ -4,16 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
 public class Settings {
-	static Preferences prefs = Gdx.app.getPreferences("Preferences");
 	static Preferences consts = Gdx.app.getPreferences("Constants");
-
-	public static void initPreferences() {
-		prefs.putString("Player", "Player");
-		consts.flush();
-	}
+	static Preferences prefs = Gdx.app.getPreferences("Preferences");
 
 	public static void initConstants() {
-		consts.putBoolean("Is this working?", true);
-		consts.flush();
+		Settings.consts.putBoolean("Is this working?", true);
+		Settings.consts.flush();
+	}
+
+	public static void initPreferences() {
+		Settings.prefs.putString("Player", "Player");
+		Settings.consts.flush();
 	}
 }

@@ -23,26 +23,27 @@ public class ConnectScreen extends AbstractScreen {
 	public void show() {
 		super.show();
 
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/uiskin.atlas"));
-		Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
-		Table table = new Table(skin);
+		final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/uiskin.atlas"));
+		final Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
+		final Table table = new Table(skin);
 		table.setFillParent(true);
 		table.setDebug(true);
-		stage.addActor(table);
-		Label hostLabel = new Label("Host:", skin);
+		this.stage.addActor(table);
+		final Label hostLabel = new Label("Host:", skin);
 		table.add(hostLabel);
-		TextField hostField = new TextField("localhost", skin);
+		final TextField hostField = new TextField("localhost", skin);
 		table.add(hostField);
-		Label portLabel = new Label("Port:", skin);
+		final Label portLabel = new Label("Port:", skin);
 		table.add(portLabel);
-		TextField portField = new TextField("7588", skin);
+		final TextField portField = new TextField("7588", skin);
 		table.add(portField);
-		TextButton connectGameButton = new TextButton("Connect", skin);
+		final TextButton connectGameButton = new TextButton("Connect", skin);
 		connectGameButton.addListener(new ChangeListener() {
-			public void changed(ChangeEvent event, Actor actor) {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Dbg("\"Connect a Game\" button pressed.");
-				game.connect(hostField.getText(), Integer.parseInt(portField.getText()));
-				game.setScreen(new MapScreen(game));
+				ConnectScreen.this.game.connect(hostField.getText(), Integer.parseInt(portField.getText()));
+				ConnectScreen.this.game.setScreen(new MapScreen(ConnectScreen.this.game));
 			}
 		});
 		table.add(connectGameButton).size(300, 60).uniform().spaceBottom(10);

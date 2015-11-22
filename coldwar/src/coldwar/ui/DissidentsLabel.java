@@ -8,22 +8,22 @@ import coldwar.logic.MoveBuilder;
 
 public class DissidentsLabel extends Label {
 
-	protected Province.Id provinceId;
 	protected MoveBuilder moveBuilder;
+	protected Province.Id provinceId;
 
-	public DissidentsLabel(Province.Id provinceId, MoveBuilder moveBuilder, Skin skin) {
+	public DissidentsLabel(final Province.Id provinceId, final MoveBuilder moveBuilder, final Skin skin) {
 		super("", skin);
 		this.provinceId = provinceId;
 		this.moveBuilder = moveBuilder;
-		updateText();
-	}
-
-	void updateText() {
-		setText(moveBuilder.hasDissidents(this.provinceId) ? "true" : "false");
+		this.updateText();
 	}
 
 	@Override
-	public void act(float delta) {
-		updateText();
+	public void act(final float delta) {
+		this.updateText();
+	}
+
+	void updateText() {
+		this.setText(this.moveBuilder.hasDissidents(this.provinceId) ? "true" : "false");
 	}
 }

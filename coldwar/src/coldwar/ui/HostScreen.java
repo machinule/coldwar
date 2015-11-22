@@ -23,22 +23,23 @@ public class HostScreen extends AbstractScreen {
 	public void show() {
 		super.show();
 
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/uiskin.atlas"));
-		Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
-		Table table = new Table(skin);
+		final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/uiskin.atlas"));
+		final Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
+		final Table table = new Table(skin);
 		table.setFillParent(true);
 		table.setDebug(true);
-		stage.addActor(table);
-		Label portLabel = new Label("Port:", skin);
+		this.stage.addActor(table);
+		final Label portLabel = new Label("Port:", skin);
 		table.add(portLabel);
-		TextField portField = new TextField("7588", skin);
+		final TextField portField = new TextField("7588", skin);
 		table.add(portField);
-		TextButton hostGameButton = new TextButton("Host", skin);
+		final TextButton hostGameButton = new TextButton("Host", skin);
 		hostGameButton.addListener(new ChangeListener() {
-			public void changed(ChangeEvent event, Actor actor) {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Dbg("\"Host a Game\" button pressed.");
-				game.host(Integer.parseInt(portField.getText()));
-				game.setScreen(new MapScreen(game));
+				HostScreen.this.game.host(Integer.parseInt(portField.getText()));
+				HostScreen.this.game.setScreen(new MapScreen(HostScreen.this.game));
 			}
 		});
 		table.add(hostGameButton).size(300, 60).uniform().spaceBottom(10);

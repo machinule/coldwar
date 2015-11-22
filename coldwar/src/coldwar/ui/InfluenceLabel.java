@@ -8,22 +8,22 @@ import coldwar.logic.MoveBuilder;
 
 public class InfluenceLabel extends Label {
 
-	protected Province.Id provinceId;
 	protected MoveBuilder moveBuilder;
+	protected Province.Id provinceId;
 
-	public InfluenceLabel(Province.Id provinceId, MoveBuilder moveBuilder, Skin skin) {
+	public InfluenceLabel(final Province.Id provinceId, final MoveBuilder moveBuilder, final Skin skin) {
 		super("", skin);
 		this.provinceId = provinceId;
 		this.moveBuilder = moveBuilder;
-		updateText();
-	}
-
-	void updateText() {
-		setText(Integer.toString(moveBuilder.getInfluence(this.provinceId)));
+		this.updateText();
 	}
 
 	@Override
-	public void act(float delta) {
-		updateText();
+	public void act(final float delta) {
+		this.updateText();
+	}
+
+	void updateText() {
+		this.setText(Integer.toString(this.moveBuilder.getInfluence(this.provinceId)));
 	}
 }

@@ -7,7 +7,14 @@ import coldwar.MoveListOuterClass.MoveList;
 
 public class ComputationCache {
 
-	public ComputationCache(GameState state, MoveList usa, MoveList ussr) {
+	private final ConcurrentHashMap<BooleanComputation, Boolean> boolCache;
+
+	private final ConcurrentHashMap<IntegerComputation, Integer> intCache;
+	private GameState state;
+	private MoveList usa;
+	private MoveList ussr;
+
+	public ComputationCache(final GameState state, final MoveList usa, final MoveList ussr) {
 		this.intCache = new ConcurrentHashMap<IntegerComputation, Integer>();
 		this.boolCache = new ConcurrentHashMap<BooleanComputation, Boolean>();
 		this.state = state;
@@ -15,49 +22,45 @@ public class ComputationCache {
 		this.ussr = ussr;
 	}
 
-	private ConcurrentHashMap<IntegerComputation, Integer> intCache;
-	private ConcurrentHashMap<BooleanComputation, Boolean> boolCache;
-	private GameState state;
-	private MoveList usa;
-	private MoveList ussr;
-
 	public void clearCaches() {
-		intCache.clear();
-		boolCache.clear();
+		this.intCache.clear();
+		this.boolCache.clear();
 	}
 
-	public int computeInteger(IntegerComputation ic) {
-		return intCache.computeIfAbsent(ic, c -> c.compute(getState(), getUSAMove(), getUSSRMove()));
+	public boolean computeBoolean(final BooleanComputation bc) {
+		return this.boolCache.computeIfAbsent(bc,
+				c -> c.compute(this.getState(), this.getUSAMove(), this.getUSSRMove()));
 	}
 
-	public boolean computeBoolean(BooleanComputation bc) {
-		return boolCache.computeIfAbsent(bc, c -> c.compute(getState(), getUSAMove(), getUSSRMove()));
+	public int computeInteger(final IntegerComputation ic) {
+		return this.intCache.computeIfAbsent(ic,
+				c -> c.compute(this.getState(), this.getUSAMove(), this.getUSSRMove()));
 	}
 
 	public GameState getState() {
-		return state;
+		return this.state;
 	}
 
 	public MoveList getUSAMove() {
-		return usa;
+		return this.usa;
 	}
 
 	public MoveList getUSSRMove() {
-		return ussr;
+		return this.ussr;
 	}
 
-	public void setState(GameState state) {
+	public void setState(final GameState state) {
 		this.state = state;
-		clearCaches();
+		this.clearCaches();
 	}
 
-	public void setUSAMove(MoveList usa) {
+	public void setUSAMove(final MoveList usa) {
 		this.usa = usa;
-		clearCaches();
+		this.clearCaches();
 	}
 
-	public void setUSSRMove(MoveList ussr) {
+	public void setUSSRMove(final MoveList ussr) {
 		this.ussr = ussr;
-		clearCaches();
+		this.clearCaches();
 	}
 }
