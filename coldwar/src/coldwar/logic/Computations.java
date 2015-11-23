@@ -15,6 +15,30 @@ public class Computations {
 	
 	// DIRECT INFLUENCE ACTIONS
 	
+	static private class GetBaseInfluenceComputation extends OneParameterComputation<Province.Id> implements IntegerComputation {
+		public GetBaseInfluenceComputation(final Id param0) {
+			super(param0);
+		}
+		
+		@Override
+		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
+			Logger.Vrb("Computing base influence...");
+			int infl = 0;
+			for (final Province p : state.getProvincesList()) {
+				if (p.getId() == this.param0) {
+					infl = p.getInfluence();
+					break;
+				}
+			}
+			return infl;
+		}
+		
+		@Override
+		protected int paramAsInt(final Province.Id p) {
+			return p.getNumber();
+		}
+	}
+	
 	static private class GetDiplomacyInfluenceComputation extends OneParameterComputation<Province.Id>
 			implements IntegerComputation {
 		public GetDiplomacyInfluenceComputation(final Id param0) {
@@ -25,12 +49,6 @@ public class Computations {
 		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
 			Logger.Vrb("Computing diplomatic influence...");
 			int infl = 0;
-			for (final Province p : state.getProvincesList()) {
-				if (p.getId() == this.param0) {
-					infl = p.getInfluence();
-					break;
-				}
-			}
 			for (final Move m : usa.getMovesList()) {
 				if (m.hasDiaDipMove() && m.getDiaDipMove().getProvinceId() == this.param0) {
 					infl += m.getDiaDipMove().getMagnitude();
@@ -60,12 +78,6 @@ public class Computations {
 		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
 			Logger.Vrb("Computing military influence...");
 			int infl = 0;
-			for (final Province p : state.getProvincesList()) {
-				if (p.getId() == this.param0) {
-					infl = p.getInfluence();
-					break;
-				}
-			}
 			for (final Move m : usa.getMovesList()) {
 				if (m.hasDiaMilMove() && m.getDiaMilMove().getProvinceId() == this.param0) {
 					infl += m.getDiaMilMove().getMagnitude();
@@ -95,12 +107,6 @@ public class Computations {
 		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
 			Logger.Vrb("Computing covert influence...");
 			int infl = 0;
-			for (final Province p : state.getProvincesList()) {
-				if (p.getId() == this.param0) {
-					infl = p.getInfluence();
-					break;
-				}
-			}
 			for (final Move m : usa.getMovesList()) {
 				if (m.hasDiaCovMove() && m.getDiaCovMove().getProvinceId() == this.param0) {
 					infl += m.getDiaCovMove().getMagnitude();
@@ -133,7 +139,7 @@ public class Computations {
 		public boolean compute(final GameState state, final MoveList usa, final MoveList ussr) {
 			Logger.Vrb("Computing dissidents...");
 			for (final Province p : state.getProvincesList()) {
-				if (p.getId() == this.param0) {
+				if (p.getId() == this.param0 && p.getDissidents()) {
 					return true;
 				}
 			}
@@ -197,45 +203,54 @@ public class Computations {
 	}
 
 	static public int getInfluence(final ComputationCache cache, final Province.Id provinceId) {
-		return cache.computeInteger(new GetDiplomacyInfluenceComputation(provinceId)) +
+		return cache.computeInteger(new GetBaseInfluenceComputation(provinceId)) +
+			   cache.computeInteger(new GetDiplomacyInfluenceComputation(provinceId)) +
 			   cache.computeInteger(new GetMilitaryInfluenceComputation(provinceId)) +
 			   cache.computeInteger(new GetCovertInfluenceComputation(provinceId));
 	}
 	
 	static private class NextGameStateComputation extends ZeroParameterComputation implements GameStateComputation {
+
+		// The computation cache is used for chaining operations together.
+		ComputationCache cache;
+		
+		public NextGameStateComputation(ComputationCache cache) {
+			this.cache = cache;
+		}
 		
 		@Override
 		public GameState compute(final GameState prevState, final MoveList usa, final MoveList ussr) {
 			Logger.Vrb("Computing next game state...");
+			Logger.Vrb("prev:\n" +prevState.toString());
+			Logger.Vrb("usa:\n" +usa.toString());
+			Logger.Vrb("ussr:\n" +ussr.toString());
 			final GameState.Builder state = GameState.newBuilder().mergeFrom(prevState);
 
 			// Update turn-based critical state values
 			state.setTurn(state.getTurn() + 1);
-
-			// Extract the province builders into a hashmap (key = Province.Id)
-			final Map<Province.Id, Province.Builder> provinceMap = new HashMap<Province.Id, Province.Builder>();
-
+			
 			for (final Province.Builder province : state.getProvincesBuilderList()) {
-				provinceMap.put(province.getId(), province);
+				province.setDissidents(Computations.getHasDissidents(this.cache, province.getId()));
+				province.setInfluence(Computations.getInfluence(this.cache, province.getId()));
 			}
 
 			// USA moves
-			for (final Move move : usa.getMovesList()) {
-				if (move.hasFoundNatoMove()) {
-					state.getUsaBuilder().setFoundNato(true);
-					state.getUsaBuilder().setUnrest(state.getUsa().getUnrest() + 1);
-				}
-				// Direct influence actions
-				if (move.hasDiaDipMove()) {
-					provinceMap.get(move.getDiaDipMove().getProvinceId()).setInfluence(move.getDiaDipMove().getMagnitude());
-				}
-				if (move.hasDiaMilMove()) {
-					provinceMap.get(move.getDiaMilMove().getProvinceId()).setInfluence(move.getDiaMilMove().getMagnitude());
-				}
-				if (move.hasDiaCovMove()) {
-					provinceMap.get(move.getDiaCovMove().getProvinceId()).setInfluence(move.getDiaCovMove().getMagnitude());
-				}
-			}
+//			for (final Move move : usa.getMovesList()) {
+//				if (move.hasFoundNatoMove()) {
+//					state.getUsaBuilder().setFoundNato(true);
+//					state.getUsaBuilder().setUnrest(state.getUsa().getUnrest() + 1);
+//				}
+//				// Direct influence actions
+//				if (move.hasDiaDipMove()) {
+//					provinceMap.get(move.getDiaDipMove().getProvinceId()).setInfluence(move.getDiaDipMove().getMagnitude());
+//				}
+//				if (move.hasDiaMilMove()) {
+//					provinceMap.get(move.getDiaMilMove().getProvinceId()).setInfluence(move.getDiaMilMove().getMagnitude());
+//				}
+//				if (move.hasDiaCovMove()) {
+//					provinceMap.get(move.getDiaCovMove().getProvinceId()).setInfluence(move.getDiaCovMove().getMagnitude());
+//				}
+//			}
 
 			// USSR moves
 			/*
@@ -251,7 +266,7 @@ public class Computations {
 		}
 	}
 	static public GameState getNextGameState(final ComputationCache cache) {
-		return cache.computeGameState(new NextGameStateComputation());
+		return cache.computeGameState(new NextGameStateComputation(cache));
 	}
 	static private class YearComputation extends ZeroParameterComputation implements IntegerComputation {
 		
