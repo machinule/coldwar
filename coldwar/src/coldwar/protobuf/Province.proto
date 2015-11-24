@@ -62,11 +62,12 @@ message Province {
 	}
 
 	optional Id id = 1;
-	optional int32 influence = 2 [default = 0];
-	optional int32 stability = 3 [default = 1];
-	optional Government gov = 4 [default = REPUBLIC];
-	optional Id occupier = 5;
-	optional bool dissidents = 6 [default = false];
-	repeated Id adjacency = 7;
-	optional Id base = 8;
+	optional string label = 2;
+	optional int32 influence = 3 [default = 0];
+	optional int32 stability = 4 [default = 1];
+	optional Government gov = 5 [default = REPUBLIC];
+	optional Id occupier = 6;
+	optional bool dissidents = 7 [default = false];
+	repeated Id adjacency = 8;
+	optional Id base = 9;
 }
