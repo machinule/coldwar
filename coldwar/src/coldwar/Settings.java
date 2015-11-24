@@ -33,6 +33,9 @@ public class Settings {
 		Settings.consts.putInteger("heat_start", 40);
 		Settings.consts.putInteger("heat_min", 0);
 		Settings.consts.putInteger("heat_max", 100);
+		Settings.consts.putInteger("starting_pol", 4);
+		Settings.consts.putInteger("starting_mil", 4);
+		Settings.consts.putInteger("starting_cov", 1);
 
 		Settings.consts.flush();
 	}

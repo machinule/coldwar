@@ -29,21 +29,21 @@ public class MoveBuilder {
 		}
 	}
 
-	public void Influence_Dip(final Province.Id id, int magnitude) {
+	public void influenceDip(final Province.Id id, int magnitude) {
 		this.moves.addMoves(
 				Move.newBuilder().setDiaDipMove(DiplomacyMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
 		Logger.Dbg("Adding influence from political points in " + id + " with magnitude " + magnitude);
 		this.setMoves();
 	}
 	
-	public void Influence_Mil(final Province.Id id, int magnitude) {
+	public void influenceMil(final Province.Id id, int magnitude) {
 		this.moves.addMoves(
 				Move.newBuilder().setDiaMilMove(MilitaryMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
 		Logger.Dbg("Adding influence from military points in " + id + " with magnitude " + magnitude);
 		this.setMoves();
 	}
 	
-	public void Influence_Cov(final Province.Id id, int magnitude) {
+	public void influenceCov(final Province.Id id, int magnitude) {
 		this.moves.addMoves(
 				Move.newBuilder().setDiaCovMove(CovertMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
 		Logger.Dbg("Adding influence from covert points in " + id + " with magnitude " + magnitude);
@@ -59,6 +59,18 @@ public class MoveBuilder {
 
 	public int getInfluence(final Province.Id provinceId) {
 		return Computations.getInfluence(this.cache, provinceId);
+	}
+	
+	public int getPolStore() {
+		return Computations.getPolStore(this.cache, this.player);
+	}
+	
+	public int getMilStore() {
+		return Computations.getMilStore(this.cache, this.player);
+	}
+	
+	public int getCovStore() {
+		return Computations.getCovStore(this.cache, this.player);
 	}
 
 	public MoveList getMoveList() {

@@ -1,5 +1,6 @@
 package coldwar.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -44,7 +45,7 @@ public class ActionPane extends Table {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Diplomatic Outreatch\" button pressed on " + province.getId().getValueDescriptor().getName());
-				ActionPane.this.client.getMoveBuilder().Influence_Dip(province.getId(), 1);
+				ActionPane.this.client.getMoveBuilder().influenceDip(province.getId(), 1);
 			}
 		});
 
@@ -52,7 +53,7 @@ public class ActionPane extends Table {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Arms Sales\" button pressed on " + province.getId().getValueDescriptor().getName());
-				ActionPane.this.client.getMoveBuilder().Influence_Mil(province.getId(), 1);
+				ActionPane.this.client.getMoveBuilder().influenceMil(province.getId(), 1);
 			}
 		});
 		
@@ -60,7 +61,7 @@ public class ActionPane extends Table {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Support Party\" button pressed on " + province.getId().getValueDescriptor().getName());
-				ActionPane.this.client.getMoveBuilder().Influence_Cov(province.getId(), 1);
+				ActionPane.this.client.getMoveBuilder().influenceCov(province.getId(), 1);
 			}
 		});
 
@@ -111,7 +112,11 @@ public class ActionPane extends Table {
 		innerBottom.add(new DynamicLabel(this.client, c -> c.getMoveBuilder().hasDissidents(province.getId()) ? "True" : "False", this.skin));
 		innerBottom.row();
 		innerBottom.add(new Label("Influence:", this.skin));
-		innerBottom.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getInfluence(province.getId())), this.skin));
+		innerBottom.add(new DynamicLabel(
+				this.client,
+				c -> Integer.toString(Math.abs(c.getMoveBuilder().getInfluence(province.getId()))),
+				c -> c.getMoveBuilder().getInfluence(province.getId()) > 0 ? Color.BLUE : c.getMoveBuilder().getInfluence(province.getId()) < 0 ? Color.RED : Color.BLACK,
+				this.skin));
 		innerBottom.row();
 		
 		this.add(innerTop);
