@@ -35,8 +35,8 @@ public class MapScreen extends AbstractScreen {
 		actionPane.setDebug(Settings.isDebug());
 		final HeaderPane headerPane = new HeaderPane(this.client, skin);
 		headerPane.setDebug(Settings.isDebug());
-		for (final Province.Id id : Province.Id.values()) {
-			ProvinceInfoCard card = new ProvinceInfoCard(Province.newBuilder().setId(id).build(), actionPane, skin);
+		for (final Province p : this.client.initialGameState.getProvincesList()) {
+			ProvinceInfoCard card = new ProvinceInfoCard(Province.newBuilder().setId(p.getId()).build(), actionPane, skin);
 			card.setDebug(Settings.isDebug());
 			nations.add(card);
 			nations.row();
