@@ -44,6 +44,7 @@ public class RemoteClient extends Client {
 			return state;
 		} else {
 			GameState state = this.peer.getGameState();
+			this.initialGameState = state;
 			return state.toBuilder();
 		}
 	}
