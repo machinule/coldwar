@@ -2,8 +2,11 @@ syntax = "proto2";
 
 package coldwar;
 
+import "InfluenceStore.proto";
+
 message UnitedStates {
 	optional bool found_nato = 1;
 	optional int32 unrest = 2;
+	optional InfluenceStore influence_store = 3;
 }
 

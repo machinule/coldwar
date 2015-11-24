@@ -2,5 +2,9 @@ syntax = "proto2";
 
 package coldwar;
 
+import "InfluenceStore.proto";
+
 message SovietUnion {
+	optional InfluenceStore influence_store = 1;
 }
+

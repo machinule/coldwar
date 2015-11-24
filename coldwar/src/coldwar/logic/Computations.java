@@ -1,6 +1,7 @@
 package coldwar.logic;
 
 import coldwar.GameStateOuterClass.GameState;
+import coldwar.InfluenceStoreOuterClass.InfluenceStore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -292,4 +293,82 @@ public class Computations {
 	public static int getYear(ComputationCache cache) {
 		return cache.computeInteger(new YearComputation());
 	}	
+	static private class PolStoreComputation extends OneParameterComputation<Player> implements IntegerComputation {
+
+		public PolStoreComputation(final Player param0) {
+			super(param0);
+		}
+
+		@Override
+		protected int paramAsInt(final Player p) {
+			return p.ordinal();
+		}
+		
+		@Override
+		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
+			Logger.Vrb("Computing POL for " + param0);
+			int pol = 0;
+			if (param0 == Player.USA) {
+				pol += state.getUsa().getInfluenceStore().getPolitical();
+			} else {
+				pol += state.getUssr().getInfluenceStore().getPolitical();
+			}
+			return pol;
+		}
+	}
+	public static int getPolStore(ComputationCache cache, Player player) {
+		return cache.computeInteger(new PolStoreComputation(player));
+	}
+	static private class MilStoreComputation extends OneParameterComputation<Player> implements IntegerComputation {
+
+		public MilStoreComputation(final Player param0) {
+			super(param0);
+		}
+
+		@Override
+		protected int paramAsInt(final Player p) {
+			return p.ordinal();
+		}
+		
+		@Override
+		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
+			Logger.Vrb("Computing MIL for " + param0);
+			int mil = 0;
+			if (param0 == Player.USA) {
+				mil += state.getUsa().getInfluenceStore().getMilitary();
+			} else {
+				mil += state.getUssr().getInfluenceStore().getMilitary();
+			}
+			return mil;
+		}
+	}
+	public static int getMilStore(ComputationCache cache, Player player) {
+		return cache.computeInteger(new MilStoreComputation(player));
+	}
+	static private class CovStoreComputation extends OneParameterComputation<Player> implements IntegerComputation {
+
+		public CovStoreComputation(final Player param0) {
+			super(param0);
+		}
+
+		@Override
+		protected int paramAsInt(final Player p) {
+			return p.ordinal();
+		}
+		
+		@Override
+		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
+			Logger.Vrb("Computing COV for " + param0);
+			int cov = 0;
+			if (param0 == Player.USA) {
+				cov += state.getUsa().getInfluenceStore().getCovert();
+			} else {
+				cov += state.getUssr().getInfluenceStore().getCovert();
+			}
+			return cov;
+		}
+	}
+	public static int getCovStore(ComputationCache cache, Player player) {
+		return cache.computeInteger(new CovStoreComputation(player));
+	}
 }

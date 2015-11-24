@@ -1,0 +1,9 @@
+syntax = "proto2";
+
+package coldwar;
+
+message InfluenceStore {
+	optional int32 political = 1;
+	optional int32 military = 2;
+	optional int32 covert = 3;
+}

@@ -1,11 +1,13 @@
 package coldwar.logic;
 
 import coldwar.GameStateOuterClass.GameState;
+import coldwar.InfluenceStoreOuterClass.InfluenceStore;
 import coldwar.Logger;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.ProvinceOuterClass.Province;
-import coldwar.ui.ProvinceInfoCard;
 import coldwar.Settings;
+import coldwar.SovietUnionOuterClass.SovietUnion;
+import coldwar.UnitedStatesOuterClass.UnitedStates;
 
 /**
  * Client manages the game state, making moves and taking turns.
@@ -23,7 +25,21 @@ public abstract class Client {
 		GameState.Builder state = GameState.newBuilder()
 				.setVersion("0.0.1")
 				.setHeat(Settings.getConstInt("Starting Heat"))
-				.setTurn(0);
+				.setTurn(0)
+				.setUsa(UnitedStates.newBuilder()
+						.setInfluenceStore(InfluenceStore.newBuilder()
+								.setPolitical(Settings.getConstInt("starting_pol"))
+								.setMilitary(Settings.getConstInt("starting_mil"))
+								.setCovert(Settings.getConstInt("starting_cov"))
+								.build())
+						.build())
+				.setUssr(SovietUnion.newBuilder()
+						.setInfluenceStore(InfluenceStore.newBuilder()
+								.setPolitical(Settings.getConstInt("starting_pol"))
+								.setMilitary(Settings.getConstInt("starting_mil"))
+								.setCovert(Settings.getConstInt("starting_cov"))
+								.build())
+						.build());
 		for (final Province.Id id : Province.Id.values()) {
 			state.addProvincesBuilder().setId(id).setInfluence(0).setDissidents(false);
 		}

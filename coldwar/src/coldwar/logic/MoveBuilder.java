@@ -60,6 +60,18 @@ public class MoveBuilder {
 	public int getInfluence(final Province.Id provinceId) {
 		return Computations.getInfluence(this.cache, provinceId);
 	}
+	
+	public int getPolStore() {
+		return Computations.getPolStore(this.cache, this.player);
+	}
+	
+	public int getMilStore() {
+		return Computations.getMilStore(this.cache, this.player);
+	}
+	
+	public int getCovStore() {
+		return Computations.getCovStore(this.cache, this.player);
+	}
 
 	public MoveList getMoveList() {
 		return this.moves.build();

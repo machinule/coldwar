@@ -1,6 +1,7 @@
 package coldwar.ui;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -37,6 +38,12 @@ public class HeaderPane extends Table {
 		});
 
 		this.clearChildren();
+		this.add(new Label("POL:", this.skin));
+		this.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getPolStore()), this.skin));
+		this.add(new Label("MIL:", this.skin));
+		this.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getMilStore()), this.skin));
+		this.add(new Label("COV:", this.skin));
+		this.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getCovStore()), this.skin));
 		this.add(yearLabel);
 		this.add(playerLabel);
 		this.add(endTurnButton);
