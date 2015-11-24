@@ -3,6 +3,14 @@ syntax = "proto2";
 package coldwar;
 
 import "Province.proto";
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MessageOptions {
+  optional int32 pol_cost = 76000;
+  optional int32 mil_cost = 76001;
+  optional int32 cov_cost = 76002;
+}
+
 
 //Proto variable names need to be VERBATIM same as message type
 message Move {
@@ -23,24 +31,32 @@ message Move {
 message DiplomacyMove {
 	optional Province.Id province_id = 1;
 	optional int32 magnitude = 2;
+
+	option (pol_cost) = 1;
 }
 
 // Influence by spending MIL points
 message MilitaryMove {
 	optional Province.Id province_id = 1;
 	optional int32 magnitude = 2;
+
+	option (mil_cost) = 1;
 }
 
 // Influence by spending COV points
 message CovertMove {
 	optional Province.Id province_id = 1;
 	optional int32 magnitude = 2;
+
+	option (cov_cost) = 1;
 }
 
 // ========== TARGETED ACTIONS ==========
 
 message FundDissidentsMove {
 	optional Province.Id province_id = 1;
+
+	option (cov_cost) = 1;
 }
 
 // ========== SPECIAL ACTIONS ==========

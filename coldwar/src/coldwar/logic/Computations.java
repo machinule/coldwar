@@ -6,7 +6,10 @@ import coldwar.InfluenceStoreOuterClass.InfluenceStore;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.protobuf.Message;
+
 import coldwar.Logger;
+import coldwar.MoveOuterClass;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
@@ -247,6 +250,15 @@ public class Computations {
 				province.setDissidents(Computations.getHasDissidents(this.cache, province.getId()));
 				province.setInfluence(Computations.getInfluence(this.cache, province.getId()));
 			}
+			
+			state.getUsaBuilder().getInfluenceStoreBuilder()
+			    .setPolitical(Computations.getPolStore(cache, Player.USA))
+			    .setMilitary(Computations.getMilStore(cache, Player.USA))
+			    .setCovert(Computations.getCovStore(cache, Player.USA));
+			state.getUssrBuilder().getInfluenceStoreBuilder()
+			    .setPolitical(Computations.getPolStore(cache, Player.USSR))
+			    .setMilitary(Computations.getMilStore(cache, Player.USSR))
+			    .setCovert(Computations.getCovStore(cache, Player.USSR));
 
 			// USA moves
 //			for (final Move move : usa.getMovesList()) {
@@ -308,10 +320,16 @@ public class Computations {
 		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
 			Logger.Vrb("Computing POL for " + param0);
 			int pol = 0;
+			MoveList moves;
 			if (param0 == Player.USA) {
 				pol += state.getUsa().getInfluenceStore().getPolitical();
+				moves = usa;
 			} else {
 				pol += state.getUssr().getInfluenceStore().getPolitical();
+				moves = ussr;
+			}
+			for (Move m : moves.getMovesList()) {
+				pol -= moveDetails(m).getDescriptorForType().getOptions().getExtension(MoveOuterClass.polCost);
 			}
 			return pol;
 		}
@@ -334,10 +352,16 @@ public class Computations {
 		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
 			Logger.Vrb("Computing MIL for " + param0);
 			int mil = 0;
+			MoveList moves;
 			if (param0 == Player.USA) {
 				mil += state.getUsa().getInfluenceStore().getMilitary();
+				moves = usa;
 			} else {
 				mil += state.getUssr().getInfluenceStore().getMilitary();
+				moves = ussr;
+			}
+			for (Move m : moves.getMovesList()) {
+				mil -= moveDetails(m).getDescriptorForType().getOptions().getExtension(MoveOuterClass.milCost);
 			}
 			return mil;
 		}
@@ -360,13 +384,22 @@ public class Computations {
 		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
 			Logger.Vrb("Computing COV for " + param0);
 			int cov = 0;
+			MoveList moves;
 			if (param0 == Player.USA) {
 				cov += state.getUsa().getInfluenceStore().getCovert();
+				moves = usa;
 			} else {
 				cov += state.getUssr().getInfluenceStore().getCovert();
+				moves = ussr;
+			}
+			for (Move m : moves.getMovesList()) {
+				cov -= moveDetails(m).getDescriptorForType().getOptions().getExtension(MoveOuterClass.covCost);
 			}
 			return cov;
 		}
+	}
+	private static Message moveDetails(Move m) {
+		return (Message)m.getAllFields().values().iterator().next();
 	}
 	public static int getCovStore(ComputationCache cache, Player player) {
 		return cache.computeInteger(new CovStoreComputation(player));
