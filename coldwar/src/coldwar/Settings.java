@@ -52,7 +52,7 @@ public class Settings {
 	}
 	
 	public static int getLogLevel() {
-		return Settings.prefs.getInteger("log_level");
+		return Settings.debug.getInteger("log_level");
 	}	
 	
 	public static boolean getConstBool(final String key) {
