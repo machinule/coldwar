@@ -23,12 +23,10 @@ public class ProvinceInfoCard extends Table {
 		this.skin = skin;
 
 		final TextButton infoButton = new TextButton(province.getLabel(), skin);
-
-		this.add(new Label(province.getId().getValueDescriptor().getName(), this.skin));
 		infoButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
-				Logger.Info("\"Info\" button pressed on " + province.getId().getValueDescriptor().getName());
+				Logger.Info(province.getLabel() + " button pressed on " + province.getId().getValueDescriptor().getName());
 				toolbar.onSelect(province);
 			}
 		});

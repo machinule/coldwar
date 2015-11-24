@@ -20,6 +20,7 @@ public abstract class Client {
 
 	protected GameState state;
 	protected Player player;
+	public GameState initialGameState;
 		
 	protected GameState.Builder getInitialGameState() {
 		GameState.Builder state = GameState.newBuilder()
@@ -41,6 +42,7 @@ public abstract class Client {
 								.build())
 						.build());
 		populateProvinces(state);
+		this.initialGameState = state.build();
 		return state;
 	}
 	

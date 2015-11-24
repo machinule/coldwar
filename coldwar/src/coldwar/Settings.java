@@ -45,14 +45,14 @@ public class Settings {
 		Settings.debug.putBoolean("debug", true);
 		Settings.debug.putInteger("log_level", Application.LOG_DEBUG);
 
-		Settings.consts.flush();
+		Settings.debug.flush();
 	}
 	public static boolean isDebug() {
 		return Settings.debug.getBoolean("debug");
 	}
 	
 	public static int getLogLevel() {
-		return Settings.prefs.getInteger("log_level");
+		return Settings.debug.getInteger("log_level");
 	}	
 	
 	public static boolean getConstBool(final String key) {
