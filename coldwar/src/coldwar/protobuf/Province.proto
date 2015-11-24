@@ -19,6 +19,36 @@ message Province {
 		IRAN = 21;
 		ISRAEL = 22;
 		IRAQ = 23;
+
+		// CENTRAL AMERICA
+
+		MEXICO = 31;
+		GUATEMALA = 32;
+		HONDURAS = 33;
+		NICARAGUA = 34;
+		COSTA_RICA = 35;
+		PANAMA = 36;
+		CUBA = 37;
+		HAITI = 38;
+		DOMINICAN_REP = 39;
+		LESS_ANTILLES = 40;
+
+		// SOUTH AMERICA
+
+		COLUMBIA = 41;
+		ECUADOR = 42;
+		PERU = 43;
+		CHILE = 44;
+		VENEZUELA = 45;
+		GUYANA = 46;
+		BRAZIL = 47;
+		BOLIVIA = 48;
+		ARGENTINA = 49;
+
+		// SUPERPOWERS
+
+		US = 98;
+		USSR = 99;
 	}
 
 	enum Government {
@@ -32,8 +62,11 @@ message Province {
 	}
 
 	optional Id id = 1;
-	optional int32 influence = 2;
-	optional Government Gov = 3;
-	optional Id Occupier = 4;
-	optional bool dissidents = 5;
+	optional int32 influence = 2 [default = 0];
+	optional int32 stability = 3 [default = 1];
+	optional Government gov = 4 [default = REPUBLIC];
+	optional Id occupier = 5;
+	optional bool dissidents = 6 [default = false];
+	repeated Id adjacency = 7;
+	optional Id base = 8;
 }
