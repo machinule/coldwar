@@ -45,7 +45,7 @@ public class Settings {
 		Settings.debug.putBoolean("debug", true);
 		Settings.debug.putInteger("log_level", Application.LOG_DEBUG);
 
-		Settings.consts.flush();
+		Settings.debug.flush();
 	}
 	public static boolean isDebug() {
 		return Settings.debug.getBoolean("debug");
