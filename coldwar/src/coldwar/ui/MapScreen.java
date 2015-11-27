@@ -34,7 +34,9 @@ public class MapScreen extends AbstractScreen {
 		final ActionPane actionPane = new ActionPane(this.client, skin);
 		actionPane.setDebug(Settings.isDebug());
 		final HeaderPane headerPane = new HeaderPane(this.client, skin);
-		headerPane.setDebug(Settings.isDebug());		
+		headerPane.setDebug(Settings.isDebug());
+		final SuperpowerPane superpowerPane = new SuperpowerPane(this.client, skin);
+		superpowerPane.setDebug(Settings.isDebug());		
 		for (final Province p : this.client.initialGameState.getProvincesList()) {
 			ProvinceInfoCard card = new ProvinceInfoCard(p, actionPane, skin);
 			card.setDebug(Settings.isDebug());
@@ -54,5 +56,13 @@ public class MapScreen extends AbstractScreen {
 		actionPane.setFillParent(true);
 		this.stage.addActor(actionPane);
 		actionPane.bottom();
+		
+		// Side Pane
+		
+		superpowerPane.setFillParent(true);
+		this.stage.addActor(superpowerPane);
+		superpowerPane.left();
+		superpowerPane.show();
+		
 	}
 }

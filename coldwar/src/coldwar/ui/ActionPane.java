@@ -80,7 +80,7 @@ public class ActionPane extends Table {
 		this.clearChildren();
 		
 		Table innerTop = new Table();
-		innerTop.add(new Label(province.getLabel(), this.skin));
+		innerTop.add(new Label(province.getLabel() + " | Stability: " + province.getStability(), this.skin));
 		
 		Table innerBottom = new Table();
 		
