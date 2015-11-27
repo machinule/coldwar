@@ -20,6 +20,14 @@ import coldwar.logic.Client.Player;
 
 public class Computations {
 	
+	public Province.Id getPlayerId(Player player) {
+		if(player.equals(Player.USSR) ) {
+			return Province.Id.USSR;
+		} else {
+			return Province.Id.US;
+		}
+	}
+	
 	// DIRECT INFLUENCE ACTIONS
 	
 	static private class GetBaseInfluenceComputation extends OneParameterComputation<Province.Id> implements IntegerComputation {
@@ -85,14 +93,30 @@ public class Computations {
 		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
 			Logger.Vrb("Computing military influence...");
 			int infl = 0;
+			int change = 0;
 			for (final Move m : usa.getMovesList()) {
 				if (m.hasDiaMilMove() && m.getDiaMilMove().getProvinceId() == this.param0) {
-					infl += m.getDiaMilMove().getMagnitude();
+					for (final Province p : state.getProvincesList()) {
+						if (p.getId() == this.param0 && p.getAlly() == Province.Id.USSR) {
+							change = 0;
+						} else {
+							change = m.getDiaMilMove().getMagnitude();
+								
+						}
+					}
+					infl += change;
 				}
 			}
 			for (final Move m : ussr.getMovesList()) {
 				if (m.hasDiaMilMove() && m.getDiaMilMove().getProvinceId() == this.param0) {
-					infl -= m.getDiaMilMove().getMagnitude();
+					for (final Province p : state.getProvincesList()) {
+						if (p.getId() == this.param0 && p.getAlly() == Province.Id.US) {
+							change = 0;
+						} else {
+							change = m.getDiaMilMove().getMagnitude();
+						}
+					}
+					infl -= change;
 				}
 			}
 			return infl;
@@ -248,6 +272,12 @@ public class Computations {
 			   cache.computeInteger(new GetMilitaryInfluenceComputation(provinceId)) +
 			   cache.computeInteger(new GetCovertInfluenceComputation(provinceId));
 	}
+	static public boolean isUSAAllied(final ComputationCache cache, final Province.Id provinceId) {
+		return getInfluence(cache, provinceId) > 0;
+	}
+	static public boolean isUSSRAllied(final ComputationCache cache, final Province.Id provinceId) {
+		return getInfluence(cache, provinceId) < 0;
+	}
 	static public boolean isUSAInfluenced(final ComputationCache cache, final Province.Id provinceId) {
 		return getInfluence(cache, provinceId) > 0;
 	}
@@ -257,6 +287,7 @@ public class Computations {
 	static public boolean isNotInfluenced(final ComputationCache cache, final Province.Id provinceId) {
 		return getInfluence(cache, provinceId) == 0;
 	}
+	
 	
 	static private class NextGameStateComputation extends ZeroParameterComputation implements GameStateComputation {
 

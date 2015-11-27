@@ -53,14 +53,6 @@ public abstract class Client {
 	public Player getPlayer() {
 		return this.player;
 	}
-	
-	public Province.Id getPlayerId() {
-		if(this.player.equals(Player.USSR) ) {
-			return Province.Id.USSR;
-		} else {
-			return Province.Id.US;
-		}
-	}
 		
 	public void nextTurn() {
 		Logger.Info("Proceeding to the next turn.");
@@ -76,7 +68,7 @@ public abstract class Client {
 		state.addProvincesBuilder()
 			.setId(Province.Id.MEXICO)
 			.setLabel("Mexico")
-			.setStability(3)
+			.setStability(2)
 			.addAdjacency(Province.Id.GUATEMALA)
 			.addAdjacency(Province.Id.HONDURAS);
 		
@@ -114,6 +106,7 @@ public abstract class Client {
 			.setId(Province.Id.PANAMA)
 			.setLabel("Panama")
 			.setInfluence(2)
+			.setStability(2)
 			.setBase(Province.Id.US)
 			.addAdjacency(Province.Id.NICARAGUA)
 			.addAdjacency(Province.Id.ECUADOR);
@@ -121,7 +114,7 @@ public abstract class Client {
 		state.addProvincesBuilder()
 			.setId(Province.Id.CUBA)
 			.setLabel("Cuba")
-			.setInfluence(2)
+			.setStability(2)
 			.setDissidents(true)
 			.addAdjacency(Province.Id.US)
 			.addAdjacency(Province.Id.NICARAGUA)
