@@ -5,18 +5,48 @@ package coldwar;
 import "Province.proto";
 import "UnitedStates.proto";
 import "SovietUnion.proto";
-import "Player.proto";
-import "TurnLogEntry.proto";
+import "MoveList.proto";
 
 message GameState {
-  optional string version = 1;
   optional int32 heat = 2; // 0 - 100
   repeated Province provinces = 3;
   optional UnitedStates usa= 4;
   optional SovietUnion ussr = 5;
-  optional Player usa_player = 6;
-  optional Player ussr_player = 7;
   optional int64 seed = 8;
   optional int32 turn = 9;
   optional TurnLogEntry turn_log = 10;
+  optional GameSettings settings = 11;
+}
+
+message TurnLogEntry {
+  optional GameState initial_state = 1;
+  optional MoveList usa_moves = 2;
+  optional MoveList ussr_moves = 3;
+}
+
+// GameSettings contains constants over the course of the game.
+// These are not logged each turn, but merely copied to the top level GameState.
+message GameSettings {
+  optional string version = 1 [default = "0.0.1"];
+  optional int32 heat_init = 2 [default = 40];
+  optional int32 heat_min = 3 [default = 0];
+  optional int32 heat_max = 4 [default = 100];
+
+  // USA Settings.
+  optional string usa_alias = 6 [default = "USA"];
+  optional int32 usa_pol_store_init = 8 [default = 4];
+  optional int32 usa_pol_income_base = 10 [default = 4];
+  optional int32 usa_mil_store_init = 12 [default = 3];
+  optional int32 usa_mil_income_base = 14 [default = 3];
+  optional int32 usa_cov_store_init = 16 [default = 1];
+  optional int32 usa_cov_income_base = 18 [default = 1];
+
+  // USSR Settings.
+  optional string ussr_alias = 5 [default = "USSR"];
+  optional int32 ussr_pol_store_init = 7 [default = 4];
+  optional int32 ussr_pol_income_base = 9 [default = 4];
+  optional int32 ussr_mil_store_init = 11 [default = 3];
+  optional int32 ussr_mil_income_base = 13 [default = 3];
+  optional int32 ussr_cov_store_init = 15 [default = 1];
+  optional int32 ussr_cov_income_base = 17 [default = 1];
 }

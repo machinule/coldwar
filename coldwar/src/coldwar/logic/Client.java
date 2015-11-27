@@ -1,5 +1,6 @@
 package coldwar.logic;
 
+import coldwar.GameStateOuterClass.GameSettings;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.InfluenceStoreOuterClass.InfluenceStore;
 import coldwar.Logger;
@@ -23,22 +24,25 @@ public abstract class Client {
 	public GameState initialGameState;
 		
 	protected GameState.Builder getInitialGameState() {
+		// Just use the defaults in the proto for now.
+		GameSettings settings = GameSettings.newBuilder()
+				.build();
 		GameState.Builder state = GameState.newBuilder()
-				.setVersion("0.0.1")
-				.setHeat(Settings.getConstInt("Starting Heat"))
+				.setSettings(settings)
+				.setHeat(settings.getHeatInit())
 				.setTurn(0)
 				.setUsa(UnitedStates.newBuilder()
 						.setInfluenceStore(InfluenceStore.newBuilder()
-								.setPolitical(Settings.getConstInt("starting_pol"))
-								.setMilitary(Settings.getConstInt("starting_mil"))
-								.setCovert(Settings.getConstInt("starting_cov"))
+								.setPolitical(settings.getUsaPolStoreInit())
+								.setMilitary(settings.getUsaMilStoreInit())
+								.setCovert(settings.getUsaCovStoreInit())
 								.build())
 						.build())
 				.setUssr(SovietUnion.newBuilder()
 						.setInfluenceStore(InfluenceStore.newBuilder()
-								.setPolitical(Settings.getConstInt("starting_pol"))
-								.setMilitary(Settings.getConstInt("starting_mil"))
-								.setCovert(Settings.getConstInt("starting_cov"))
+								.setPolitical(settings.getUssrPolStoreInit())
+								.setMilitary(settings.getUssrMilStoreInit())
+								.setCovert(settings.getUssrCovStoreInit())
 								.build())
 						.build());
 		populateProvinces(state);

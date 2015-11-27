@@ -1,7 +1,0 @@
-syntax = "proto2";
-
-package coldwar;
-
-message Player {
-	optional string name = 1;
-}
