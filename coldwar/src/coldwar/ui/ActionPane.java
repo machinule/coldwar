@@ -33,11 +33,11 @@ public class ActionPane extends Table {
 		TextButton coupButton;
 		TextButton establishBaseButton;
 
-		diplomaticInfluenceButton = new TextButton("Diplomatic Outreach", this.skin);
-		militaryInfluenceButton = new TextButton("Arms Sales", this.skin);
-		covertInfluenceButton = new TextButton("Support Party", this.skin);
+		diplomaticInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getPolStore() > 0, "Diplomatic Outreach", this.skin);
+		militaryInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getMilStore() > 0, "Arms Sales", this.skin);
+		covertInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getCovStore() > 0, "Support Party", this.skin);
 		
-		dissidentsButton = new TextButton("Fund Dissidents", this.skin);
+		dissidentsButton = new DynamicButton(this.client, c -> !c.getMoveBuilder().hasDissidents(province.getId()), "Fund Dissidents", this.skin);
 		coupButton = new TextButton("Organize Coup", this.skin);
 		establishBaseButton = new TextButton("Establish Military Base", this.skin);
 		
