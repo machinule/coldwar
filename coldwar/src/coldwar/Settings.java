@@ -36,6 +36,9 @@ public class Settings {
 		Settings.consts.putInteger("starting_pol", 4);
 		Settings.consts.putInteger("starting_mil", 4);
 		Settings.consts.putInteger("starting_cov", 1);
+		Settings.consts.putInteger("base_income_pol", 4);
+		Settings.consts.putInteger("base_income_mil", 4);
+		Settings.consts.putInteger("base_income_cov", 1);
 
 		Settings.consts.flush();
 	}

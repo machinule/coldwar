@@ -14,6 +14,7 @@ import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.ProvinceOuterClass.Province.Id;
+import coldwar.Settings;
 import coldwar.logic.Client.Player;
 
 public class Computations {
@@ -252,13 +253,13 @@ public class Computations {
 			}
 			
 			state.getUsaBuilder().getInfluenceStoreBuilder()
-			    .setPolitical(Computations.getPolStore(cache, Player.USA))
-			    .setMilitary(Computations.getMilStore(cache, Player.USA))
-			    .setCovert(Computations.getCovStore(cache, Player.USA));
+			    .setPolitical(Computations.getPolStore(cache, Player.USA) + Computations.getPolIncome(cache, Player.USA))
+			    .setMilitary(Computations.getMilStore(cache, Player.USA) + Computations.getMilIncome(cache, Player.USA))
+			    .setCovert(Computations.getCovStore(cache, Player.USA) + Computations.getCovIncome(cache, Player.USA));
 			state.getUssrBuilder().getInfluenceStoreBuilder()
-			    .setPolitical(Computations.getPolStore(cache, Player.USSR))
-			    .setMilitary(Computations.getMilStore(cache, Player.USSR))
-			    .setCovert(Computations.getCovStore(cache, Player.USSR));
+			    .setPolitical(Computations.getPolStore(cache, Player.USSR) + Computations.getPolIncome(cache, Player.USSR))
+			    .setMilitary(Computations.getMilStore(cache, Player.USSR) + Computations.getMilIncome(cache, Player.USSR))
+			    .setCovert(Computations.getCovStore(cache, Player.USSR) + Computations.getCovIncome(cache, Player.USSR));
 
 			// USA moves
 //			for (final Move move : usa.getMovesList()) {
@@ -403,5 +404,65 @@ public class Computations {
 	}
 	public static int getCovStore(ComputationCache cache, Player player) {
 		return cache.computeInteger(new CovStoreComputation(player));
+	}
+	static private class PolIncomeComputation extends OneParameterComputation<Player> implements IntegerComputation {
+
+		public PolIncomeComputation(final Player param0) {
+			super(param0);
+		}
+
+		@Override
+		protected int paramAsInt(final Player p) {
+			return p.ordinal();
+		}
+		
+		@Override
+		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
+			Logger.Vrb("Computing POL income for " + param0);
+			return Settings.getConstInt("base_income_pol");
+		}
+	}
+	public static int getPolIncome(ComputationCache cache, Player player) {
+		return cache.computeInteger(new PolIncomeComputation(player));
+	}
+	static private class MilIncomeComputation extends OneParameterComputation<Player> implements IntegerComputation {
+
+		public MilIncomeComputation(final Player param0) {
+			super(param0);
+		}
+
+		@Override
+		protected int paramAsInt(final Player p) {
+			return p.ordinal();
+		}
+		
+		@Override
+		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
+			Logger.Vrb("Computing MIL income for " + param0);
+			return Settings.getConstInt("base_income_mil");
+		}
+	}
+	public static int getMilIncome(ComputationCache cache, Player player) {
+		return cache.computeInteger(new MilIncomeComputation(player));
+	}
+	static private class CovIncomeComputation extends OneParameterComputation<Player> implements IntegerComputation {
+
+		public CovIncomeComputation(final Player param0) {
+			super(param0);
+		}
+
+		@Override
+		protected int paramAsInt(final Player p) {
+			return p.ordinal();
+		}
+		
+		@Override
+		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
+			Logger.Vrb("Computing COV income for " + param0);
+			return Settings.getConstInt("base_income_cov");
+		}
+	}
+	public static int getCovIncome(ComputationCache cache, Player player) {
+		return cache.computeInteger(new CovIncomeComputation(player));
 	}
 }
