@@ -283,7 +283,8 @@ public class Computations {
 							.setUsaMoves(usa)
 							.setUssrMoves(ussr)
 							.build())
-					.setTurn(prevState.getTurn() + 1);
+					.setTurn(prevState.getTurn() + 1)
+					.addAllProvinces(prevState.getProvincesList());
 			
 			for (final Province.Builder province : state.getProvincesBuilderList()) {
 				province.setDissidents(Computations.getHasDissidents(this.cache, province.getId()));
