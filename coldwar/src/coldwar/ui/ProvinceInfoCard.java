@@ -22,7 +22,7 @@ public class ProvinceInfoCard extends Table {
 		this.province = province;
 		this.skin = skin;
 
-		final TextButton infoButton = new TextButton(province.getLabel(), skin);
+		final TextButton infoButton = new TextButton(province.getLabel() + " | " + province.getStability() + " ", skin);
 		infoButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
