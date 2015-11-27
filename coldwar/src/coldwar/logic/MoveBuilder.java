@@ -98,4 +98,8 @@ public class MoveBuilder {
 		return Computations.getYear(this.cache);
 	}
 
+	public int getStabilityModifier(Province.Id provinceId) {
+		return Computations.getStabilityModifier(this.cache, provinceId);
+	}
+
 }

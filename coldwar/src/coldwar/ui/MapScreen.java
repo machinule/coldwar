@@ -38,7 +38,7 @@ public class MapScreen extends AbstractScreen {
 		final SuperpowerPane superpowerPane = new SuperpowerPane(this.client, skin);
 		superpowerPane.setDebug(Settings.isDebug());		
 		for (final Province p : this.client.initialGameState.getProvincesList()) {
-			ProvinceInfoCard card = new ProvinceInfoCard(p, actionPane, skin);
+			ProvinceInfoCard card = new ProvinceInfoCard(this.client, p, actionPane, skin);
 			card.setDebug(Settings.isDebug());
 			nations.add(card);
 			nations.row();

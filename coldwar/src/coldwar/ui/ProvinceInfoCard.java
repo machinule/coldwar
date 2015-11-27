@@ -9,16 +9,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import coldwar.Logger;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.logic.Client;
 
 public class ProvinceInfoCard extends Table {
 
+	protected Client client;
 	protected Province province;
 	protected Skin skin;
 	protected ActionPane toolbar;
 
-	public ProvinceInfoCard(final Province province, final ActionPane toolbar,
+	public ProvinceInfoCard(final Client client, final Province province, final ActionPane toolbar,
 			final Skin skin) {
 		super();
+		this.client = client;
 		this.province = province;
 		this.skin = skin;
 
@@ -31,6 +34,7 @@ public class ProvinceInfoCard extends Table {
 			}
 		});
 		this.add(infoButton);
+		this.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getStabilityModifier(this.province.getId())), this.skin));
 	}
 
 }

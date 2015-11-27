@@ -473,4 +473,31 @@ public class Computations {
 	public static int getCovIncome(ComputationCache cache, Player player) {
 		return cache.computeInteger(new CovIncomeComputation(player));
 	}
+	static private class GetStabilityModifierComputation extends OneParameterComputation<Province.Id> implements IntegerComputation {
+		// The computation cache is used for chaining operations together.
+		ComputationCache cache;
+		
+		public GetStabilityModifierComputation(ComputationCache cache, final Id param0) {
+			super(param0);
+			this.cache = cache;
+		}
+		
+		@Override
+		public int compute(final GameState state, final MoveList usa, final MoveList ussr) {
+			Logger.Vrb("Computing stability modifier...");
+			int mod = 0;
+			if (Computations.getHasDissidents(this.cache, this.param0)) {
+				mod -= 1;
+			}
+			return mod;
+		}
+		
+		@Override
+		protected int paramAsInt(final Province.Id p) {
+			return p.getNumber();
+		}
+	}
+	public static int getStabilityModifier(ComputationCache cache, Province.Id provinceId) {
+		return cache.computeInteger(new GetStabilityModifierComputation(cache, provinceId));
+	}
 }
