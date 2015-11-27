@@ -12,7 +12,6 @@ message GameState {
   repeated Province provinces = 3;
   optional UnitedStates usa= 4;
   optional SovietUnion ussr = 5;
-  optional int64 seed = 8;
   optional int32 turn = 9;
   optional TurnLogEntry turn_log = 10;
   optional GameSettings settings = 11;
@@ -31,22 +30,23 @@ message GameSettings {
   optional int32 heat_init = 2 [default = 40];
   optional int32 heat_min = 3 [default = 0];
   optional int32 heat_max = 4 [default = 100];
+  optional int64 seed = 5 [default = 0];
 
   // USA Settings.
-  optional string usa_alias = 6 [default = "USA"];
-  optional int32 usa_pol_store_init = 8 [default = 4];
-  optional int32 usa_pol_income_base = 10 [default = 4];
-  optional int32 usa_mil_store_init = 12 [default = 3];
-  optional int32 usa_mil_income_base = 14 [default = 3];
-  optional int32 usa_cov_store_init = 16 [default = 1];
-  optional int32 usa_cov_income_base = 18 [default = 1];
+  optional string usa_alias = 100 [default = "USA"];
+  optional int32 usa_pol_store_init = 101 [default = 4];
+  optional int32 usa_pol_income_base = 102 [default = 4];
+  optional int32 usa_mil_store_init = 103 [default = 3];
+  optional int32 usa_mil_income_base = 104 [default = 3];
+  optional int32 usa_cov_store_init = 105 [default = 1];
+  optional int32 usa_cov_income_base = 106 [default = 1];
 
   // USSR Settings.
-  optional string ussr_alias = 5 [default = "USSR"];
-  optional int32 ussr_pol_store_init = 7 [default = 4];
-  optional int32 ussr_pol_income_base = 9 [default = 4];
-  optional int32 ussr_mil_store_init = 11 [default = 3];
-  optional int32 ussr_mil_income_base = 13 [default = 3];
-  optional int32 ussr_cov_store_init = 15 [default = 1];
-  optional int32 ussr_cov_income_base = 17 [default = 1];
+  optional string ussr_alias = 200 [default = "USSR"];
+  optional int32 ussr_pol_store_init = 201 [default = 4];
+  optional int32 ussr_pol_income_base = 202 [default = 4];
+  optional int32 ussr_mil_store_init = 203 [default = 3];
+  optional int32 ussr_mil_income_base = 204 [default = 3];
+  optional int32 ussr_cov_store_init = 205 [default = 1];
+  optional int32 ussr_cov_income_base = 206 [default = 1];
 }

@@ -1,6 +1,7 @@
 package coldwar.logic;
 
 import coldwar.GameStateOuterClass.GameState;
+import coldwar.GameStateOuterClass.TurnLogEntry;
 import coldwar.InfluenceStoreOuterClass.InfluenceStore;
 
 import java.util.HashMap;
@@ -242,10 +243,17 @@ public class Computations {
 			Logger.Vrb("prev:\n" +prevState.toString());
 			Logger.Vrb("usa:\n" +usa.toString());
 			Logger.Vrb("ussr:\n" +ussr.toString());
-			final GameState.Builder state = GameState.newBuilder().mergeFrom(prevState);
-
-			// Update turn-based critical state values
-			state.setTurn(state.getTurn() + 1);
+			GameState.Builder state = GameState.newBuilder()
+					.setSettings(prevState.getSettings())
+					.setTurnLog(TurnLogEntry.newBuilder()
+							.setInitialState(GameState.newBuilder()
+									.mergeFrom(prevState)
+									.clearSettings()
+									.build())
+							.setUsaMoves(usa)
+							.setUssrMoves(ussr)
+							.build())
+					.setTurn(prevState.getTurn() + 1);
 			
 			for (final Province.Builder province : state.getProvincesBuilderList()) {
 				province.setDissidents(Computations.getHasDissidents(this.cache, province.getId()));
