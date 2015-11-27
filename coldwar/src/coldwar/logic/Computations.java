@@ -145,6 +145,7 @@ public class Computations {
 		@Override
 		public boolean compute(final GameState state, final MoveList usa, final MoveList ussr) {
 			Logger.Vrb("Computing dissidents...");
+			int stab = 0;
 			for (final Province p : state.getProvincesList()) {
 				if (p.getId() == this.param0 && p.getDissidents()) {
 					return true;
@@ -203,6 +204,35 @@ public class Computations {
 		}
 
 		protected abstract int paramAsInt(T p);
+	}
+	static private abstract class TwoParameterComputation<T, S> {
+		protected T param0;
+		protected S param1;
+
+		public TwoParameterComputation(final T param0, final S param1) {
+			this.param0 = param0;
+			this.param1 = param1;
+		}
+
+		@Override
+		public boolean equals(final Object obj) {
+			if (!(obj instanceof TwoParameterComputation<?, ?>)) {
+				return false;
+			}
+			@SuppressWarnings("unchecked")
+			final TwoParameterComputation<T, S> other = (TwoParameterComputation<T, S>) obj;
+			return (this.getClass() == other.getClass() && 
+					this.param0.getClass() == other.param0.getClass() && this.param0 == other.param0 &&
+					this.param1.getClass() == other.param1.getClass() && this.param1 == other.param0);
+		}
+
+		@Override
+		public int hashCode() {
+			return this.getClass().hashCode() + this.param0AsInt(this.param0) + this.param1AsInt(this.param1);
+		}
+
+		protected abstract int param0AsInt(T p);
+		protected abstract int param1AsInt(S p);
 	}
 
 	static public boolean getHasDissidents(final ComputationCache cache, final Province.Id provinceId) {

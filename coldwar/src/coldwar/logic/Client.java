@@ -53,6 +53,14 @@ public abstract class Client {
 	public Player getPlayer() {
 		return this.player;
 	}
+	
+	public Province.Id getPlayerId() {
+		if(this.player.equals(Player.USSR) ) {
+			return Province.Id.USSR;
+		} else {
+			return Province.Id.US;
+		}
+	}
 		
 	public void nextTurn() {
 		Logger.Info("Proceeding to the next turn.");

@@ -70,4 +70,5 @@ message Province {
 	optional bool dissidents = 7 [default = false];
 	repeated Id adjacency = 8;
 	optional Id base = 9;
+	optional Id ally = 10;
 }
