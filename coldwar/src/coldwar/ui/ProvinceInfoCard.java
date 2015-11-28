@@ -39,7 +39,7 @@ public class ProvinceInfoCard extends Table {
 				toolbar.onSelect(province);
 			}
 		});
-		this.add(infoBox).size(180, 50);
+		this.add(infoBox).size(180, 40);
 	}
 	
 	protected Button createLayout() {
@@ -50,17 +50,18 @@ public class ProvinceInfoCard extends Table {
 		DynamicLabel name = new DynamicLabel(client, c -> province.getLabel(), skin);
 		
 		name.setAlignment(1); //Center in cell
+		name.setFontScale((float)0.75);
 		stability.setFontScale((float)1.5);
 		influence.setFontScale((float)1.5);
 		
 		DynamicLabel modifiers = new DynamicLabel(client, c -> getModifiers(), skin);
 		
-		//modifiers.setFontScale((float)0.75);
+		modifiers.setFontScale((float)0.75);
 		modifiers.setAlignment(1); //Center in cell
 		
-		ret.add(influence).left().expand();
+		ret.add(influence).left().padTop(12).expand();
 		ret.add(name).center();
-		ret.add(stability).right().expand();
+		ret.add(stability).right().padTop(12).expand();
 		ret.row();
 		ret.add();
 		ret.add(modifiers).center();
