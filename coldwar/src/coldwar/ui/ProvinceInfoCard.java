@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 import coldwar.Logger;
+import coldwar.Settings;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.Client;
 
@@ -38,23 +39,31 @@ public class ProvinceInfoCard extends Table {
 				toolbar.onSelect(province);
 			}
 		});
-		this.add(infoBox).size(150, 50);
+		this.add(infoBox).size(180, 50);
 	}
 	
 	protected Button createLayout() {
 		Button ret = new Button(this.skin);
-		Color influenceColor = client.getMoveBuilder().getInfluence(province.getId()) > 0 ? Color.BLUE : client.getMoveBuilder().getInfluence(province.getId()) < 0 ? Color.RED : Color.BLACK;
-		DynamicLabel influence = new DynamicLabel(client, c -> Integer.toString(Math.abs(c.getMoveBuilder().getInfluence(province.getId()))), c -> influenceColor, skin);
+		//ret.setDebug(Settings.isDebug());
+		DynamicLabel influence = new DynamicLabel(client, c -> Integer.toString(Math.abs(c.getMoveBuilder().getInfluence(province.getId()))), c -> c.getMoveBuilder().getInfluence(province.getId()) > 0 ? Color.BLUE : c.getMoveBuilder().getInfluence(province.getId()) < 0 ? Color.RED : Color.BLACK, skin);
 		DynamicLabel stability = new DynamicLabel(client, c -> netStability(), skin);
 		DynamicLabel name = new DynamicLabel(client, c -> province.getLabel(), skin);
 		
 		name.setAlignment(1); //Center in cell
-		stability.setFontScale((float)1.25);
-		influence.setFontScale((float)1.25);
+		stability.setFontScale((float)1.5);
+		influence.setFontScale((float)1.5);
+		
+		DynamicLabel modifiers = new DynamicLabel(client, c -> getModifiers(), skin);
+		
+		//modifiers.setFontScale((float)0.75);
+		modifiers.setAlignment(1); //Center in cell
 		
 		ret.add(influence).left().expand();
 		ret.add(name).center();
 		ret.add(stability).right().expand();
+		ret.row();
+		ret.add();
+		ret.add(modifiers).center();
 		ret.row();
 		return ret;
 	}
@@ -64,5 +73,13 @@ public class ProvinceInfoCard extends Table {
 		String ret = netStab + " ";
 		return ret;
 	}
+    
+    protected String getModifiers() {
+    	String ret = " ";
+    	if(province.getDissidents()) {
+    		ret += "D ";
+    	}
+    	return ret;
+    }
 
 }

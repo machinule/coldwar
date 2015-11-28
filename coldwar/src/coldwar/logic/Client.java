@@ -129,7 +129,7 @@ public abstract class Client {
 		
 		state.addProvincesBuilder()
 			.setId(Province.Id.DOMINICAN_REP)
-			.setLabel("Dominican \nRepublic")
+			.setLabel("Dominican Rep.")
 			.setGov(Province.Government.AUTOCRACY)
 			.addAdjacency(Province.Id.HAITI)
 			.addAdjacency(Province.Id.LESS_ANTILLES);
