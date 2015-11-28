@@ -20,6 +20,7 @@ message Move {
 	optional CovertMove dia_cov_move = 3;
 
 	optional FundDissidentsMove fund_dissidents_move = 101;
+	optional EstablishBaseMove establish_base_move = 102;
 
 	optional FoundNATOMove found_nato_move = 1001;
 	optional FoundPactMove found_pact_move = 1002;
@@ -57,6 +58,12 @@ message FundDissidentsMove {
 	optional Province.Id province_id = 1;
 
 	option (cov_cost) = 1;
+}
+
+message EstablishBaseMove {
+	optional Province.Id province_id = 1;
+
+	option (mil_cost) = 2;
 }
 
 // ========== SPECIAL ACTIONS ==========

@@ -117,7 +117,7 @@ public abstract class Client {
 			.setLabel("Panama")
 			.setInfluenceInit(2)
 			.setStabilityBase(2)
-			.setMilitaryBaseInit(Province.Id.US)
+			.setMilitaryBaseInit(Province.Id.USA)
 			.addAdjacency(Province.Id.NICARAGUA)
 			.addAdjacency(Province.Id.ECUADOR);
 		
@@ -126,7 +126,7 @@ public abstract class Client {
 			.setLabel("Cuba")
 			.setStabilityBase(2)
 			.setDissidentsInit(true)
-			.addAdjacency(Province.Id.US)
+			.addAdjacency(Province.Id.USA)
 			.addAdjacency(Province.Id.NICARAGUA)
 			.addAdjacency(Province.Id.MEXICO)
 			.addAdjacency(Province.Id.HAITI);

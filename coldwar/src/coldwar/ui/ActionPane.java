@@ -41,7 +41,7 @@ public class ActionPane extends Table {
 		
 		dissidentsButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidFundDissidentsMove(c.getPlayer(), province.getId()), "Fund Dissidents", this.skin);
 		coupButton = new TextButton("Organize Coup", this.skin);
-		establishBaseButton = new TextButton("Establish Military Base", this.skin);
+		establishBaseButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidEstablishBaseMove(c.getPlayer(), province.getId()), "Establish Military Base", this.skin);
 		
 		diplomaticInfluenceButton.addListener(new ChangeListener() {
 			@Override
@@ -76,6 +76,14 @@ public class ActionPane extends Table {
 				 * if(!moveBuilder.CanDecreaseInfluence(province.getId())) {
 				 * actor.setVisible(false); } increaseButton.setVisible(true);
 				 */
+			}
+		});
+		
+		establishBaseButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				Logger.Info("\"Establish Base\" button pressed on " + province.getId().getValueDescriptor().getName());
+				ActionPane.this.client.getMoveBuilder().EstablishBase(province.getId());
 			}
 		});
 		

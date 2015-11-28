@@ -47,7 +47,7 @@ message Province {
 
 		// SUPERPOWERS
 
-		US = 98;
+		USA = 98;
 		USSR = 99;
 	}
 

@@ -17,6 +17,7 @@ import coldwar.Logger;
 import coldwar.Settings;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.Client;
+import coldwar.logic.Client.Player;
 
 public class ProvinceInfoCard extends Table {
 
@@ -79,7 +80,13 @@ public class ProvinceInfoCard extends Table {
     protected String getModifiers() {
     	String ret = " ";
     	if(client.getMoveBuilder().hasDissidents(province.getId())) {
-    		ret += "D ";
+    		ret += "DISS ";
+    	}
+    	if(client.getMoveBuilder().getBaseOwner(province.getId()) == Player.USA) {
+    		ret += "USA-B ";
+    	}
+    	if(client.getMoveBuilder().getBaseOwner(province.getId()) == Player.USSR) {
+    		ret += "USSR-B ";
     	}
     	return ret;
     }

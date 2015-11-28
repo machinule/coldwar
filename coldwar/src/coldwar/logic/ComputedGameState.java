@@ -42,6 +42,7 @@ public class ComputedGameState {
 	public final Map<Province.Id, Integer> totalInfluence;
 	
 	public final Map<Province.Id, Boolean> dissidents;
+	public final Map<Province.Id, Player> bases;
 
 	public final Map<Province.Id, Integer> stabilityBase;
 	public final Map<Province.Id, Integer> stabilityModifier;
@@ -83,6 +84,8 @@ public class ComputedGameState {
 
 		EnumMap<Province.Id, Boolean> dissidentsMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
 		this.dissidents = Collections.unmodifiableMap(dissidentsMap);
+		EnumMap<Province.Id, Player> baseMap = new EnumMap<Province.Id, Player>(Province.Id.class);
+		this.bases = Collections.unmodifiableMap(baseMap);
 
 		EnumMap<Province.Id, Integer> stabilityBaseMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.stabilityBase = Collections.unmodifiableMap(stabilityBaseMap);
@@ -100,6 +103,7 @@ public class ComputedGameState {
 		this.state.getProvincesList().forEach(p -> {
 			baseInfluenceMap.put(p.getId(), p.getInfluence());
 			dissidentsMap.put(p.getId(), p.getDissidents());
+			baseMap.put(p.getId(), toPlayer(p.getBase()));
 		});
 		
 		polStoreMap.put(Player.USA, state.getUsa().getInfluenceStore().getPolitical());
@@ -153,12 +157,6 @@ public class ComputedGameState {
 						covStoreMap.compute(player, (p, cov) -> cov == null ? -mag : cov - mag);
 					}
 				}
-				if (move.hasFoundNatoMove()) {
-					
-				}
-				if (move.hasFoundPactMove()) {
-					
-				}
 				if (move.hasFundDissidentsMove()) {
 					if(isValidFundDissidentsMove(player, move.getFundDissidentsMove().getProvinceId())) {
 						dissidentsMap.put(move.getFundDissidentsMove().getProvinceId(), true);
@@ -166,6 +164,20 @@ public class ComputedGameState {
 						heatCounter += 4;
 					}
 				}
+				if (move.hasEstablishBaseMove()) {
+					if(isValidEstablishBaseMove(player, move.getEstablishBaseMove().getProvinceId())) {
+						baseMap.put(move.getEstablishBaseMove().getProvinceId(), player);
+						milStoreMap.compute(player,  (p, mil) -> mil == null ? -2 : mil - 2);
+						heatCounter += 4;
+					}
+				}
+				if (move.hasFoundNatoMove()) {
+					
+				}
+				if (move.hasFoundPactMove()) {
+					
+				}
+				
 			}			
 		}
 		
@@ -254,6 +266,16 @@ public class ComputedGameState {
 	
 	public boolean isValidFundDissidentsMove(Player player, Province.Id province) {
 		return covStore.get(player) > 0 && !(dissidents.get(province));
+	}
+	
+	public boolean isValidEstablishBaseMove(Player player, Province.Id province) {
+		return milStore.get(player) > 1 && bases.get(province) == null;
+	}
+	
+	public static Player toPlayer(Province.Id id) {
+		if (id == Province.Id.USA) return Player.USA;
+		if (id == Province.Id.USSR) return Player.USSR;
+		return null;
 	}
 
 }

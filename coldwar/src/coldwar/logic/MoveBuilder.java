@@ -5,6 +5,7 @@ import coldwar.Logger;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.CovertMove;
 import coldwar.MoveOuterClass.DiplomacyMove;
+import coldwar.MoveOuterClass.EstablishBaseMove;
 import coldwar.MoveOuterClass.FundDissidentsMove;
 import coldwar.MoveOuterClass.MilitaryMove;
 import coldwar.MoveOuterClass.Move;
@@ -62,6 +63,13 @@ public class MoveBuilder {
 		this.computeState();
 	}
 	
+	public void EstablishBase(final Province.Id id) {
+		this.moves.addMoves(
+				Move.newBuilder().setEstablishBaseMove(EstablishBaseMove.newBuilder().setProvinceId(id)).build());
+		Logger.Dbg("Establishing base in " + id);
+		this.computeState();
+	}
+	
 	public final ComputedGameState getComputedGameState() {
 		return this.computedState;
 	}
@@ -92,6 +100,10 @@ public class MoveBuilder {
 
 	public boolean hasDissidents(final Province.Id provinceId) {
 		return this.computedState.dissidents.get(provinceId);
+	}
+	
+	public Player getBaseOwner(final Province.Id provinceId) {
+		return this.computedState.bases.get(provinceId);
 	}
 
 	public void Undo() {
