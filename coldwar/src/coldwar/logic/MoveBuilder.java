@@ -76,6 +76,10 @@ public class MoveBuilder {
 	public int getCovStore() {
 		return this.computedState.covStore.get(this.player);
 	}
+	
+	public int getHeat() {
+		return this.computedState.heat;
+	}
 
 	public MoveList getMoveList() {
 		return this.moves.build();

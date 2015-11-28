@@ -21,6 +21,7 @@ public class ComputedGameState {
 	public final MoveList usaMoves;
 	public final MoveList ussrMoves;
 	public final int year;
+	public final int heat;
 		
 	public final Map<Player, Integer> polStore;
 	public final Map<Player, Integer> milStore;
@@ -48,6 +49,7 @@ public class ComputedGameState {
 		this.ussrMoves = ussrMoves;
 		
 		this.year = state.getTurn() + 1947;
+		int heatCounter = state.getHeat();
 		
 		EnumMap<Player, Integer> polStoreMap = new EnumMap<Player, Integer>(Player.class);
 		this.polStore = Collections.unmodifiableMap(polStoreMap);
@@ -150,6 +152,7 @@ public class ComputedGameState {
 					if(isValidFundDissidentsMove(player, move)) {
 						dissidentsMap.put(move.getFundDissidentsMove().getProvinceId(), true);
 						covStoreMap.compute(player, (p, cov) -> cov == null ? -1 : cov - 1);
+						heatCounter += 4;
 					}
 				}
 			}			
@@ -160,6 +163,8 @@ public class ComputedGameState {
 		dissidentsMap.forEach((p, dissidents) -> {
 			if (dissidents) {stabilityModifierMap.compute(p, (q, mod) -> mod == null ? -1 : mod - 1 );}
 		});
+		heatCounter = Math.max(heatCounter - 10, 0);
+		this.heat = heatCounter;
 		
 		GameState.Builder nextStateBuilder = GameState.newBuilder()
 				.setSettings(this.state.getSettings())
@@ -172,6 +177,7 @@ public class ComputedGameState {
 						.setUssrMoves(this.ussrMoves)
 						.build())
 				.setTurn(this.state.getTurn() + 1)
+				.setHeat(heatCounter)
 				.addAllProvinces(this.state.getProvincesList());
 		
 		for (final Province.Builder province : nextStateBuilder.getProvincesBuilderList()) {
