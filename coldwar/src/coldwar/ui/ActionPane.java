@@ -12,6 +12,7 @@ import coldwar.GameStateOuterClass.ProvinceSettings;
 import coldwar.Logger;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.Client;
+import coldwar.logic.ComputedGameState;
 
 public class ActionPane extends Table {
 
@@ -34,11 +35,11 @@ public class ActionPane extends Table {
 		TextButton coupButton;
 		TextButton establishBaseButton;
 
-		diplomaticInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getPolStore() > 0, "Diplomatic Outreach", this.skin);
-		militaryInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getMilStore() > 0, "Arms Sales", this.skin);
-		covertInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getCovStore() > 0, "Support Party", this.skin);
+		diplomaticInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaDipMove(c.getPlayer()), "Diplomatic Outreach", this.skin);
+		militaryInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaMilMove(c.getPlayer()), "Arms Sales", this.skin);
+		covertInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaCovMove(c.getPlayer()), "Support Party", this.skin);
 		
-		dissidentsButton = new DynamicButton(this.client, c -> !c.getMoveBuilder().hasDissidents(province.getId()), "Fund Dissidents", this.skin);
+		dissidentsButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidFundDissidentsMove(c.getPlayer(), province.getId()), "Fund Dissidents", this.skin);
 		coupButton = new TextButton("Organize Coup", this.skin);
 		establishBaseButton = new TextButton("Establish Military Base", this.skin);
 		
