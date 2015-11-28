@@ -19,7 +19,7 @@ public class DynamicLabel extends Label {
 		this.client = client;
 		this.textFn = textFn;
 		this.colorFn = c -> Color.BLACK;
-		this.updateText();
+		this.update();
 	}
 
 	public DynamicLabel(final Client client, Function<Client, String> textFn, Function<Client, Color> colorFn, final Skin skin) {
@@ -27,15 +27,15 @@ public class DynamicLabel extends Label {
 		this.client = client;
 		this.textFn = textFn;
 		this.colorFn = colorFn;
-		this.updateText();
+		this.update();
 	}
 
 	@Override
 	public void act(final float delta) {
-		this.updateText();
+		this.update();
 	}
 
-	void updateText() {
+	void update() {
 		this.setColor(colorFn.apply(this.client));
 		this.setText(textFn.apply(this.client));
 	}

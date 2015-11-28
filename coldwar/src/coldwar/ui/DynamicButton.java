@@ -12,14 +12,24 @@ public class DynamicButton extends TextButton {
 
 	protected Client client;
 	protected Function<Client, Boolean> enabledFn;
+	protected Function<Client, String> textFn;
 
-	public DynamicButton(final Client client, Function<Client, Boolean> enabledFn, String text, final Skin skin) {
-		super(text, skin);
+	public DynamicButton(final Client client, Function<Client, Boolean> enabledFn, Function<Client, String> textFn, final Skin skin) {
+		super("", skin);
 		this.client = client;
+		this.textFn = textFn;
 		this.enabledFn = enabledFn;
 		this.update();
 	}
 
+	public DynamicButton(final Client client, Function<Client, Boolean> enabledFn, String text, final Skin skin) {
+		super("", skin);
+		this.client = client;
+		this.textFn = c -> text;
+		this.enabledFn = enabledFn;
+		this.update();
+	}
+	
 	@Override
 	public void act(final float delta) {
 		this.update();
@@ -33,5 +43,6 @@ public class DynamicButton extends TextButton {
 		} else {
 			this.setColor(Color.DARK_GRAY);
 		}
+		this.setText(textFn.apply(this.client));
 	}
 }
