@@ -32,7 +32,7 @@ public class ActionPane extends Table {
 		TextButton covertInfluenceButton;
 		
 		TextButton dissidentsButton;
-		TextButton coupButton;
+		TextButton politicalPressureButton;
 		TextButton establishBaseButton;
 
 		diplomaticInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaDipMove(c.getPlayer()), "Diplomatic Outreach", this.skin);
@@ -40,7 +40,7 @@ public class ActionPane extends Table {
 		covertInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaCovMove(c.getPlayer()), "Support Party", this.skin);
 		
 		dissidentsButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidFundDissidentsMove(c.getPlayer(), province.getId()), "Fund Dissidents", this.skin);
-		coupButton = new TextButton("Organize Coup", this.skin);
+		politicalPressureButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidPoliticalPressureMove(c.getPlayer(), province.getId()), "Political Pressure", this.skin);
 		establishBaseButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidEstablishBaseMove(c.getPlayer(), province.getId()), "Establish Military Base", this.skin);
 		
 		diplomaticInfluenceButton.addListener(new ChangeListener() {
@@ -87,6 +87,14 @@ public class ActionPane extends Table {
 			}
 		});
 		
+		politicalPressureButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				Logger.Info("\"Political Pressure\" button pressed on " + province.getId().getValueDescriptor().getName());
+				ActionPane.this.client.getMoveBuilder().PoliticalPressure(province.getId());
+			}
+		});
+		
 		this.clearChildren();
 		
 		Table innerTop = new Table();
@@ -106,7 +114,7 @@ public class ActionPane extends Table {
 		innerBottom.add(militaryInfluenceButton)
 			.right()
 			.padTop(5);
-		innerBottom.add(coupButton)
+		innerBottom.add(politicalPressureButton)
 			.left()
 			.padTop(5)
 			.padLeft(10);

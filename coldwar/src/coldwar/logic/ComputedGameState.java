@@ -171,6 +171,12 @@ public class ComputedGameState {
 						heatCounter += 4;
 					}
 				}
+				if (move.hasPoliticalPressureMove()) {
+					if(isValidPoliticalPressureMove(player, move.getPoliticalPressureMove().getProvinceId())) {
+						polStoreMap.compute(player,  (p, pol) -> pol == null ? -2 : pol - 2);
+						heatCounter += 4; // More if enemy ally
+					}
+				}
 				if (move.hasFoundNatoMove()) {
 					
 				}
@@ -269,7 +275,13 @@ public class ComputedGameState {
 	}
 	
 	public boolean isValidEstablishBaseMove(Player player, Province.Id province) {
-		return milStore.get(player) > 1 && bases.get(province) == null;
+		return milStore.get(player) >= 2 && bases.get(province) == null;
+		// Check alliances
+	}
+	
+	public boolean isValidPoliticalPressureMove(Player player, Province.Id province) {
+		return polStore.get(player) >= 2;
+		// Handle adjacencies
 	}
 	
 	public static Player toPlayer(Province.Id id) {

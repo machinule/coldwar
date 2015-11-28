@@ -21,6 +21,7 @@ message Move {
 
 	optional FundDissidentsMove fund_dissidents_move = 101;
 	optional EstablishBaseMove establish_base_move = 102;
+	optional PoliticalPressureMove political_pressure_move = 103;
 
 	optional FoundNATOMove found_nato_move = 1001;
 	optional FoundPactMove found_pact_move = 1002;
@@ -64,6 +65,12 @@ message EstablishBaseMove {
 	optional Province.Id province_id = 1;
 
 	option (mil_cost) = 2;
+}
+
+message PoliticalPressureMove {
+	optional Province.Id province_id = 1;
+
+	option (pol_cost) = 2;
 }
 
 // ========== SPECIAL ACTIONS ==========

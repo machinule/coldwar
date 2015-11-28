@@ -9,6 +9,7 @@ import coldwar.MoveOuterClass.EstablishBaseMove;
 import coldwar.MoveOuterClass.FundDissidentsMove;
 import coldwar.MoveOuterClass.MilitaryMove;
 import coldwar.MoveOuterClass.Move;
+import coldwar.MoveOuterClass.PoliticalPressureMove;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.ProvinceOuterClass.Province.Id;
 import coldwar.logic.Client.Player;
@@ -67,6 +68,13 @@ public class MoveBuilder {
 		this.moves.addMoves(
 				Move.newBuilder().setEstablishBaseMove(EstablishBaseMove.newBuilder().setProvinceId(id)).build());
 		Logger.Dbg("Establishing " + player + " base in " + id);
+		this.computeState();
+	}
+	
+	public void PoliticalPressure(final Province.Id id) {
+		this.moves.addMoves(
+				Move.newBuilder().setPoliticalPressureMove(PoliticalPressureMove.newBuilder().setProvinceId(id)).build());
+		Logger.Dbg("Applying political pressure in " + id);
 		this.computeState();
 	}
 	
