@@ -60,6 +60,10 @@ public class MoveBuilder {
 		Logger.Dbg("Funding dissidents in " + id);
 		this.computeState();
 	}
+	
+	public final ComputedGameState getComputedGameState() {
+		return this.computedState;
+	}
 
 	public int getInfluence(final Province.Id provinceId) {
 		return this.computedState.totalInfluence.get(provinceId);

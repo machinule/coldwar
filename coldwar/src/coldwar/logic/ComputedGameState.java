@@ -119,7 +119,7 @@ public class ComputedGameState {
 			}
 			for (Move move : moves.getMovesList()) {
 				if (move.hasDiaDipMove()) {
-					if(isValidDiaDipMove(player, move)) {
+					if(isValidDiaDipMove(player)) {
 						Province.Id id = move.getDiaDipMove().getProvinceId();
 						final int mag = move.getDiaDipMove().getMagnitude();
 						polInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
@@ -127,7 +127,7 @@ public class ComputedGameState {
 						}
 					}
 				if (move.hasDiaMilMove()) {
-					if(isValidDiaMilMove(player, move)) {
+					if(isValidDiaMilMove(player)) {
 						Province.Id id = move.getDiaMilMove().getProvinceId();
 						final int mag = move.getDiaMilMove().getMagnitude();
 						milInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
@@ -135,7 +135,7 @@ public class ComputedGameState {
 					}
 				}
 				if (move.hasDiaCovMove()) {
-					if(isValidDiaCovMove(player, move)) {
+					if(isValidDiaCovMove(player)) {
 						Province.Id id = move.getDiaCovMove().getProvinceId();
 						final int mag = move.getDiaCovMove().getMagnitude();
 						covInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
@@ -149,7 +149,7 @@ public class ComputedGameState {
 					
 				}
 				if (move.hasFundDissidentsMove()) {
-					if(isValidFundDissidentsMove(player, move)) {
+					if(isValidFundDissidentsMove(player, move.getFundDissidentsMove().getProvinceId())) {
 						dissidentsMap.put(move.getFundDissidentsMove().getProvinceId(), true);
 						covStoreMap.compute(player, (p, cov) -> cov == null ? -1 : cov - 1);
 						heatCounter += 4;
@@ -199,20 +199,20 @@ public class ComputedGameState {
 
 	}
 	
-	public boolean isValidDiaDipMove(Player player, Move move){
-		return true;
+	public boolean isValidDiaDipMove(Player player){
+		return polStore.get(player) > 0;
 	}
 	
-	public boolean isValidDiaMilMove (Player player, Move move){
-		return true;
+	public boolean isValidDiaMilMove (Player player){
+		return milStore.get(player) > 0;
 	}
 	
-	public boolean isValidDiaCovMove (Player player, Move move){
-		return true;
+	public boolean isValidDiaCovMove (Player player){
+		return covStore.get(player) > 0;
 	}
 	
-	public boolean isValidFundDissidentsMove(Player player, Move move) {
-		return true;
+	public boolean isValidFundDissidentsMove(Player player, Province.Id province) {
+		return covStore.get(player) > 0 && !(dissidents.get(province));
 	}
 
 }
