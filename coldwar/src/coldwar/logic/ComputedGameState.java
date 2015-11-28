@@ -117,22 +117,28 @@ public class ComputedGameState {
 			}
 			for (Move move : moves.getMovesList()) {
 				if (move.hasDiaDipMove()) {
-					Province.Id id = move.getDiaDipMove().getProvinceId();
-					final int mag = move.getDiaDipMove().getMagnitude();
-					polInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
-					polStoreMap.compute(player, (p, pol) -> pol == null ? -mag : pol - mag);
-				}
+					if(isValidDiaDipMove(player, move)) {
+						Province.Id id = move.getDiaDipMove().getProvinceId();
+						final int mag = move.getDiaDipMove().getMagnitude();
+						polInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
+						polStoreMap.compute(player, (p, pol) -> pol == null ? -mag : pol - mag);
+						}
+					}
 				if (move.hasDiaMilMove()) {
-					Province.Id id = move.getDiaMilMove().getProvinceId();
-					final int mag = move.getDiaMilMove().getMagnitude();
-					milInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
-					milStoreMap.compute(player, (p, mil) -> mil == null ? -mag : mil - mag);
+					if(isValidDiaMilMove(player, move)) {
+						Province.Id id = move.getDiaMilMove().getProvinceId();
+						final int mag = move.getDiaMilMove().getMagnitude();
+						milInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
+						milStoreMap.compute(player, (p, mil) -> mil == null ? -mag : mil - mag);
+					}
 				}
 				if (move.hasDiaCovMove()) {
-					Province.Id id = move.getDiaCovMove().getProvinceId();
-					final int mag = move.getDiaCovMove().getMagnitude();
-					covInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
-					covStoreMap.compute(player, (p, cov) -> cov == null ? -mag : cov - mag);
+					if(isValidDiaCovMove(player, move)) {
+						Province.Id id = move.getDiaCovMove().getProvinceId();
+						final int mag = move.getDiaCovMove().getMagnitude();
+						covInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
+						covStoreMap.compute(player, (p, cov) -> cov == null ? -mag : cov - mag);
+					}
 				}
 				if (move.hasFoundNatoMove()) {
 					
@@ -141,8 +147,10 @@ public class ComputedGameState {
 					
 				}
 				if (move.hasFundDissidentsMove()) {
-					dissidentsMap.put(move.getFundDissidentsMove().getProvinceId(), true);
-					covStoreMap.compute(player, (p, cov) -> cov == null ? -1 : cov - 1);
+					if(isValidFundDissidentsMove(player, move)) {
+						dissidentsMap.put(move.getFundDissidentsMove().getProvinceId(), true);
+						covStoreMap.compute(player, (p, cov) -> cov == null ? -1 : cov - 1);
+					}
 				}
 			}			
 		}
@@ -185,7 +193,19 @@ public class ComputedGameState {
 
 	}
 	
-	public boolean CanMakeMove(Player player, Move move) {
+	public boolean isValidDiaDipMove(Player player, Move move){
+		return true;
+	}
+	
+	public boolean isValidDiaMilMove (Player player, Move move){
+		return true;
+	}
+	
+	public boolean isValidDiaCovMove (Player player, Move move){
+		return true;
+	}
+	
+	public boolean isValidFundDissidentsMove(Player player, Move move) {
 		return true;
 	}
 
