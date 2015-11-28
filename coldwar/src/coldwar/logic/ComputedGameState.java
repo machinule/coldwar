@@ -142,6 +142,7 @@ public class ComputedGameState {
 				}
 				if (move.hasFundDissidentsMove()) {
 					dissidentsMap.put(move.getFundDissidentsMove().getProvinceId(), true);
+					covStoreMap.compute(player, (p, cov) -> cov == null ? -1 : cov - 1);
 				}
 			}			
 		}
