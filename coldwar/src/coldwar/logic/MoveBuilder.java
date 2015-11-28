@@ -66,7 +66,7 @@ public class MoveBuilder {
 	public void EstablishBase(final Province.Id id) {
 		this.moves.addMoves(
 				Move.newBuilder().setEstablishBaseMove(EstablishBaseMove.newBuilder().setProvinceId(id)).build());
-		Logger.Dbg("Establishing base in " + id);
+		Logger.Dbg("Establishing " + player + " base in " + id);
 		this.computeState();
 	}
 	
