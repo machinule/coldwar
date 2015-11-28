@@ -56,8 +56,8 @@ public abstract class Client {
 		
 	public void nextTurn() {
 		Logger.Info("Proceeding to the next turn.");
-		ComputationCache cache = new ComputationCache(this.state, this.getUSAMove(), this.getUSSRMove());
-		this.state = Computations.getNextGameState(cache);
+		ComputedGameState computedState = new ComputedGameState(this.state, this.getUSAMove(), this.getUSSRMove());
+		this.state = computedState.nextState;
 		Logger.Info("Next game state: " + this.state.toString());
 	}
 	
