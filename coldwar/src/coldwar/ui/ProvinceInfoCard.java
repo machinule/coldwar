@@ -1,11 +1,16 @@
 package coldwar.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 import coldwar.Logger;
 import coldwar.ProvinceOuterClass.Province;
@@ -24,21 +29,39 @@ public class ProvinceInfoCard extends Table {
 		this.client = client;
 		this.province = province;
 		this.skin = skin;
-
-		final DynamicButton infoButton = new DynamicButton(this.client, c -> true, c -> formattedLabel(), skin);
-		infoButton.addListener(new ChangeListener() {
+		
+		final Button infoBox = createLayout();
+		infoBox.addCaptureListener(new ChangeListener() {
 			@Override
-			public void changed(final ChangeEvent event, final Actor actor) {
-				Logger.Info(province.getLabel() + " button pressed on " + province.getId().getValueDescriptor().getName());
+			public void changed(ChangeEvent event, final Actor actor) {
+				Logger.Info(province.getId().getValueDescriptor().getName() + " selected");
 				toolbar.onSelect(province);
 			}
 		});
-		this.add(infoButton);
+		this.add(infoBox).size(150, 50);
 	}
 	
-    protected String formattedLabel() {
-    	int netStability = province.getStability() + client.getMoveBuilder().getStabilityModifier(province.getId());
-		String ret = province.getLabel() + " | " + netStability;
+	protected Button createLayout() {
+		Button ret = new Button(this.skin);
+		Color influenceColor = client.getMoveBuilder().getInfluence(province.getId()) > 0 ? Color.BLUE : client.getMoveBuilder().getInfluence(province.getId()) < 0 ? Color.RED : Color.BLACK;
+		DynamicLabel influence = new DynamicLabel(client, c -> Integer.toString(Math.abs(c.getMoveBuilder().getInfluence(province.getId()))), c -> influenceColor, skin);
+		DynamicLabel stability = new DynamicLabel(client, c -> netStability(), skin);
+		DynamicLabel name = new DynamicLabel(client, c -> province.getLabel(), skin);
+		
+		name.setAlignment(1); //Center in cell
+		stability.setFontScale((float)1.25);
+		influence.setFontScale((float)1.25);
+		
+		ret.add(influence).left().expand();
+		ret.add(name).center();
+		ret.add(stability).right().expand();
+		ret.row();
+		return ret;
+	}
+	
+    protected String netStability() {
+    	int netStab = province.getStability() + client.getMoveBuilder().getStabilityModifier(province.getId());
+		String ret = netStab + " ";
 		return ret;
 	}
 

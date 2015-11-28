@@ -26,7 +26,7 @@ public class SuperpowerPane extends Table {
 		this.client = client;
 		this.skin = skin;
 		
-		this.playerLabelText = client.getPlayer() == Player.USA ? "United States" : "Soviet Union";
+		playerLabelText = "National Actions";
 	}
 	
 	public void show() {

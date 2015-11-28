@@ -36,12 +36,17 @@ public class MapScreen extends AbstractScreen {
 		final HeaderPane headerPane = new HeaderPane(this.client, skin);
 		headerPane.setDebug(Settings.isDebug());
 		final SuperpowerPane superpowerPane = new SuperpowerPane(this.client, skin);
-		superpowerPane.setDebug(Settings.isDebug());		
+		superpowerPane.setDebug(Settings.isDebug());
+		int count = 0; //Temporary for setting orderly columns
 		for (final Province p : this.client.initialGameState.getProvincesList()) {
 			ProvinceInfoCard card = new ProvinceInfoCard(this.client, p, actionPane, skin);
 			card.setDebug(Settings.isDebug());
 			nations.add(card);
-			nations.row();
+			count ++;
+			if(count == 4) {
+				nations.row();
+				count = 0;
+			}
 		}
 		
 		// Top Pane
