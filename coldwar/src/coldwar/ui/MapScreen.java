@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import coldwar.ColdWarGame;
+import coldwar.GameStateOuterClass.ProvinceSettings;
 import coldwar.Settings;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.Client;
@@ -38,7 +39,7 @@ public class MapScreen extends AbstractScreen {
 		final SuperpowerPane superpowerPane = new SuperpowerPane(this.client, skin);
 		superpowerPane.setDebug(Settings.isDebug());
 		int count = 0; //Temporary for setting orderly columns
-		for (final Province p : this.client.initialGameState.getProvincesList()) {
+		for (final ProvinceSettings p : this.client.initialGameState.getSettings().getProvincesList()) {
 			ProvinceInfoCard card = new ProvinceInfoCard(this.client, p, actionPane, skin);
 			card.setDebug(Settings.isDebug());
 			nations.add(card);

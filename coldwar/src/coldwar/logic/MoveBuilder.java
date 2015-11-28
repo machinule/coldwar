@@ -9,6 +9,7 @@ import coldwar.MoveOuterClass.FundDissidentsMove;
 import coldwar.MoveOuterClass.MilitaryMove;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.ProvinceOuterClass.Province.Id;
 import coldwar.logic.Client.Player;
 
 public class MoveBuilder {

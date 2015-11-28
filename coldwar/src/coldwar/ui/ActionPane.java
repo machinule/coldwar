@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+import coldwar.GameStateOuterClass.ProvinceSettings;
 import coldwar.Logger;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.Client;
@@ -24,7 +25,7 @@ public class ActionPane extends Table {
 		this.setDebug(true);
 	}
 
-	public void onSelect(final Province province) {
+	public void onSelect(final ProvinceSettings province) {
 		TextButton diplomaticInfluenceButton;
 		TextButton militaryInfluenceButton;
 		TextButton covertInfluenceButton;
@@ -80,7 +81,7 @@ public class ActionPane extends Table {
 		this.clearChildren();
 		
 		Table innerTop = new Table();
-		int netStability = province.getStability() + client.getMoveBuilder().getStabilityModifier(province.getId());
+		int netStability = province.getStabilityBase() + client.getMoveBuilder().getStabilityModifier(province.getId());
 		innerTop.add(new DynamicLabel(client, c -> formattedLabel(province), this.skin));
 		
 		Table innerBottom = new Table();
@@ -128,8 +129,8 @@ public class ActionPane extends Table {
 		this.row();
 	}
 	
-	protected String formattedLabel(final Province province) {
-		String ret = province.getLabel() + " | " + province.getStability();
+	protected String formattedLabel(final ProvinceSettings province) {
+		String ret = province.getLabel() + " | " + province.getStabilityBase();
 		int positiveModifier = 0;
 		int negativeModifier = client.getMoveBuilder().getStabilityModifier(province.getId());
 		if (positiveModifier != 0) {

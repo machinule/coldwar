@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
+import coldwar.GameStateOuterClass.ProvinceSettings;
 import coldwar.Logger;
 import coldwar.Settings;
 import coldwar.ProvinceOuterClass.Province;
@@ -20,11 +21,11 @@ import coldwar.logic.Client;
 public class ProvinceInfoCard extends Table {
 
 	protected Client client;
-	protected Province province;
+	protected ProvinceSettings province;
 	protected Skin skin;
 	protected ActionPane toolbar;
 
-	public ProvinceInfoCard(final Client client, final Province province, final ActionPane toolbar,
+	public ProvinceInfoCard(final Client client, final ProvinceSettings province, final ActionPane toolbar,
 			final Skin skin) {
 		super();
 		this.client = client;
@@ -70,7 +71,7 @@ public class ProvinceInfoCard extends Table {
 	}
 	
     protected String netStability() {
-    	int netStab = province.getStability() + client.getMoveBuilder().getStabilityModifier(province.getId());
+    	int netStab = province.getStabilityBase() + client.getMoveBuilder().getStabilityModifier(province.getId());
 		String ret = netStab + " ";
 		return ret;
 	}

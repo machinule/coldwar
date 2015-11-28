@@ -1,3 +1,66 @@
 syntax = "proto2";
 
 package coldwar;
+
+import "Province.proto";
+
+message Event {
+	optional LeaderSpawnEvent leader_spawn = 1;
+	optional LeaderDeathEvent leader_death = 2;
+	optional ProvinceCoupEvent province_coup = 3;
+	optional ProvinceDemocracyEvent province_democracy = 4;
+	optional ProvinceCommunismEvent province_communism = 5;
+	optional ProvinceAutocracyEvent province_autocracy = 6;
+	optional ProvinceRepublicEvent province_republic = 7;
+	optional ProvinceFauxPasEvent province_faux_pas = 8;
+	optional ProvinceDissidentsEvent province_dissidents = 9;
+	optional ProvinceDissidentsSuppressedEvent province_dissidents_suppressed = 10;
+	optional UsAllyDemocracyEvent us_ally_democracy = 11;
+	optional UssrAllyCommunismEvent ussr_ally_communism = 12;
+}
+
+message LeaderSpawnEvent {
+}
+
+message LeaderDeathEvent {
+}
+
+message ProvinceCoupEvent {
+	optional Province.Id province_id = 1;
+}
+
+message ProvinceDemocracyEvent {
+	optional Province.Id province_id = 1;
+}
+
+message ProvinceCommunismEvent {
+	optional Province.Id province_id = 1;
+}
+
+message ProvinceAutocracyEvent {
+	optional Province.Id province_id = 1;
+}
+
+message ProvinceRepublicEvent {
+	optional Province.Id province_id = 1;
+}
+
+message ProvinceFauxPasEvent {
+	optional Province.Id province_id = 1;
+}
+
+message ProvinceDissidentsEvent {
+	optional Province.Id province_id = 1;
+}
+
+message ProvinceDissidentsSuppressedEvent {
+	optional Province.Id province_id = 1;
+}
+
+message UsAllyDemocracyEvent {
+	optional Province.Id province_id = 1;
+}
+
+message UssrAllyCommunismEvent {
+	optional Province.Id province_id = 1;
+}

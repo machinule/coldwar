@@ -6,6 +6,7 @@ import "Province.proto";
 import "UnitedStates.proto";
 import "SovietUnion.proto";
 import "MoveList.proto";
+import "Event.proto";
 
 message GameState {
   optional int32 heat = 2; // 0 - 100
@@ -21,6 +22,7 @@ message TurnLogEntry {
   optional GameState initial_state = 1;
   optional MoveList usa_moves = 2;
   optional MoveList ussr_moves = 3;
+  repeated Event events = 4;
 }
 
 // GameSettings contains constants over the course of the game.
@@ -31,6 +33,7 @@ message GameSettings {
   optional int32 heat_min = 3 [default = 0];
   optional int32 heat_max = 4 [default = 100];
   optional int64 seed = 5 [default = 0];
+  repeated ProvinceSettings provinces = 6;
 
   // USA Settings.
   optional string usa_alias = 100 [default = "USA"];
@@ -49,4 +52,34 @@ message GameSettings {
   optional int32 ussr_mil_income_base = 204 [default = 3];
   optional int32 ussr_cov_store_init = 205 [default = 1];
   optional int32 ussr_cov_income_base = 206 [default = 1];
+
+  // Random events.
+  // Chance value is out of 1e6. (e.g. 100000 = 10%, 1000000 = 100%)
+  // Probability applies to a single eligible target, per turn.
+  optional int32 random_leader_spawn_chance = 300 [default = 100000];
+  optional int32 random_leader_death_chance = 301 [default = 100000];
+  optional int32 random_province_coup_chance = 302 [default = 100000];
+  optional int32 random_province_democracy_chance = 303 [default = 100000];
+  optional int32 random_province_communism_chance = 304 [default = 100000];
+  optional int32 random_province_autocracy_chance = 305 [default = 100000];
+  optional int32 random_province_republic_chance = 306 [default = 100000];
+  optional int32 random_province_faux_pas_chance = 307 [default = 100000];
+  optional int32 random_province_dissidents_chance = 308 [default = 100000];
+  optional int32 random_province_dissidents_suppressed_chance = 309 [default = 100000];
+  optional int32 random_us_ally_democracy_chance = 310 [default = 100000];
+  optional int32 random_us_ally_communism_chance = 311 [default = 100000];
+
+}
+
+message ProvinceSettings {
+	optional Province.Id id = 1;
+	optional string label = 2;
+	repeated Province.Id adjacency = 3;
+	optional int32 stability_base = 4 [default = 1];
+	optional int32 influence_init = 5 [default = 0];
+	optional Province.Government government_init = 6 [default = REPUBLIC];
+	optional Province.Id occupier_init = 7;
+	optional bool dissidents_init = 8;
+	optional Province.Id military_base_init = 9;
+	optional Province.Id ally_init = 10;
 }

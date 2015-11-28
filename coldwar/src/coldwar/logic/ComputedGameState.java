@@ -3,10 +3,14 @@ package coldwar.logic;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.function.Function;
 
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.GameStateOuterClass.TurnLogEntry;
 import coldwar.Logger;
+import coldwar.EventOuterClass.Event;
+import coldwar.EventOuterClass.ProvinceRepublicEvent;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
@@ -38,7 +42,8 @@ public class ComputedGameState {
 	public final Map<Province.Id, Integer> totalInfluence;
 	
 	public final Map<Province.Id, Boolean> dissidents;
-	
+
+	public final Map<Province.Id, Integer> stabilityBase;
 	public final Map<Province.Id, Integer> stabilityModifier;
 	
 	public final GameState nextState;
@@ -79,13 +84,19 @@ public class ComputedGameState {
 		EnumMap<Province.Id, Boolean> dissidentsMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
 		this.dissidents = Collections.unmodifiableMap(dissidentsMap);
 
+		EnumMap<Province.Id, Integer> stabilityBaseMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
+		this.stabilityBase = Collections.unmodifiableMap(stabilityBaseMap);
 		EnumMap<Province.Id, Integer> stabilityModifierMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.stabilityModifier = Collections.unmodifiableMap(stabilityModifierMap);
 
 		// Computations:
 		// NOTE: computations should only expose a read-only version of themselves as public variables.
 		// For collections, Collections.unmodifiable* produces an appropriate view.
-				
+		
+		this.state.getSettings().getProvincesList().forEach(p -> {
+			stabilityBaseMap.put(p.getId(), p.getStabilityBase());
+		});
+		
 		this.state.getProvincesList().forEach(p -> {
 			baseInfluenceMap.put(p.getId(), p.getInfluence());
 			dissidentsMap.put(p.getId(), p.getDissidents());
@@ -185,6 +196,36 @@ public class ComputedGameState {
 			.setPolitical(polStoreMap.get(Player.USSR) + basePolIncomeMap.get(Player.USSR))
 			.setMilitary(milStoreMap.get(Player.USSR) + baseMilIncomeMap.get(Player.USSR))
 			.setCovert(covStoreMap.get(Player.USSR) + baseCovIncomeMap.get(Player.USSR));
+		
+		// Random events.
+		Random r = new Random(this.state.getSettings().getSeed());
+		Function<Integer, Boolean> happens = c -> r.nextInt(1000000) < c;
+		// TODO: LeaderSpawn
+		// TODO: LeaderDeath
+		// TODO: ProvinceCoup
+		// TODO: ProvinceDemocracy
+		// TODO: ProvinceCommunism
+		// TODO: ProvinceAutocracy
+		// ProvinceRepublic
+		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
+			if (p.getGov() == Province.Government.AUTOCRACY) {
+				if (happens.apply(this.state.getSettings().getRandomProvinceRepublicChance())) {
+					p.setGov(Province.Government.REPUBLIC);
+					nextStateBuilder.getTurnLogBuilder()
+						.addEvents(Event.newBuilder()
+							.setProvinceRepublic(ProvinceRepublicEvent.newBuilder()
+								.setProvinceId(p.getId())
+								.build())
+							.build());
+					
+				}
+			}
+		}
+		// TODO: ProvinceFauxPas
+		// TODO: ProvinceDissidents
+		// TODO: ProvinceDissidentsSuppressed
+		// TODO: UsAllyDemocracy
+		// TODO: UssrAllyCommunism		
 		
 		this.nextState = nextStateBuilder.build();
 		Logger.Info("Stability Mod: " + this.stabilityModifier);
