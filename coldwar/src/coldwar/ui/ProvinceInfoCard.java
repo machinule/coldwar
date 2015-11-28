@@ -77,7 +77,7 @@ public class ProvinceInfoCard extends Table {
     
     protected String getModifiers() {
     	String ret = " ";
-    	if(province.getDissidents()) {
+    	if(client.getMoveBuilder().hasDissidents(province.getId())) {
     		ret += "D ";
     	}
     	return ret;
