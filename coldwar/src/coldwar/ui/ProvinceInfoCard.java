@@ -25,7 +25,7 @@ public class ProvinceInfoCard extends Table {
 		this.province = province;
 		this.skin = skin;
 
-		final TextButton infoButton = new TextButton(province.getLabel() + " | " + province.getStability() + " ", skin);
+		final DynamicButton infoButton = new DynamicButton(this.client, c -> true, c -> formattedLabel(), skin);
 		infoButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
@@ -34,7 +34,12 @@ public class ProvinceInfoCard extends Table {
 			}
 		});
 		this.add(infoButton);
-		this.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getStabilityModifier(this.province.getId())), this.skin));
+	}
+	
+    protected String formattedLabel() {
+    	int netStability = province.getStability() + client.getMoveBuilder().getStabilityModifier(province.getId());
+		String ret = province.getLabel() + " | " + netStability;
+		return ret;
 	}
 
 }

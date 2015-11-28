@@ -76,11 +76,12 @@ public class ActionPane extends Table {
 				 */
 			}
 		});
-
+		
 		this.clearChildren();
 		
 		Table innerTop = new Table();
-		innerTop.add(new Label(province.getLabel() + " | Stability: " + province.getStability(), this.skin));
+		int netStability = province.getStability() + client.getMoveBuilder().getStabilityModifier(province.getId());
+		innerTop.add(new DynamicLabel(client, c -> formattedLabel(province), this.skin));
 		
 		Table innerBottom = new Table();
 		
@@ -125,6 +126,19 @@ public class ActionPane extends Table {
 		this.row();
 		this.add(innerBottom);
 		this.row();
+	}
+	
+	protected String formattedLabel(final Province province) {
+		String ret = province.getLabel() + " | " + province.getStability();
+		int positiveModifier = 0;
+		int negativeModifier = client.getMoveBuilder().getStabilityModifier(province.getId());
+		if (positiveModifier != 0) {
+			ret += " + " + positiveModifier + " ";
+		}
+		if (negativeModifier != 0) {
+			ret += " - " + Math.abs(negativeModifier) + " ";
+		}
+		return ret;
 	}
 
 }
