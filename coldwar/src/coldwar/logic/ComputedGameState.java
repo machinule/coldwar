@@ -35,14 +35,16 @@ public class ComputedGameState {
 	public final Map<Player, Integer> baseMilIncome;
 	public final Map<Player, Integer> baseCovIncome;
 	
-	public final Map<Province.Id, Integer> baseInfluence;
+	public final Map<Province.Id, Integer> initialInfluence;
 	public final Map<Province.Id, Integer> polInfluence;
 	public final Map<Province.Id, Integer> milInfluence;
 	public final Map<Province.Id, Integer> covInfluence;
 	public final Map<Province.Id, Integer> totalInfluence;
 	
+	public final Map<Province.Id, Player>  alliances; // NULL -> Neither player
+	
 	public final Map<Province.Id, Boolean> dissidents;
-	public final Map<Province.Id, Player> bases;
+	public final Map<Province.Id, Player> bases; // NULL -> Neither player
 
 	public final Map<Province.Id, Integer> stabilityBase;
 	public final Map<Province.Id, Integer> stabilityModifier;
@@ -72,7 +74,7 @@ public class ComputedGameState {
 		this.baseCovIncome = Collections.unmodifiableMap(baseCovIncomeMap);
 
 		EnumMap<Province.Id, Integer> baseInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
-		this.baseInfluence = Collections.unmodifiableMap(baseInfluenceMap);
+		this.initialInfluence = Collections.unmodifiableMap(baseInfluenceMap);
 		EnumMap<Province.Id, Integer> polInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.polInfluence = Collections.unmodifiableMap(polInfluenceMap);
 		EnumMap<Province.Id, Integer> milInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
@@ -81,6 +83,9 @@ public class ComputedGameState {
 		this.covInfluence = Collections.unmodifiableMap(covInfluenceMap);
 		EnumMap<Province.Id, Integer> totalInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.totalInfluence = Collections.unmodifiableMap(totalInfluenceMap);
+		
+		EnumMap<Province.Id, Player> allianceMap = new EnumMap<Province.Id, Player>(Province.Id.class);
+		this.alliances = Collections.unmodifiableMap(allianceMap);
 
 		EnumMap<Province.Id, Boolean> dissidentsMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
 		this.dissidents = Collections.unmodifiableMap(dissidentsMap);
@@ -192,6 +197,7 @@ public class ComputedGameState {
 		dissidentsMap.forEach((p, dissidents) -> {
 			if (dissidents) {stabilityModifierMap.compute(p, (q, mod) -> mod == null ? -1 : mod - 1 );}
 		});
+		
 		heatCounter = Math.max(heatCounter - 10, 0);
 		this.heat = heatCounter;
 		
@@ -212,6 +218,7 @@ public class ComputedGameState {
 		for (final Province.Builder province : nextStateBuilder.getProvincesBuilderList()) {
 			province.setDissidents(dissidentsMap.get(province.getId()));
 			province.setInfluence(totalInfluenceMap.get(province.getId()));
+			allianceMap.put(province.getId(), getAlly(province.getId()));
 		}
 		
 		nextStateBuilder.getUsaBuilder().getInfluenceStoreBuilder()
@@ -258,6 +265,8 @@ public class ComputedGameState {
 
 	}
 	
+	// VALIDATION
+	
 	public boolean isValidDiaDipMove(Player player){
 		return polStore.get(player) > 0;
 	}
@@ -282,6 +291,29 @@ public class ComputedGameState {
 	public boolean isValidPoliticalPressureMove(Player player, Province.Id province) {
 		return polStore.get(player) >= 2;
 		// Handle adjacencies
+	}
+	
+	// OTHER HELPER FUNCTIONS
+	
+	public Player getAlly(Province.Id province) {
+		if(totalInfluence.get(province) >= getAllianceThreshold(province)) {
+			return Player.USA;
+		} else if(totalInfluence.get(province) <= -getAllianceThreshold(province)) {
+			return Player.USSR;
+		}
+		return null;
+	}
+	
+	public int getNetStability(Province.Id province) {
+		if(stabilityModifier.get(province) != null) {
+			return stabilityBase.get(province) - stabilityModifier.get(province);
+		} else {
+			return stabilityBase.get(province);
+		}
+	}
+	
+	public int getAllianceThreshold(Province.Id province) {
+		return (int) Math.ceil(((float)getNetStability(province)/2));
 	}
 	
 	public static Player toPlayer(Province.Id id) {
