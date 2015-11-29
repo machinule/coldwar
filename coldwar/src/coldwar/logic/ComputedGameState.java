@@ -64,6 +64,8 @@ public class ComputedGameState {
 	public final Map<Province.Id, ProvinceSettings> provinceSettings;
 	
 	public final Map<Province.Id, Integer> coups;
+
+	public final Map<Province.Id, Boolean> acted;
 	
 	public final GameState nextState;
 	
@@ -127,6 +129,9 @@ public class ComputedGameState {
 
 		EnumMap<Province.Id, Integer> coupMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.coups = Collections.unmodifiableMap(coupMap);
+
+		EnumMap<Province.Id, Boolean> actedMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
+		this.acted = Collections.unmodifiableMap(actedMap);
 		
 		boolean ciaFoundedFlag = false;
 		boolean kgbFoundedFlag = false;
@@ -148,6 +153,7 @@ public class ComputedGameState {
 			dissidentsMap.put(p.getId(), p.getDissidents());
 			baseMap.put(p.getId(), toPlayer(p.getBase()));
 			governmentMap.put(p.getId(), p.getGov());
+			actedMap.put(p.getId(), false);
 		});
 		
 		totalInfluenceMap.putAll(baseInfluenceMap);
@@ -191,14 +197,16 @@ public class ComputedGameState {
 						}
 						polInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
 						polStoreMap.compute(player, (p, pol) -> pol == null ? -mag : pol - cost_multiplier);
-						}
+						actedMap.put(id, true);
 					}
+				}
 				if (move.hasDiaMilMove()) {
 					Province.Id id = move.getDiaMilMove().getProvinceId();
 					if(isValidDiaMilMove(player, id)) {
 						final int mag = move.getDiaMilMove().getMagnitude();
 						milInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
 						milStoreMap.compute(player, (p, mil) -> mil == null ? -mag : mil - mag);
+						actedMap.put(id, true);
 					}
 				}
 				if (move.hasDiaCovMove()) {
@@ -207,6 +215,7 @@ public class ComputedGameState {
 						final int mag = move.getDiaCovMove().getMagnitude();
 						covInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
 						covStoreMap.compute(player, (p, cov) -> cov == null ? -mag : cov - mag);
+						actedMap.put(id, true);
 					}
 				}
 				if (move.hasFundDissidentsMove()) {
@@ -215,6 +224,7 @@ public class ComputedGameState {
 						dissidentsMap.put(id, true);
 						covStoreMap.compute(player, (p, cov) -> cov == null ? -1 : cov - 1);
 						heatCounter += 4;
+						actedMap.put(id, true);
 					}
 				}
 				if (move.hasEstablishBaseMove()) {
@@ -223,6 +233,7 @@ public class ComputedGameState {
 						baseMap.put(id, player);
 						milStoreMap.compute(player,  (p, mil) -> mil == null ? -2 : mil - 2);
 						heatCounter += 4;
+						actedMap.put(id, true);
 					}
 				}
 				if (move.hasPoliticalPressureMove()) {
@@ -253,6 +264,7 @@ public class ComputedGameState {
 							heatCounter +=4;
 						}
 						heatCounter += 4; // More if enemy ally
+						actedMap.put(id, true);
 					}
 				}
 				if (move.hasCoupMove()) {
@@ -261,6 +273,7 @@ public class ComputedGameState {
 						//baseMap.put(id, player);
 						//milStoreMap.compute(player,  (p, mil) -> mil == null ? -2 : mil - 2);
 						//heatCounter += 4;
+						//actedMap.put(id, true);
 					}
 				}
 				if (move.hasFoundNatoMove()) {
@@ -481,6 +494,10 @@ public class ComputedGameState {
 	}
 	
 	// OTHER HELPER FUNCTIONS
+	
+	public boolean hasActed(Province.Id id) {
+		return acted.get(id);
+	}
 	
 	public Player getAlly(Province.Id province) {
 		if(totalInfluence.get(province) >= getAllianceThreshold(province)) {

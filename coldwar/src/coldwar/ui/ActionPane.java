@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import coldwar.GameStateOuterClass.ProvinceSettings;
+import coldwar.ProvinceOuterClass.Province;
 import coldwar.Logger;
 import coldwar.logic.Client;
 
@@ -69,7 +70,7 @@ public class ActionPane extends Table {
 		actionButtons.put(coupButton, () -> ActionPane.this.client.getMoveBuilder().Coup(province.getId(), 1) );
 		//actionButtons.put(invadeButton, () -> ActionPane.this.client.getMoveBuilder().Invade(province.getId()) );
 		
-		submitButton = new DynamicButton(this.client, c -> true, "Submit", this.skin);
+		submitButton = new DynamicButton(this.client, c -> !(c.getMoveBuilder().getComputedGameState().hasActed(province.getId()) || (selected == null)), "Submit", this.skin);
 		
 		diplomaticInfluenceButton.addListener(new ChangeListener() {
 			@Override
