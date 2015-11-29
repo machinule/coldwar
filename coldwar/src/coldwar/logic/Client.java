@@ -88,6 +88,7 @@ public abstract class Client {
 			.setId(Province.Id.MEXICO)
 			.setLabel("Mexico")
 			.setStabilityBase(2)
+			.addAdjacency(Province.Id.USA)
 			.addAdjacency(Province.Id.GUATEMALA)
 			.addAdjacency(Province.Id.HONDURAS)
 			.addAdjacency(Province.Id.CUBA);
@@ -112,6 +113,7 @@ public abstract class Client {
 			.addAdjacency(Province.Id.CUBA)
 			.addAdjacency(Province.Id.HONDURAS)
 			.addAdjacency(Province.Id.GUATEMALA)
+			.addAdjacency(Province.Id.PANAMA)
 			.addAdjacency(Province.Id.COSTA_RICA);
 		
 		settings.addProvincesBuilder()
@@ -129,6 +131,7 @@ public abstract class Client {
 			.setStabilityBase(2)
 			.setMilitaryBaseInit(Province.Id.USA)
 			.addAdjacency(Province.Id.NICARAGUA)
+			.addAdjacency(Province.Id.COSTA_RICA)
 			.addAdjacency(Province.Id.ECUADOR);
 		
 		settings.addProvincesBuilder()
@@ -151,6 +154,7 @@ public abstract class Client {
 			.setId(Province.Id.DOMINICAN_REP)
 			.setLabel("Dominican Rep.")
 			.setGovernmentInit(Province.Government.AUTOCRACY)
+			.addAdjacency(Province.Id.COLUMBIA)
 			.addAdjacency(Province.Id.HAITI)
 			.addAdjacency(Province.Id.LESS_ANTILLES);
 		
@@ -168,6 +172,7 @@ public abstract class Client {
 			.setLabel("Columbia")
 			.addAdjacency(Province.Id.DOMINICAN_REP)
 			.addAdjacency(Province.Id.VENEZUELA)
+			.addAdjacency(Province.Id.ECUADOR)
 			.addAdjacency(Province.Id.GUYANA);
 		
 		settings.addProvincesBuilder()
@@ -175,6 +180,7 @@ public abstract class Client {
 			.setLabel("Ecuador")
 			.setStabilityBase(2)
 			.addAdjacency(Province.Id.COLUMBIA)
+			.addAdjacency(Province.Id.PANAMA)
 			.addAdjacency(Province.Id.PERU);
 		
 		settings.addProvincesBuilder()
@@ -224,6 +230,7 @@ public abstract class Client {
 			.setLabel("Guyana")
 			.setGovernmentInit(Province.Government.COLONY)
 			.setOccupierInit(Province.Id.GREAT_BRITAIN)
+			.addAdjacency(Province.Id.COLUMBIA)
 			.addAdjacency(Province.Id.VENEZUELA)
 			.addAdjacency(Province.Id.BRAZIL)
 			.addAdjacency(Province.Id.LESS_ANTILLES);
