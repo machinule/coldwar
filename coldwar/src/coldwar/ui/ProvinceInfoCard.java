@@ -49,7 +49,7 @@ public class ProvinceInfoCard extends Table {
 		//ret.setDebug(Settings.isDebug());
 		DynamicLabel influence = new DynamicLabel(client, c -> Integer.toString(Math.abs(c.getMoveBuilder().getInfluence(province.getId()))), c -> c.getMoveBuilder().getInfluence(province.getId()) > 0 ? Color.BLUE : c.getMoveBuilder().getInfluence(province.getId()) < 0 ? Color.RED : Color.BLACK, skin);
 		DynamicLabel stability = new DynamicLabel(client, c -> netStability(), skin);
-		DynamicLabel name = new DynamicLabel(client, c -> province.getLabel(), skin);
+		DynamicLabel name = new DynamicLabel(client, c -> province.getLabel(), c -> c.getMoveBuilder().getComputedGameState().getAlly(province.getId()) == Player.USA ? Color.BLUE : c.getMoveBuilder().getComputedGameState().getAlly(province.getId()) == Player.USSR ? Color.RED : Color.BLACK, skin);
 		
 		name.setAlignment(1); //Center in cell
 		name.setFontScale((float)0.75);
