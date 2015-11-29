@@ -111,6 +111,8 @@ public class ComputedGameState {
 			baseMap.put(p.getId(), toPlayer(p.getBase()));
 		});
 		
+		totalInfluenceMap.putAll(baseInfluenceMap);
+		
 		polStoreMap.put(Player.USA, state.getUsa().getInfluenceStore().getPolitical());
 		milStoreMap.put(Player.USA, state.getUsa().getInfluenceStore().getMilitary());
 		covStoreMap.put(Player.USA, state.getUsa().getInfluenceStore().getCovert());
@@ -140,10 +142,16 @@ public class ComputedGameState {
 			for (Move move : moves.getMovesList()) {
 				if (move.hasDiaDipMove()) {
 					if(isValidDiaDipMove(player)) {
+						int multiplier = 1;
+						if(getAlly(move.getDiaDipMove().getProvinceId()) != player ||
+								getAlly(move.getDiaDipMove().getProvinceId()) != null) {
+							multiplier = 2;
+						}
 						Province.Id id = move.getDiaDipMove().getProvinceId();
 						final int mag = move.getDiaDipMove().getMagnitude();
-						polInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
-						polStoreMap.compute(player, (p, pol) -> pol == null ? -mag : pol - mag);
+						int change = mag/multiplier;
+						polInfluenceMap.compute(id, (i, infl) -> infl == null ? change * inflSign : infl + mag * inflSign);
+						polStoreMap.compute(player, (p, pol) -> pol == null ? -change : pol - mag);
 						}
 					}
 				if (move.hasDiaMilMove()) {
@@ -192,7 +200,6 @@ public class ComputedGameState {
 			}			
 		}
 		
-		totalInfluenceMap.putAll(baseInfluenceMap);
 		totalInfluenceMap.replaceAll((p, infl) -> infl + polInfluenceMap.getOrDefault(p, 0) + milInfluenceMap.getOrDefault(p, 0) + covInfluenceMap.getOrDefault(p, 0));
 		dissidentsMap.forEach((p, dissidents) -> {
 			if (dissidents) {stabilityModifierMap.compute(p, (q, mod) -> mod == null ? -1 : mod - 1 );}
