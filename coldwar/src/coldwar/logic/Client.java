@@ -88,6 +88,7 @@ public abstract class Client {
 			.setId(Province.Id.MEXICO)
 			.setLabel("Mexico")
 			.setStabilityBase(2)
+			.addAdjacency(Province.Id.USA)
 			.addAdjacency(Province.Id.GUATEMALA)
 			.addAdjacency(Province.Id.HONDURAS)
 			.addAdjacency(Province.Id.CUBA);
