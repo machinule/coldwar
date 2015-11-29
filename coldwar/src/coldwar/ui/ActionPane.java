@@ -162,8 +162,7 @@ public class ActionPane extends Table {
 		
 		Table innerConfirm = new Table();
 		
-		DynamicLabel actionParamLabel = new DynamicLabel(client, c -> "Value: " + actionParamInput.getValue() + " ", skin);
-		actionParamLabel.setVisibleFn(c -> requiresSlider);
+		DynamicLabel actionParamLabel = new DynamicLabel(client, c -> requiresSlider ? "Value: " + actionParamInput.getValue() + " " : "", skin);
 		
 		innerConfirm.add(actionParamLabel).left();
 		innerConfirm.add(actionParamInput);
