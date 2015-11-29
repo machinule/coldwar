@@ -49,15 +49,23 @@ public abstract class Client {
 								.build())
 						.build());
 		for (ProvinceSettings p : settings.getProvincesList()) {
-			state.addProvincesBuilder()
+			Province.Builder builder = state.addProvincesBuilder()
 				.setId(p.getId())
-				.setAlly(p.getAllyInit())
-				.setBase(p.getMilitaryBaseInit())
 				.setDissidents(p.getDissidentsInit())
 				.setGov(p.getGovernmentInit())
 				.setInfluence(p.getInfluenceInit());
+			if (p.hasAllyInit()) {
+				builder.setAlly(p.getAllyInit());
+			}
+			if (p.hasMilitaryBaseInit()) {
+				builder.setBase(p.getMilitaryBaseInit());
+			}
+			if (p.hasOccupierInit()) {
+				builder.setOccupier(p.getOccupierInit());
+			}
 		}
 		this.initialGameState = state.build();
+		Logger.Dbg("Initial game state: " + this.initialGameState);
 		return state;
 	}
 	
