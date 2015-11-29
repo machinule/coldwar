@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.function.Function;
 
 import coldwar.GameStateOuterClass.GameState;
+import coldwar.GameStateOuterClass.ProvinceSettings;
 import coldwar.GameStateOuterClass.TurnLogEntry;
 import coldwar.Logger;
 import coldwar.EventOuterClass.Event;
@@ -17,6 +18,7 @@ import coldwar.EventOuterClass.ProvinceRepublicEvent;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.Settings;
 import coldwar.logic.Client.Player;
 
 /**
@@ -54,9 +56,12 @@ public class ComputedGameState {
 	
 	public final Map<Province.Id, Boolean> dissidents;
 	public final Map<Province.Id, Player> bases; // NULL -> Neither player
+	public final Map<Province.Id, Province.Government> governments;
 
 	public final Map<Province.Id, Integer> stabilityBase;
 	public final Map<Province.Id, Integer> stabilityModifier;
+	
+	public final Map<Province.Id, ProvinceSettings> provinceSettings;
 	
 	public final GameState nextState;
 	
@@ -107,11 +112,16 @@ public class ComputedGameState {
 		this.dissidents = Collections.unmodifiableMap(dissidentsMap);
 		EnumMap<Province.Id, Player> baseMap = new EnumMap<Province.Id, Player>(Province.Id.class);
 		this.bases = Collections.unmodifiableMap(baseMap);
+		EnumMap<Province.Id, Province.Government> governmentMap = new EnumMap<Province.Id, Province.Government>(Province.Id.class);
+		this.governments = Collections.unmodifiableMap(governmentMap);
 
 		EnumMap<Province.Id, Integer> stabilityBaseMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.stabilityBase = Collections.unmodifiableMap(stabilityBaseMap);
 		EnumMap<Province.Id, Integer> stabilityModifierMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
-		this.stabilityModifier = Collections.unmodifiableMap(stabilityModifierMap);
+		this.stabilityModifier = Collections.unmodifiableMap(stabilityModifierMap);	
+
+		EnumMap<Province.Id, ProvinceSettings> provinceSettingsMap = new EnumMap<Province.Id, ProvinceSettings>(Province.Id.class);
+		this.provinceSettings = Collections.unmodifiableMap(provinceSettingsMap);
 
 		boolean ciaFoundedFlag = false;
 		boolean kgbFoundedFlag = false;
@@ -125,12 +135,14 @@ public class ComputedGameState {
 		
 		this.state.getSettings().getProvincesList().forEach(p -> {
 			stabilityBaseMap.put(p.getId(), p.getStabilityBase());
+			provinceSettingsMap.put(p.getId(), p);
 		});
 		
 		this.state.getProvincesList().forEach(p -> {
 			baseInfluenceMap.put(p.getId(), p.getInfluence());
 			dissidentsMap.put(p.getId(), p.getDissidents());
 			baseMap.put(p.getId(), toPlayer(p.getBase()));
+			governmentMap.put(p.getId(), p.getGov());
 		});
 		
 		totalInfluenceMap.putAll(baseInfluenceMap);
@@ -209,8 +221,32 @@ public class ComputedGameState {
 					}
 				}
 				if (move.hasPoliticalPressureMove()) {
-					if(isValidPoliticalPressureMove(player, move.getPoliticalPressureMove().getProvinceId())) {
+					Province.Id id = move.getPoliticalPressureMove().getProvinceId();
+					if(isValidPoliticalPressureMove(player, id)) {
+						int netInfl = 0;
+						for (Province.Id adj : provinceSettingsMap.get(id).getAdjacencyList()) {
+							Logger.Vrb("Seeing pressure from: " + adj);
+							if(getAlly(adj) == otherPlayer(player)) {
+								netInfl -= 1;
+								Logger.Vrb("Neighboring enemy ally -> -1");
+							} else if(getAlly(adj) == otherPlayer(player)) {
+								netInfl += 1;
+								Logger.Vrb("Neighboring friendly ally -> +1");
+							}
+							if(governmentMap.get(adj) == getIdealGov(player)) {
+								netInfl += 1;
+								Logger.Vrb("Neighboring friendly government -> +1");
+							} else if(governmentMap.get(adj) == getIdealGov(otherPlayer(player))) {
+								netInfl -= 1;
+								Logger.Vrb("Neighboring enemy government -> +1");
+							} 
+						}
+						final int finInfl = netInfl;
+						polInfluenceMap.compute(id, (i, infl) -> infl == null ? finInfl * inflSign : infl + finInfl * inflSign);
 						polStoreMap.compute(player,  (p, pol) -> pol == null ? -2 : pol - 2);
+						if(getAlly(id) != null) {
+							heatCounter +=4;
+						}
 						heatCounter += 4; // More if enemy ally
 					}
 				}
@@ -462,6 +498,14 @@ public class ComputedGameState {
 		if (id == Province.Id.USA) return Player.USA;
 		if (id == Province.Id.USSR) return Player.USSR;
 		return null;
+	}
+	
+	public Province.Government getIdealGov(Player player) {
+		if(player == Player.USSR) {
+			return Province.Government.COMMUNISM;
+		} else {
+			return Province.Government.DEMOCRACY;
+		} 
 	}
 
 }
