@@ -10,6 +10,9 @@ import coldwar.GameStateOuterClass.GameState;
 import coldwar.GameStateOuterClass.TurnLogEntry;
 import coldwar.Logger;
 import coldwar.EventOuterClass.Event;
+import coldwar.EventOuterClass.ProvinceDissidentsEvent;
+import coldwar.EventOuterClass.ProvinceDissidentsSuppressedEvent;
+import coldwar.EventOuterClass.ProvinceFauxPasEvent;
 import coldwar.EventOuterClass.ProvinceRepublicEvent;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
@@ -224,7 +227,7 @@ public class ComputedGameState {
 			.setCovert(covStoreMap.get(Player.USSR) + baseCovIncomeMap.get(Player.USSR));
 		
 		// Random events.
-		Random r = new Random(this.state.getSettings().getSeed());
+		Random r = new Random(this.state.getSeed());
 		Function<Integer, Boolean> happens = c -> r.nextInt(1000000) < c;
 		// TODO: LeaderSpawn
 		// TODO: LeaderDeath
@@ -247,12 +250,80 @@ public class ComputedGameState {
 				}
 			}
 		}
-		// TODO: ProvinceFauxPas
-		// TODO: ProvinceDissidents
-		// TODO: ProvinceDissidentsSuppressed
+		// ProvinceFauxPas
+		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
+			if (p.getInfluence() != 0) {
+				if (happens.apply(this.state.getSettings().getRandomProvinceFauxPasChance())) {
+					int sgn;
+				    if (p.getInfluence() < 0) {
+				    	sgn = -1;
+				    } else {
+				    	sgn = 1;
+				    }
+				    int mag = Math.min(Math.abs(p.getInfluence()), r.nextInt(2) + 1);
+				    p.setInfluence(sgn * (Math.abs(p.getInfluence()) - mag));
+					p.setGov(Province.Government.REPUBLIC);
+					nextStateBuilder.getTurnLogBuilder()
+						.addEvents(Event.newBuilder()
+							.setProvinceFauxPas(ProvinceFauxPasEvent.newBuilder()
+								.setProvinceId(p.getId())
+								.setMagnitude(mag)
+								.build())
+							.build());
+					
+				}
+			}
+		}
+		// ProvinceDissidents
+		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
+			if (!p.getDissidents()) {
+				int chance;
+				if (p.getGov() == Province.Government.AUTOCRACY ||
+					p.getGov() == Province.Government.COMMUNISM ||
+					p.getGov() == Province.Government.DEMOCRACY) {
+					chance = this.state.getSettings().getRandomProvinceACDDissidentsChance();
+				} else {
+					chance = this.state.getSettings().getRandomProvinceDefaultDissidentsChance();
+				}
+				if (happens.apply(chance)) {
+					p.setDissidents(true);
+					nextStateBuilder.getTurnLogBuilder()
+						.addEvents(Event.newBuilder()
+							.setProvinceDissidents(ProvinceDissidentsEvent.newBuilder()
+								.setProvinceId(p.getId())
+								.build())
+							.build());
+					
+				}
+			}
+		}
+		// ProvinceDissidentsSuppressed
+		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
+			if (p.getDissidents()) {
+				int chance;
+				if (p.getGov() == Province.Government.AUTOCRACY ||
+					p.getGov() == Province.Government.COMMUNISM ||
+					p.getGov() == Province.Government.DEMOCRACY) {
+					chance = this.state.getSettings().getRandomProvinceACDDissidentsSuppressedChance();
+				} else {
+					chance = this.state.getSettings().getRandomProvinceDefaultDissidentsSuppressedChance();
+				}
+				if (happens.apply(chance)) {
+					p.setDissidents(false);
+					nextStateBuilder.getTurnLogBuilder()
+						.addEvents(Event.newBuilder()
+							.setProvinceDissidentsSuppressed(ProvinceDissidentsSuppressedEvent.newBuilder()
+								.setProvinceId(p.getId())
+								.build())
+							.build());
+					
+				}
+			}
+		}
 		// TODO: UsAllyDemocracy
 		// TODO: UssrAllyCommunism		
 		
+		nextStateBuilder.setSeed(r.nextLong());
 		this.nextState = nextStateBuilder.build();
 		Logger.Info("Stability Mod: " + this.stabilityModifier);
 

@@ -47,6 +47,7 @@ message ProvinceRepublicEvent {
 
 message ProvinceFauxPasEvent {
 	optional Province.Id province_id = 1;
+	optional int32 magnitude = 2;
 }
 
 message ProvinceDissidentsEvent {
