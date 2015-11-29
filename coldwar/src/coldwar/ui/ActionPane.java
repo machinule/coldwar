@@ -21,7 +21,7 @@ public class ActionPane extends Table {
 	private final Client client;
 	protected Skin skin;
 	DynamicButton selected;
-	boolean requiresSlider = false;	
+	boolean requiresSlider;	
 	
 	public ActionPane(final Client client, final Skin skin) {
 		super();
@@ -44,6 +44,7 @@ public class ActionPane extends Table {
 		
 		DynamicButton submitButton;
 		selected = null;
+		requiresSlider = false;
 			
 		DynamicSliderContainer actionParamInput = new DynamicSliderContainer(client, 1, 2, 1, c -> requiresSlider, false, skin);
 		int sliderMax = 10;		
@@ -84,7 +85,10 @@ public class ActionPane extends Table {
 				Logger.Info("\"Diplomatic Outreatch\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(diplomaticInfluenceButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(1, Math.min(client.getMoveBuilder().getComputedGameState().polStore.get(client.getPlayer()), sliderMax), 1);
+				actionParamInput.setBounds(1, 
+										   Math.min(client.getMoveBuilder().getComputedGameState().polStore.get(client.getPlayer()), 
+												    2*client.getMoveBuilder().getComputedGameState().getNetStability(province.getId())),
+										   1);
 			}
 		});
 
@@ -94,7 +98,10 @@ public class ActionPane extends Table {
 				Logger.Info("\"Arms Sales\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(militaryInfluenceButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(1, Math.min(client.getMoveBuilder().getComputedGameState().milStore.get(client.getPlayer()), sliderMax), 1);
+				actionParamInput.setBounds(1, 
+						                   Math.min(client.getMoveBuilder().getComputedGameState().milStore.get(client.getPlayer()),
+					                                2*client.getMoveBuilder().getComputedGameState().getNetStability(province.getId())),
+						                   1);
 			}
 		});
 		
@@ -104,7 +111,10 @@ public class ActionPane extends Table {
 				Logger.Info("\"Support Party\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(covertInfluenceButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(1, Math.min(client.getMoveBuilder().getComputedGameState().covStore.get(client.getPlayer()), sliderMax), 1);
+				actionParamInput.setBounds(1, 
+										   Math.min(client.getMoveBuilder().getComputedGameState().covStore.get(client.getPlayer()), 
+												    2*client.getMoveBuilder().getComputedGameState().getNetStability(province.getId())),
+										   1);
 			}
 		});
 
@@ -141,7 +151,10 @@ public class ActionPane extends Table {
 				Logger.Info("\"Sponsor coup\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(coupButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(1, Math.min(client.getMoveBuilder().getComputedGameState().covStore.get(client.getPlayer()), sliderMax), 1);
+				actionParamInput.setBounds(1, 
+										   Math.min(client.getMoveBuilder().getComputedGameState().covStore.get(client.getPlayer()), 
+												    client.getMoveBuilder().getComputedGameState().getNetStability(province.getId())),
+										   1);
 			}
 		});
 		
