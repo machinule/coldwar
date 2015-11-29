@@ -5,6 +5,9 @@ package coldwar;
 message Province {
 
 	enum Id {
+
+		NONE = 00;
+
 		// EUROPE
 		GREAT_BRITAIN = 01;
 		FRANCE = 02;

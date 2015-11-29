@@ -3,6 +3,7 @@ package coldwar.logic;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.Logger;
 import coldwar.MoveListOuterClass.MoveList;
+import coldwar.MoveOuterClass.CoupMove;
 import coldwar.MoveOuterClass.CovertMove;
 import coldwar.MoveOuterClass.DiplomacyMove;
 import coldwar.MoveOuterClass.EstablishBaseMove;
@@ -89,6 +90,13 @@ public class MoveBuilder {
 		this.moves.addMoves(
 				Move.newBuilder().setPoliticalPressureMove(PoliticalPressureMove.newBuilder().setProvinceId(id)).build());
 		Logger.Dbg("Applying political pressure in " + id);
+		this.computeState();
+	}
+	
+	public void Coup(final Province.Id id, final int magnitude) {
+		this.moves.addMoves(
+				Move.newBuilder().setCoupMove(CoupMove.newBuilder().setProvinceId(id)).build());
+		Logger.Dbg("Preparing coup in " + id);
 		this.computeState();
 	}
 	

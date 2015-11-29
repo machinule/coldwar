@@ -22,6 +22,7 @@ message Move {
 	optional FundDissidentsMove fund_dissidents_move = 101;
 	optional EstablishBaseMove establish_base_move = 102;
 	optional PoliticalPressureMove political_pressure_move = 103;
+	optional CoupMove coup_move = 104;
 
 	optional FoundCIAMove found_cia_move = 200;
 
@@ -75,6 +76,13 @@ message PoliticalPressureMove {
 	optional Province.Id province_id = 1;
 
 	option (pol_cost) = 2;
+}
+
+message CoupMove {
+	optional Province.Id province_id = 1;
+	optional int32 magnitude = 2;
+
+	//option (pol_cost) = 2;
 }
 
 // ========== SPECIAL ACTIONS ==========
