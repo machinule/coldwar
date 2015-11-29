@@ -229,8 +229,12 @@ public class ComputedGameState {
 		
 		for (final Province.Builder province : nextStateBuilder.getProvincesBuilderList()) {
 			province.setDissidents(dissidentsMap.get(province.getId()));
-			province.setInfluence(totalInfluenceMap.get(province.getId()));
 			allianceMap.put(province.getId(), getAlly(province.getId()));
+			province.setInfluence(totalInfluenceMap.get(province.getId()));
+			int totalStability = this.stabilityBase.get(province.getId()) + this.stabilityModifier.getOrDefault(province.getId(), 0);
+			if (Math.abs(province.getInfluence()) > totalStability) {
+				province.setInfluence(Integer.signum(province.getInfluence()) * totalStability);
+			}
 		}
 		
 		nextStateBuilder.getUsaBuilder().getInfluenceStoreBuilder()
