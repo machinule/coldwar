@@ -223,8 +223,12 @@ public class ActionPane extends Table {
 			.padTop(5)
 			.padLeft(10);
 		innerBottom.row();
-		innerBottom.add(new Label("Dissidents:", this.skin));
-		innerBottom.add(new DynamicLabel(this.client, c -> c.getMoveBuilder().hasDissidents(province.getId()) ? "True" : "False", this.skin));
+		innerBottom.add(new Label("Adjacencies:", this.skin));
+		DynamicLabel adjacencyList = new DynamicLabel(this.client, c -> getFormattedAdjacencies(province), this.skin);
+		innerBottom.add(adjacencyList)
+			.size(0, 0)
+			.left()
+			.padLeft(10);
 		innerBottom.row();
 		innerBottom.add(new Label("Influence:", this.skin));
 		innerBottom.add(new DynamicLabel(
@@ -263,5 +267,17 @@ public class ActionPane extends Table {
 		}
 		selected = button;
 		selected.isSelected = true;
+	}
+	
+	protected String getFormattedAdjacencies(final ProvinceSettings province) {
+		String ret = "";
+		int count = 0;
+		int max = province.getAdjacencyCount();
+		for(Province.Id id : province.getAdjacencyList()) {
+			count++;
+			ret += client.getMoveBuilder().getComputedGameState().provinceSettings.get(id).getLabel();
+			if(count < max) ret += ", ";
+		}
+		return ret;
 	}
 }

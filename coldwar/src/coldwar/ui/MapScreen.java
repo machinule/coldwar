@@ -40,13 +40,15 @@ public class MapScreen extends AbstractScreen {
 		superpowerPane.setDebug(Settings.isDebug());
 		int count = 0; //Temporary for setting orderly columns
 		for (final ProvinceSettings p : this.client.initialGameState.getSettings().getProvincesList()) {
-			ProvinceInfoCard card = new ProvinceInfoCard(this.client, p, actionPane, skin);
-			card.setDebug(Settings.isDebug());
-			nations.add(card);
-			count ++;
-			if(count == 4) {
-				nations.row();
-				count = 0;
+			if(p.getRegionInit() != Province.Region.SUPERPOWERS) {
+				ProvinceInfoCard card = new ProvinceInfoCard(this.client, p, actionPane, skin);
+				card.setDebug(Settings.isDebug());
+				nations.add(card);
+				count ++;
+				if(count == 4) {
+					nations.row();
+					count = 0;
+				}
 			}
 		}
 		

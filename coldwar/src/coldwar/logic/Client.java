@@ -83,6 +83,22 @@ public abstract class Client {
 	
 	protected void populateProvinces(GameSettings.Builder settings) {
 		
+		// SUPERPOWERS
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.USA)
+			.setRegionInit(Province.Region.SUPERPOWERS)
+			.setLabel("United States")
+			.setGovernmentInit(Province.Government.DEMOCRACY)
+			.addAdjacency(Province.Id.MEXICO)
+			.addAdjacency(Province.Id.CUBA);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.USA)
+			.setRegionInit(Province.Region.SUPERPOWERS)
+			.setLabel("Soviet Union")
+			.setGovernmentInit(Province.Government.COMMUNISM);
+		
 		// CENTRAL AMERICA
 		
 		settings.addProvincesBuilder()

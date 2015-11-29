@@ -73,6 +73,8 @@ message Province {
 		MIDDLE_EAST = 6;
 		SOUTH_ASIA = 7;
 		EAST_ASIA = 8;
+
+		SUPERPOWERS = 9;
 	}
 
 	optional Id id = 1;

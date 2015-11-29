@@ -49,7 +49,7 @@ public class ProvinceInfoCard extends Table {
 					currentSelection.infoBox.setColor(currentSelection.color);
 				}
 				currentSelection = ProvinceInfoCard.this;
-				currentSelection.infoBox.setColor(new Color(1, 1, 51/255, 1));
+				currentSelection.infoBox.setColor(new Color(1, 1, 1, 1));
 			}
 		});
 		this.add(infoBox).size(180, 40);
