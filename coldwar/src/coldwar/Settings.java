@@ -30,6 +30,8 @@ public class Settings {
 
 	public static void initConstants() {
 		Settings.consts.putBoolean("pack_textures", true);
+		Settings.consts.putInteger("splash_x", 480);
+		Settings.consts.putInteger("splash_y", 551);
 		Settings.consts.putInteger("heat_start", 40);
 		Settings.consts.putInteger("heat_min", 0);
 		Settings.consts.putInteger("heat_max", 100);

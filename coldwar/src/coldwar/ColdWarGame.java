@@ -34,8 +34,8 @@ public class ColdWarGame extends Game {
 			TexturePacker.process(settings, "assets", "textures", "pack");	
 		}
 		Gdx.app.getGraphics().setDisplayMode(
-				Settings.prefs.getInteger("resolution_width"),
-				Settings.prefs.getInteger("resolution_height"),
+				Settings.consts.getInteger("splash_y"),
+				Settings.consts.getInteger("splash_x"),
 				Settings.prefs.getBoolean("fullscreen"));
 		this.setScreen(new SplashScreen(this));
 	}
@@ -60,4 +60,18 @@ public class ColdWarGame extends Game {
 		// TODO: clean up application elements.
 	}
 
+	public void setRes() {
+		Gdx.app.getGraphics().setDisplayMode(
+				Settings.prefs.getInteger("resolution_width"),
+				Settings.prefs.getInteger("resolution_height"),
+				Settings.prefs.getBoolean("fullscreen"));
+	}
+	
+	public void setRes(int x, int y) {
+		Gdx.app.getGraphics().setDisplayMode(
+				x,
+				y,
+				Settings.prefs.getBoolean("fullscreen"));
+	}
+	
 }

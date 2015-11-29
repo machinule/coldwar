@@ -25,7 +25,7 @@ public class SplashScreen extends AbstractScreen {
 	public void show() {
 		super.show();
 		final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/pack.atlas"));
-		final AtlasRegion splashRegion = atlas.findRegion("logo");
+		final AtlasRegion splashRegion = atlas.findRegion("Knife'sEdge");
 		final Drawable splashDrawable = new TextureRegionDrawable(splashRegion);
 		final Image splashImage = new Image(splashDrawable, Scaling.none);
 		splashImage.setFillParent(true);
@@ -35,6 +35,7 @@ public class SplashScreen extends AbstractScreen {
 				Actions.sequence(Actions.fadeIn(0.75f), Actions.delay(1.75f), Actions.fadeOut(0.75f), new Action() {
 					@Override
 					public boolean act(final float delta) {
+						game.setRes();
 						SplashScreen.this.game.setScreen(new MainMenuScreen(SplashScreen.this.game));
 						return true;
 					}
@@ -44,6 +45,7 @@ public class SplashScreen extends AbstractScreen {
 			@Override
 			public void clicked(final InputEvent event, final float x, final float y) {
 				Logger.Dbg("Splash image clicked - skipping");
+				game.setRes();
 				SplashScreen.this.game.setScreen(new MainMenuScreen(SplashScreen.this.game));
 			}
 		});
