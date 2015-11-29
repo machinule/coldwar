@@ -83,9 +83,13 @@ public class ProvinceInfoCard extends Table {
 	}
 	
     protected String netStability() {
-    	int netStab = province.getStabilityBase() + client.getMoveBuilder().getStabilityModifier(province.getId());
-		String ret = netStab + " ";
-		return ret;
+    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.CIVIL_WAR) {
+    		return "X ";
+    	} else {
+	    	int netStab = client.getMoveBuilder().getComputedGameState().getNetStability(province.getId());
+			String ret = netStab + " ";
+			return ret;
+    	}
 	}
     
     protected String getModifiers() {
@@ -94,12 +98,16 @@ public class ProvinceInfoCard extends Table {
     		ret += "DISS ";
     	}
     	if(client.getMoveBuilder().getBaseOwner(province.getId()) == Player.USA) {
-    		ret += "USA-B ";
+    		ret += "USA Base ";
     	}
     	if(client.getMoveBuilder().getBaseOwner(province.getId()) == Player.USSR) {
-    		ret += "USSR-B ";
+    		ret += "USSR Base ";
     	}
-    	return ret;
+    	// Unique proto for each government to include string label?
+    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.CIVIL_WAR) {
+    		ret += "CIVIL WAR ";
+    	}
+    		return ret;
     }
     
     protected Color getRegionColor(Region region) {

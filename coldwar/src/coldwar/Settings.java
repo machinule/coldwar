@@ -41,6 +41,17 @@ public class Settings {
 		Settings.consts.putInteger("base_income_pol", 4);
 		Settings.consts.putInteger("base_income_mil", 4);
 		Settings.consts.putInteger("base_income_cov", 1);
+		
+		Settings.consts.putInteger("action_dissidents_cost", 2); // COV
+		Settings.consts.putInteger("action_dissidents_heat", 4);
+		
+		Settings.consts.putInteger("action_pressure_cost", 2); // POL
+		Settings.consts.putInteger("action_pressure_heat", 4);
+		Settings.consts.putInteger("action_pressure_heat_extra", 4); // If target was allied to enemy
+		
+		Settings.consts.putInteger("action_base_cost", 2); // MIL
+		Settings.consts.putInteger("action_base_heat", 4);
+		
 
 		Settings.consts.flush();
 	}

@@ -94,7 +94,7 @@ public abstract class Client {
 			.addAdjacency(Province.Id.CUBA);
 		
 		settings.addProvincesBuilder()
-			.setId(Province.Id.USA)
+			.setId(Province.Id.USSR)
 			.setRegionInit(Province.Region.SUPERPOWERS)
 			.setLabel("Soviet Union")
 			.setGovernmentInit(Province.Government.COMMUNISM);

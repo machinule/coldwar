@@ -55,9 +55,9 @@ public class ActionPane extends Table {
 		int param; //For use in lambda's
 		Map<DynamicButton, Runnable> actionButtons = new HashMap<>();
 		
-		diplomaticInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaDipMove(c.getPlayer()), "Diplomatic Outreach", this.skin);
+		diplomaticInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaDipMove(c.getPlayer(), province.getId()), "Diplomatic Outreach", this.skin);
 		militaryInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaMilMove(c.getPlayer(), province.getId()), "Arms Sales", this.skin);
-		covertInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaCovMove(c.getPlayer()), "Support Party", this.skin);
+		covertInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaCovMove(c.getPlayer(), province.getId()), "Support Party", this.skin);
 		
 		dissidentsButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidFundDissidentsMove(c.getPlayer(), province.getId()), "Fund Dissidents", this.skin);
 		politicalPressureButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidPoliticalPressureMove(c.getPlayer(), province.getId()), "Political Pressure", this.skin);
@@ -279,5 +279,9 @@ public class ActionPane extends Table {
 			if(count < max) ret += ", ";
 		}
 		return ret;
+	}
+	
+	protected String getFormattedCost(int cost) {
+		return "Cost: " + cost;
 	}
 }

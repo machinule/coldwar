@@ -62,6 +62,7 @@ message Province {
 		AUTOCRACY = 4;
 		COLONY = 5;
 		OCCUPIED = 6;
+		CIVIL_WAR = 7;
 	}
 
 	enum Region {
