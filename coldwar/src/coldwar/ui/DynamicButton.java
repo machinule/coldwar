@@ -14,6 +14,7 @@ public class DynamicButton extends TextButton {
 	protected Function<Client, Boolean> enabledFn;
 	protected Function<Client, Boolean> visibleFn;
 	protected Function<Client, String> textFn;
+	public boolean isSelected;
 
 	public DynamicButton(final Client client, Function<Client, Boolean> enabledFn, Function<Client, Boolean> visibleFn, Function<Client, String> textFn, final Skin skin) {
 		super("", skin);
@@ -54,7 +55,11 @@ public class DynamicButton extends TextButton {
 		boolean enabled = this.enabledFn.apply(this.client);
 		this.setDisabled(!enabled);
 		if (enabled) {
-			this.setColor(Color.LIGHT_GRAY);			
+			if (isSelected) {
+				this.setColor(Color.YELLOW);
+			} else {
+				this.setColor(Color.LIGHT_GRAY);
+			}
 		} else {
 			this.setColor(Color.DARK_GRAY);
 		}

@@ -25,6 +25,9 @@ public class ProvinceInfoCard extends Table {
 	protected ProvinceSettings province;
 	protected Skin skin;
 	protected ActionPane toolbar;
+	protected Button infoBox;
+	static ProvinceInfoCard currentSelection;
+	static protected Color color; // To be replaced with region color
 
 	public ProvinceInfoCard(final Client client, final ProvinceSettings province, final ActionPane toolbar,
 			final Skin skin) {
@@ -32,13 +35,19 @@ public class ProvinceInfoCard extends Table {
 		this.client = client;
 		this.province = province;
 		this.skin = skin;
+		color = this.getColor();
 		
-		final Button infoBox = createLayout();
+		infoBox = createLayout();
 		infoBox.addCaptureListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, final Actor actor) {
 				Logger.Info(province.getId().getValueDescriptor().getName() + " selected");
 				toolbar.onSelect(province);
+				if (currentSelection != null) {
+					currentSelection.infoBox.setColor(color);
+				}
+				currentSelection = ProvinceInfoCard.this;
+				currentSelection.infoBox.setColor(Color.YELLOW);
 			}
 		});
 		this.add(infoBox).size(180, 40);
