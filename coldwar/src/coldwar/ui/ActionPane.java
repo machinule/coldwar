@@ -34,6 +34,12 @@ public class ActionPane extends Table {
 		TextButton dissidentsButton;
 		TextButton politicalPressureButton;
 		TextButton establishBaseButton;
+		
+		TextButton coupButton;
+		TextButton invadeButton;
+		
+		int sizeX = 200;
+		int sizeY = 25;
 
 		diplomaticInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaDipMove(c.getPlayer()), "Diplomatic Outreach", this.skin);
 		militaryInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaMilMove(c.getPlayer(), province.getId()), "Arms Sales", this.skin);
@@ -42,6 +48,9 @@ public class ActionPane extends Table {
 		dissidentsButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidFundDissidentsMove(c.getPlayer(), province.getId()), "Fund Dissidents", this.skin);
 		politicalPressureButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidPoliticalPressureMove(c.getPlayer(), province.getId()), "Political Pressure", this.skin);
 		establishBaseButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidEstablishBaseMove(c.getPlayer(), province.getId()), "Establish Military Base", this.skin);
+		
+		coupButton = new DynamicButton(this.client, c -> false, "Initiate Coup", this.skin);
+		invadeButton = new DynamicButton(this.client, c -> false, "Conduct Military Action", this.skin);
 		
 		diplomaticInfluenceButton.addListener(new ChangeListener() {
 			@Override
@@ -104,25 +113,41 @@ public class ActionPane extends Table {
 		Table innerBottom = new Table();
 		
 		innerBottom.add(diplomaticInfluenceButton)
+			.size(sizeX, sizeY)
 			.right()
 			.padTop(5);
 		innerBottom.add(dissidentsButton)
+		.size(sizeX, sizeY)
+			.left()
+			.padTop(5)
+			.padLeft(10);
+		innerBottom.add(coupButton)
+		.size(sizeX, sizeY)
 			.left()
 			.padTop(5)
 			.padLeft(10);
 		innerBottom.row();
 		innerBottom.add(militaryInfluenceButton)
+		.size(sizeX, sizeY)
 			.right()
 			.padTop(5);
 		innerBottom.add(politicalPressureButton)
+		.size(sizeX, sizeY)
 			.left()
 			.padTop(5)
 			.padLeft(10);
+		innerBottom.add(invadeButton)
+		.size(sizeX, sizeY)
+		.left()
+		.padTop(5)
+		.padLeft(10);
 		innerBottom.row();
 		innerBottom.add(covertInfluenceButton)
+		.size(sizeX, sizeY)
 			.right()
 			.padTop(5);
 		innerBottom.add(establishBaseButton)
+		.size(sizeX, sizeY)
 			.left()
 			.padTop(5)
 			.padLeft(10);
