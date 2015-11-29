@@ -12,13 +12,24 @@ public class DynamicButton extends TextButton {
 
 	protected Client client;
 	protected Function<Client, Boolean> enabledFn;
+	protected Function<Client, Boolean> visibleFn;
 	protected Function<Client, String> textFn;
 
+	public DynamicButton(final Client client, Function<Client, Boolean> enabledFn, Function<Client, Boolean> visibleFn, Function<Client, String> textFn, final Skin skin) {
+		super("", skin);
+		this.client = client;
+		this.textFn = textFn;
+		this.visibleFn = visibleFn;
+		this.enabledFn = enabledFn;
+		this.update();
+	}
+	
 	public DynamicButton(final Client client, Function<Client, Boolean> enabledFn, Function<Client, String> textFn, final Skin skin) {
 		super("", skin);
 		this.client = client;
 		this.textFn = textFn;
 		this.enabledFn = enabledFn;
+		this.visibleFn = c -> true;
 		this.update();
 	}
 
@@ -27,6 +38,7 @@ public class DynamicButton extends TextButton {
 		this.client = client;
 		this.textFn = c -> text;
 		this.enabledFn = enabledFn;
+		this.visibleFn = c -> true;
 		this.update();
 	}
 	
@@ -36,7 +48,10 @@ public class DynamicButton extends TextButton {
 	}
 
 	void update() {
-		Boolean enabled = this.enabledFn.apply(this.client);
+		boolean visible = this.visibleFn.apply(this.client);
+		this.setVisible(visible);
+		this.setLayoutEnabled(visible);
+		boolean enabled = this.enabledFn.apply(this.client);
 		this.setDisabled(!enabled);
 		if (enabled) {
 			this.setColor(Color.LIGHT_GRAY);			

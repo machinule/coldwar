@@ -23,6 +23,10 @@ message Move {
 	optional EstablishBaseMove establish_base_move = 102;
 	optional PoliticalPressureMove political_pressure_move = 103;
 
+	optional FoundCIAMove found_cia_move = 200;
+
+	optional FoundKGBMove found_kgb_move = 300;
+
 	optional FoundNATOMove found_nato_move = 1001;
 	optional FoundPactMove found_pact_move = 1002;
 }
@@ -79,4 +83,10 @@ message FoundNATOMove {
 }
 
 message FoundPactMove {
+}
+
+message FoundCIAMove {
+}
+
+message FoundKGBMove {
 }
