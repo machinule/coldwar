@@ -18,6 +18,7 @@ import coldwar.EventOuterClass.ProvinceRepublicEvent;
 import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.ProvinceOuterClass.Province.Region;
 import coldwar.Settings;
 import coldwar.logic.Client.Player;
 
@@ -52,6 +53,8 @@ public class ComputedGameState {
 	public final Map<Province.Id, Integer> covInfluence;
 	public final Map<Province.Id, Integer> totalInfluence;
 	
+	public final Map<Province.Id, Region> regions;
+
 	public final Map<Province.Id, Player>  alliances; // NULL -> Neither player
 	
 	public final Map<Province.Id, Boolean> dissidents;
@@ -108,6 +111,9 @@ public class ComputedGameState {
 		this.covInfluence = Collections.unmodifiableMap(covInfluenceMap);
 		EnumMap<Province.Id, Integer> totalInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.totalInfluence = Collections.unmodifiableMap(totalInfluenceMap);
+
+		EnumMap<Province.Id, Region> regionMap = new EnumMap<Province.Id, Region>(Province.Id.class);
+		this.regions = Collections.unmodifiableMap(regionMap);
 		
 		EnumMap<Province.Id, Player> allianceMap = new EnumMap<Province.Id, Player>(Province.Id.class);
 		this.alliances = Collections.unmodifiableMap(allianceMap);
@@ -150,6 +156,7 @@ public class ComputedGameState {
 		
 		this.state.getProvincesList().forEach(p -> {
 			baseInfluenceMap.put(p.getId(), p.getInfluence());
+			regionMap.put(p.getId(), p.getRegion());
 			dissidentsMap.put(p.getId(), p.getDissidents());
 			baseMap.put(p.getId(), toPlayer(p.getBase()));
 			governmentMap.put(p.getId(), p.getGov());

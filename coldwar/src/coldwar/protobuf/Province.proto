@@ -64,6 +64,17 @@ message Province {
 		OCCUPIED = 6;
 	}
 
+	enum Region {
+		WESTERN_EUROPE = 1;
+		EASTERN_EUROPE = 2;
+		CENTRAL_AMERICA = 3;
+		SOUTH_AMERICA = 4;
+		AFRICA = 5;
+		MIDDLE_EAST = 6;
+		SOUTH_ASIA = 7;
+		EAST_ASIA = 8;
+	}
+
 	optional Id id = 1;
 	optional int32 influence = 3 [default = 0];
 	optional Government gov = 5 [default = REPUBLIC];
@@ -71,4 +82,5 @@ message Province {
 	optional bool dissidents = 7 [default = false];
 	optional Id base = 9;
 	optional Id ally = 10;
+	optional Region region = 11;
 }

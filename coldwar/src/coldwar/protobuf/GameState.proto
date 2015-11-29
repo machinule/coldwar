@@ -89,4 +89,5 @@ message ProvinceSettings {
 	optional bool dissidents_init = 8;
 	optional Province.Id military_base_init = 9;
 	optional Province.Id ally_init = 10;
+	optional Province.Region region_init = 11;
 }

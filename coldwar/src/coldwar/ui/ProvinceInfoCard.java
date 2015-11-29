@@ -16,6 +16,7 @@ import coldwar.GameStateOuterClass.ProvinceSettings;
 import coldwar.Logger;
 import coldwar.Settings;
 import coldwar.ProvinceOuterClass.Province;
+import coldwar.ProvinceOuterClass.Province.Region;
 import coldwar.logic.Client;
 import coldwar.logic.Client.Player;
 
@@ -27,7 +28,7 @@ public class ProvinceInfoCard extends Table {
 	protected ActionPane toolbar;
 	protected Button infoBox;
 	static ProvinceInfoCard currentSelection;
-	static protected Color color; // To be replaced with region color
+	protected Color color; // To be replaced with region color
 
 	public ProvinceInfoCard(final Client client, final ProvinceSettings province, final ActionPane toolbar,
 			final Skin skin) {
@@ -35,19 +36,20 @@ public class ProvinceInfoCard extends Table {
 		this.client = client;
 		this.province = province;
 		this.skin = skin;
-		color = this.getColor();
+		color = getRegionColor(client.getMoveBuilder().getComputedGameState().regions.get(province.getId()));
 		
 		infoBox = createLayout();
+		infoBox.setColor(color);
 		infoBox.addCaptureListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, final Actor actor) {
 				Logger.Info(province.getId().getValueDescriptor().getName() + " selected");
 				toolbar.onSelect(province);
 				if (currentSelection != null) {
-					currentSelection.infoBox.setColor(color);
+					currentSelection.infoBox.setColor(currentSelection.color);
 				}
 				currentSelection = ProvinceInfoCard.this;
-				currentSelection.infoBox.setColor(Color.YELLOW);
+				currentSelection.infoBox.setColor(new Color(1, 1, 51/255, 1));
 			}
 		});
 		this.add(infoBox).size(180, 40);
@@ -99,5 +101,20 @@ public class ProvinceInfoCard extends Table {
     	}
     	return ret;
     }
-
+    
+    protected Color getRegionColor(Region region) {
+    	Color ret;
+    	switch (region) {
+	        case CENTRAL_AMERICA:
+	        	ret = new Color(0, (float)201/255, (float)201/255, 1);
+	            break;
+	        case SOUTH_AMERICA:
+	        	ret = new Color((float)51/255, (float)201/255, (float)0/255, 1);
+	            break;
+	        default:
+	        	ret = Color.BLACK;
+	        	break;
+    	}
+    	return ret;
+    }
 }
