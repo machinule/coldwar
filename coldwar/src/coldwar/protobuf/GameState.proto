@@ -13,6 +13,7 @@ message GameState {
   repeated Province provinces = 3;
   optional UnitedStates usa= 4;
   optional SovietUnion ussr = 5;
+  optional int64 seed = 6;
   optional int32 turn = 9;
   optional TurnLogEntry turn_log = 10;
   optional GameSettings settings = 11;
@@ -32,7 +33,7 @@ message GameSettings {
   optional int32 heat_init = 2 [default = 40];
   optional int32 heat_min = 3 [default = 0];
   optional int32 heat_max = 4 [default = 100];
-  optional int64 seed = 5 [default = 0];
+  optional int64 seed_init = 5 [default = 0];
   repeated ProvinceSettings provinces = 6;
 
   // USA Settings.
@@ -64,10 +65,12 @@ message GameSettings {
   optional int32 random_province_autocracy_chance = 305 [default = 100000];
   optional int32 random_province_republic_chance = 306 [default = 100000];
   optional int32 random_province_faux_pas_chance = 307 [default = 100000];
-  optional int32 random_province_dissidents_chance = 308 [default = 100000];
-  optional int32 random_province_dissidents_suppressed_chance = 309 [default = 100000];
-  optional int32 random_us_ally_democracy_chance = 310 [default = 100000];
-  optional int32 random_us_ally_communism_chance = 311 [default = 100000];
+  optional int32 random_province_A_C_D_dissidents_chance = 308 [default = 100000];
+  optional int32 random_province_default_dissidents_chance = 309 [default = 100000];
+  optional int32 random_province_A_C_D_dissidents_suppressed_chance = 310 [default = 100000];
+  optional int32 random_province_default_dissidents_suppressed_chance = 311 [default = 100000];
+  optional int32 random_us_ally_democracy_chance = 312 [default = 100000];
+  optional int32 random_us_ally_communism_chance = 313 [default = 100000];
 
 }
 

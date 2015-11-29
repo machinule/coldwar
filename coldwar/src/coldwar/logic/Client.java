@@ -32,6 +32,7 @@ public abstract class Client {
 		GameState.Builder state = GameState.newBuilder()
 				.setSettings(settings.build())
 				.setHeat(settings.getHeatInit())
+				.setSeed(settings.getSeedInit())
 				.setTurn(0)
 				.setUsa(UnitedStates.newBuilder()
 						.setInfluenceStore(InfluenceStore.newBuilder()
