@@ -29,5 +29,10 @@ public class DynamicTable extends Table {
 		boolean visible = this.visibleFn.apply(this.client);
 		this.setVisible(visible);
 		this.setLayoutEnabled(visible);
+		this.clear();
+	}
+	
+	void setVisibleFn(Function<Client, Boolean> visibleFn) {
+		this.visibleFn = visibleFn;
 	}
 }

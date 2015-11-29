@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
@@ -20,6 +21,7 @@ public class ActionPane extends Table {
 	private final Client client;
 	protected Skin skin;
 	DynamicButton selected;
+	boolean requiresSlider = false;	
 	
 	public ActionPane(final Client client, final Skin skin) {
 		super();
@@ -41,6 +43,10 @@ public class ActionPane extends Table {
 		DynamicButton invadeButton;
 		
 		DynamicButton submitButton;
+		selected = null;
+			
+		DynamicSliderContainer actionParamInput = new DynamicSliderContainer(client, 1, 2, 1, c -> requiresSlider, false, skin);
+		int sliderMax = 10;		
 		
 		int sizeX = 200;
 		int sizeY = 25;
@@ -59,15 +65,15 @@ public class ActionPane extends Table {
 		coupButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidCoupMove(c.getPlayer(), province.getId()), "Initiate Coup", this.skin);
 		invadeButton = new DynamicButton(this.client, c -> false, "Conduct Military Action", this.skin);
 
-		actionButtons.put(diplomaticInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceDip(province.getId(), 1) );
-		actionButtons.put(militaryInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceMil(province.getId(), 1) );
-		actionButtons.put(covertInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceCov(province.getId(), 1) );
+		actionButtons.put(diplomaticInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceDip(province.getId(), actionParamInput.getValue()) );
+		actionButtons.put(militaryInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceMil(province.getId(), actionParamInput.getValue()) );
+		actionButtons.put(covertInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceCov(province.getId(), actionParamInput.getValue()) );
 
 		actionButtons.put(dissidentsButton, () -> ActionPane.this.client.getMoveBuilder().FundDissidents(province.getId()) );
 		actionButtons.put(politicalPressureButton, () -> ActionPane.this.client.getMoveBuilder().PoliticalPressure(province.getId()) );
 		actionButtons.put(establishBaseButton, () -> ActionPane.this.client.getMoveBuilder().EstablishBase(province.getId()) );
 
-		actionButtons.put(coupButton, () -> ActionPane.this.client.getMoveBuilder().Coup(province.getId(), 1) );
+		actionButtons.put(coupButton, () -> ActionPane.this.client.getMoveBuilder().Coup(province.getId(), actionParamInput.getValue()) );
 		//actionButtons.put(invadeButton, () -> ActionPane.this.client.getMoveBuilder().Invade(province.getId()) );
 		
 		submitButton = new DynamicButton(this.client, c -> !(c.getMoveBuilder().getComputedGameState().hasActed(province.getId()) || (selected == null)), "Submit", this.skin);
@@ -77,6 +83,8 @@ public class ActionPane extends Table {
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Diplomatic Outreatch\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(diplomaticInfluenceButton);
+				requiresSlider = true;
+				actionParamInput.setBounds(1, Math.min(client.getMoveBuilder().getComputedGameState().polStore.get(client.getPlayer()), sliderMax), 1);
 			}
 		});
 
@@ -85,6 +93,8 @@ public class ActionPane extends Table {
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Arms Sales\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(militaryInfluenceButton);
+				requiresSlider = true;
+				actionParamInput.setBounds(1, Math.min(client.getMoveBuilder().getComputedGameState().milStore.get(client.getPlayer()), sliderMax), 1);
 			}
 		});
 		
@@ -93,6 +103,8 @@ public class ActionPane extends Table {
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Support Party\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(covertInfluenceButton);
+				requiresSlider = true;
+				actionParamInput.setBounds(1, Math.min(client.getMoveBuilder().getComputedGameState().covStore.get(client.getPlayer()), sliderMax), 1);
 			}
 		});
 
@@ -101,6 +113,7 @@ public class ActionPane extends Table {
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Dissidents\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(dissidentsButton);
+				requiresSlider = false;
 			}
 		});
 		
@@ -109,6 +122,7 @@ public class ActionPane extends Table {
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Establish Base\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(establishBaseButton);
+				requiresSlider = false;
 			}
 		});
 		
@@ -117,6 +131,7 @@ public class ActionPane extends Table {
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Political Pressure\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(politicalPressureButton);
+				requiresSlider = false;
 			}
 		});
 		
@@ -125,6 +140,8 @@ public class ActionPane extends Table {
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Sponsor coup\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(coupButton);
+				requiresSlider = true;
+				actionParamInput.setBounds(1, Math.min(client.getMoveBuilder().getComputedGameState().covStore.get(client.getPlayer()), sliderMax), 1);
 			}
 		});
 		
@@ -133,6 +150,7 @@ public class ActionPane extends Table {
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Submit\" button pressed on " + province.getId().getValueDescriptor().getName());
 				actionButtons.get(selected).run();
+				requiresSlider = false;
 			}
 		});
 		
@@ -144,7 +162,12 @@ public class ActionPane extends Table {
 		
 		Table innerConfirm = new Table();
 		
-		innerConfirm.add(submitButton);
+		DynamicLabel actionParamLabel = new DynamicLabel(client, c -> "Value: " + actionParamInput.getValue() + " ", skin);
+		actionParamLabel.setVisibleFn(c -> requiresSlider);
+		
+		innerConfirm.add(actionParamLabel).left();
+		innerConfirm.add(actionParamInput);
+		innerConfirm.add(submitButton).center();
 		
 		Table innerBottom = new Table();
 		
@@ -153,18 +176,18 @@ public class ActionPane extends Table {
 			.right()
 			.padTop(5);
 		innerBottom.add(dissidentsButton)
-		.size(sizeX, sizeY)
+			.size(sizeX, sizeY)
 			.left()
 			.padTop(5)
 			.padLeft(10);
 		innerBottom.add(coupButton)
-		.size(sizeX, sizeY)
+			.size(sizeX, sizeY)
 			.left()
 			.padTop(5)
 			.padLeft(10);
 		innerBottom.row();
 		innerBottom.add(militaryInfluenceButton)
-		.size(sizeX, sizeY)
+			.size(sizeX, sizeY)
 			.right()
 			.padTop(5);
 		innerBottom.add(politicalPressureButton)
@@ -173,17 +196,17 @@ public class ActionPane extends Table {
 			.padTop(5)
 			.padLeft(10);
 		innerBottom.add(invadeButton)
-		.size(sizeX, sizeY)
-		.left()
-		.padTop(5)
-		.padLeft(10);
+			.size(sizeX, sizeY)
+			.left()
+			.padTop(5)
+			.padLeft(10);
 		innerBottom.row();
 		innerBottom.add(covertInfluenceButton)
-		.size(sizeX, sizeY)
+			.size(sizeX, sizeY)
 			.right()
 			.padTop(5);
 		innerBottom.add(establishBaseButton)
-		.size(sizeX, sizeY)
+			.size(sizeX, sizeY)
 			.left()
 			.padTop(5)
 			.padLeft(10);

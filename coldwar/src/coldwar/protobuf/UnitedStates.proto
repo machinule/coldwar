@@ -5,8 +5,8 @@ package coldwar;
 import "InfluenceStore.proto";
 
 message UnitedStates {
-	optional bool found_nato = 1;
-	optional int32 unrest = 2;
+	optional int32 patriotism = 1;
+	optional bool found_nato = 2;
 	optional InfluenceStore influence_store = 3;
 	optional bool cia_founded = 4 [default = false];
 }
