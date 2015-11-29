@@ -72,6 +72,10 @@ message GameSettings {
   optional int32 random_us_ally_democracy_chance = 312 [default = 100000];
   optional int32 random_us_ally_communism_chance = 313 [default = 100000];
 
+  // Action Settings.
+  optional int32 kgb_cov_income_modifier = 400 [default = 2];
+  optional int32 cia_cov_income_modifier = 401 [default = 2];
+
 }
 
 message ProvinceSettings {

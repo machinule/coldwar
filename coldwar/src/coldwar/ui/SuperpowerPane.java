@@ -32,19 +32,28 @@ public class SuperpowerPane extends Table {
 	public void show() {
 		DynamicLabel playerLabel = new DynamicLabel(this.client, c -> playerLabelText, skin);
 		
-		final TextButton testButton = new TextButton("Destroy the world", this.skin);
-		testButton.addListener(new ChangeListener() {
+		final DynamicButton ciaButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidFoundCIAMove(), c -> c.getPlayer() == Player.USA, c -> "Found CIA", this.skin);
+		ciaButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
-				Logger.Info("\"Destroy the world\" button pressed.");
-				playerLabelText = "WHY WOULD YOU PRESS THAT?";
+				client.getMoveBuilder().foundCIA();
+			}
+		});
+		
+		final DynamicButton kgbButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidFoundKGBMove(), c -> c.getPlayer() == Player.USSR, c -> "Found KGB", this.skin);
+		kgbButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				client.getMoveBuilder().foundKGB();
 			}
 		});
 
 		this.clearChildren();
 		this.add(playerLabel);
 		this.row();
-		this.add(testButton);
+		this.add(ciaButton);
+		this.row();
+		this.add(kgbButton);
 		this.row();
 	}
 }

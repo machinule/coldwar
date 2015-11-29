@@ -6,6 +6,8 @@ import coldwar.MoveListOuterClass.MoveList;
 import coldwar.MoveOuterClass.CovertMove;
 import coldwar.MoveOuterClass.DiplomacyMove;
 import coldwar.MoveOuterClass.EstablishBaseMove;
+import coldwar.MoveOuterClass.FoundCIAMove;
+import coldwar.MoveOuterClass.FoundKGBMove;
 import coldwar.MoveOuterClass.FundDissidentsMove;
 import coldwar.MoveOuterClass.MilitaryMove;
 import coldwar.MoveOuterClass.Move;
@@ -56,7 +58,19 @@ public class MoveBuilder {
 		Logger.Dbg("Adding influence from covert points in " + id + " with magnitude " + magnitude);
 		this.computeState();
 	}
+	
+	public void foundKGB() {
+		this.moves.addMoves(
+				Move.newBuilder().setFoundKgbMove(FoundKGBMove.getDefaultInstance()));
+		this.computeState();
+	}
 
+	public void foundCIA() {
+		this.moves.addMoves(
+				Move.newBuilder().setFoundCiaMove(FoundCIAMove.getDefaultInstance()));
+		this.computeState();
+	}
+	
 	public void FundDissidents(final Province.Id id) {
 		this.moves.addMoves(
 				Move.newBuilder().setFundDissidentsMove(FundDissidentsMove.newBuilder().setProvinceId(id)).build());

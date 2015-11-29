@@ -29,6 +29,8 @@ public class ComputedGameState {
 	public final MoveList ussrMoves;
 	public final int year;
 	public final int heat;
+	public final boolean kgbFounded;
+	public final boolean ciaFounded;
 		
 	public final Map<Player, Integer> polStore;
 	public final Map<Player, Integer> milStore;
@@ -37,6 +39,10 @@ public class ComputedGameState {
 	public final Map<Player, Integer> basePolIncome;
 	public final Map<Player, Integer> baseMilIncome;
 	public final Map<Player, Integer> baseCovIncome;
+	
+	public final Map<Player, Integer> polIncomeModifier;
+	public final Map<Player, Integer> milIncomeModifier;
+	public final Map<Player, Integer> covIncomeModifier;
 	
 	public final Map<Province.Id, Integer> initialInfluence;
 	public final Map<Province.Id, Integer> polInfluence;
@@ -76,6 +82,13 @@ public class ComputedGameState {
 		EnumMap<Player, Integer> baseCovIncomeMap = new EnumMap<Player, Integer>(Player.class);
 		this.baseCovIncome = Collections.unmodifiableMap(baseCovIncomeMap);
 
+		EnumMap<Player, Integer> polIncomeModifierMap = new EnumMap<Player, Integer>(Player.class);
+		this.polIncomeModifier = Collections.unmodifiableMap(polIncomeModifierMap);
+		EnumMap<Player, Integer> milIncomeModifierMap = new EnumMap<Player, Integer>(Player.class);
+		this.milIncomeModifier = Collections.unmodifiableMap(milIncomeModifierMap);
+		EnumMap<Player, Integer> covIncomeModifierMap = new EnumMap<Player, Integer>(Player.class);
+		this.covIncomeModifier = Collections.unmodifiableMap(covIncomeModifierMap);
+		
 		EnumMap<Province.Id, Integer> baseInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.initialInfluence = Collections.unmodifiableMap(baseInfluenceMap);
 		EnumMap<Province.Id, Integer> polInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
@@ -100,9 +113,15 @@ public class ComputedGameState {
 		EnumMap<Province.Id, Integer> stabilityModifierMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.stabilityModifier = Collections.unmodifiableMap(stabilityModifierMap);
 
+		boolean ciaFoundedFlag = false;
+		boolean kgbFoundedFlag = false;
+		
 		// Computations:
 		// NOTE: computations should only expose a read-only version of themselves as public variables.
 		// For collections, Collections.unmodifiable* produces an appropriate view.
+		
+		ciaFoundedFlag = this.state.getUsa().getCiaFounded();
+		kgbFoundedFlag = this.state.getUssr().getKgbFounded();
 		
 		this.state.getSettings().getProvincesList().forEach(p -> {
 			stabilityBaseMap.put(p.getId(), p.getStabilityBase());
@@ -201,8 +220,28 @@ public class ComputedGameState {
 				if (move.hasFoundPactMove()) {
 					
 				}
-				
+				if (move.hasFoundKgbMove()) {
+					kgbFoundedFlag = true;
+				}
+				if (move.hasFoundCiaMove()) {
+					ciaFoundedFlag = true;					
+				}
 			}			
+		}
+		
+		kgbFounded = kgbFoundedFlag;
+		ciaFounded = ciaFoundedFlag;
+		
+		if (kgbFoundedFlag) {
+			int covModifier = this.state.getSettings().getKgbCovIncomeModifier();
+			covIncomeModifierMap.putIfAbsent(Player.USSR, 0);
+			covIncomeModifierMap.computeIfPresent(Player.USSR, (p, i) -> i + covModifier);
+		}
+		
+		if (ciaFoundedFlag) {
+			int covModifier = this.state.getSettings().getCiaCovIncomeModifier();
+			covIncomeModifierMap.putIfAbsent(Player.USA, 0);
+			covIncomeModifierMap.computeIfPresent(Player.USA, (p, i) -> i + covModifier);
 		}
 		
 		totalInfluenceMap.replaceAll((p, infl) -> infl + polInfluenceMap.getOrDefault(p, 0) + milInfluenceMap.getOrDefault(p, 0) + covInfluenceMap.getOrDefault(p, 0));
@@ -238,13 +277,16 @@ public class ComputedGameState {
 		}
 		
 		nextStateBuilder.getUsaBuilder().getInfluenceStoreBuilder()
-		    .setPolitical(polStoreMap.get(Player.USA) + basePolIncomeMap.get(Player.USA))
-		    .setMilitary(milStoreMap.get(Player.USA) + baseMilIncomeMap.get(Player.USA))
-		    .setCovert(covStoreMap.get(Player.USA) + baseCovIncomeMap.get(Player.USA));
+		    .setPolitical(polStoreMap.get(Player.USA) + basePolIncomeMap.get(Player.USA) + polIncomeModifierMap.getOrDefault(Player.USA, 0))
+		    .setMilitary(milStoreMap.get(Player.USA) + baseMilIncomeMap.get(Player.USA) + milIncomeModifierMap.getOrDefault(Player.USA, 0))
+		    .setCovert(covStoreMap.get(Player.USA) + baseCovIncomeMap.get(Player.USA) + covIncomeModifierMap.getOrDefault(Player.USA, 0));
 		nextStateBuilder.getUssrBuilder().getInfluenceStoreBuilder()
-			.setPolitical(polStoreMap.get(Player.USSR) + basePolIncomeMap.get(Player.USSR))
-			.setMilitary(milStoreMap.get(Player.USSR) + baseMilIncomeMap.get(Player.USSR))
-			.setCovert(covStoreMap.get(Player.USSR) + baseCovIncomeMap.get(Player.USSR));
+			.setPolitical(polStoreMap.get(Player.USSR) + basePolIncomeMap.get(Player.USSR) + polIncomeModifierMap.getOrDefault(Player.USSR, 0))
+			.setMilitary(milStoreMap.get(Player.USSR) + baseMilIncomeMap.get(Player.USSR) + milIncomeModifierMap.getOrDefault(Player.USSR, 0))
+			.setCovert(covStoreMap.get(Player.USSR) + baseCovIncomeMap.get(Player.USSR) + covIncomeModifierMap.getOrDefault(Player.USSR, 0));
+		
+		nextStateBuilder.getUsaBuilder().setCiaFounded(ciaFoundedFlag);
+		nextStateBuilder.getUssrBuilder().setKgbFounded(kgbFoundedFlag);
 		
 		// Random events.
 		Random r = new Random(this.state.getSeed());
@@ -375,6 +417,14 @@ public class ComputedGameState {
 	public boolean isValidPoliticalPressureMove(Player player, Province.Id province) {
 		return polStore.get(player) >= 2;
 		// Handle adjacencies
+	}
+	
+	public boolean isValidFoundKGBMove() {
+		return !kgbFounded;
+	}
+	
+	public boolean isValidFoundCIAMove() {
+		return !ciaFounded;
 	}
 	
 	// OTHER HELPER FUNCTIONS
