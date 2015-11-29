@@ -63,6 +63,8 @@ public class ComputedGameState {
 	
 	public final Map<Province.Id, ProvinceSettings> provinceSettings;
 	
+	public final Map<Province.Id, Integer> coups;
+	
 	public final GameState nextState;
 	
 	public ComputedGameState(final GameState state, final MoveList usaMoves, final MoveList ussrMoves) {
@@ -123,6 +125,9 @@ public class ComputedGameState {
 		EnumMap<Province.Id, ProvinceSettings> provinceSettingsMap = new EnumMap<Province.Id, ProvinceSettings>(Province.Id.class);
 		this.provinceSettings = Collections.unmodifiableMap(provinceSettingsMap);
 
+		EnumMap<Province.Id, Integer> coupMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
+		this.coups = Collections.unmodifiableMap(coupMap);
+		
 		boolean ciaFoundedFlag = false;
 		boolean kgbFoundedFlag = false;
 		
@@ -225,7 +230,7 @@ public class ComputedGameState {
 					if(isValidPoliticalPressureMove(player, id)) {
 						int netInfl = 0;
 						for (Province.Id adj : provinceSettingsMap.get(id).getAdjacencyList()) {
-							Logger.Vrb("Seeing pressure from: " + adj);
+							Logger.Dbg("Seeing pressure from: " + adj);
 							if(getAlly(adj) == otherPlayer(player)) {
 								netInfl -= 1;
 								Logger.Vrb("Neighboring enemy ally -> -1");
@@ -248,6 +253,14 @@ public class ComputedGameState {
 							heatCounter +=4;
 						}
 						heatCounter += 4; // More if enemy ally
+					}
+				}
+				if (move.hasCoupMove()) {
+					Province.Id id = move.getCoupMove().getProvinceId();
+					if(isValidCoupMove(player, id)) {
+						//baseMap.put(id, player);
+						//milStoreMap.compute(player,  (p, mil) -> mil == null ? -2 : mil - 2);
+						//heatCounter += 4;
 					}
 				}
 				if (move.hasFoundNatoMove()) {
@@ -453,6 +466,10 @@ public class ComputedGameState {
 	public boolean isValidPoliticalPressureMove(Player player, Province.Id province) {
 		return polStore.get(player) >= 2;
 		// Handle adjacencies
+	}
+	
+	public boolean isValidCoupMove(Player player, Province.Id province) {
+		return false;
 	}
 	
 	public boolean isValidFoundKGBMove() {

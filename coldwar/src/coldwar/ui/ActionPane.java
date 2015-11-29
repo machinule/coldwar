@@ -49,7 +49,7 @@ public class ActionPane extends Table {
 		politicalPressureButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidPoliticalPressureMove(c.getPlayer(), province.getId()), "Political Pressure", this.skin);
 		establishBaseButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidEstablishBaseMove(c.getPlayer(), province.getId()), "Establish Military Base", this.skin);
 		
-		coupButton = new DynamicButton(this.client, c -> false, "Initiate Coup", this.skin);
+		coupButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidCoupMove(c.getPlayer(), province.getId()), "Initiate Coup", this.skin);
 		invadeButton = new DynamicButton(this.client, c -> false, "Conduct Military Action", this.skin);
 		
 		diplomaticInfluenceButton.addListener(new ChangeListener() {
@@ -101,6 +101,14 @@ public class ActionPane extends Table {
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Political Pressure\" button pressed on " + province.getId().getValueDescriptor().getName());
 				ActionPane.this.client.getMoveBuilder().PoliticalPressure(province.getId());
+			}
+		});
+		
+		coupButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				Logger.Info("\"Sponsor coup\" button pressed on " + province.getId().getValueDescriptor().getName());
+				ActionPane.this.client.getMoveBuilder().Coup(province.getId(), 1); //Real magnitude calculations
 			}
 		});
 		
