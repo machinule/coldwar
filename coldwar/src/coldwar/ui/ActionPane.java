@@ -33,6 +33,8 @@ public class ActionPane extends Table {
 	}
 
 	public void onSelect(final ProvinceSettings province) {
+		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
+		
 		DynamicButton diplomaticInfluenceButton;
 		DynamicButton militaryInfluenceButton;
 		DynamicButton covertInfluenceButton;
@@ -87,9 +89,9 @@ public class ActionPane extends Table {
 				Logger.Info("\"Diplomatic Outreatch\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(diplomaticInfluenceButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(1, 
-										   dipInfluenceLimit(province),
-										   1);
+				actionParamInput.setBounds(state.getDiaDipMoveMin(client.getPlayer(), province.getId()), 
+						state.getDiaDipMoveMax(client.getPlayer(), province.getId()),
+						state.getDiaDipMoveIncrement(client.getPlayer(), province.getId()));
 			}
 		});
 		
@@ -99,10 +101,9 @@ public class ActionPane extends Table {
 				Logger.Info("\"Arms Sales\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(militaryInfluenceButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(1, 
-						                   Math.min(client.getMoveBuilder().getComputedGameState().milStore.get(client.getPlayer()),
-					                                2*client.getMoveBuilder().getComputedGameState().getNetStability(province.getId())),
-						                   1);
+				actionParamInput.setBounds(state.getDiaMilMoveMin(), 
+						state.getDiaMilMoveMax(client.getPlayer(), province.getId()),
+						state.getDiaMilMoveIncrement());
 			}
 		});
 		
@@ -112,10 +113,9 @@ public class ActionPane extends Table {
 				Logger.Info("\"Support Party\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(covertInfluenceButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(1, 
-										   Math.min(client.getMoveBuilder().getComputedGameState().covStore.get(client.getPlayer()), 
-												    2*client.getMoveBuilder().getComputedGameState().getNetStability(province.getId())),
-										   1);
+				actionParamInput.setBounds(state.getDiaCovMoveMin(), 
+						state.getDiaCovMoveMax(client.getPlayer(), province.getId()),
+						state.getDiaCovMoveIncrement());
 			}
 		});
 
@@ -152,10 +152,9 @@ public class ActionPane extends Table {
 				Logger.Info("\"Sponsor coup\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(coupButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(0, 
-										   Math.min(client.getMoveBuilder().getComputedGameState().covStore.get(client.getPlayer()), 
-												    client.getMoveBuilder().getComputedGameState().getNetStability(province.getId())),
-										   1);
+				actionParamInput.setBounds(state.getCoupMoveMagnitudeMin(), 
+						state.getCoupMoveMagnitudeMax(client.getPlayer(), province.getId()),
+						state.getCoupMoveMagnitudeIncrement());
 			}
 		});
 		
@@ -251,13 +250,12 @@ public class ActionPane extends Table {
 	
 	protected String formattedLabel(final ProvinceSettings province) {
 		String ret = province.getLabel() + " | " + province.getStabilityBase();
-		int positiveModifier = 0;
-		int negativeModifier = client.getMoveBuilder().getStabilityModifier(province.getId());
-		if (positiveModifier != 0) {
-			ret += " + " + positiveModifier + " ";
+		int modifier = client.getMoveBuilder().getStabilityModifier(province.getId());
+		if (modifier > 0) {
+			ret += " + " + modifier + " ";
 		}
-		if (negativeModifier != 0) {
-			ret += " - " + Math.abs(negativeModifier) + " ";
+		if (modifier < 0) {
+			ret += " - " + Math.abs(modifier) + " ";
 		}
 		return ret;
 	}
@@ -279,19 +277,6 @@ public class ActionPane extends Table {
 			ret += client.getMoveBuilder().getComputedGameState().provinceSettings.get(id).getLabel();
 			if(count < max) ret += ", ";
 		}
-		return ret;
-	}
-	
-	protected String getFormattedCost(int cost) {
-		return "Cost: " + cost;
-	}
-	
-	protected int dipInfluenceLimit(ProvinceSettings province) {
-		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
-		int ret = Math.min(state.polStore.get(client.getPlayer()), 
-			      2*state.getNetStability(province.getId()));
-		Player alliedPlayer = state.getAlly(province.getId());
-		if(state.getAlly(province.getId()) == state.otherPlayer(client.getPlayer())) ret = ret/2;
 		return ret;
 	}
 }
