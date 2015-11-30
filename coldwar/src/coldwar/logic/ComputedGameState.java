@@ -230,7 +230,7 @@ public class ComputedGameState {
 				if (move.hasFundDissidentsMove()) {
 					Province.Id id = move.getFundDissidentsMove().getProvinceId();
 					if(isValidFundDissidentsMove(player, id)) {
-						final int cost = getFundDissidentsMoveCost(id);
+						final int cost = getFundDissidentsMoveCost();
 						dissidentsMap.put(id, true);
 						covStoreMap.compute(player, (p, cov) -> cov == null ? -cost : cov - cost);
 						heatCounter += Settings.getConstInt("action_dissidents_heat");
@@ -549,36 +549,36 @@ public class ComputedGameState {
 	// VALIDATION
 	
 	public boolean isValidDiaDipMove(Player player, Province.Id id){
-		return polStore.get(player) > 0 &&
+		return polStore.get(player) >= getDiaDipMoveMin(player, id) &&
 			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
 	public boolean isValidDiaMilMove (Player player, Province.Id id){
-		return milStore.get(player) > 0 &&
+		return milStore.get(player) >= getDiaMilMoveMin() &&
 			   getAlly(id) != otherPlayer(player) && 
 			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
 	public boolean isValidDiaCovMove (Player player, Province.Id id){
-		return covStore.get(player) > 0 && 
+		return covStore.get(player) >= getDiaCovMoveMin() && 
 			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
 	public boolean isValidFundDissidentsMove(Player player, Province.Id id) {
-		return covStore.get(player) > 0 &&
+		return covStore.get(player) >= getFundDissidentsMoveCost() &&
 			   !(dissidents.get(id)) && 
 			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
 	public boolean isValidEstablishBaseMove(Player player, Province.Id id) {
-		return milStore.get(player) >= 2 &&
-			   bases.get(id) == null && 
+		return milStore.get(player) >= getEstablishBaseMoveCost() &&
+			   bases.get(id) == null &&
+			   getAlly(id) == player &&
 			   governments.get(id) != Province.Government.CIVIL_WAR;
-		// Check alliances
 	}
 	
 	public boolean isValidPoliticalPressureMove(Player player, Province.Id id) {
-		return polStore.get(player) >= 2 && 
+		return polStore.get(player) >= getPoliticalPressureMoveCost() && 
 			   governments.get(id) != Province.Government.CIVIL_WAR &&
 			   bases.get(id) != otherPlayer(player);
 	}
@@ -641,9 +641,8 @@ public class ComputedGameState {
 		return 1;
 	}
 	
-	public int getFundDissidentsMoveCost(Province.Id id) {
-		int base_cost = Settings.getConstInt("action_dissidents_cost");
-		return base_cost;
+	public int getFundDissidentsMoveCost() {
+		return Settings.getConstInt("action_dissidents_cost");
 	}
 	
 	public int getEstablishBaseMoveCost() {
