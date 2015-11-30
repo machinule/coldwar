@@ -251,7 +251,6 @@ public class ComputedGameState {
 					Province.Id id = move.getPoliticalPressureMove().getProvinceId();
 					if(isValidPoliticalPressureMove(player, id)) {
 						final int cost = Settings.getConstInt("action_pressure_cost");
-						int mod = player == Player.USA ? 1 : -1;
 						int netInfl = 0;
 						for (Province.Id adj : provinceSettingsMap.get(id).getAdjacencyList()) {
 							Logger.Dbg("Seeing pressure from: " + adj);
@@ -270,7 +269,7 @@ public class ComputedGameState {
 								Logger.Vrb("Neighboring enemy government -> +1");
 							} 
 						}
-						final int finInfl = netInfl*mod;
+						final int finInfl = inflFromPlayer(player, netInfl);
 						polInfluenceMap.compute(id, (i, infl) -> infl == null ? finInfl * inflSign : infl + finInfl * inflSign);
 						polStoreMap.compute(player,  (p, pol) -> pol == null ? -cost : pol - cost);
 						if(getAlly(id) != null) {
@@ -284,8 +283,7 @@ public class ComputedGameState {
 					Province.Id id = move.getCoupMove().getProvinceId();
 					if(isValidCoupMove(player, id)) {
 						int mag = move.getCoupMove().getMagnitude();
-						int mod = player == Player.USA ? 1 : -1;
-						int result = (mod*mag)+initialInfluence.get(id);
+						int result = inflFromPlayer(player, mag)+initialInfluence.get(id);
 						Logger.Dbg("Expected result on incoming coup on success : " + result);
 						coupMap.put(id, result);
 						int cov_cost = Settings.getConstInt("action_coup_cost_per_stab");
@@ -651,9 +649,13 @@ public class ComputedGameState {
 	}
 	
 	public boolean hasInfluence(Player player, Province.Id id) {
-		int mod = (player == Player.USA ? 1 : -1);
-		if(totalInfluence.get(id)*mod > 0 || bases.get(id) == player) return true;
+		if(inflFromPlayer(player, totalInfluence.get(id)) > 0 || bases.get(id) == player) return true;
 		return false;
+	}
+	
+	public int inflFromPlayer(Player player, int infl) {
+		int mod = (player == Player.USA ? 1 : -1);
+		return infl * mod;
 	}
 
 }
