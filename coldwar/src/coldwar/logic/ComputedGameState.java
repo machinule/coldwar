@@ -462,6 +462,21 @@ public class ComputedGameState {
 				}
 			}
 		}
+		// EndCivilWar
+		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
+			if (p.getGov() == Province.Government.CIVIL_WAR) {
+				if (happens.apply(this.state.getSettings().getRandomEndCivilWarChance())) {
+					p.setGov(Province.Government.REPUBLIC);
+					nextStateBuilder.getTurnLogBuilder()
+						.addEvents(Event.newBuilder()
+							.setProvinceDissidentsSuppressed(ProvinceDissidentsSuppressedEvent.newBuilder()
+								.setProvinceId(p.getId())
+								.build())
+							.build());
+					
+				}
+			}
+		}
 		// TODO: UsAllyDemocracy
 		// TODO: UssrAllyCommunism		
 		
@@ -491,41 +506,41 @@ public class ComputedGameState {
 	
 	// VALIDATION
 	
-	public boolean isValidDiaDipMove(Player player, Province.Id province){
-		return polStore.get(player) > 0 && 
-			   governments.get(province) != Province.Government.CIVIL_WAR;
+	public boolean isValidDiaDipMove(Player player, Province.Id id){
+		return polStore.get(player) > 0 &&
+			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
-	public boolean isValidDiaMilMove (Player player, Province.Id province){
+	public boolean isValidDiaMilMove (Player player, Province.Id id){
 		return milStore.get(player) > 0 &&
-			   getAlly(province) != otherPlayer(player) && 
-			   governments.get(province) != Province.Government.CIVIL_WAR;
+			   getAlly(id) != otherPlayer(player) && 
+			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
-	public boolean isValidDiaCovMove (Player player, Province.Id province){
+	public boolean isValidDiaCovMove (Player player, Province.Id id){
 		return covStore.get(player) > 0 && 
-			   governments.get(province) != Province.Government.CIVIL_WAR;
+			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
-	public boolean isValidFundDissidentsMove(Player player, Province.Id province) {
+	public boolean isValidFundDissidentsMove(Player player, Province.Id id) {
 		return covStore.get(player) > 0 &&
-			   !(dissidents.get(province)) && 
-			   governments.get(province) != Province.Government.CIVIL_WAR;
+			   !(dissidents.get(id)) && 
+			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
-	public boolean isValidEstablishBaseMove(Player player, Province.Id province) {
+	public boolean isValidEstablishBaseMove(Player player, Province.Id id) {
 		return milStore.get(player) >= 2 &&
-			   bases.get(province) == null && 
-			   governments.get(province) != Province.Government.CIVIL_WAR;
+			   bases.get(id) == null && 
+			   governments.get(id) != Province.Government.CIVIL_WAR;
 		// Check alliances
 	}
 	
-	public boolean isValidPoliticalPressureMove(Player player, Province.Id province) {
+	public boolean isValidPoliticalPressureMove(Player player, Province.Id id) {
 		return polStore.get(player) >= 2 && 
-			   governments.get(province) != Province.Government.CIVIL_WAR;
+			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
-	public boolean isValidCoupMove(Player player, Province.Id province) {
+	public boolean isValidCoupMove(Player player, Province.Id id) {
 		return false;
 	}
 	
@@ -581,6 +596,19 @@ public class ComputedGameState {
 		} else {
 			return Province.Government.DEMOCRACY;
 		} 
+	}
+	
+	public boolean hasAdjacencyInfluence(Player player, Province.Id id) {
+		for (Province.Id adj : provinceSettings.get(id).getAdjacencyList()) {
+			if(hasInfluence(player, id)) return true;
+		}
+		return false;
+	}
+	
+	public boolean hasInfluence(Player player, Province.Id id) {
+		int mod = (player == Player.USA ? 1 : -1);
+		if(totalInfluence.get(id)*mod > 0 || bases.get(id) == player) return true;
+		return false;
 	}
 
 }

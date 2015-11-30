@@ -65,13 +65,13 @@ message GameSettings {
   optional int32 random_province_autocracy_chance = 305 [default = 100000];
   optional int32 random_province_republic_chance = 306 [default = 100000];
   optional int32 random_province_faux_pas_chance = 307 [default = 100000];
-  optional int32 random_province_A_C_D_dissidents_chance = 308 [default = 100000];
-  optional int32 random_province_default_dissidents_chance = 309 [default = 100000];
-  optional int32 random_province_A_C_D_dissidents_suppressed_chance = 310 [default = 100000];
-  optional int32 random_province_default_dissidents_suppressed_chance = 311 [default = 100000];
+  optional int32 random_province_A_C_D_dissidents_chance = 308 [default = 2000];
+  optional int32 random_province_default_dissidents_chance = 309 [default = 5000];
+  optional int32 random_province_A_C_D_dissidents_suppressed_chance = 310 [default = 30000];
+  optional int32 random_province_default_dissidents_suppressed_chance = 311 [default = 15000];
   optional int32 random_us_ally_democracy_chance = 312 [default = 100000];
   optional int32 random_us_ally_communism_chance = 313 [default = 100000];
-
+  optional int32 random_end_civil_war_chance = 314 [default = 250000];
   // Action Settings.
   optional int32 kgb_cov_income_modifier = 400 [default = 2];
   optional int32 cia_cov_income_modifier = 401 [default = 2];
