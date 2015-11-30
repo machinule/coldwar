@@ -79,7 +79,7 @@ public class ComputedGameState {
 		this.usaMoves = usaMoves;
 		this.ussrMoves = ussrMoves;
 		
-		this.year = state.getTurn() + 1947;
+		this.year = state.getTurn() + 1948;
 		int heatCounter = state.getHeat();
 		
 		EnumMap<Player, Integer> polStoreMap = new EnumMap<Player, Integer>(Player.class);
@@ -251,6 +251,7 @@ public class ComputedGameState {
 					Province.Id id = move.getPoliticalPressureMove().getProvinceId();
 					if(isValidPoliticalPressureMove(player, id)) {
 						final int cost = Settings.getConstInt("action_pressure_cost");
+						int mod = player == Player.USA ? 1 : -1;
 						int netInfl = 0;
 						for (Province.Id adj : provinceSettingsMap.get(id).getAdjacencyList()) {
 							Logger.Dbg("Seeing pressure from: " + adj);
@@ -269,7 +270,7 @@ public class ComputedGameState {
 								Logger.Vrb("Neighboring enemy government -> +1");
 							} 
 						}
-						final int finInfl = netInfl;
+						final int finInfl = netInfl*mod;
 						polInfluenceMap.compute(id, (i, infl) -> infl == null ? finInfl * inflSign : infl + finInfl * inflSign);
 						polStoreMap.compute(player,  (p, pol) -> pol == null ? -cost : pol - cost);
 						if(getAlly(id) != null) {
@@ -359,6 +360,9 @@ public class ComputedGameState {
 			allianceMap.put(province.getId(), getAlly(province.getId()));
 			province.setGov(governmentMap.get(province.getId()));
 			province.setInfluence(totalInfluenceMap.get(province.getId()));
+			Player baseOwner = baseMap.get(province.getId());
+			if(baseOwner != null)
+				province.setBase(toProvinceId(baseOwner));
 			int totalStability = getNetStability(province.getId());
 			if (Math.abs(province.getInfluence()) > totalStability) {
 				province.setInfluence(Integer.signum(province.getInfluence()) * totalStability);
@@ -621,6 +625,12 @@ public class ComputedGameState {
 	public static Player toPlayer(Province.Id id) {
 		if (id == Province.Id.USA) return Player.USA;
 		if (id == Province.Id.USSR) return Player.USSR;
+		return null;
+	}
+	
+	public static Province.Id toProvinceId(Player player) {
+		if (player == Player.USA) return Province.Id.USA;
+		if (player == Player.USSR) return Province.Id.USSR;
 		return null;
 	}
 	

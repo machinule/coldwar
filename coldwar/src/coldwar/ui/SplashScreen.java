@@ -24,8 +24,8 @@ public class SplashScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
-		final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/pack.atlas"));
-		//final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("pack.atlas")); // When creating JAR
+		//final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/pack.atlas"));
+		final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("pack.atlas")); // When creating JAR
 		final AtlasRegion splashRegion = atlas.findRegion("Knife'sEdge");
 		final Drawable splashDrawable = new TextureRegionDrawable(splashRegion);
 		final Image splashImage = new Image(splashDrawable, Scaling.none);

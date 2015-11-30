@@ -15,6 +15,8 @@ import coldwar.GameStateOuterClass.ProvinceSettings;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.Logger;
 import coldwar.logic.Client;
+import coldwar.logic.Client.Player;
+import coldwar.logic.ComputedGameState;
 
 public class ActionPane extends Table {
 
@@ -86,12 +88,11 @@ public class ActionPane extends Table {
 				buttonSelect(diplomaticInfluenceButton);
 				requiresSlider = true;
 				actionParamInput.setBounds(1, 
-										   Math.min(client.getMoveBuilder().getComputedGameState().polStore.get(client.getPlayer()), 
-												    2*client.getMoveBuilder().getComputedGameState().getNetStability(province.getId())),
+										   dipInfluenceLimit(province),
 										   1);
 			}
 		});
-
+		
 		militaryInfluenceButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
@@ -283,5 +284,14 @@ public class ActionPane extends Table {
 	
 	protected String getFormattedCost(int cost) {
 		return "Cost: " + cost;
+	}
+	
+	protected int dipInfluenceLimit(ProvinceSettings province) {
+		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
+		int ret = Math.min(state.polStore.get(client.getPlayer()), 
+			      2*state.getNetStability(province.getId()));
+		Player alliedPlayer = state.getAlly(province.getId());
+		if(state.getAlly(province.getId()) == state.otherPlayer(client.getPlayer())) ret = ret/2;
+		return ret;
 	}
 }
