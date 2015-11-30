@@ -60,7 +60,7 @@ public class ComputedGameState {
 	public final Map<Province.Id, Player>  alliances; // NULL -> Neither player
 	
 	public final Map<Province.Id, Boolean> dissidents;
-	public final Map<Province.Id, Player> bases; // NULL -> Neither player
+	public final Map<Province.Id, Player> bases;
 	public final Map<Province.Id, Province.Government> governments;
 
 	public final Map<Province.Id, Integer> stabilityBase;
@@ -283,7 +283,7 @@ public class ComputedGameState {
 					Province.Id id = move.getCoupMove().getProvinceId();
 					if(isValidCoupMove(player, id)) {
 						int mag = move.getCoupMove().getMagnitude();
-						int result = inflFromPlayer(player, mag)+initialInfluence.get(id);
+						int result = inflFromPlayer(player, mag)+inflFromPlayer(player, getNetStability(id))+initialInfluence.get(id);
 						Logger.Dbg("Expected result on incoming coup on success : " + result);
 						coupMap.put(id, result);
 						int cov_cost = Settings.getConstInt("action_coup_cost_per_stab");
@@ -333,6 +333,11 @@ public class ComputedGameState {
 					governmentMap.put(p, Province.Government.CIVIL_WAR);
 					dissidentsMap.put(p, false);
 				}
+			}
+		});
+		governmentMap.forEach((p, gov) -> {
+			if (gov == Province.Government.DEMOCRACY || gov == Province.Government.COMMUNISM) {
+				stabilityModifierMap.compute(p, (q, mod) -> mod == null ? 1 : mod + 1 );
 			}
 		});
 		
@@ -497,7 +502,9 @@ public class ComputedGameState {
 		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
 			if (p.getGov() == Province.Government.CIVIL_WAR) {
 				p.setGov(Province.Government.CIVIL_WAR);
-				//if(p.getBase() != null) p.setBase(null);
+				p.setInfluence(0);
+				coupMap.put(p.getId(), 0);
+				p.setBase(Province.Id.NONE);
 				p.setDissidents(false);
 				nextStateBuilder.getTurnLogBuilder()
 					.addEvents(Event.newBuilder()
@@ -514,11 +521,12 @@ public class ComputedGameState {
 			if (coups.getOrDefault(p.getId(), 0) != 0) {
 				int result = coups.get(p.getId());
 				int netMag = Math.abs(result-getNetStability(p.getId())); 
-				int chance = this.state.getSettings().getCoupBaseChance();
-				chance -= netMag*this.state.getSettings().getCoupDecreaseChance();
+				int chance = this.state.getSettings().getCoupBaseChance() - 
+						     ((getNetStability(p.getId())-1) * this.state.getSettings().getCoupDecreaseChanceStab());
+				chance -= netMag*this.state.getSettings().getCoupDecreaseChanceMag();
 				Logger.Dbg("Coup chance is: " + chance/10000 + "%");
 				if (happens.apply(chance)) {
-					p.setInfluence(result);
+					p.setInfluence(Math.min(result, getNetStability(p.getId())));
 					Logger.Dbg("Coup success - influence set to " + result);
 				}
 				nextStateBuilder.getTurnLogBuilder()
@@ -571,12 +579,14 @@ public class ComputedGameState {
 	
 	public boolean isValidPoliticalPressureMove(Player player, Province.Id id) {
 		return polStore.get(player) >= 2 && 
-			   governments.get(id) != Province.Government.CIVIL_WAR;
+			   governments.get(id) != Province.Government.CIVIL_WAR &&
+			   bases.get(id) != otherPlayer(player);
 	}
 	
 	public boolean isValidCoupMove(Player player, Province.Id id) {
 		return covStore.get(player) >= Settings.getConstInt("action_coup_cost_per_stab")*getNetStability(id) &&
-			   bases.get(id) == null && 
+			   bases.get(id) == null &&
+			   !hasInfluence(player, id) &&
 			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
