@@ -38,7 +38,7 @@ message Province {
 
 		// SOUTH AMERICA
 
-		COLUMBIA = 41;
+		COLOMBIA = 41;
 		ECUADOR = 42;
 		PERU = 43;
 		CHILE = 44;
