@@ -27,7 +27,7 @@ public class ColdWarGame extends Game {
 		Logger.setLogLevel(Application.LOG_DEBUG);
 		Settings.init();
 		Logger.setLogLevel(Settings.getLogLevel());
-		if (Settings.getConstBool("pack_textures")) {
+		if (Settings.getConstBool("pack_textures")) { // Set to false for JAR
 			final TexturePacker.Settings settings = new TexturePacker.Settings();
 			settings.maxWidth = 16384;
 			settings.maxHeight = 8192;

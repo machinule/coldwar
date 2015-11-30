@@ -107,6 +107,15 @@ public class ProvinceInfoCard extends Table {
     	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.CIVIL_WAR) {
     		ret += "CIVIL WAR ";
     	}
+    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.DEMOCRACY) {
+    		ret += "DEM ";
+    	}
+    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.AUTOCRACY) {
+    		ret += "AUT ";
+    	}
+    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.COMMUNISM) {
+    		ret += "COM ";
+    	}
     		return ret;
     }
     

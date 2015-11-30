@@ -51,7 +51,11 @@ public class Settings {
 		
 		Settings.consts.putInteger("action_base_cost", 2); // MIL
 		Settings.consts.putInteger("action_base_heat", 4);
-		
+
+		Settings.consts.putInteger("action_coup_cost_per_stab", 1); // COV
+		Settings.consts.putInteger("action_coup_cost_per_mag", 1); // MIL
+		Settings.consts.putInteger("action_coup_heat_fixed", 5);
+		Settings.consts.putInteger("action_coup_heat_per_stab", 2);
 
 		Settings.consts.flush();
 	}

@@ -18,6 +18,7 @@ message Event {
 	optional CivilWarEvent civil_war = 11;
 	optional UsAllyDemocracyEvent us_ally_democracy = 12;
 	optional UssrAllyCommunismEvent ussr_ally_communism = 13;
+	optional CoupEvent coup_event = 14;
 }
 
 message LeaderSpawnEvent {
@@ -69,4 +70,9 @@ message UsAllyDemocracyEvent {
 
 message UssrAllyCommunismEvent {
 	optional Province.Id province_id = 1;
+}
+
+message CoupEvent {
+	optional Province.Id province_id = 1;
+	optional int32 magnitude = 2;
 }

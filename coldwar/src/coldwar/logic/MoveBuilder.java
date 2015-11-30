@@ -95,8 +95,8 @@ public class MoveBuilder {
 	
 	public void Coup(final Province.Id id, final int magnitude) {
 		this.moves.addMoves(
-				Move.newBuilder().setCoupMove(CoupMove.newBuilder().setProvinceId(id)).build());
-		Logger.Dbg("Preparing coup in " + id);
+				Move.newBuilder().setCoupMove(CoupMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
+		Logger.Dbg("Preparing coup in " + id + " with extra support " + magnitude);
 		this.computeState();
 	}
 	

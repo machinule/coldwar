@@ -151,7 +151,7 @@ public class ActionPane extends Table {
 				Logger.Info("\"Sponsor coup\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(coupButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(1, 
+				actionParamInput.setBounds(0, 
 										   Math.min(client.getMoveBuilder().getComputedGameState().covStore.get(client.getPlayer()), 
 												    client.getMoveBuilder().getComputedGameState().getNetStability(province.getId())),
 										   1);
