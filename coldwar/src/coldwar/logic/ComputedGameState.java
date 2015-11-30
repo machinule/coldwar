@@ -281,10 +281,14 @@ public class ComputedGameState {
 				if (move.hasCoupMove()) {
 					Province.Id id = move.getCoupMove().getProvinceId();
 					if(isValidCoupMove(player, id)) {
+						int mag = move.getCoupMove().getMagnitude();
 						//baseMap.put(id, player);
 						//milStoreMap.compute(player,  (p, mil) -> mil == null ? -2 : mil - 2);
 						//heatCounter += 4;
 						//actedMap.put(id, true);
+
+						//polInfluenceMap.compute(id, (i, infl) -> infl == null ? finInfl * inflSign : infl + finInfl * inflSign);
+						//polStoreMap.compute(player,  (p, pol) -> pol == null ? -cost : pol - cost);
 					}
 				}
 				if (move.hasFoundNatoMove()) {

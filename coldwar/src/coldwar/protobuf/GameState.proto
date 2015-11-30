@@ -65,8 +65,8 @@ message GameSettings {
   optional int32 random_province_autocracy_chance = 305 [default = 100000];
   optional int32 random_province_republic_chance = 306 [default = 100000];
   optional int32 random_province_faux_pas_chance = 307 [default = 100000];
-  optional int32 random_province_A_C_D_dissidents_chance = 308 [default = 2000];
-  optional int32 random_province_default_dissidents_chance = 309 [default = 5000];
+  optional int32 random_province_A_C_D_dissidents_chance = 308 [default = 20000];
+  optional int32 random_province_default_dissidents_chance = 309 [default = 40000];
   optional int32 random_province_A_C_D_dissidents_suppressed_chance = 310 [default = 30000];
   optional int32 random_province_default_dissidents_suppressed_chance = 311 [default = 15000];
   optional int32 random_us_ally_democracy_chance = 312 [default = 100000];

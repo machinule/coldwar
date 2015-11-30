@@ -27,7 +27,9 @@ public class ConnectScreen extends AbstractScreen {
 		super.show();
 
 		final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("textures/uiskin.atlas"));
+		//final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("uiskin.atlas")); // When creating JAR
 		final Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
+		//final Skin skin = new Skin(Gdx.files.internal("uiskin.json"), atlas); // When creating JAR
 		final Table table = new Table(skin);
 		table.setFillParent(true);
 		table.setDebug(Settings.isDebug());
