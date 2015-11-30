@@ -633,8 +633,9 @@ public class ComputedGameState {
 	}
 	
 	public boolean hasAdjacencyInfluence(Player player, Province.Id id) {
+		if(hasInfluence(player, id)) return true;
 		for (Province.Id adj : provinceSettings.get(id).getAdjacencyList()) {
-			if(hasInfluence(player, id)) return true;
+			if(hasInfluence(player, adj)) return true;
 		}
 		return false;
 	}
