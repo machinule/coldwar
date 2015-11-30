@@ -1,5 +1,7 @@
 package coldwar.ui;
 
+import java.util.EnumMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -40,18 +42,32 @@ public class MapScreen extends AbstractScreen {
 		headerPane.setDebug(Settings.isDebug());
 		final SuperpowerPane superpowerPane = new SuperpowerPane(this.client, skin);
 		superpowerPane.setDebug(Settings.isDebug());
-		int count = 0; //Temporary for setting orderly columns
+		final EnumMap<Province.Id, ProvinceInfoCard> cards = new EnumMap<Province.Id, ProvinceInfoCard>(Province.Id.class);
 		for (final ProvinceSettings p : this.client.initialGameState.getSettings().getProvincesList()) {
 			if(p.getRegionInit() != Province.Region.SUPERPOWERS) {
-				ProvinceInfoCard card = new ProvinceInfoCard(this.client, p, actionPane, skin);
-				card.setDebug(Settings.isDebug());
-				nations.add(card);
-				count ++;
-				if(count == 4) {
-					nations.row();
-					count = 0;
+				cards.put(p.getId(), new ProvinceInfoCard(this.client, p, actionPane, skin));
+			}
+		}
+		final Province.Id[][] provincePosition = {
+			{Province.Id.MEXICO,    Province.Id.CUBA,       Province.Id.HAITI,     null,                      null},
+			{Province.Id.GUATEMALA, Province.Id.HONDURAS,   Province.Id.NICARAGUA, Province.Id.DOMINICAN_REP, null},
+			{null,                  Province.Id.COSTA_RICA, Province.Id.PANAMA,    Province.Id.LESS_ANTILLES, null},
+			{null,                  null,                   Province.Id.COLOMBIA,  Province.Id.VENEZUELA,     Province.Id.GUYANA},
+			{null,                  Province.Id.ECUADOR,    Province.Id.PERU,      Province.Id.BRAZIL,        null},
+			{null,                  Province.Id.CHILE,      Province.Id.BOLIVIA,   null,                      null},
+			{null,                  null,                   Province.Id.ARGENTINA, null,                      null},
+		};
+		for (int r=0; r<provincePosition.length; r++) {
+			for (int c=0; c<provincePosition[r].length; c++) {
+				ProvinceInfoCard pic = cards.getOrDefault(provincePosition[r][c], null);
+				if (pic != null) {
+					pic.setDebug(Settings.isDebug());
+					nations.add(pic);
+				} else {
+					nations.add();
 				}
 			}
+			nations.row();
 		}
 		
 		// Top Pane
