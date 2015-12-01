@@ -256,21 +256,22 @@ public class ComputedGameState {
 							Logger.Dbg("Seeing pressure from: " + adj);
 							if(getAlly(adj) == otherPlayer(player)) {
 								netInfl -= 1;
-								Logger.Vrb("Neighboring enemy ally -> -1");
-							} else if(getAlly(adj) == otherPlayer(player)) {
+								Logger.Dbg("Neighboring enemy ally -> -1");
+							} else if(getAlly(adj) == player) {
 								netInfl += 1;
-								Logger.Vrb("Neighboring friendly ally -> +1");
+								Logger.Dbg("Neighboring friendly ally -> +1");
 							}
 							if(governmentMap.get(adj) == getIdealGov(player)) {
 								netInfl += 1;
-								Logger.Vrb("Neighboring friendly government -> +1");
+								Logger.Dbg("Neighboring friendly government -> +1");
 							} else if(governmentMap.get(adj) == getIdealGov(otherPlayer(player))) {
 								netInfl -= 1;
-								Logger.Vrb("Neighboring enemy government -> +1");
+								Logger.Dbg("Neighboring enemy government -> -1");
 							} 
 						}
+						Logger.Dbg("Net influence: " + netInfl);
 						final int finInfl = netInfl * inflSign;
-						polInfluenceMap.compute(id, (i, infl) -> infl == null ? finInfl * inflSign : infl + finInfl * inflSign);
+						polInfluenceMap.compute(id, (i, infl) -> infl == null ? finInfl : infl + finInfl);
 						polStoreMap.compute(player,  (p, pol) -> pol == null ? -cost : pol - cost);
 						if(getAlly(id) != null) {
 							heatCounter += Settings.getConstInt("action_pressure_heat_extra"); // More if enemy ally
