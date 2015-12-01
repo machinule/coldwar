@@ -2,6 +2,7 @@ package coldwar.ui;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -57,7 +58,8 @@ public class ActionPane extends Table {
 		int sizeY = 25;
 		
 		int param; //For use in lambda's
-		Map<DynamicButton, Runnable> actionButtons = new HashMap<>();
+		Map<DynamicButton, Runnable> actionButtonMethods = new HashMap<>();
+		Map<DynamicButton, Function<Client, Integer>> actionButtonCosts = new HashMap<>();
 		
 		diplomaticInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaDipMove(c.getPlayer(), province.getId()), "Diplomatic Outreach", this.skin);
 		militaryInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaMilMove(c.getPlayer(), province.getId()), "Arms Sales", this.skin);
@@ -70,15 +72,26 @@ public class ActionPane extends Table {
 		coupButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidCoupMove(c.getPlayer(), province.getId()), "Initiate Coup", this.skin);
 		invadeButton = new DynamicButton(this.client, c -> false, "Conduct Military Action", this.skin);
 
-		actionButtons.put(diplomaticInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceDip(province.getId(), actionParamInput.getValue()) );
-		actionButtons.put(militaryInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceMil(province.getId(), actionParamInput.getValue()) );
-		actionButtons.put(covertInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceCov(province.getId(), actionParamInput.getValue()) );
+		actionButtonMethods.put(diplomaticInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceDip(province.getId(), actionParamInput.getValue()) );
+		actionButtonMethods.put(militaryInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceMil(province.getId(), actionParamInput.getValue()) );
+		actionButtonMethods.put(covertInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceCov(province.getId(), actionParamInput.getValue()) );
 
-		actionButtons.put(dissidentsButton, () -> ActionPane.this.client.getMoveBuilder().FundDissidents(province.getId()) );
-		actionButtons.put(politicalPressureButton, () -> ActionPane.this.client.getMoveBuilder().PoliticalPressure(province.getId()) );
-		actionButtons.put(establishBaseButton, () -> ActionPane.this.client.getMoveBuilder().EstablishBase(province.getId()) );
+		actionButtonMethods.put(dissidentsButton, () -> ActionPane.this.client.getMoveBuilder().FundDissidents(province.getId()) );
+		actionButtonMethods.put(politicalPressureButton, () -> ActionPane.this.client.getMoveBuilder().PoliticalPressure(province.getId()) );
+		actionButtonMethods.put(establishBaseButton, () -> ActionPane.this.client.getMoveBuilder().EstablishBase(province.getId()) );
 
-		actionButtons.put(coupButton, () -> ActionPane.this.client.getMoveBuilder().Coup(province.getId(), actionParamInput.getValue()) );
+		actionButtonMethods.put(coupButton, () -> ActionPane.this.client.getMoveBuilder().Coup(province.getId(), actionParamInput.getValue()) );
+		//actionButtons.put(invadeButton, () -> ActionPane.this.client.getMoveBuilder().Invade(province.getId()) );
+		
+		actionButtonCosts.put(diplomaticInfluenceButton, c -> state.getDiaDipMoveIncrement(client.getPlayer(), province.getId()) );
+		actionButtonCosts.put(militaryInfluenceButton, c -> state.getDiaMilMoveIncrement() );
+		actionButtonCosts.put(covertInfluenceButton, c -> state.getDiaCovMoveIncrement() );
+
+		actionButtonCosts.put(dissidentsButton, c -> state.getFundDissidentsMoveCost() );
+		actionButtonCosts.put(politicalPressureButton, c -> state.getPoliticalPressureMoveCost() );
+		actionButtonCosts.put(establishBaseButton, c -> state.getEstablishBaseMoveCost() );
+
+		actionButtonCosts.put(coupButton, c -> state.getCoupMoveCost(province.getId()) );
 		//actionButtons.put(invadeButton, () -> ActionPane.this.client.getMoveBuilder().Invade(province.getId()) );
 		
 		submitButton = new DynamicButton(this.client, c -> !(c.getMoveBuilder().getComputedGameState().hasActed(province.getId()) || (selected == null)), "Submit", this.skin);
@@ -151,10 +164,7 @@ public class ActionPane extends Table {
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Sponsor coup\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(coupButton);
-				requiresSlider = true;
-				actionParamInput.setBounds(state.getCoupMoveMagnitudeMin(), 
-						state.getCoupMoveMagnitudeMax(client.getPlayer(), province.getId()),
-						state.getCoupMoveMagnitudeIncrement());
+				requiresSlider = false;
 			}
 		});
 		
@@ -162,7 +172,7 @@ public class ActionPane extends Table {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"Submit\" button pressed on " + province.getId().getValueDescriptor().getName());
-				actionButtons.get(selected).run();
+				actionButtonMethods.get(selected).run();
 				requiresSlider = false;
 			}
 		});
@@ -176,10 +186,13 @@ public class ActionPane extends Table {
 		Table innerConfirm = new Table();
 		
 		DynamicLabel actionParamLabel = new DynamicLabel(client, c -> requiresSlider ? "Value: " + actionParamInput.getValue() + " " : "", skin);
+		DynamicLabel costLabel = new DynamicLabel(client, c -> requiresSlider ? "Cost: " + actionParamInput.getValue() + " " : selected != null ? "Cost: " + actionButtonCosts.get(selected).apply(client) + " " : "", skin);
 		
-		innerConfirm.add(actionParamLabel).left();
-		innerConfirm.add(actionParamInput);
-		innerConfirm.add(submitButton).center();
+
+		innerConfirm.add(submitButton).left();
+		innerConfirm.add(actionParamLabel).expand().right();
+		innerConfirm.add(actionParamInput).left();
+		innerConfirm.add(costLabel).expand().right();
 		
 		Table innerBottom = new Table();
 		
@@ -238,7 +251,7 @@ public class ActionPane extends Table {
 				this.skin));
 		innerBottom.row();
 		
-		this.add(innerConfirm);
+		this.add(innerConfirm).fill();
 		this.row();
 		this.add(innerTop);
 		this.row();

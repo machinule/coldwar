@@ -282,14 +282,10 @@ public class ComputedGameState {
 				if (move.hasCoupMove()) {
 					Province.Id id = move.getCoupMove().getProvinceId();
 					if(isValidCoupMove(player, id)) {
-						int mag = move.getCoupMove().getMagnitude();
-						int result = ((mag + getNetStability(id)) * inflSign ) +initialInfluence.get(id);
-						Logger.Dbg("Expected result on incoming coup on success : " + result);
+						int result = inflSign * (getAllianceThreshold(id) + 1);
 						coupMap.put(id, result);
-						int cov_cost = getCoupMoveBaseCost(id);
-						int mil_cost = mag*Settings.getConstInt("action_coup_cost_per_mag");
+						int cov_cost = getCoupMoveCost(id);
 						covStoreMap.compute(player,  (p, mil) -> mil == null ? -cov_cost : mil - cov_cost);
-						milStoreMap.compute(player,  (p, mil) -> mil == null ? -mil_cost : mil - mil_cost);
 						int heatPerStab = Settings.getConstInt("action_coup_heat_per_stab")*getNetStability(id);
 						heatCounter += Settings.getConstInt("action_coup_heat_fixed") + heatPerStab;
 						actedMap.put(id, true);
@@ -506,6 +502,7 @@ public class ComputedGameState {
 				coupMap.put(p.getId(), 0);
 				p.setBase(Province.Id.NONE);
 				p.setDissidents(false);
+				stabilityModifierMap.put(p.getId(), 0);
 				nextStateBuilder.getTurnLogBuilder()
 					.addEvents(Event.newBuilder()
 						.setCivilWar(CivilWarEvent.newBuilder()
@@ -520,20 +517,14 @@ public class ComputedGameState {
 		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
 			if (coups.getOrDefault(p.getId(), 0) != 0) {
 				int result = coups.get(p.getId());
-				int netMag = Math.abs(result-getNetStability(p.getId())); 
-				int chance = this.state.getSettings().getCoupBaseChance() - 
-						     ((getNetStability(p.getId())-1) * this.state.getSettings().getCoupDecreaseChanceStab());
-				chance -= netMag*this.state.getSettings().getCoupDecreaseChanceMag();
-				Logger.Dbg("Coup chance is: " + chance/10000 + "%");
-				if (happens.apply(chance)) {
-					p.setInfluence(Math.min(result, getNetStability(p.getId())));
-					Logger.Dbg("Coup success - influence set to " + result);
+				if (happens.apply(this.state.getSettings().getCoupSuccessChance())) {
+					p.setInfluence(result);
+					Logger.Dbg("Coup success in " + p.getId() + "; result = " + result);
 				}
 				nextStateBuilder.getTurnLogBuilder()
 					.addEvents(Event.newBuilder()
 						.setCoupEvent(CoupEvent.newBuilder()
 							.setProvinceId(p.getId())
-							.setMagnitude(netMag)
 							.build())
 						.build());
 				
@@ -584,9 +575,10 @@ public class ComputedGameState {
 	}
 	
 	public boolean isValidCoupMove(Player player, Province.Id id) {
-		return covStore.get(player) >= Settings.getConstInt("action_coup_cost_per_stab")*getNetStability(id) &&
+		return covStore.get(player) >= getCoupMoveCost(id) &&
 			   bases.get(id) == null &&
 			   !hasInfluence(player, id) &&
+			   getNetStability(id) <= Settings.getConstInt("action_coup_stab_threshold") &&
 			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
@@ -653,20 +645,8 @@ public class ComputedGameState {
 		return Settings.getConstInt("action_pressure_cost");
 	}
 	
-	public int getCoupMoveBaseCost(Province.Id id) {
-		return Settings.getConstInt("action_pressure_cost") * getNetStability(id);
-	}
-	
-	public int getCoupMoveMagnitudeMin() {
-		return 0;
-	}
-	
-	public int getCoupMoveMagnitudeMax(Player player, Province.Id id) {
-		return Math.min(milStore.get(player), getNetStability(id)) * Settings.getConstInt("action_coup_cost_per_mag");
-	}
-	
-	public int getCoupMoveMagnitudeIncrement() {
-		return Settings.getConstInt("action_coup_cost_per_mag");
+	public int getCoupMoveCost(Province.Id id) {
+		return (Settings.getConstInt("action_coup_cost_per_stab") * getNetStability(id)) + 1;
 	}
 	
 	// OTHER HELPER FUNCTIONS
@@ -732,10 +712,14 @@ public class ComputedGameState {
 	}
 	
 	public boolean hasInfluence(Player player, Province.Id id) {
-		if((player == Player.USA ? 1 : -1) * totalInfluence.get(id) > 0 ||
+		if((inflSign(player) * totalInfluence.get(id) > 0 ||
 				bases.get(id) == player ||
-				governments.get(id) == getIdealGov(player)) return true;
+				governments.get(id) == getIdealGov(player))) return true;
 		return false;
+	}
+	
+	protected int inflSign(Player player) {
+		return player == Player.USA ? 1 : -1;
 	}
 
 }

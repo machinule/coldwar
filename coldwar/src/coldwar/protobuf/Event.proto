@@ -74,5 +74,4 @@ message UssrAllyCommunismEvent {
 
 message CoupEvent {
 	optional Province.Id province_id = 1;
-	optional int32 magnitude = 2;
 }
