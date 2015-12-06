@@ -2,19 +2,13 @@ package coldwar.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 import coldwar.GameSettingsOuterClass.ProvinceSettings;
 import coldwar.Logger;
-import coldwar.Settings;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.ProvinceOuterClass.Province.Region;
 import coldwar.logic.Client;
@@ -36,17 +30,16 @@ public class ProvinceInfoCard extends Table {
 		this.client = client;
 		this.province = province;
 		this.skin = skin;
-		color = getRegionColor(province.getRegion());
 		
 		infoBox = createLayout();
-		infoBox.setColor(color);
+		infoBox.setColor(getValidColor());
 		infoBox.addCaptureListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, final Actor actor) {
 				Logger.Info(province.getId().getValueDescriptor().getName() + " selected");
 				toolbar.onSelect(province);
 				if (currentSelection != null) {
-					currentSelection.infoBox.setColor(currentSelection.color);
+					currentSelection.infoBox.setColor(currentSelection.getValidColor());
 				}
 				currentSelection = ProvinceInfoCard.this;
 				currentSelection.infoBox.setColor(new Color(1, 1, 1, 1));
@@ -55,12 +48,30 @@ public class ProvinceInfoCard extends Table {
 		this.add(infoBox).size(180, 40);
 	}
 	
+	@Override
+	public void act(final float delta) {
+		super.act(delta);
+		infoBox.setColor(getValidColor());
+	}
+	
+	public Color getValidColor() {
+		if(client.getMoveBuilder().getComputedGameState().hasAdjacencyInfluence(client.getPlayer(), province.getId()))
+			return getRegionColor(province.getRegion());
+		else
+			return getNonAdjColor(province.getRegion());
+	}
+	
 	protected Button createLayout() {
 		Button ret = new Button(this.skin);
 		//ret.setDebug(Settings.isDebug());
-		DynamicLabel influence = new DynamicLabel(client, c -> Integer.toString(Math.abs(c.getMoveBuilder().getInfluence(province.getId()))), c -> c.getMoveBuilder().getInfluence(province.getId()) > 0 ? Color.BLUE : c.getMoveBuilder().getInfluence(province.getId()) < 0 ? Color.RED : Color.BLACK, skin);
+		DynamicLabel influence = new DynamicLabel(client,
+				c -> Integer.toString(Math.abs(c.getMoveBuilder().getInfluence(province.getId()))),
+				c -> c.getMoveBuilder().getInfluence(province.getId()) > 0 ? Color.BLUE : c.getMoveBuilder().getInfluence(province.getId()) < 0 ? Color.RED : Color.BLACK,
+				skin);
 		DynamicLabel stability = new DynamicLabel(client, c -> netStability(), skin);
-		DynamicLabel name = new DynamicLabel(client, c -> province.getLabel(), c -> c.getMoveBuilder().getComputedGameState().getAlly(province.getId()) == Player.USA ? Color.BLUE : c.getMoveBuilder().getComputedGameState().getAlly(province.getId()) == Player.USSR ? Color.RED : Color.BLACK, skin);
+		DynamicLabel name = new DynamicLabel(client,
+				c -> province.getLabel(),
+				c -> c.getMoveBuilder().getComputedGameState().getAlly(province.getId()) == Player.USA ? Color.BLUE : c.getMoveBuilder().getComputedGameState().getAlly(province.getId()) == Player.USSR ? Color.RED : Color.BLACK, skin);
 		
 		name.setAlignment(1); //Center in cell
 		name.setFontScale((float)0.75);
@@ -125,6 +136,22 @@ public class ProvinceInfoCard extends Table {
 	            break;
 	        case SOUTH_AMERICA:
 	        	ret = new Color((float)51/255, (float)201/255, (float)0/255, 1);
+	            break;
+	        default:
+	        	ret = Color.BLACK;
+	        	break;
+    	}
+    	return ret;
+    }
+    
+    protected Color getNonAdjColor(Region region) {
+    	Color ret;
+    	switch (region) {
+	        case CENTRAL_AMERICA:
+	        	ret = new Color(0, (float)153/255, (float)153/255, 1);
+	            break;
+	        case SOUTH_AMERICA:
+	        	ret = new Color((float)25/255, (float)153/255, (float)0/255, 1);
 	            break;
 	        default:
 	        	ret = Color.BLACK;

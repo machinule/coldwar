@@ -122,6 +122,7 @@ public abstract class Client {
 			.setId(Province.Id.USA)
 			.setRegion(Province.Region.SUPERPOWERS)
 			.setLabel("United States")
+			.setInfluenceInit(1)
 			.setGovernmentInit(Province.Government.DEMOCRACY)
 			.addAdjacency(Province.Id.MEXICO)
 			.addAdjacency(Province.Id.CUBA);
@@ -130,6 +131,7 @@ public abstract class Client {
 			.setId(Province.Id.USSR)
 			.setRegion(Province.Region.SUPERPOWERS)
 			.setLabel("Soviet Union")
+			.setInfluenceInit(-1)
 			.setGovernmentInit(Province.Government.COMMUNISM);
 		
 		// CENTRAL AMERICA

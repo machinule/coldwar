@@ -207,8 +207,14 @@ public class ComputedGameState {
 						}
 						polInfluenceMap.compute(id, (i, infl) -> infl == null ? (mag/effect_multiplier) * inflSign : infl + (mag/effect_multiplier) * inflSign);
 						polStoreMap.compute(player, (p, pol) -> pol == null ? -mag : pol - mag);
+						int nonAdjCost = getNonAdjacentDiaMoveCost(player, id);
+						if(nonAdjCost != 0) {
+							Logger.Dbg("Adding non-adjacent cost of " + nonAdjCost);
+							polStoreMap.compute(player, (p, pol) -> pol == null ? -nonAdjCost : pol - nonAdjCost);
+						}
 						actedMap.put(id, true);
 					}
+					
 				}
 				if (move.hasDiaMilMove()) {
 					Province.Id id = move.getDiaMilMove().getProvinceId();
@@ -216,7 +222,11 @@ public class ComputedGameState {
 						final int mag = move.getDiaMilMove().getMagnitude();
 						milInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
 						milStoreMap.compute(player, (p, mil) -> mil == null ? -mag : mil - mag);
-						actedMap.put(id, true);
+						int nonAdjCost = getNonAdjacentDiaMoveCost(player, id);
+						if(nonAdjCost != 0) {
+							Logger.Dbg("Adding non-adjacent cost of " + nonAdjCost);
+							polStoreMap.compute(player, (p, pol) -> pol == null ? -nonAdjCost : pol - nonAdjCost);
+						}actedMap.put(id, true);
 					}
 				}
 				if (move.hasDiaCovMove()) {
@@ -225,7 +235,11 @@ public class ComputedGameState {
 						final int mag = move.getDiaCovMove().getMagnitude();
 						covInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
 						covStoreMap.compute(player, (p, cov) -> cov == null ? -mag : cov - mag);
-						actedMap.put(id, true);
+						int nonAdjCost = getNonAdjacentDiaMoveCost(player, id);
+						if(nonAdjCost != 0) {
+							Logger.Dbg("Adding non-adjacent cost of " + nonAdjCost);
+							polStoreMap.compute(player, (p, pol) -> pol == null ? -nonAdjCost : pol - nonAdjCost);
+						}actedMap.put(id, true);
 					}
 				}
 				if (move.hasFundDissidentsMove()) {
@@ -621,6 +635,13 @@ public class ComputedGameState {
 	
 	// COST AND COST RANGES
 
+	public int getNonAdjacentDiaMoveCost(Player player, Province.Id id) {
+		if(hasAdjacencyInfluence(player, id)) {
+			return Settings.getConstInt("non_adjacent_cost");
+		}
+		return 0;
+	}
+	
 	public int getDiaDipMoveMin(Player player, Province.Id id) {
 		if(getDiaDipMoveIncrement(player, id) == 2) return 2;
 		return 1;

@@ -41,6 +41,8 @@ public class Settings {
 		Settings.consts.putInteger("base_income_pol", 4);
 		Settings.consts.putInteger("base_income_mil", 4);
 		Settings.consts.putInteger("base_income_cov", 2);
+		
+		Settings.consts.putInteger("non_adjacent_cost", 2); // POL
 
 		Settings.consts.putInteger("leader_income_pol", 2);
 		Settings.consts.putInteger("leader_income_mil", 2);
@@ -61,7 +63,6 @@ public class Settings {
 		Settings.consts.putInteger("action_coup_heat_per_stab", 2);
 		Settings.consts.putInteger("action_coup_lock_time", 2);
 		Settings.consts.putInteger("action_coup_stab_threshold", 2);
-		
 
 		Settings.consts.flush();
 	}

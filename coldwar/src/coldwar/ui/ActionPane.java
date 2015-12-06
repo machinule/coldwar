@@ -4,11 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
@@ -18,7 +17,6 @@ import coldwar.ProvinceOuterClass.Province;
 import coldwar.Logger;
 import coldwar.Settings;
 import coldwar.logic.Client;
-import coldwar.logic.Client.Player;
 import coldwar.logic.ComputedGameState;
 
 public class ActionPane extends Table {
@@ -54,12 +52,10 @@ public class ActionPane extends Table {
 		requiresSlider = false;
 			
 		DynamicSliderContainer actionParamInput = new DynamicSliderContainer(client, 1, 2, 1, c -> requiresSlider, false, skin);
-		int sliderMax = 10;		
 		
 		int sizeX = 200;
 		int sizeY = 25;
 		
-		int param; //For use in lambda's
 		Map<DynamicButton, Runnable> actionButtonMethods = new HashMap<>();
 		Map<DynamicButton, Function<Client, Integer>> actionButtonCosts = new HashMap<>();
 		
@@ -189,7 +185,6 @@ public class ActionPane extends Table {
 		
 		DynamicLabel actionParamLabel = new DynamicLabel(client, c -> requiresSlider ? "Value: " + actionParamInput.getValue() + " " : "", skin);
 		DynamicLabel costLabel = new DynamicLabel(client, c -> requiresSlider ? "Cost: " + actionParamInput.getValue() + " " : selected != null ? "Cost: " + actionButtonCosts.get(selected).apply(client) + " " : "", skin);
-		
 
 		innerConfirm.add(submitButton).left();
 		innerConfirm.add(actionParamLabel).expand().right();
@@ -239,14 +234,17 @@ public class ActionPane extends Table {
 			.padLeft(10);
 		innerBottom.row();
 		innerBottom.add(new Label("Adjacencies:", this.skin));
-		DynamicLabel adjacencyList = new DynamicLabel(this.client, c -> getFormattedAdjacencies(province), this.skin);
+		DynamicLabel adjacencyList = new DynamicLabel(this.client,
+				c -> getFormattedAdjacencies(province),
+				c -> state.hasAdjacencyInfluence(c.getPlayer(), province.getId()) ? Color.BLACK : Color.RED,
+				this.skin);
 		innerBottom.add(adjacencyList)
 			.size(0, 0)
 			.left()
 			.padLeft(10);
 		innerBottom.row();
 		innerBottom.add(new Label("Leader:", this.skin));
-		innerBottom.add(new DynamicLabel(this.client, c -> getFormattedLeader(province),	this.skin))
+		innerBottom.add(new DynamicLabel(this.client, c -> getFormattedLeader(province), this.skin))
 			.size(0, 0)
 			.padLeft(10)
 			.left();
