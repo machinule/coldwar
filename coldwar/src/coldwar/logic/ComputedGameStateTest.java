@@ -136,4 +136,59 @@ public class ComputedGameStateTest {
 		assertEquals(22, state.getHeat());
 	}
 
+	@Test
+	public void testNoEventsForZeroChance() throws ParseException {
+		for(int i=0; i<1000; i++) {
+			GameState.Builder initial = eventFreeGameState();
+			initial.setSeed(i);
+			GameState state;
+			state = computeState(
+					initial.build(),
+					new MoveList[]{ML(""), ML("")});
+			assertEquals(0, state.getTurnLog().getEventsCount());	
+		}
+	}
+	
+	@Test
+	public void testSettingsNotDuplicated() throws ParseException {
+		GameState.Builder initial = eventFreeGameState();
+		GameState state;
+		state = computeState(
+				initial.build(),
+				new MoveList[]{ML(""), ML("")});
+		assertEquals(false, state.getTurnLog().getInitialState().hasSettings());	
+	}
+	
+	@Test
+	public void testTurnLogCopiesMoves() throws ParseException {
+		GameState.Builder initial = eventFreeGameState();
+		GameState state;
+		state = computeState(
+				initial.build(),
+				new MoveList[]{ML("moves{found_cia_move{}}"), ML("moves{found_kgb_move{}}")});
+		assertEquals(ML("moves{found_cia_move{}}"), state.getTurnLog().getUsaMoves());	
+		assertEquals(ML("moves{found_kgb_move{}}"), state.getTurnLog().getUssrMoves());	
+	}
+	
+	@Test
+	public void testTurnLogCopiesTurnLog() throws ParseException {
+		GameState.Builder initial = eventFreeGameState();
+		GameState state;
+		state = computeState(
+				initial.build(),
+				new MoveList[]{ML("moves{found_cia_move{}}"), ML("moves{found_kgb_move{}}")},
+				new MoveList[]{ML(""), ML("")});
+		assertEquals(ML("moves{found_cia_move{}}"), state.getTurnLog().getInitialState().getTurnLog().getUsaMoves());	
+		assertEquals(ML("moves{found_kgb_move{}}"), state.getTurnLog().getInitialState().getTurnLog().getUssrMoves());	
+	}
+	
+	@Test
+	public void testTurnLogCopiesGameState() throws ParseException {
+		GameState.Builder initial = eventFreeGameState();
+		GameState state;
+		state = computeState(
+				initial.build(),
+				new MoveList[]{ML(""), ML("")});
+		assertEquals(initial.clearSettings().build(), state.getTurnLog().getInitialState());	
+	}
 }
