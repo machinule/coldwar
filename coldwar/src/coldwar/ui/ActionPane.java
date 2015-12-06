@@ -25,7 +25,7 @@ public class ActionPane extends Table {
 	protected Skin skin;
 	DynamicButton selected;
 	boolean requiresSlider;	
-	
+    
 	public ActionPane(final Client client, final Skin skin) {
 		super();
 		this.client = client;
@@ -50,7 +50,7 @@ public class ActionPane extends Table {
 		DynamicButton submitButton;
 		selected = null;
 		requiresSlider = false;
-			
+		
 		DynamicSliderContainer actionParamInput = new DynamicSliderContainer(client, 1, 2, 1, c -> requiresSlider, false, skin);
 		
 		int sizeX = 200;

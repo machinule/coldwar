@@ -3,6 +3,7 @@ package coldwar.ui;
 import java.util.function.Function;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -16,6 +17,13 @@ public class DynamicLabel extends Label {
 
 	public DynamicLabel(final Client client, Function<Client, String> textFn, final Skin skin) {
 		super("", skin);
+		/* ENABLE ACCENTS IN FONT
+		 * 
+		 * BitmapFont bmpFnt = new BitmapFont();
+		 * LabelStyle style = new LabelStyle();
+		 * style.font = bmpFnt;
+		 * this.setStyle(style);
+		 */ 
 		this.client = client;
 		this.textFn = textFn;
 		this.colorFn = c -> Color.BLACK;
