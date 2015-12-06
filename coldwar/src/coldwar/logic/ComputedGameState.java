@@ -532,8 +532,6 @@ public class ComputedGameState {
 		
 		nextStateBuilder.setSeed(r.nextLong());
 		this.nextState = nextStateBuilder.build();
-		Logger.Info("Stability Mod: " + this.stabilityModifier);
-
 	}
 	
 	// VALIDATION
