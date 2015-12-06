@@ -21,7 +21,6 @@ import coldwar.EventOuterClass.ProvinceRepublicEvent;
 import coldwar.MoveOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
-import coldwar.ProvinceOuterClass.Province.Region;
 import coldwar.Settings;
 import coldwar.logic.Client.Player;
 
@@ -339,6 +338,34 @@ public class ComputedGameState {
 				stabilityModifierMap.compute(p, (q, mod) -> mod == null ? 1 : mod + 1 );
 			}
 		});
+		leaderMap.forEach((p, l) -> {
+			stabilityModifierMap.compute(p, (q, mod) -> mod == null ? 1 : mod + 1 );
+			Leader.Type type = l.getType();
+			Player player = getAlly(p);
+			if(player != null) {
+				int lead_income;
+				switch (type) {
+					case POLITICAL:
+						lead_income = Settings.getConstInt("leader_income_pol");
+						polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
+						break;
+					case MILITARY:
+						lead_income = Settings.getConstInt("leader_income_mil");
+						polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
+						break;
+					case COVERT:
+						lead_income = Settings.getConstInt("leader_income_cov");
+						polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
+						break;
+					default:
+						Logger.Err("Leader " + l.getName() + " has no type!");
+						break;				
+				}
+			}
+			if(type == Leader.Type.ISOLATIONIST) {
+				polInfluenceMap.compute(p, (i, infl) -> infl == null ? -1 * inflSign(player) : infl + -1 * inflSign(player));
+			}
+		});
 		
 		heatCounter = Math.max(heatCounter - 10, this.state.getSettings().getHeatMin());
 		this.heat = heatCounter;
@@ -355,7 +382,8 @@ public class ComputedGameState {
 						.build())
 				.setTurn(this.state.getTurn() + 1)
 				.setHeat(heatCounter)
-				.addAllProvinces(this.state.getProvincesList());
+				.addAllProvinces(this.state.getProvincesList())
+				.addAllActiveLeaders(this.state.getActiveLeadersList());
 		
 		for (final Province.Builder province : nextStateBuilder.getProvincesBuilderList()) {
 			province.setDissidents(dissidentsMap.get(province.getId()));
@@ -366,8 +394,8 @@ public class ComputedGameState {
 			if(baseOwner != null)
 				province.setBase(toProvinceId(baseOwner));
 			int totalStability = getNetStability(province.getId());
-			if (Math.abs(province.getInfluence()) > totalStability) {
-				province.setInfluence(Integer.signum(province.getInfluence()) * totalStability);
+			if (Math.abs(province.getInfluence()) > totalStability*2) {
+				province.setInfluence(Integer.signum(province.getInfluence()) * totalStability*2);
 			}
 		}
 		
@@ -680,7 +708,7 @@ public class ComputedGameState {
 	}
 	
 	public int getAllianceThreshold(Province.Id province) {
-		if(getNetStability(province) > 0) return (int) Math.ceil(((float)getNetStability(province)/2)) - 1;
+		if(getNetStability(province) > 0) return getNetStability(province)-1;
 		return 0;
 	}
 	
@@ -721,10 +749,5 @@ public class ComputedGameState {
 	
 	protected int inflSign(Player player) {
 		return player == Player.USA ? 1 : -1;
-	}
-
-	protected Leader pullLeader(Province.Id id) {
-		return null;
-	}
-	
+	}	
 }

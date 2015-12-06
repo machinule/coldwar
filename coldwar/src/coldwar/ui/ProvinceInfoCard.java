@@ -98,10 +98,10 @@ public class ProvinceInfoCard extends Table {
     		ret += "DISS ";
     	}
     	if(client.getMoveBuilder().getBaseOwner(province.getId()) == Player.USA) {
-    		ret += "USA Base ";
+    		ret += "(USA Base) ";
     	}
     	if(client.getMoveBuilder().getBaseOwner(province.getId()) == Player.USSR) {
-    		ret += "USSR Base ";
+    		ret += "(USSR Base) ";
     	}
     	// Unique proto for each government to include string label?
     	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.CIVIL_WAR)
@@ -113,7 +113,7 @@ public class ProvinceInfoCard extends Table {
     	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.COMMUNISM)
     		ret += "COM ";
     	if(client.getMoveBuilder().getComputedGameState().leaders.containsKey(province.getId()))
-    		ret += "Lead";
+    		ret += "LDR ";
 		return ret;
     }
     

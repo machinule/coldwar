@@ -156,6 +156,7 @@ leaderBank {
 	name: "Anastasio Somoza García"
 	birth: 1896
 	elected: false
+	type: POLITICAL
 }
 
 leaderBank {
@@ -272,16 +273,142 @@ leaderBank {
 
 # Peru
 
+leaderBank {
+	name: "Manuel Prado Ugarteche"
+	province: PERU
+	birth: 1889
+	elected: true
+}
+
+leaderBank {
+	name: "Ricardo Pérez Godoy"
+	province: PERU
+	birth: 1905
+	elected: false
+}
+
+leaderBank {
+	name: "Fernando Belaúnde Terry"
+	province: PERU
+	birth: 1912
+	elected: true
+}
+
+leaderBank {
+	name: "Juan Velasco Alvarado"
+	province: PERU
+	birth: 1910
+	elected: false
+}
+
 # Ecuador
 
 # Chile
 
+leaderBank {
+	name: "Carlos Ibáñez del Campo"
+	province: CHILE
+	birth: 1877
+	elected: true
+}
+
+leaderBank {
+	name: "Salvador Allende"
+	province: CHILE
+	birth: 1908
+	elected: true
+	allegiance: ANTI_USA
+}
+
+leaderBank {
+	name: "Augusto Pinochet"
+	province: CHILE
+	birth: 1915
+	elected: false
+}
+
 # Bolivia
 
+leaderBank {
+	name: "Víctor Paz Estenssoro"
+	province: BOLIVIA
+	birth: 1907
+	elected: true
+}
+
+leaderBank {
+	name: "René Barrientos"
+	province: BOLIVIA
+	birth: 1919
+	elected: false
+}
+
+leaderBank {
+	name: "Hugo Banzer"
+	province: BOLIVIA
+	birth: 1926
+}
+
 # Argentina
+
+leaderBank {
+	name: "Juan Perón"
+	province: ARGENTINA
+	birth: 1895
+	elected: true
+	type: MILITARY
+}
+
+leaderBank {
+	name: "Pedro Eugenio Aramburu"
+	province: ARGENTINA
+	birth: 1903
+	elected: false
+}
+
+leaderBank {
+	name: "Eva Perón"
+	province: ARGENTINA
+	birth: 1919
+	elected: false
+}
+
+leaderBank {
+	name: "Arturo Frondizi Ercoli"
+	province: ARGENTINA
+	birth: 1908
+	elected: true
+}
+
+leaderBank {
+	name: "Juan Carlos Onganía"
+	province: ARGENTINA
+	birth: 1914
+	elected: false
+}
 
 # Venezuela
 
 # Brazil
+
+leaderBank {
+	name: "Getúlio Vargas"
+	province: BRAZIL
+	birth: 1882
+}
+
+leaderBank {
+	name: "Juscelino Kubitschek"
+	province: BRAZIL
+	birth: 1902
+	elected: true
+}
+
+leaderBank {
+	name: "Humberto de Alencar Castelo Branco"
+	province: BRAZIL
+	birth: 1902
+	elected: false
+}
 
 # Guyana

@@ -13,8 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import coldwar.GameSettingsOuterClass.ProvinceSettings;
+import coldwar.LeaderOuterClass.Leader;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.Logger;
+import coldwar.Settings;
 import coldwar.logic.Client;
 import coldwar.logic.Client.Player;
 import coldwar.logic.ComputedGameState;
@@ -244,13 +246,10 @@ public class ActionPane extends Table {
 			.padLeft(10);
 		innerBottom.row();
 		innerBottom.add(new Label("Leader:", this.skin));
-		innerBottom.add(new DynamicLabel(
-				this.client,
-				c -> getLeader(province),
-				c -> c.getMoveBuilder().getInfluence(province.getId()) > 0 ? Color.BLUE : c.getMoveBuilder().getInfluence(province.getId()) < 0 ? Color.RED : Color.BLACK,
-				this.skin))
-				.padLeft(10)
-				.left();
+		innerBottom.add(new DynamicLabel(this.client, c -> getFormattedLeader(province),	this.skin))
+			.size(0, 0)
+			.padLeft(10)
+			.left();
 		innerBottom.row();
 		
 		this.add(innerConfirm).fill();
@@ -295,10 +294,27 @@ public class ActionPane extends Table {
 		return ret;
 	}
 	
-	protected String getLeader(final ProvinceSettings province) {
+	protected String getFormattedLeader(final ProvinceSettings province) {
 		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
-		if (state.leaders.containsKey(province.getId()))
-			return state.leaders.get(province.getId()).getName();
+		if (state.leaders.containsKey(province.getId())) {
+			Leader l = state.leaders.get(province.getId());
+			String ret = l.getName();
+			ret += " (" + (state.year - l.getBirth()) + ") ";
+			switch (l.getType()) {
+				case POLITICAL:
+					ret += "+" + Settings.getConstInt("leader_income_pol") + " POL";
+					break;
+				case MILITARY:
+					ret += "+" + Settings.getConstInt("leader_income_mil") + " MIL";
+					break;
+				case COVERT:
+					ret += "+" + Settings.getConstInt("leader_income_cov") + " COV";
+					break;
+				default:
+					break;
+			}
+			return ret;
+		}
 		else
 			return "None";
 	}
