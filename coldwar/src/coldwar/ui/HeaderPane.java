@@ -46,6 +46,11 @@ public class HeaderPane extends Table {
 		this.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getCovStore()), this.skin));
 		this.add(new Label("HEAT:", this.skin));
 		this.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getHeat()), this.skin));
+		this.add(new DynamicLabel(this.client, c -> client.getPlayer() == Player.USSR ? "PARTY UNITY:" : "PATRIOTISM:", this.skin));
+		this.add(new DynamicLabel(this.client, c -> client.getPlayer() == Player.USSR
+			? Integer.toString(c.getMoveBuilder().getComputedGameState().getNetPartyUnity())
+			: Integer.toString(c.getMoveBuilder().getComputedGameState().getNetPatriotism()),
+			this.skin));
 		this.add(yearLabel);
 		this.add(playerLabel);
 		this.add(endTurnButton);

@@ -122,7 +122,15 @@ public class MoveBuilder {
 	public int getHeat() {
 		return this.computedState.heat;
 	}
+	
+	public int getPartyUnity() {
+		return this.computedState.partyUnity;
+	}
 
+	public int getPatriotism() {
+		return this.computedState.patriotism;
+	}
+	
 	public MoveList getMoveList() {
 		return this.moves.build();
 	}

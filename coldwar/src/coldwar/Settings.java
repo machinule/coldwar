@@ -32,9 +32,10 @@ public class Settings {
 		Settings.consts.putBoolean("pack_textures", true);
 		Settings.consts.putInteger("splash_x", 480);
 		Settings.consts.putInteger("splash_y", 551);
-		Settings.consts.putInteger("heat_start", 40);
-		Settings.consts.putInteger("heat_min", 0);
-		Settings.consts.putInteger("heat_max", 100);
+		
+		Settings.consts.putInteger("heat_bleed_threshold", 65);
+		Settings.consts.putInteger("heat_bleed", 5);
+		
 		Settings.consts.putInteger("starting_pol", 4);
 		Settings.consts.putInteger("starting_mil", 4);
 		Settings.consts.putInteger("starting_cov", 1);
@@ -64,6 +65,8 @@ public class Settings {
 		Settings.consts.putInteger("action_coup_lock_time", 2);
 		Settings.consts.putInteger("action_coup_stab_threshold", 2);
 
+		Settings.consts.putInteger("vp_region_modifier", 5);
+		
 		Settings.consts.flush();
 	}
 

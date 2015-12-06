@@ -24,6 +24,7 @@ message GameSettings {
   optional int32 usa_mil_income_base = 104 [default = 3];
   optional int32 usa_cov_store_init = 105 [default = 1];
   optional int32 usa_cov_income_base = 106 [default = 1];
+  optional int32 usa_init_patriotism = 107 [default = 50];
 
   // USSR Settings.
   optional string ussr_alias = 200 [default = "USSR"];
@@ -33,6 +34,7 @@ message GameSettings {
   optional int32 ussr_mil_income_base = 204 [default = 3];
   optional int32 ussr_cov_store_init = 205 [default = 1];
   optional int32 ussr_cov_income_base = 206 [default = 1];
+  optional int32 ussr_init_party_unity = 207 [default = 50];
 
   // Random events.
   // Chance value is out of 1e6. (e.g. 100000 = 10%, 1000000 = 100%)
@@ -44,7 +46,7 @@ message GameSettings {
   optional int32 random_province_communism_chance = 304 [default = 100000];
   optional int32 random_province_autocracy_chance = 305 [default = 100000];
   optional int32 random_province_republic_chance = 306 [default = 100000];
-  optional int32 random_province_faux_pas_chance = 307 [default = 100000];
+  optional int32 random_province_faux_pas_chance = 307 [default = 00000];
   optional int32 random_province_A_C_D_dissidents_chance = 308 [default = 15000];
   optional int32 random_province_default_dissidents_chance = 309 [default = 30000];
   optional int32 random_province_A_C_D_dissidents_suppressed_chance = 310 [default = 20000];

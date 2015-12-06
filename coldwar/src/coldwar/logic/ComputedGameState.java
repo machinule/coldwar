@@ -34,6 +34,8 @@ public class ComputedGameState {
 	public final MoveList ussrMoves;
 	public final int year;
 	public final int heat;
+	public final int partyUnity;
+	public final int patriotism;
 	public final boolean kgbFounded;
 	public final boolean ciaFounded;
 		
@@ -48,6 +50,10 @@ public class ComputedGameState {
 	public final Map<Player, Integer> polIncomeModifier;
 	public final Map<Player, Integer> milIncomeModifier;
 	public final Map<Player, Integer> covIncomeModifier;
+	
+	public final Map<Province.Region, Integer> usaRegionControl;
+	public final Map<Province.Region, Integer> ussrRegionControl;
+	public final Map<Province.Region, Integer> regionTotal;
 	
 	public final Map<Province.Id, Integer> initialInfluence;
 	public final Map<Province.Id, Integer> polInfluence;
@@ -82,6 +88,8 @@ public class ComputedGameState {
 		
 		this.year = state.getTurn() + 1948;
 		int heatCounter = state.getHeat();
+		int partyUnityCounter = state.getUssr().getPartyUnity();
+		int patriotismCounter = state.getUsa().getPatriotism();
 		
 		EnumMap<Player, Integer> polStoreMap = new EnumMap<Player, Integer>(Player.class);
 		this.polStore = Collections.unmodifiableMap(polStoreMap);
@@ -103,6 +111,13 @@ public class ComputedGameState {
 		this.milIncomeModifier = Collections.unmodifiableMap(milIncomeModifierMap);
 		EnumMap<Player, Integer> covIncomeModifierMap = new EnumMap<Player, Integer>(Player.class);
 		this.covIncomeModifier = Collections.unmodifiableMap(covIncomeModifierMap);
+		
+		EnumMap<Province.Region, Integer> usaRegionControlMap = new EnumMap<Province.Region, Integer>(Province.Region.class);
+		this.usaRegionControl = Collections.unmodifiableMap(usaRegionControlMap);
+		EnumMap<Province.Region, Integer> ussrRegionControlMap = new EnumMap<Province.Region, Integer>(Province.Region.class);
+		this.ussrRegionControl = Collections.unmodifiableMap(ussrRegionControlMap);
+		EnumMap<Province.Region, Integer> regionTotalMap = new EnumMap<Province.Region, Integer>(Province.Region.class);
+		this.regionTotal = Collections.unmodifiableMap(regionTotalMap);
 		
 		EnumMap<Province.Id, Integer> baseInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.initialInfluence = Collections.unmodifiableMap(baseInfluenceMap);
@@ -158,6 +173,7 @@ public class ComputedGameState {
 		this.state.getSettings().getProvincesList().forEach(p -> {
 			stabilityBaseMap.put(p.getId(), p.getStabilityBase());
 			provinceSettingsMap.put(p.getId(), p);
+			regionTotalMap.put(p.getRegion(), regionTotalMap.getOrDefault(p.getRegion(), 0) + 1);
 		});
 		
 		this.state.getProvincesList().forEach(p -> {
@@ -397,6 +413,14 @@ public class ComputedGameState {
 		heatCounter = Math.max(heatCounter - 10, this.state.getSettings().getHeatMin());
 		this.heat = heatCounter;
 		
+		patriotismCounter = this.state.getUsa().getPatriotism();
+		partyUnityCounter = this.state.getUssr().getPartyUnity();
+		
+		if (this.heat > Settings.getConstInt("heat_bleed_threshold")) {
+			patriotismCounter -= Settings.getConstInt("heat_bleed");
+			partyUnityCounter -= Settings.getConstInt("heat_bleed");
+		}
+		
 		GameState.Builder nextStateBuilder = GameState.newBuilder()
 				.setSettings(this.state.getSettings())
 				.setTurnLog(TurnLogEntry.newBuilder()
@@ -434,6 +458,9 @@ public class ComputedGameState {
 			.setPolitical(polStoreMap.get(Player.USSR) + basePolIncomeMap.get(Player.USSR) + polIncomeModifierMap.getOrDefault(Player.USSR, 0))
 			.setMilitary(milStoreMap.get(Player.USSR) + baseMilIncomeMap.get(Player.USSR) + milIncomeModifierMap.getOrDefault(Player.USSR, 0))
 			.setCovert(covStoreMap.get(Player.USSR) + baseCovIncomeMap.get(Player.USSR) + covIncomeModifierMap.getOrDefault(Player.USSR, 0));
+		
+		nextStateBuilder.getUsaBuilder().setPatriotism(patriotismCounter);
+		nextStateBuilder.getUssrBuilder().setPartyUnity(partyUnityCounter);
 		
 		nextStateBuilder.getUsaBuilder().setCiaFounded(ciaFoundedFlag);
 		nextStateBuilder.getUssrBuilder().setKgbFounded(kgbFoundedFlag);
@@ -590,6 +617,49 @@ public class ComputedGameState {
 		}
 		
 		nextStateBuilder.setSeed(r.nextLong());
+		
+		this.patriotism = patriotismCounter;
+		this.partyUnity = partyUnityCounter;
+
+		int ussrCentralAmerica = 0, usaCentralAmerica = 0,
+			ussrSouthAmerica = 0, usaSouthAmerica = 0;
+		
+		for (ProvinceSettings p : this.state.getSettings().getProvincesList()) {
+			switch (p.getRegion()) {
+				case CENTRAL_AMERICA:
+					if (getAlly(p.getId()) == Player.USSR)
+						ussrCentralAmerica++;
+					if (getAlly(p.getId()) == Player.USA)
+						usaCentralAmerica++;
+					break;
+				case SOUTH_AMERICA:
+					if (getAlly(p.getId()) == Player.USSR)
+						ussrSouthAmerica++;
+					if (getAlly(p.getId()) == Player.USA)
+						usaSouthAmerica++;
+					break;
+				default:
+					break;
+			}
+		}
+		
+		Logger.Dbg("USA currently holds " + usaCentralAmerica + " provinces in Central America");
+		Logger.Dbg("USSR currently holds " + ussrCentralAmerica + " provinces in Central America");
+		Logger.Dbg("USA currently holds " + usaSouthAmerica + " provinces in South America");
+		Logger.Dbg("USSR currently holds " + ussrSouthAmerica + " provinces in South America");
+		
+		usaRegionControlMap.put(Province.Region.CENTRAL_AMERICA, usaCentralAmerica);
+		usaRegionControlMap.put(Province.Region.SOUTH_AMERICA, usaSouthAmerica);
+		
+		ussrRegionControlMap.put(Province.Region.CENTRAL_AMERICA, ussrCentralAmerica);
+		ussrRegionControlMap.put(Province.Region.SOUTH_AMERICA, ussrSouthAmerica);
+		
+		nextStateBuilder.getUsaBuilder().setPatriotism(patriotism);
+		nextStateBuilder.getUssrBuilder().setPartyUnity(partyUnity);
+		
+		if(getPatriotismModifier() <= 0) {} // Lose
+		if(getPartyUnityModifier() <= 0) {} // Lose
+		
 		this.nextState = nextStateBuilder.build();
 	}
 	
@@ -788,6 +858,54 @@ public class ComputedGameState {
 				bases.get(id) == player ||
 				governments.get(id) == getIdealGov(player))) return true;
 		return false;
+	}
+	
+	public int getPatriotismModifier() {
+		int sum = 0;
+		for(Province.Region r : Province.Region.values()) {
+			int usaControl = usaRegionControl.getOrDefault(r, 0); 
+			int ussrControl = ussrRegionControl.getOrDefault(r, 0); 
+			if(usaControl > regionTotal.getOrDefault(r, 0)/2) { // TODO: Wrong getOrDefault
+				sum++;
+				if(usaControl > (int)regionTotal.getOrDefault(r, 0)*0.75)
+					sum++;
+			}
+			if(usaControl == 0 && ussrControl > 0)
+				sum--;
+			if(ussrControl*3 > usaControl) {
+				sum--;
+			}
+		}
+		sum = sum*Settings.getConstInt("vp_region_modifier");
+		return sum;
+	}
+	
+	public int getPartyUnityModifier() {
+		int sum = 0;
+		for(Province.Region r : Province.Region.values()) {
+			int usaControl = usaRegionControl.getOrDefault(r, 0); 
+			int ussrControl = ussrRegionControl.getOrDefault(r, 0); 
+			if(ussrControl > regionTotal.getOrDefault(r, 0)/2) { // TODO: Wrong getOrDefault
+				sum++;
+				if(ussrControl > (int)regionTotal.get(r)*0.75)
+					sum++;
+			}
+			if(ussrControl == 0 && usaControl > 0)
+				sum--;
+			if(usaControl*3 > ussrControl) {
+				sum--;
+			}
+		}
+		sum = sum*Settings.getConstInt("vp_region_modifier");
+		return sum;
+	}
+	
+	public int getNetPatriotism() {
+		return state.getUsa().getPatriotism() + getPatriotismModifier();
+	}
+	
+	public int getNetPartyUnity() {
+		return state.getUssr().getPartyUnity() + getPartyUnityModifier();
 	}
 	
 	protected int inflSign(Player player) {

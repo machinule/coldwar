@@ -45,6 +45,7 @@ public abstract class Client {
 								.setMilitary(settings.getUsaMilStoreInit())
 								.setCovert(settings.getUsaCovStoreInit())
 								.build())
+						.setPatriotism(settings.getUsaInitPatriotism())
 						.build())
 				.setUssr(SovietUnion.newBuilder()
 						.setInfluenceStore(InfluenceStore.newBuilder()
@@ -52,6 +53,7 @@ public abstract class Client {
 								.setMilitary(settings.getUssrMilStoreInit())
 								.setCovert(settings.getUssrCovStoreInit())
 								.build())
+						.setPartyUnity(settings.getUssrInitPartyUnity())
 						.build());
 		for (ProvinceSettings p : settings.getProvincesList()) {
 			Province.Builder builder = state.addProvincesBuilder()
@@ -96,6 +98,9 @@ public abstract class Client {
 		ComputedGameState computedState = new ComputedGameState(this.state, this.getUSAMove(), this.getUSSRMove());
 		this.state = computedState.nextState;
 		Logger.Info("Next game state: " + this.state.toString());
+		Logger.Dbg("Net party unity: " + computedState.getNetPartyUnity());
+		Logger.Dbg("Net patriotism: " + computedState.getNetPatriotism());
+		
 	}
 	
 	protected boolean populateLeaders(GameSettings.Builder settings) {
