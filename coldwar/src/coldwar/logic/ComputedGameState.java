@@ -56,6 +56,8 @@ public class ComputedGameState {
 	public final Map<Province.Id, Integer> totalInfluence;
 
 	public final Map<Province.Id, Player>  alliances; // NULL -> Neither player
+	public final Map<Province.Id, Boolean> usaAdjacencies;
+	public final Map<Province.Id, Boolean> ussrAdjacencies;
 	
 	public final Map<Province.Id, Boolean> dissidents;
 	public final Map<Province.Id, Player> bases;
@@ -115,6 +117,10 @@ public class ComputedGameState {
 		
 		EnumMap<Province.Id, Player> allianceMap = new EnumMap<Province.Id, Player>(Province.Id.class);
 		this.alliances = Collections.unmodifiableMap(allianceMap);
+		EnumMap<Province.Id, Boolean> usaAdjacencyMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
+		this.usaAdjacencies = Collections.unmodifiableMap(usaAdjacencyMap);EnumMap<Province.Id, Boolean> adjacencyMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
+		EnumMap<Province.Id, Boolean> ussrAdjacencyMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
+		this.ussrAdjacencies = Collections.unmodifiableMap(ussrAdjacencyMap);
 
 		EnumMap<Province.Id, Boolean> dissidentsMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
 		this.dissidents = Collections.unmodifiableMap(dissidentsMap);
@@ -167,6 +173,11 @@ public class ComputedGameState {
 		});
 		
 		totalInfluenceMap.putAll(baseInfluenceMap);
+		
+		this.state.getProvincesList().forEach(p -> {
+			usaAdjacencyMap.put(p.getId(), hasAdjacencyInfluence(Player.USA, p.getId()));
+			ussrAdjacencyMap.put(p.getId(), hasAdjacencyInfluence(Player.USSR, p.getId()));
+		});
 		
 		polStoreMap.put(Player.USA, state.getUsa().getInfluenceStore().getPolitical());
 		milStoreMap.put(Player.USA, state.getUsa().getInfluenceStore().getMilitary());
@@ -226,7 +237,8 @@ public class ComputedGameState {
 						if(nonAdjCost != 0) {
 							Logger.Dbg("Adding non-adjacent cost of " + nonAdjCost);
 							polStoreMap.compute(player, (p, pol) -> pol == null ? -nonAdjCost : pol - nonAdjCost);
-						}actedMap.put(id, true);
+						}
+						actedMap.put(id, true);
 					}
 				}
 				if (move.hasDiaCovMove()) {
@@ -239,7 +251,8 @@ public class ComputedGameState {
 						if(nonAdjCost != 0) {
 							Logger.Dbg("Adding non-adjacent cost of " + nonAdjCost);
 							polStoreMap.compute(player, (p, pol) -> pol == null ? -nonAdjCost : pol - nonAdjCost);
-						}actedMap.put(id, true);
+						}
+						actedMap.put(id, true);
 					}
 				}
 				if (move.hasFundDissidentsMove()) {
@@ -753,12 +766,19 @@ public class ComputedGameState {
 		} 
 	}
 	
-	public boolean hasAdjacencyInfluence(Player player, Province.Id id) {
+	protected boolean hasAdjacencyInfluence(Player player, Province.Id id) {
 		if(hasInfluence(player, id)) return true;
 		for (Province.Id adj : provinceSettings.get(id).getAdjacencyList()) {
 			if(hasInfluence(player, adj)) return true;
 		}
 		return false;
+	}
+	
+	public boolean isInRange(Player player, Province.Id id) {
+		if (player == Player.USA)
+			return usaAdjacencies.get(id);
+		else //if (player == Player.USSR)
+			return ussrAdjacencies.get(id);
 	}
 	
 	public boolean hasInfluence(Player player, Province.Id id) {

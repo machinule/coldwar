@@ -55,7 +55,7 @@ public class ProvinceInfoCard extends Table {
 	}
 	
 	public Color getValidColor() {
-		if(client.getMoveBuilder().getComputedGameState().hasAdjacencyInfluence(client.getPlayer(), province.getId()))
+		if(client.getMoveBuilder().getComputedGameState().isInRange(client.getPlayer(), province.getId()))
 			return getRegionColor(province.getRegion());
 		else
 			return getNonAdjColor(province.getRegion());

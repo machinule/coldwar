@@ -236,7 +236,7 @@ public class ActionPane extends Table {
 		innerBottom.add(new Label("Adjacencies:", this.skin));
 		DynamicLabel adjacencyList = new DynamicLabel(this.client,
 				c -> getFormattedAdjacencies(province),
-				c -> state.hasAdjacencyInfluence(c.getPlayer(), province.getId()) ? Color.BLACK : Color.RED,
+				c -> state.isInRange(c.getPlayer(), province.getId()) ? Color.BLACK : Color.RED,
 				this.skin);
 		innerBottom.add(adjacencyList)
 			.size(0, 0)
