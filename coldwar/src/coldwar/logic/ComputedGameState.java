@@ -336,7 +336,7 @@ public class ComputedGameState {
 			}
 		});
 		
-		heatCounter = Math.max(heatCounter - 10, 0);
+		heatCounter = Math.max(heatCounter - 10, this.state.getSettings().getHeatMin());
 		this.heat = heatCounter;
 		
 		GameState.Builder nextStateBuilder = GameState.newBuilder()
