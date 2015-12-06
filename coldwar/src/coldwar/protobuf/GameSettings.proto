@@ -14,7 +14,7 @@ message GameSettings {
   optional int32 heat_max = 4 [default = 100];
   optional int64 seed_init = 5 [default = 0];
   repeated ProvinceSettings provinces = 6;
-  optional LeaderList leaders = 7;
+  repeated Leader leaderBank = 7;
 
   // USA Settings.
   optional string usa_alias = 100 [default = "USA"];
@@ -69,11 +69,11 @@ message ProvinceSettings {
 	optional int32 stability_base = 4 [default = 1];
 	optional int32 influence_init = 5 [default = 0];
 	optional Province.Government government_init = 6 [default = REPUBLIC];
-	optional Leader leader_init = 7;
+	optional string leader_init = 7;
 	optional Province.Id occupier_init = 8;
 	optional bool dissidents_init = 9;
 	optional Province.Id military_base_init = 10;
 	optional Province.Id ally_init = 11;
 	optional Province.Region region = 12;
-	optional Province.Culture culture = 13;
+	optional Culture culture = 13;
 }

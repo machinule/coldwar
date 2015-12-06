@@ -1,20 +1,14 @@
 package coldwar.logic;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.CharBuffer;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.google.protobuf.TextFormat;
 
 import coldwar.GameSettingsOuterClass.GameSettings;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.GameSettingsOuterClass.ProvinceSettings;
 import coldwar.InfluenceStoreOuterClass.InfluenceStore;
-import coldwar.LeaderOuterClass.LeaderList;
+import coldwar.LeaderOuterClass.Culture;
+import coldwar.LeaderOuterClass.Leader;
 import coldwar.Logger;
 import coldwar.MoveOuterClass.MoveList;
 import coldwar.ProvinceOuterClass.Province;
@@ -37,7 +31,7 @@ public abstract class Client {
 	protected GameState.Builder getInitialGameState() {
 		// Just use the defaults in the proto for now.
 		GameSettings.Builder settings = GameSettings.newBuilder();
-		populateLeaders(settings);
+		if(!populateLeaders(settings)) return null;
 		populateProvinces(settings);
 		
 		GameState.Builder state = GameState.newBuilder()
@@ -64,8 +58,7 @@ public abstract class Client {
 				.setId(p.getId())
 				.setDissidents(p.getDissidentsInit())
 				.setGov(p.getGovernmentInit())
-				.setInfluence(p.getInfluenceInit())
-				.setLeader(p.getLeaderInit());
+				.setInfluence(p.getInfluenceInit());
 			if (p.hasAllyInit()) {
 				builder.setAlly(p.getAllyInit());
 			}
@@ -74,6 +67,9 @@ public abstract class Client {
 			}
 			if (p.hasOccupierInit()) {
 				builder.setOccupier(p.getOccupierInit());
+			}
+			if (p.hasLeaderInit()) {
+				state.addActiveLeaders(getLeader(settings, p.getLeaderInit()));
 			}
 		}
 		this.initialGameState = state.build();
@@ -84,7 +80,17 @@ public abstract class Client {
 	public Player getPlayer() {
 		return this.player;
 	}
-		
+	
+	protected Leader getLeader(GameSettings.Builder settings, String name) {
+		for(Leader l : settings.getLeaderBankList()) {
+			if (l.getName().equals(name)) {
+				Logger.Dbg("Setting leader " + l.getName());
+				return l;
+			}
+		}
+		return null;
+	}
+	
 	public void nextTurn() {
 		Logger.Info("Proceeding to the next turn.");
 		ComputedGameState computedState = new ComputedGameState(this.state, this.getUSAMove(), this.getUSSRMove());
@@ -92,20 +98,20 @@ public abstract class Client {
 		Logger.Info("Next game state: " + this.state.toString());
 	}
 	
-	protected void populateLeaders(GameSettings.Builder settings) {
+	protected boolean populateLeaders(GameSettings.Builder settings) {
         String file = "src/proto/Leaders.txt";
-        String line = null;
-        LeaderList.Builder leaderList = settings.getLeaders().newBuilder();
         
         Logger.Dbg("Reading leader file at " + file);
-        String leaders = new String(Gdx.files.internal("Leaders.txt").readString());
+        String input = new String(Gdx.files.internal("Leaders.txt").readString());
         
         try {
-        	TextFormat.merge(leaders, leaderList);
+        	TextFormat.merge(input, settings);
         }
         catch(TextFormat.ParseException ex) {
         	Logger.Err(ex.toString());
+        	return false;
         }
+        return true;
     }
 
 	protected void populateProvinces(GameSettings.Builder settings) {
@@ -130,7 +136,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.MEXICO)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Mexico")
 			.setStabilityBase(2)
@@ -141,7 +147,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.GUATEMALA)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Guatemala")
 			.addAdjacency(Province.Id.MEXICO)
@@ -149,7 +155,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.HONDURAS)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Honduras")
 			.addAdjacency(Province.Id.MEXICO)
@@ -158,10 +164,11 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.NICARAGUA)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Nicaragua")
 			.setGovernmentInit(Province.Government.AUTOCRACY)
+			.setLeaderInit("Anastasio Somoza García")
 			.addAdjacency(Province.Id.CUBA)
 			.addAdjacency(Province.Id.HONDURAS)
 			.addAdjacency(Province.Id.PANAMA)
@@ -169,7 +176,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.COSTA_RICA)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Costa Rica")
 			.setStabilityBase(2)
@@ -179,7 +186,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.PANAMA)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Panama")
 			.setInfluenceInit(2)
@@ -191,7 +198,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.CUBA)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Cuba")
 			.setStabilityBase(2)
@@ -203,7 +210,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.HAITI)
-			.setCulture(Province.Culture.FRENCH)
+			.setCulture(Culture.FRENCH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Haiti")
 			.addAdjacency(Province.Id.CUBA)
@@ -211,7 +218,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.DOMINICAN_REP)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Dominican Rep.")
 			.setGovernmentInit(Province.Government.AUTOCRACY)
@@ -220,7 +227,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.LESS_ANTILLES)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Lesser Antilles")
 			.addAdjacency(Province.Id.DOMINICAN_REP)
@@ -231,7 +238,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.COLOMBIA)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Colombia")
 			.addAdjacency(Province.Id.PANAMA)
@@ -241,7 +248,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.ECUADOR)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Ecuador")
 			.setStabilityBase(2)
@@ -250,7 +257,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.PERU)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Peru")
 			.setStabilityBase(2)
@@ -262,7 +269,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.CHILE)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Chile")
 			.setStabilityBase(2)
@@ -273,7 +280,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.BOLIVIA)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Bolivia")
 			.setStabilityBase(2)
@@ -283,17 +290,18 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.ARGENTINA)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Argentina")
 			.setStabilityBase(2)
+			//.setLeaderInit(getLeader(settings, "Juan Peron"))
 			.addAdjacency(Province.Id.BOLIVIA)
 			.addAdjacency(Province.Id.BRAZIL)
 			.addAdjacency(Province.Id.CHILE);
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.BRAZIL)
-			.setCulture(Province.Culture.PORTUGUESE)
+			.setCulture(Culture.PORTUGUESE)
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Brazil")
 			.setStabilityBase(2)
@@ -303,7 +311,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.GUYANA)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Guyana")
 			.setGovernmentInit(Province.Government.COLONY)
@@ -314,7 +322,7 @@ public abstract class Client {
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.VENEZUELA)
-			.setCulture(Province.Culture.SPANISH)
+			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Venezuela")
 			.setStabilityBase(2)

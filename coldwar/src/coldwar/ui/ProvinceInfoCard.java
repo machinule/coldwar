@@ -104,19 +104,17 @@ public class ProvinceInfoCard extends Table {
     		ret += "USSR Base ";
     	}
     	// Unique proto for each government to include string label?
-    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.CIVIL_WAR) {
+    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.CIVIL_WAR)
     		ret += "CIVIL WAR ";
-    	}
-    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.DEMOCRACY) {
+    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.DEMOCRACY)
     		ret += "DEM ";
-    	}
-    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.AUTOCRACY) {
+    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.AUTOCRACY)
     		ret += "AUT ";
-    	}
-    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.COMMUNISM) {
+    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.COMMUNISM)
     		ret += "COM ";
-    	}
-    		return ret;
+    	if(client.getMoveBuilder().getComputedGameState().leaders.containsKey(province.getId()))
+    		ret += "Lead";
+		return ret;
     }
     
     protected Color getRegionColor(Region region) {

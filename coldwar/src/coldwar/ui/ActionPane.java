@@ -243,12 +243,14 @@ public class ActionPane extends Table {
 			.left()
 			.padLeft(10);
 		innerBottom.row();
-		innerBottom.add(new Label("Influence:", this.skin));
+		innerBottom.add(new Label("Leader:", this.skin));
 		innerBottom.add(new DynamicLabel(
 				this.client,
-				c -> Integer.toString(Math.abs(c.getMoveBuilder().getInfluence(province.getId()))),
+				c -> getLeader(province),
 				c -> c.getMoveBuilder().getInfluence(province.getId()) > 0 ? Color.BLUE : c.getMoveBuilder().getInfluence(province.getId()) < 0 ? Color.RED : Color.BLACK,
-				this.skin));
+				this.skin))
+				.padLeft(10)
+				.left();
 		innerBottom.row();
 		
 		this.add(innerConfirm).fill();
@@ -291,5 +293,13 @@ public class ActionPane extends Table {
 			if(count < max) ret += ", ";
 		}
 		return ret;
+	}
+	
+	protected String getLeader(final ProvinceSettings province) {
+		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
+		if (state.leaders.containsKey(province.getId()))
+			return state.leaders.get(province.getId()).getName();
+		else
+			return "None";
 	}
 }

@@ -2,6 +2,14 @@ syntax = "proto2";
 
 package coldwar;
 
+import "Province.proto";
+
+enum Culture {
+	SPANISH = 1;
+	FRENCH = 2;
+	PORTUGUESE = 3;
+}
+
 message Leader {
 
 	enum Type {
@@ -13,16 +21,18 @@ message Leader {
 
 	enum Allegiance {
 		NONE = 0;
-		ANTI_US = 1;
+		ANTI_USA = 1;
 		ANTI_USSR = 2;
 	}
 
 	optional Type type = 1;
-	optional int32 age = 2;
+	optional int32 birth = 2;
 	optional string name = 3;
 	optional Allegiance allegiance = 4 [default = NONE];
-}
+	optional Province.Id province = 5;
 
-message LeaderList {
-	repeated Leader leaders = 1;
+	//Used for initial population
+	optional Culture culture = 10;
+	optional bool historical = 11 [default = false];
+	optional bool elected = 12;
 }

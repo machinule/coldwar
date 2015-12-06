@@ -163,6 +163,10 @@ public class ComputedGameState {
 			actedMap.put(p.getId(), false);
 		});
 		
+		this.state.getActiveLeadersList().forEach(l -> {
+			leaderMap.put(l.getProvince(), l);
+		});
+		
 		totalInfluenceMap.putAll(baseInfluenceMap);
 		
 		polStoreMap.put(Player.USA, state.getUsa().getInfluenceStore().getPolitical());
