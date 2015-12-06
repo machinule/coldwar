@@ -596,18 +596,20 @@ public class ComputedGameState {
 	// VALIDATION
 	
 	public boolean isValidDiaDipMove(Player player, Province.Id id){
-		return polStore.get(player) >= getDiaDipMoveMin(player, id) &&
+		return polStore.get(player) >= getDiaDipMoveMin(player, id) + getNonAdjacentDiaMoveCost(player, id) &&
 			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
 	public boolean isValidDiaMilMove (Player player, Province.Id id){
 		return milStore.get(player) >= getDiaMilMoveMin() &&
+			   polStore.get(player) >= getNonAdjacentDiaMoveCost(player, id) && 
 			   getAlly(id) != otherPlayer(player) && 
 			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
 	public boolean isValidDiaCovMove (Player player, Province.Id id){
 		return covStore.get(player) >= getDiaCovMoveMin() && 
+			   polStore.get(player) >= getNonAdjacentDiaMoveCost(player, id) && 
 			   governments.get(id) != Province.Government.CIVIL_WAR;
 	}
 	
@@ -649,9 +651,9 @@ public class ComputedGameState {
 	// COST AND COST RANGES
 
 	public int getNonAdjacentDiaMoveCost(Player player, Province.Id id) {
-		if(hasAdjacencyInfluence(player, id)) {
+		if((player == Player.USA && !usaAdjacencies.get(id)) ||
+		   (player == Player.USSR && !ussrAdjacencies.get(id)) )
 			return Settings.getConstInt("non_adjacent_cost");
-		}
 		return 0;
 	}
 	
