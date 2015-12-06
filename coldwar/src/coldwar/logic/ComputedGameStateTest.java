@@ -15,7 +15,7 @@ import com.google.protobuf.TextFormat;
 import com.google.protobuf.TextFormat.ParseException;
 
 import coldwar.GameStateOuterClass.GameState;
-import coldwar.MoveListOuterClass.MoveList;
+import coldwar.MoveOuterClass.MoveList;
 
 @RunWith(Parameterized.class)
 public class ComputedGameStateTest {
