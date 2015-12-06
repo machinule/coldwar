@@ -49,8 +49,6 @@ public class ComputedGameStateTest {
     
 	private static GameState.Builder eventFreeGameState() throws ParseException {
 		return GSB(
-				"turn: 0",
-				"heat: 40",
 				"settings {",
 				"  version: 'test'",
 				"  heat_init: 40",
@@ -96,19 +94,21 @@ public class ComputedGameStateTest {
 	
 	@Test
 	public void testTurnsIncrement() throws ParseException {
+		GameState.Builder initial = eventFreeGameState();
+		initial.setTurn(12);
 		GameState state;
 		state = computeState(
-				eventFreeGameState().build(),
+				initial.build(),
 				new MoveList[]{ML(""), ML("")});
-		assertEquals(1, state.getTurn());
+		assertEquals(13, state.getTurn());
 		state = computeState(
-				eventFreeGameState().build(),
+				initial.build(),
 				new MoveList[]{ML(""), ML("")},
 				new MoveList[]{ML(""), ML("")},
 				new MoveList[]{ML(""), ML("")},
 				new MoveList[]{ML(""), ML("")},
 				new MoveList[]{ML(""), ML("")});
-		assertEquals(5, state.getTurn());
+		assertEquals(17, state.getTurn());
 	}
     
 	@Test
