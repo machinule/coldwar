@@ -40,7 +40,11 @@ public class Settings {
 		Settings.consts.putInteger("starting_cov", 1);
 		Settings.consts.putInteger("base_income_pol", 4);
 		Settings.consts.putInteger("base_income_mil", 4);
-		Settings.consts.putInteger("base_income_cov", 1);
+		Settings.consts.putInteger("base_income_cov", 2);
+
+		Settings.consts.putInteger("leader_income_pol", 2);
+		Settings.consts.putInteger("leader_income_mil", 2);
+		Settings.consts.putInteger("leader_income_cov", 1);
 		
 		Settings.consts.putInteger("action_dissidents_cost", 2); // COV
 		Settings.consts.putInteger("action_dissidents_heat", 4);

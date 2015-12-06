@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
-import coldwar.GameStateOuterClass.ProvinceSettings;
+import coldwar.GameSettingsOuterClass.ProvinceSettings;
 import coldwar.Logger;
 import coldwar.Settings;
 import coldwar.ProvinceOuterClass.Province;
@@ -36,7 +36,7 @@ public class ProvinceInfoCard extends Table {
 		this.client = client;
 		this.province = province;
 		this.skin = skin;
-		color = getRegionColor(client.getMoveBuilder().getComputedGameState().regions.get(province.getId()));
+		color = getRegionColor(province.getRegion());
 		
 		infoBox = createLayout();
 		infoBox.setColor(color);

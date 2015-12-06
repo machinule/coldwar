@@ -11,6 +11,9 @@ extend google.protobuf.MessageOptions {
   optional int32 cov_cost = 76002;
 }
 
+message MoveList {
+	repeated Move moves = 1;
+}
 
 //Proto variable names need to be VERBATIM same as message type
 message Move {

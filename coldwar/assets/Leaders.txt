@@ -1,0 +1,287 @@
+## CULTURES ##
+
+# Spanish
+
+Leader {
+	culture: "Spanish"
+	historical: "false"
+	name: "Antonio Villaverde"
+}
+
+Leader {
+	culture: "Spanish"
+	historical: "false"
+	name: "Rafael Cruz"
+}
+
+Leader {
+	culture: "Spanish"
+	historical: "false"
+	name: "Alejandro Falconi"
+}
+
+Leader {
+	culture: "Spanish"
+	historical: "false"
+	name: "Pedro 'Speedy' Gonzales"
+}
+
+Leader {
+	culture: "Spanish"
+	historical: "false"
+	name: "Juan Cabrera"
+}
+
+# French
+
+Leader {
+	culture: "French"
+	historical: "false"
+	name: "Jacques Villeneuve"
+}
+
+Leader {
+	culture: "French"
+	historical: "false"
+	name: "Louis Montaigne"
+}
+
+## CENTRAL AMERICA ##
+
+# Mexico
+
+Leader {
+	country: "Mexico"
+	historical: "true"
+	name: "Adolfo Ruiz Cortines"
+	birth: "1889"
+	elected: "true"
+}
+
+Leader {
+	country: "Mexico"
+	historical: "true"
+	name: "Adolfo López Mateos"
+	birth: "1911"
+	elected: "true"
+}
+
+Leader {
+	country: "Mexico"
+	historical: "true"
+	name: "Luis Echeverria"
+	birth: "1922"
+	elected: "true"
+}
+
+Leader {
+	country: "Mexico"
+	historical: "true"
+	name: "José López Portillo"
+	birth: "1920"
+	elected: "true"
+}
+
+# Guatemala
+
+Leader {
+	country: "Guatemala"
+	historical: "true"
+	name: "Jacobo Árbenz"
+	birth: "1913"
+	elected: "true"
+}
+
+Leader {
+	country: "Guatemala"
+	historical: "true"
+	name: "Carlos Castillo Armas"
+	birth: "1904"
+	elected: "false"
+}
+
+Leader {
+	country: "Guatemala"
+	historical: "true"
+	name: "Miguel Ydígoras Fuentes"
+	birth: "1895"
+	elected: "false"
+}
+
+Leader {
+	country: "Guatemala"
+	historical: "true"
+	name: "Fernando Romeo Lucas García"
+	birth: "1924"
+	elected: "false"
+}
+
+Leader {
+	country: "Guatemala"
+	historical: "true"
+	name: "Luis Augusto Turcios Lima"
+	birth: "1941"
+}
+
+# Honduras
+
+Leader {
+	country: "Honduras"
+	historical: "true"
+	name: "Ramón Villeda Morales"
+	birth: "1909"
+	elected: "true"
+}
+
+Leader {
+	country: "Honduras"
+	historical: "true"
+	name: "Julio Lozano Díaz"
+	birth: "1885"
+}
+
+Leader {
+	country: "Honduras"
+	historical: "true"
+	name: "Oswaldo López Arellano"
+	birth: "1921"
+	elected: "false"
+}
+
+# Nicaragua
+
+Leader {
+	country: "Nicaragua"
+	historical: "true"
+	name: "Anastasio Somoza García"
+	birth: "1896"
+	elected: "false"
+}
+
+Leader {
+	country: "Nicaragua"
+	historical: "true"
+	name: "Anastasio Somoza Debayle"
+	birth: "1925"
+	elected: "false"
+}
+
+Leader {
+	country: "Nicaragua"
+	historical: "true"
+	name: "Luis Somoza Debayle"
+	birth: "1922"
+	elected: "false"
+}
+
+Leader {
+	country: "Nicaragua"
+	historical: "true"
+	name: "Daniel Ortega"
+	birth: "1936"
+	allegiance: "ANTI_USSR"
+}
+
+Leader {
+	country: "Nicaragua"
+	historical: "true"
+	name: "Carlos Fonseca"
+	birth: "1936"
+}
+
+Leader {
+	country: "Nicaragua"
+	historical: "true"
+	name: "Pedro Joaquín Chamorro Cardenal"
+	birth: "1936"
+	elected: "true"
+}
+
+# Costa Rica
+
+# Panama
+
+# Cuba
+
+Leader {
+	country: "Cuba"
+	historical: "true"
+	name: "Fidel Castro"
+	birth: "1926"
+	elected: "false"
+	allegiance: "ANTI_USA"
+}
+
+Leader {
+	country: "Cuba"
+	historical: "true"
+	name: "Raul Castro"
+	birth: "1926"
+	elected: "false"
+	allegiance: "ANTI_USA"
+}
+
+Leader {
+	country: "Cuba"
+	historical: "true"
+	name: "Che Guevara"
+	birth: "1928"
+	elected: "false"
+	allegiance: "ANTI_USA"
+}
+
+Leader {
+	country: "Cuba"
+	historical: "true"
+	name: "Fulgencio Batista"
+	birth: "1901"
+	allegiance: "ANTI_USSR"
+}
+
+Leader {
+	country: "Cuba"
+	historical: "true"
+	name: "Roberto Agramonte"
+	birth: "1904"
+	elected: "true"
+}
+
+Leader {
+	country: "Cuba"
+	historical: "true"
+	name: "Carlos Hevia"
+	birth: "1900"
+	elected: "true"
+}
+
+# Haiti
+
+Leader {
+	historical: "true"
+	name: "François 'Papa Doc' Duvalier"
+	birth: "1907"
+}
+
+# Dominican Republic
+
+# Lesser Antilles
+
+## SOUTH AMERICA ##
+
+# Colombia
+
+# Peru
+
+# Ecuador
+
+# Chile
+
+# Bolivia
+
+# Argentina
+
+# Venezuela
+
+# Brazil
+
+# Guyana

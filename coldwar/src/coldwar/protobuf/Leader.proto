@@ -1,0 +1,28 @@
+syntax = "proto2";
+
+package coldwar;
+
+message Leader {
+
+	enum Type {
+		POLITICAL = 1;
+		MILITARY = 2;
+		COVERT = 3;
+		ISOLATIONIST = 4;
+	}
+
+	enum Allegiance {
+		NONE = 0;
+		ANTI_US = 1;
+		ANTI_USSR = 2;
+	}
+
+	optional Type type = 1;
+	optional int32 age = 2;
+	optional string name = 3;
+	optional Allegiance allegiance = 4 [default = NONE];
+}
+
+message LeaderList {
+	repeated Leader leaders = 1;
+}

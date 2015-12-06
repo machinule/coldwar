@@ -2,7 +2,7 @@ package coldwar.logic;
 
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.Logger;
-import coldwar.MoveListOuterClass.MoveList;
+import coldwar.MoveOuterClass.MoveList;
 import coldwar.MoveOuterClass.CoupMove;
 import coldwar.MoveOuterClass.CovertMove;
 import coldwar.MoveOuterClass.DiplomacyMove;
@@ -14,7 +14,6 @@ import coldwar.MoveOuterClass.MilitaryMove;
 import coldwar.MoveOuterClass.Move;
 import coldwar.MoveOuterClass.PoliticalPressureMove;
 import coldwar.ProvinceOuterClass.Province;
-import coldwar.ProvinceOuterClass.Province.Id;
 import coldwar.logic.Client.Player;
 
 public class MoveBuilder {

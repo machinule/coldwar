@@ -1,6 +1,6 @@
 package coldwar.logic;
 
-import coldwar.MoveListOuterClass.MoveList;
+import coldwar.MoveOuterClass.MoveList;
 
 public class HotseatClient extends Client {
 

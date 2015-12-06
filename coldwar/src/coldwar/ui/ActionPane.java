@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import coldwar.GameStateOuterClass.ProvinceSettings;
+import coldwar.GameSettingsOuterClass.ProvinceSettings;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.Logger;
 import coldwar.logic.Client;

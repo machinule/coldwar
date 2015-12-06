@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import coldwar.ColdWarGame;
-import coldwar.GameStateOuterClass.ProvinceSettings;
+import coldwar.GameSettingsOuterClass.ProvinceSettings;
 import coldwar.Settings;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.Client;
@@ -44,7 +44,7 @@ public class MapScreen extends AbstractScreen {
 		superpowerPane.setDebug(Settings.isDebug());
 		final EnumMap<Province.Id, ProvinceInfoCard> cards = new EnumMap<Province.Id, ProvinceInfoCard>(Province.Id.class);
 		for (final ProvinceSettings p : this.client.initialGameState.getSettings().getProvincesList()) {
-			if(p.getRegionInit() != Province.Region.SUPERPOWERS) {
+			if(p.getRegion() != Province.Region.SUPERPOWERS) {
 				cards.put(p.getId(), new ProvinceInfoCard(this.client, p, actionPane, skin));
 			}
 		}

@@ -1,0 +1,79 @@
+syntax = "proto2";
+
+package coldwar;
+
+import "Province.proto";
+import "Leader.proto";
+
+// GameSettings contains constants over the course of the game.
+// These are not logged each turn, but merely copied to the top level GameState.
+message GameSettings {
+  optional string version = 1 [default = "0.0.1"];
+  optional int32 heat_init = 2 [default = 40];
+  optional int32 heat_min = 3 [default = 0];
+  optional int32 heat_max = 4 [default = 100];
+  optional int64 seed_init = 5 [default = 0];
+  repeated ProvinceSettings provinces = 6;
+  optional LeaderList leaders = 7;
+
+  // USA Settings.
+  optional string usa_alias = 100 [default = "USA"];
+  optional int32 usa_pol_store_init = 101 [default = 4];
+  optional int32 usa_pol_income_base = 102 [default = 4];
+  optional int32 usa_mil_store_init = 103 [default = 3];
+  optional int32 usa_mil_income_base = 104 [default = 3];
+  optional int32 usa_cov_store_init = 105 [default = 1];
+  optional int32 usa_cov_income_base = 106 [default = 1];
+
+  // USSR Settings.
+  optional string ussr_alias = 200 [default = "USSR"];
+  optional int32 ussr_pol_store_init = 201 [default = 4];
+  optional int32 ussr_pol_income_base = 202 [default = 4];
+  optional int32 ussr_mil_store_init = 203 [default = 3];
+  optional int32 ussr_mil_income_base = 204 [default = 3];
+  optional int32 ussr_cov_store_init = 205 [default = 1];
+  optional int32 ussr_cov_income_base = 206 [default = 1];
+
+  // Random events.
+  // Chance value is out of 1e6. (e.g. 100000 = 10%, 1000000 = 100%)
+  // Probability applies to a single eligible target, per turn.
+  optional int32 random_leader_spawn_chance = 300 [default = 100000];
+  optional int32 random_leader_death_chance = 301 [default = 100000];
+  optional int32 random_province_coup_chance = 302 [default = 100000];
+  optional int32 random_province_democracy_chance = 303 [default = 100000];
+  optional int32 random_province_communism_chance = 304 [default = 100000];
+  optional int32 random_province_autocracy_chance = 305 [default = 100000];
+  optional int32 random_province_republic_chance = 306 [default = 100000];
+  optional int32 random_province_faux_pas_chance = 307 [default = 100000];
+  optional int32 random_province_A_C_D_dissidents_chance = 308 [default = 15000];
+  optional int32 random_province_default_dissidents_chance = 309 [default = 30000];
+  optional int32 random_province_A_C_D_dissidents_suppressed_chance = 310 [default = 20000];
+  optional int32 random_province_default_dissidents_suppressed_chance = 311 [default = 20000];
+  optional int32 random_us_ally_democracy_chance = 312 [default = 100000];
+  optional int32 random_us_ally_communism_chance = 313 [default = 100000];
+  optional int32 random_end_civil_war_chance = 314 [default = 250000];
+  // Action Settings.
+  optional int32 coup_success_chance = 400 [default = 650000];
+  optional int32 coup_leader_chance = 401 [default = 200000];
+  optional int32 coup_backfire_chance = 402 [default = 100000];
+  // National actions
+  optional int32 kgb_cov_income_modifier = 500 [default = 2];
+  optional int32 cia_cov_income_modifier = 501 [default = 2];
+
+}
+
+message ProvinceSettings {
+	optional Province.Id id = 1;
+	optional string label = 2;
+	repeated Province.Id adjacency = 3;
+	optional int32 stability_base = 4 [default = 1];
+	optional int32 influence_init = 5 [default = 0];
+	optional Province.Government government_init = 6 [default = REPUBLIC];
+	optional Leader leader_init = 7;
+	optional Province.Id occupier_init = 8;
+	optional bool dissidents_init = 9;
+	optional Province.Id military_base_init = 10;
+	optional Province.Id ally_init = 11;
+	optional Province.Region region = 12;
+	optional Province.Culture culture = 13;
+}

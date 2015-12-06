@@ -2,7 +2,7 @@ package coldwar.logic;
 
 import com.badlogic.gdx.Gdx;
 
-import coldwar.MoveListOuterClass.MoveList;
+import coldwar.MoveOuterClass.MoveList;
 import coldwar.Logger;
 import coldwar.Peer;
 import coldwar.GameStateOuterClass.GameState;

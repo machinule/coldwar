@@ -15,7 +15,7 @@ import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 
 import coldwar.GameStateOuterClass.GameState;
-import coldwar.MoveListOuterClass.MoveList;
+import coldwar.MoveOuterClass.MoveList;
 
 public class Peer {
 

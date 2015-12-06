@@ -1,9 +1,0 @@
-syntax = "proto2";
-
-package coldwar;
-
-import "Move.proto";
-
-message MoveList {
-	repeated Move moves = 1;
-}

@@ -7,8 +7,9 @@ import java.util.Random;
 import java.util.function.Function;
 
 import coldwar.GameStateOuterClass.GameState;
-import coldwar.GameStateOuterClass.ProvinceSettings;
+import coldwar.GameSettingsOuterClass.ProvinceSettings;
 import coldwar.GameStateOuterClass.TurnLogEntry;
+import coldwar.LeaderOuterClass.Leader;
 import coldwar.Logger;
 import coldwar.EventOuterClass.CivilWarEvent;
 import coldwar.EventOuterClass.CoupEvent;
@@ -17,7 +18,7 @@ import coldwar.EventOuterClass.ProvinceDissidentsEvent;
 import coldwar.EventOuterClass.ProvinceDissidentsSuppressedEvent;
 import coldwar.EventOuterClass.ProvinceFauxPasEvent;
 import coldwar.EventOuterClass.ProvinceRepublicEvent;
-import coldwar.MoveListOuterClass.MoveList;
+import coldwar.MoveOuterClass.MoveList;
 import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.ProvinceOuterClass.Province.Region;
@@ -54,14 +55,13 @@ public class ComputedGameState {
 	public final Map<Province.Id, Integer> milInfluence;
 	public final Map<Province.Id, Integer> covInfluence;
 	public final Map<Province.Id, Integer> totalInfluence;
-	
-	public final Map<Province.Id, Region> regions;
 
 	public final Map<Province.Id, Player>  alliances; // NULL -> Neither player
 	
 	public final Map<Province.Id, Boolean> dissidents;
 	public final Map<Province.Id, Player> bases;
 	public final Map<Province.Id, Province.Government> governments;
+	public final Map<Province.Id, Leader> leaders;
 
 	public final Map<Province.Id, Integer> stabilityBase;
 	public final Map<Province.Id, Integer> stabilityModifier;
@@ -113,9 +113,6 @@ public class ComputedGameState {
 		this.covInfluence = Collections.unmodifiableMap(covInfluenceMap);
 		EnumMap<Province.Id, Integer> totalInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.totalInfluence = Collections.unmodifiableMap(totalInfluenceMap);
-
-		EnumMap<Province.Id, Region> regionMap = new EnumMap<Province.Id, Region>(Province.Id.class);
-		this.regions = Collections.unmodifiableMap(regionMap);
 		
 		EnumMap<Province.Id, Player> allianceMap = new EnumMap<Province.Id, Player>(Province.Id.class);
 		this.alliances = Collections.unmodifiableMap(allianceMap);
@@ -126,6 +123,8 @@ public class ComputedGameState {
 		this.bases = Collections.unmodifiableMap(baseMap);
 		EnumMap<Province.Id, Province.Government> governmentMap = new EnumMap<Province.Id, Province.Government>(Province.Id.class);
 		this.governments = Collections.unmodifiableMap(governmentMap);
+		EnumMap<Province.Id, Leader> leaderMap = new EnumMap<Province.Id, Leader>(Province.Id.class);
+		this.leaders = Collections.unmodifiableMap(leaderMap);
 
 		EnumMap<Province.Id, Integer> stabilityBaseMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.stabilityBase = Collections.unmodifiableMap(stabilityBaseMap);
@@ -158,7 +157,6 @@ public class ComputedGameState {
 		
 		this.state.getProvincesList().forEach(p -> {
 			baseInfluenceMap.put(p.getId(), p.getInfluence());
-			regionMap.put(p.getId(), p.getRegion());
 			dissidentsMap.put(p.getId(), p.getDissidents());
 			baseMap.put(p.getId(), toPlayer(p.getBase()));
 			governmentMap.put(p.getId(), p.getGov());
@@ -723,4 +721,8 @@ public class ComputedGameState {
 		return player == Player.USA ? 1 : -1;
 	}
 
+	protected Leader pullLeader(Province.Id id) {
+		return null;
+	}
+	
 }
