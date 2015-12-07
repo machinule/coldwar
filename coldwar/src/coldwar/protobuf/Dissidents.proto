@@ -1,0 +1,20 @@
+syntax = "proto2";
+
+package coldwar;
+
+import "Leader.proto";
+
+enum Government {
+	REPUBLIC = 0;
+	DEMOCRACY = 1;
+	COMMUNISM = 2;
+	AUTOCRACY = 3;
+	COLONY = 4;
+	OCCUPIED = 5;
+	CIVIL_WAR = 6;
+}
+
+message Dissidents {
+	optional Government gov = 1 [default = REPUBLIC];
+	optional Leader leader = 2;
+}
