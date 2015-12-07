@@ -623,6 +623,7 @@ public class ComputedGameState {
 					chance = this.state.getSettings().getRandomProvinceDefaultDissidentsSuppressedChance();
 				}
 				if (happens.apply(chance)) {
+					Logger.Vrb("Dissidents suppressed in " + p.getId());
 					p.setDissidents(Dissidents.getDefaultInstance());
 					nextStateBuilder.getTurnLogBuilder()
 						.addEvents(Event.newBuilder()
@@ -640,6 +641,7 @@ public class ComputedGameState {
 				if (happens.apply(this.state.getSettings().getRandomEndCivilWarChance())) {
 					Logger.Vrb("Ending civil war in " + p.getId());
 					p.setGov(Government.REPUBLIC);
+					p.setDissidents(Dissidents.getDefaultInstance());
 					nextStateBuilder.getTurnLogBuilder()
 						.addEvents(Event.newBuilder()
 							.setEndCivilWar(EndCivilWarEvent.newBuilder()
@@ -663,7 +665,7 @@ public class ComputedGameState {
 				p.setInfluence(0);
 				coupMap.put(p.getId(), 0);
 				p.setBase(Province.Id.NONE);
-				dissidentsMap.remove(p.getId());
+				p.setDissidents(Dissidents.getDefaultInstance());
 				stabilityModifierMap.put(p.getId(), 0);
 				nextStateBuilder.getTurnLogBuilder()
 					.addEvents(Event.newBuilder()

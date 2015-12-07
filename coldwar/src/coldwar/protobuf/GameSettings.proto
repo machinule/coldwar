@@ -69,8 +69,8 @@ message GameSettings {
   optional int32 influenced_democracy_neutral_dissidents = 414 [default = 250000];
   optional int32 influenced_democracy_opposing_dissidents = 415 [default = 6666667];
 
-  optional int32 random_province_democracy_dissidents_suppressed_chance = 450 [default = 40000];
-  optional int32 random_province_default_dissidents_suppressed_chance = 451 [default = 20000];
+  optional int32 random_province_democracy_dissidents_suppressed_chance = 450 [default = 100000];
+  optional int32 random_province_default_dissidents_suppressed_chance = 451 [default = 50000];
 
   optional int32 random_us_ally_democracy_chance = 312 [default = 100000];
   optional int32 random_us_ally_communism_chance = 313 [default = 100000];
