@@ -19,20 +19,16 @@ import coldwar.Settings;
 import coldwar.logic.Client;
 import coldwar.logic.ComputedGameState;
 
-public class ActionPane extends Table {
+public class ActionPane extends FooterPane {
 
-	private final Client client;
-	protected Skin skin;
 	DynamicButton selected;
 	boolean requiresSlider;	
     
 	public ActionPane(final Client client, final Skin skin) {
-		super();
-		this.client = client;
-		this.skin = skin;
-		this.setDebug(true);
+		super(client, skin);
 	}
 
+	@Override
 	public void onSelect(final ProvinceSettings province) {
 		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
 		
@@ -191,72 +187,71 @@ public class ActionPane extends Table {
 		innerConfirm.add(actionParamInput).left();
 		innerConfirm.add(costLabel).expand().right();
 		
-		Table innerBottom = new Table();
-		
-		innerBottom.add(diplomaticInfluenceButton)
-			.size(sizeX, sizeY)
-			.right()
-			.padTop(5);
-		innerBottom.add(dissidentsButton)
-			.size(sizeX, sizeY)
-			.left()
-			.padTop(5)
-			.padLeft(10);
-		innerBottom.add(coupButton)
-			.size(sizeX, sizeY)
-			.left()
-			.padTop(5)
-			.padLeft(10);
-		innerBottom.row();
-		innerBottom.add(militaryInfluenceButton)
-			.size(sizeX, sizeY)
-			.right()
-			.padTop(5);
-		innerBottom.add(politicalPressureButton)
-		.size(sizeX, sizeY)
-			.left()
-			.padTop(5)
-			.padLeft(10);
-		innerBottom.add(invadeButton)
-			.size(sizeX, sizeY)
-			.left()
-			.padTop(5)
-			.padLeft(10);
-		innerBottom.row();
-		innerBottom.add(covertInfluenceButton)
-			.size(sizeX, sizeY)
-			.right()
-			.padTop(5);
-		innerBottom.add(establishBaseButton)
-			.size(sizeX, sizeY)
-			.left()
-			.padTop(5)
-			.padLeft(10);
-		innerBottom.row();
-		innerBottom.add(new Label("Adjacencies:", this.skin));
-		DynamicLabel adjacencyList = new DynamicLabel(this.client,
-				c -> getFormattedAdjacencies(province),
-				c -> state.isInRange(c.getPlayer(), province.getId()) ? Color.BLACK : Color.RED,
-				this.skin);
-		innerBottom.add(adjacencyList)
-			.size(0, 0)
-			.left()
-			.padLeft(10);
-		innerBottom.row();
-		innerBottom.add(new Label("Leader:", this.skin));
-		innerBottom.add(new DynamicLabel(this.client, c -> getFormattedLeader(province), this.skin))
-			.size(0, 0)
-			.padLeft(10)
-			.left();
-		innerBottom.row();
-		
 		this.add(innerConfirm).fill();
 		this.row();
 		this.add(innerTop);
 		this.row();
-		this.add(innerBottom);
-		this.row();
-		this.add(innerBottom);
+
+		Table innerAction = new Table();
+		
+		innerAction.add(diplomaticInfluenceButton)
+			.size(sizeX, sizeY)
+			.right()
+			.padTop(5);
+		innerAction.add(dissidentsButton)
+			.size(sizeX, sizeY)
+			.left()
+			.padTop(5)
+			.padLeft(10);
+		innerAction.add(coupButton)
+			.size(sizeX, sizeY)
+			.left()
+			.padTop(5)
+			.padLeft(10);
+		innerAction.row();
+		innerAction.add(militaryInfluenceButton)
+			.size(sizeX, sizeY)
+			.right()
+			.padTop(5);
+		innerAction.add(politicalPressureButton)
+		.size(sizeX, sizeY)
+			.left()
+			.padTop(5)
+			.padLeft(10);
+		innerAction.add(invadeButton)
+			.size(sizeX, sizeY)
+			.left()
+			.padTop(5)
+			.padLeft(10);
+		innerAction.row();
+		innerAction.add(covertInfluenceButton)
+			.size(sizeX, sizeY)
+			.right()
+			.padTop(5);
+		innerAction.add(establishBaseButton)
+			.size(sizeX, sizeY)
+			.left()
+			.padTop(5)
+			.padLeft(10);
+		innerAction.row();
+		innerAction.add(new Label("Adjacencies:", this.skin));
+		DynamicLabel adjacencyList = new DynamicLabel(this.client,
+				c -> getFormattedAdjacencies(province),
+				c -> state.isInRange(c.getPlayer(), province.getId()) ? Color.BLACK : Color.RED,
+				this.skin);
+		innerAction.add(adjacencyList)
+			.size(0, 0)
+			.left()
+			.padLeft(10);
+		innerAction.row();
+		innerAction.add(new Label("Leader:", this.skin));
+		innerAction.add(new DynamicLabel(this.client, c -> getFormattedLeader(province), this.skin))
+			.size(0, 0)
+			.padLeft(10)
+			.left();
+		innerAction.row();
+		
+		this.add(innerAction);
 		this.row();
 	}
 	

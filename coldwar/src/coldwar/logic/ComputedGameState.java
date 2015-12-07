@@ -955,6 +955,13 @@ public class ComputedGameState {
 		return false;
 	}
 	
+	public boolean isInArmedConflict(Province.Id id) {
+		Government gov = governments.get(id);
+		if(gov == Government.CIVIL_WAR)
+			return true;
+		return false;
+	}
+	
 	public int getPatriotismModifier() {
 		int sum = 0;
 		for(Province.Region r : Province.Region.values()) {

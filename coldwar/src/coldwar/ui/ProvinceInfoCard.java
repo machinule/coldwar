@@ -3,7 +3,6 @@ package coldwar.ui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -11,28 +10,36 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import coldwar.DissidentsOuterClass.Government;
 import coldwar.GameSettingsOuterClass.ProvinceSettings;
 import coldwar.Logger;
-import coldwar.ProvinceOuterClass.Province;
 import coldwar.ProvinceOuterClass.Province.Region;
 import coldwar.logic.Client;
 import coldwar.logic.Client.Player;
-import coldwar.logic.ComputedGameState;
 
 public class ProvinceInfoCard extends Table {
 
 	protected Client client;
 	protected ProvinceSettings province;
 	protected Skin skin;
-	protected ActionPane toolbar;
+	protected ActionPane actionPane;
+	protected WarPane warPane;
 	protected Button infoBox;
 	static ProvinceInfoCard currentSelection;
-	protected Color color; // To be replaced with region color
+	protected Color color;
+	protected boolean paneSwitch;
+	
 
-	public ProvinceInfoCard(final Client client, final ProvinceSettings province, final ActionPane toolbar,
-			final Skin skin) {
+	public boolean inConflict = false;
+	
+	public ProvinceInfoCard(final Client client,
+							final ProvinceSettings province,
+							final ActionPane actionPane,
+							final WarPane warPane,
+							final Skin skin) {
 		super();
 		this.client = client;
 		this.province = province;
 		this.skin = skin;
+		this.actionPane = actionPane;
+		this.warPane = warPane;
 		
 		infoBox = createLayout();
 		infoBox.setColor(getValidColor());
@@ -40,7 +47,13 @@ public class ProvinceInfoCard extends Table {
 			@Override
 			public void changed(ChangeEvent event, final Actor actor) {
 				Logger.Info(province.getId().getValueDescriptor().getName() + " selected");
-				toolbar.onSelect(province);
+				if(client.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId())) {
+					warPane.onSelect(province);
+					actionPane.clear();
+				} else {
+					actionPane.onSelect(province);
+					warPane.clear();
+				}
 				if (currentSelection != null) {
 					currentSelection.infoBox.setColor(currentSelection.getValidColor());
 				}
@@ -55,6 +68,19 @@ public class ProvinceInfoCard extends Table {
 	public void act(final float delta) {
 		super.act(delta);
 		infoBox.setColor(getValidColor());
+		if(currentSelection == this) {
+			boolean currentSwitch = client.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId());
+			if (paneSwitch != currentSwitch) {
+				if(currentSwitch) {
+					warPane.onSelect(province);
+					actionPane.clear();
+				} else {
+					actionPane.onSelect(province);
+					warPane.clear();
+				}
+				paneSwitch = currentSwitch;
+			}
+		}
 	}
 	
 	public Color getValidColor() {

@@ -22,6 +22,10 @@ public class MapScreen extends AbstractScreen {
 		this.client = client;
 	}
 
+	//@Override
+	public void act() {
+	}
+	
 	@Override
 	public void show() {
 		super.show();
@@ -36,8 +40,12 @@ public class MapScreen extends AbstractScreen {
 		nations.setFillParent(true);
 		nations.setDebug(Settings.isDebug());
 		this.stage.addActor(nations);
+		
 		final ActionPane actionPane = new ActionPane(this.client, skin);
 		actionPane.setDebug(Settings.isDebug());
+		final WarPane warPane = new WarPane(this.client, skin);
+		warPane.setDebug(Settings.isDebug());
+		
 		final HeaderPane headerPane = new HeaderPane(this.client, skin);
 		headerPane.setDebug(Settings.isDebug());
 		final SuperpowerPane superpowerPane = new SuperpowerPane(this.client, skin);
@@ -45,7 +53,7 @@ public class MapScreen extends AbstractScreen {
 		final EnumMap<Province.Id, ProvinceInfoCard> cards = new EnumMap<Province.Id, ProvinceInfoCard>(Province.Id.class);
 		for (final ProvinceSettings p : this.client.initialGameState.getSettings().getProvincesList()) {
 			if(p.getRegion() != Province.Region.SUPERPOWERS) {
-				cards.put(p.getId(), new ProvinceInfoCard(this.client, p, actionPane, skin));
+				cards.put(p.getId(), new ProvinceInfoCard(this.client, p, actionPane, warPane, skin));
 			}
 		}
 		final Province.Id[][] provincePosition = {
@@ -82,6 +90,10 @@ public class MapScreen extends AbstractScreen {
 		actionPane.setFillParent(true);
 		this.stage.addActor(actionPane);
 		actionPane.bottom();
+		
+		warPane.setFillParent(true);
+		this.stage.addActor(warPane);
+		warPane.bottom();
 		
 		// Side Pane
 		
