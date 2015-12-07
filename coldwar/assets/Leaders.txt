@@ -2,200 +2,205 @@
 
 # Spanish
 
-leaderBank {
+candidates {
 	culture: SPANISH
-	historical: false
-	name: "Antonio Villaverde"
-}
 
-leaderBank {
-	culture: SPANISH
-	historical: false
-	name: "Rafael Cruz"
-}
+	leaders {
+		historical: false
+		name: "Antonio Villaverde"
+	}
+	
+	leaders {
+		historical: false
+		name: "Rafael Cruz"
+	}
+	
+	leaders {
+		historical: false
+		name: "Alejandro Falconi"
+	}
+	
+	leaders {
+		historical: false
+		name: "Pedro 'Speedy' Gonzales"
+	}
+	
+	leaders {
+		historical: false
+		name: "Juan Cabrera"
+	}
 
-leaderBank {
-	culture: SPANISH
-	historical: false
-	name: "Alejandro Falconi"
-}
-
-leaderBank {
-	culture: SPANISH
-	historical: false
-	name: "Pedro 'Speedy' Gonzales"
-}
-
-leaderBank {
-	culture: SPANISH
-	historical: false
-	name: "Juan Cabrera"
 }
 
 # French
 
-leaderBank {
+candidates {
 	culture: FRENCH
-	historical: false
-	name: "Jacques Villeneuve"
-}
 
-leaderBank {
-	culture: FRENCH
-	historical: false
-	name: "Louis Montaigne"
+	leaders {
+		historical: false
+		name: "Jacques Villeneuve"
+	}
+	
+	leaders {
+		historical: false
+		name: "Louis Montaigne"
+	}
+
 }
 
 ## CENTRAL AMERICA ##
 
 # Mexico
 
-leaderBank {
+candidates {
 	province: MEXICO
-	historical: true
-	name: "Adolfo Ruiz Cortines"
-	birth: 1889
-	elected: true
-}
-
-leaderBank {
-	province: MEXICO
-	historical: true
-	name: "Adolfo López Mateos"
-	birth: 1911
-	elected: true
-}
-
-leaderBank {
-	province: MEXICO
-	historical: true
-	name: "Luis Echeverria"
-	birth: 1922
-	elected: true
-}
-
-leaderBank {
-	province: MEXICO
-	historical: true
-	name: "José López Portillo"
-	birth: 1920
-	elected: true
+	
+	leaders {
+		historical: true
+		name: "Adolfo Ruiz Cortines"
+		birth: 1889
+		elected: true
+	}
+	
+	leaders {
+		historical: true
+		name: "Adolfo López Mateos"
+		birth: 1911
+		elected: true
+	}
+	
+	leaders {
+		historical: true
+		name: "Luis Echeverria"
+		birth: 1922
+		elected: true
+	}
+	
+	leaders {
+		historical: true
+		name: "José López Portillo"
+		birth: 1920
+		elected: true
+	}
+	
 }
 
 # Guatemala
 
-leaderBank {
+candidates {
 	province: GUATEMALA
-	historical: true
-	name: "Jacobo Árbenz"
-	birth: 1913
-	elected: true
-}
+	
+	leaders {
+		historical: true
+		name: "Jacobo Árbenz"
+		birth: 1913
+		elected: true
+	}
+	
+	leaders {
+		historical: true
+		name: "Carlos Castillo Armas"
+		birth: 1904
+		elected: false
+	}
+	
+	leaders {
+		historical: true
+		name: "Miguel Ydígoras Fuentes"
+		birth: 1895
+		elected: false
+	}
+	
+	leaders {
+		historical: true
+		name: "Fernando Romeo Lucas García"
+		birth: 1924
+		elected: false
+	}
+	
+	leaders {
+		historical: true
+		name: "Luis Augusto Turcios Lima"
+		birth: 1941
+	}
 
-leaderBank {
-	province: GUATEMALA
-	historical: true
-	name: "Carlos Castillo Armas"
-	birth: 1904
-	elected: false
-}
-
-leaderBank {
-	province: GUATEMALA
-	historical: true
-	name: "Miguel Ydígoras Fuentes"
-	birth: 1895
-	elected: false
-}
-
-leaderBank {
-	province: GUATEMALA
-	historical: true
-	name: "Fernando Romeo Lucas García"
-	birth: 1924
-	elected: false
-}
-
-leaderBank {
-	province: GUATEMALA
-	historical: true
-	name: "Luis Augusto Turcios Lima"
-	birth: 1941
 }
 
 # Honduras
 
-leaderBank {
+candidates {
 	province: HONDURAS
-	historical: true
-	name: "Ramón Villeda Morales"
-	birth: 1909
-	elected: true
-}
 
-leaderBank {
-	province: HONDURAS
-	historical: true
-	name: "Julio Lozano Díaz"
-	birth: 1885
-}
-
-leaderBank {
-	province: HONDURAS
-	historical: true
-	name: "Oswaldo López Arellano"
-	birth: 1921
-	elected: false
+	leaders {
+		historical: true
+		name: "Ramón Villeda Morales"
+		birth: 1909
+		elected: true
+	}
+	
+	leaders {
+		historical: true
+		name: "Julio Lozano Díaz"
+		birth: 1885
+	}
+	
+	leaders {
+		historical: true
+		name: "Oswaldo López Arellano"
+		birth: 1921
+		elected: false
+	}
+	
 }
 
 # Nicaragua
 
-leaderBank {
+candidates {
 	province: NICARAGUA
-	historical: true
-	name: "Anastasio Somoza García"
-	birth: 1896
-	elected: false
-	type: POLITICAL
-}
 
-leaderBank {
-	province: NICARAGUA
-	historical: true
-	name: "Anastasio Somoza Debayle"
-	birth: 1925
-	elected: false
-}
+	leaders {
+		historical: true
+		name: "Anastasio Somoza García"
+		birth: 1896
+		elected: false
+		type: POLITICAL
+	}
+	
+	leaders {
+		historical: true
+		name: "Anastasio Somoza Debayle"
+		birth: 1925
+		elected: false
+	}
+	
+	leaders {
+		historical: true
+		name: "Luis Somoza Debayle"
+		birth: 1922
+		elected: false
+	}
+	
+	leaders {
+		historical: true
+		name: "Daniel Ortega"
+		birth: 1936
+		allegiance: ANTI_USSR
+	}
+	
+	leaders {
+		historical: true
+		name: "Carlos Fonseca"
+		birth: 1936
+	}
+	
+	leaders {
+		historical: true
+		name: "Pedro Joaquín Chamorro Cardenal"
+		birth: 1936
+		elected: true
+	}
 
-leaderBank {
-	province: NICARAGUA
-	historical: true
-	name: "Luis Somoza Debayle"
-	birth: 1922
-	elected: false
-}
-
-leaderBank {
-	province: NICARAGUA
-	historical: true
-	name: "Daniel Ortega"
-	birth: 1936
-	allegiance: ANTI_USSR
-}
-
-leaderBank {
-	province: NICARAGUA
-	historical: true
-	name: "Carlos Fonseca"
-	birth: 1936
-}
-
-leaderBank {
-	province: NICARAGUA
-	historical: true
-	name: "Pedro Joaquín Chamorro Cardenal"
-	birth: 1936
-	elected: true
 }
 
 # Costa Rica
@@ -204,63 +209,67 @@ leaderBank {
 
 # Cuba
 
-leaderBank {
+candidates {
 	province: CUBA
-	historical: true
-	name: "Fidel Castro"
-	birth: 1926
-	elected: false
-	allegiance: ANTI_USA
+	
+	leaders {
+		historical: true
+		name: "Fidel Castro"
+		birth: 1926
+		elected: false
+		allegiance: ANTI_USA
+	}
+	
+	leaders {
+		historical: true
+		name: "Raul Castro"
+		birth: 1926
+		elected: false
+		allegiance: ANTI_USA
+	}
+	
+	leaders {
+		historical: true
+		name: "Che Guevara"
+		birth: 1928
+		elected: false
+		allegiance: ANTI_USA
+	}
+	
+	leaders {
+		historical: true
+		name: "Fulgencio Batista"
+		birth: 1901
+		allegiance: ANTI_USSR
+	}
+	
+	leaders {
+		historical: true
+		name: "Roberto Agramonte"
+		birth: 1904
+		elected: true
+	}
+	
+	leaders {
+		historical: true
+		name: "Carlos Hevia"
+		birth: 1900
+		elected: true
+	}
+	
 }
 
-leaderBank {
-	province: CUBA
-	historical: true
-	name: "Raul Castro"
-	birth: 1926
-	elected: false
-	allegiance: ANTI_USA
-}
+	# Haiti
+	
+candidates {
+	province: HAITI
+	
+	leaders {
+		historical: true
+		name: "François 'Papa Doc' Duvalier"
+		birth: 1907
+	}
 
-leaderBank {
-	province: CUBA
-	historical: true
-	name: "Che Guevara"
-	birth: 1928
-	elected: false
-	allegiance: ANTI_USA
-}
-
-leaderBank {
-	province: CUBA
-	historical: true
-	name: "Fulgencio Batista"
-	birth: 1901
-	allegiance: ANTI_USSR
-}
-
-leaderBank {
-	province: CUBA
-	historical: true
-	name: "Roberto Agramonte"
-	birth: 1904
-	elected: true
-}
-
-leaderBank {
-	province: CUBA
-	historical: true
-	name: "Carlos Hevia"
-	birth: 1900
-	elected: true
-}
-
-# Haiti
-
-leaderBank {
-	historical: true
-	name: "François 'Papa Doc' Duvalier"
-	birth: 1907
 }
 
 # Dominican Republic
@@ -273,142 +282,149 @@ leaderBank {
 
 # Peru
 
-leaderBank {
-	name: "Manuel Prado Ugarteche"
+candidates {
 	province: PERU
-	birth: 1889
-	elected: true
-}
+	
+	leaders {
+		name: "Manuel Prado Ugarteche"
+		birth: 1889
+		elected: true
+	}
+	
+	leaders {
+		name: "Ricardo Pérez Godoy"
+		birth: 1905
+		elected: false
+	}
+	
+	leaders {
+		name: "Fernando Belaúnde Terry"
+		birth: 1912
+		elected: true
+	}
+	
+	leaders {
+		name: "Juan Velasco Alvarado"
+		birth: 1910
+		elected: false
+	}
 
-leaderBank {
-	name: "Ricardo Pérez Godoy"
-	province: PERU
-	birth: 1905
-	elected: false
-}
-
-leaderBank {
-	name: "Fernando Belaúnde Terry"
-	province: PERU
-	birth: 1912
-	elected: true
-}
-
-leaderBank {
-	name: "Juan Velasco Alvarado"
-	province: PERU
-	birth: 1910
-	elected: false
 }
 
 # Ecuador
 
 # Chile
 
-leaderBank {
-	name: "Carlos Ibáñez del Campo"
+candidates {
 	province: CHILE
-	birth: 1877
-	elected: true
-}
 
-leaderBank {
-	name: "Salvador Allende"
-	province: CHILE
-	birth: 1908
-	elected: true
-	allegiance: ANTI_USA
-}
+	leaders {
+		name: "Carlos Ibáñez del Campo"
+		birth: 1877
+		elected: true
+	}
+	
+	leaders {
+		name: "Salvador Allende"
+		birth: 1908
+		elected: true
+		allegiance: ANTI_USA
+	}
+	
+	leaders {
+		name: "Augusto Pinochet"
+		birth: 1915
+		elected: false
+	}
 
-leaderBank {
-	name: "Augusto Pinochet"
-	province: CHILE
-	birth: 1915
-	elected: false
 }
 
 # Bolivia
 
-leaderBank {
-	name: "Víctor Paz Estenssoro"
+candidates {
 	province: BOLIVIA
-	birth: 1907
-	elected: true
-}
+	
+	leaders {
+		name: "Víctor Paz Estenssoro"
+		birth: 1907
+		elected: true
+	}
+	
+	leaders {
+		name: "René Barrientos"
+		birth: 1919
+		elected: false
+	}
+	
+	leaders {
+		name: "Hugo Banzer"
+		birth: 1926
+	}
 
-leaderBank {
-	name: "René Barrientos"
-	province: BOLIVIA
-	birth: 1919
-	elected: false
-}
-
-leaderBank {
-	name: "Hugo Banzer"
-	province: BOLIVIA
-	birth: 1926
 }
 
 # Argentina
 
-leaderBank {
-	name: "Juan Perón"
+candidates {
 	province: ARGENTINA
-	birth: 1895
-	elected: true
-	type: MILITARY
-}
 
-leaderBank {
-	name: "Pedro Eugenio Aramburu"
-	province: ARGENTINA
-	birth: 1903
-	elected: false
-}
+	leaders {
+		name: "Juan Perón"
+		birth: 1895
+		elected: true
+		type: MILITARY
+	}
+	
+	leaders {
+		name: "Pedro Eugenio Aramburu"
+		birth: 1903
+		elected: false
+	}
+	
+	leaders {
+		name: "Eva Perón"
+		birth: 1919
+		elected: false
+	}
+	
+	leaders {
+		name: "Arturo Frondizi Ercoli"
+		birth: 1908
+		elected: true
+	}
+	
+	leaders {
+		name: "Juan Carlos Onganía"
+		birth: 1914
+		elected: false
+	}
 
-leaderBank {
-	name: "Eva Perón"
-	province: ARGENTINA
-	birth: 1919
-	elected: false
-}
-
-leaderBank {
-	name: "Arturo Frondizi Ercoli"
-	province: ARGENTINA
-	birth: 1908
-	elected: true
-}
-
-leaderBank {
-	name: "Juan Carlos Onganía"
-	province: ARGENTINA
-	birth: 1914
-	elected: false
 }
 
 # Venezuela
 
 # Brazil
 
-leaderBank {
-	name: "Getúlio Vargas"
+candidates {
 	province: BRAZIL
-	birth: 1882
-}
 
-leaderBank {
-	name: "Juscelino Kubitschek"
-	province: BRAZIL
-	birth: 1902
-	elected: true
-}
-
-leaderBank {
-	name: "Humberto de Alencar Castelo Branco"
-	province: BRAZIL
-	birth: 1902
-	elected: false
+	leaders {
+		name: "Getúlio Vargas"
+		birth: 1882
+	}
+	
+	leaders {
+		name: "Juscelino Kubitschek"
+		birth: 1902
+		elected: true
+	}
+	
+	leaders {
+		name: "Humberto de Alencar Castelo Branco"
+		birth: 1902
+		elected: false
+	}
+	
 }
 
 # Guyana

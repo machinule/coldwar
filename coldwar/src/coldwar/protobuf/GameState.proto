@@ -9,6 +9,7 @@ import "SovietUnion.proto";
 import "Move.proto";
 import "Event.proto";
 import "Leader.proto";
+import "Dissidents.proto";
 
 message GameState {
   optional int32 heat = 2; // 0 - 100
@@ -19,7 +20,8 @@ message GameState {
   optional int32 turn = 9;
   optional TurnLogEntry turn_log = 10;
   optional GameSettings settings = 11;
-  repeated Leader activeLeaders = 12;
+  repeated Leader initLeaders = 12;
+  repeated Dissidents initDissidents = 13;
 }
 
 message TurnLogEntry {

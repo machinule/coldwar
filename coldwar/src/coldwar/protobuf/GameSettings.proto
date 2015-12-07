@@ -4,6 +4,7 @@ package coldwar;
 
 import "Province.proto";
 import "Leader.proto";
+import "Dissidents.proto";
 
 // GameSettings contains constants over the course of the game.
 // These are not logged each turn, but merely copied to the top level GameState.
@@ -12,9 +13,9 @@ message GameSettings {
   optional int32 heat_init = 2 [default = 40];
   optional int32 heat_min = 3 [default = 0];
   optional int32 heat_max = 4 [default = 100];
-  optional int64 seed_init = 5 [default = 0];
+  optional int64 seed_init = 5 [default = 1];
   repeated ProvinceSettings provinces = 6;
-  repeated Leader leaderBank = 7;
+  repeated LeaderList candidates = 7;
 
   // USA Settings.
   optional string usa_alias = 100 [default = "USA"];
@@ -46,21 +47,41 @@ message GameSettings {
   optional int32 random_province_communism_chance = 304 [default = 100000];
   optional int32 random_province_autocracy_chance = 305 [default = 100000];
   optional int32 random_province_republic_chance = 306 [default = 100000];
-  optional int32 random_province_faux_pas_chance = 307 [default = 00000];
-  optional int32 random_province_A_C_D_dissidents_chance = 308 [default = 15000];
-  optional int32 random_province_default_dissidents_chance = 309 [default = 30000];
-  optional int32 random_province_A_C_D_dissidents_suppressed_chance = 310 [default = 20000];
-  optional int32 random_province_default_dissidents_suppressed_chance = 311 [default = 20000];
+  optional int32 random_province_faux_pas_chance = 307 [default = 00000]; // TODO: Temporarily set to 0
+
+  optional int32 random_province_communism_dissidents_chance = 400 [default = 15000];
+  optional int32 random_province_democracy_dissidents_chance = 401 [default = 15000];
+  optional int32 random_province_authoritarian_dissidents_chance = 402 [default = 15000];
+  optional int32 random_province_default_dissidents_chance = 403 [default = 30000];
+
+  optional int32 neutral_autocracy_neutral_dissidents = 404 [default = 500000];
+  optional int32 neutral_autocracy_communist_dissidents = 405 [default = 500000];
+  optional int32 influenced_autocracy_neutral_dissidents = 406 [default = 250000];
+  optional int32 influenced_autocracy_opposing_dissidents = 407 [default = 666667];
+
+  optional int32 neutral_republic_neutral_dissidents = 408 [default = 500000];
+  optional int32 neutral_republic_communist_dissidents = 409 [default = 500000];
+  optional int32 influenced_republic_neutral_dissidents = 410 [default = 250000];
+  optional int32 influenced_republic_opposing_dissidents = 411 [default = 666667];
+
+  optional int32 neutral_democracy_neutral_dissidents = 412 [default = 500000];
+  optional int32 neutral_democracy_communist_dissidents = 413 [default = 333333];
+  optional int32 influenced_democracy_neutral_dissidents = 414 [default = 250000];
+  optional int32 influenced_democracy_opposing_dissidents = 415 [default = 6666667];
+
+  optional int32 random_province_democracy_dissidents_suppressed_chance = 450 [default = 40000];
+  optional int32 random_province_default_dissidents_suppressed_chance = 451 [default = 20000];
+
   optional int32 random_us_ally_democracy_chance = 312 [default = 100000];
   optional int32 random_us_ally_communism_chance = 313 [default = 100000];
   optional int32 random_end_civil_war_chance = 314 [default = 250000];
   // Action Settings.
-  optional int32 coup_success_chance = 400 [default = 650000];
-  optional int32 coup_leader_chance = 401 [default = 200000];
-  optional int32 coup_backfire_chance = 402 [default = 100000];
+  optional int32 coup_success_chance = 500 [default = 650000];
+  optional int32 coup_leader_chance = 501 [default = 200000];
+  optional int32 coup_backfire_chance = 502 [default = 100000];
   // National actions
-  optional int32 kgb_cov_income_modifier = 500 [default = 2];
-  optional int32 cia_cov_income_modifier = 501 [default = 2];
+  optional int32 kgb_cov_income_modifier = 600 [default = 2];
+  optional int32 cia_cov_income_modifier = 601 [default = 2];
 
 }
 
@@ -70,10 +91,10 @@ message ProvinceSettings {
 	repeated Province.Id adjacency = 3;
 	optional int32 stability_base = 4 [default = 1];
 	optional int32 influence_init = 5 [default = 0];
-	optional Province.Government government_init = 6 [default = REPUBLIC];
+	optional Government government_init = 6 [default = REPUBLIC];
 	optional string leader_init = 7;
 	optional Province.Id occupier_init = 8;
-	optional bool dissidents_init = 9;
+	optional Dissidents dissidents_init = 9;
 	optional Province.Id military_base_init = 10;
 	optional Province.Id ally_init = 11;
 	optional Province.Region region = 12;

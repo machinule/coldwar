@@ -2,10 +2,12 @@ syntax = "proto2";
 
 package coldwar;
 
+import "Leader.proto";
+import "Dissidents.proto";
+
 message Province {
 
 	enum Id {
-
 		NONE = 00;
 
 		// EUROPE
@@ -54,17 +56,6 @@ message Province {
 		USSR = 99;
 	}
 
-	enum Government {
-		REPUBLIC = 0;
-		DEMOCRACY = 1;
-		SOCIALISM = 2;
-		COMMUNISM = 3;
-		AUTOCRACY = 4;
-		COLONY = 5;
-		OCCUPIED = 6;
-		CIVIL_WAR = 7;
-	}
-
 	enum Region {
 		WESTERN_EUROPE = 1;
 		EASTERN_EUROPE = 2;
@@ -82,7 +73,16 @@ message Province {
 	optional int32 influence = 3 [default = 0];
 	optional Government gov = 5 [default = REPUBLIC];
 	optional Id occupier = 6;
-	optional bool dissidents = 7 [default = false];
 	optional Id base = 9;
 	optional Id ally = 10;
+	optional bool has_leader = 11;
+	optional Leader leader = 12;
+	optional bool has_dissidents = 13;
+	optional Dissidents dissidents = 14;
+}
+
+message LeaderList {
+	repeated Leader leaders = 1;
+	optional Province.Id province = 2;
+	optional Culture culture = 3;
 }

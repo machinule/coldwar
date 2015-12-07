@@ -294,7 +294,7 @@ public class ActionPane extends Table {
 	
 	protected String getFormattedLeader(final ProvinceSettings province) {
 		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
-		if (state.leaders.containsKey(province.getId())) {
+		if (state.hasLeader(province.getId())) {
 			Leader l = state.leaders.get(province.getId());
 			String ret = l.getName();
 			ret += " (" + (state.year - l.getBirth()) + ") ";

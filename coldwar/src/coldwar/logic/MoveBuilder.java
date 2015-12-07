@@ -134,10 +134,6 @@ public class MoveBuilder {
 	public MoveList getMoveList() {
 		return this.moves.build();
 	}
-
-	public boolean hasDissidents(final Province.Id provinceId) {
-		return this.computedState.dissidents.get(provinceId);
-	}
 	
 	public Player getBaseOwner(final Province.Id provinceId) {
 		return this.computedState.bases.get(provinceId);

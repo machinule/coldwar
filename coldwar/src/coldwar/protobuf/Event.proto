@@ -16,9 +16,10 @@ message Event {
 	optional ProvinceDissidentsEvent province_dissidents = 9;
 	optional ProvinceDissidentsSuppressedEvent province_dissidents_suppressed = 10;
 	optional CivilWarEvent civil_war = 11;
-	optional UsAllyDemocracyEvent us_ally_democracy = 12;
-	optional UssrAllyCommunismEvent ussr_ally_communism = 13;
-	optional CoupEvent coup_event = 14;
+	optional EndCivilWarEvent end_civil_war = 12;
+	optional UsAllyDemocracyEvent us_ally_democracy = 13;
+	optional UssrAllyCommunismEvent ussr_ally_communism = 14;
+	optional CoupEvent coup_event = 15;
 }
 
 message LeaderSpawnEvent {
@@ -64,6 +65,9 @@ message CivilWarEvent {
 	optional Province.Id province_id = 1;
 }
 
+message EndCivilWarEvent {
+	optional Province.Id province_id = 1;
+}
 message UsAllyDemocracyEvent {
 	optional Province.Id province_id = 1;
 }

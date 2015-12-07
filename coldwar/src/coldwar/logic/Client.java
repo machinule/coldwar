@@ -10,7 +10,10 @@ import coldwar.InfluenceStoreOuterClass.InfluenceStore;
 import coldwar.LeaderOuterClass.Culture;
 import coldwar.LeaderOuterClass.Leader;
 import coldwar.Logger;
+import coldwar.DissidentsOuterClass.Dissidents;
+import coldwar.DissidentsOuterClass.Government;
 import coldwar.MoveOuterClass.MoveList;
+import coldwar.ProvinceOuterClass.LeaderList;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.SovietUnionOuterClass.SovietUnion;
 import coldwar.UnitedStatesOuterClass.UnitedStates;
@@ -58,7 +61,6 @@ public abstract class Client {
 		for (ProvinceSettings p : settings.getProvincesList()) {
 			Province.Builder builder = state.addProvincesBuilder()
 				.setId(p.getId())
-				.setDissidents(p.getDissidentsInit())
 				.setGov(p.getGovernmentInit())
 				.setInfluence(p.getInfluenceInit());
 			if (p.hasAllyInit()) {
@@ -71,7 +73,10 @@ public abstract class Client {
 				builder.setOccupier(p.getOccupierInit());
 			}
 			if (p.hasLeaderInit()) {
-				state.addActiveLeaders(getLeader(settings, p.getLeaderInit()));
+				builder.setLeader(getLeader(settings, p.getLeaderInit()));
+			}
+			if (p.hasDissidentsInit()) {
+				builder.setDissidents(p.getDissidentsInit());
 			}
 		}
 		this.initialGameState = state.build();
@@ -84,10 +89,12 @@ public abstract class Client {
 	}
 	
 	protected Leader getLeader(GameSettings.Builder settings, String name) {
-		for(Leader l : settings.getLeaderBankList()) {
-			if (l.getName().equals(name)) {
-				Logger.Dbg("Setting leader " + l.getName());
-				return l;
+		for(LeaderList leadList : settings.getCandidatesList()) {
+			for(Leader l : leadList.getLeadersList()) {
+				if (l.getName().equals(name)) {
+					Logger.Dbg("Setting leader " + l.getName());
+					return l;
+				}
 			}
 		}
 		return null;
@@ -128,7 +135,7 @@ public abstract class Client {
 			.setRegion(Province.Region.SUPERPOWERS)
 			.setLabel("United States")
 			.setInfluenceInit(1)
-			.setGovernmentInit(Province.Government.DEMOCRACY)
+			.setGovernmentInit(Government.DEMOCRACY)
 			.addAdjacency(Province.Id.MEXICO)
 			.addAdjacency(Province.Id.CUBA);
 		
@@ -137,7 +144,7 @@ public abstract class Client {
 			.setRegion(Province.Region.SUPERPOWERS)
 			.setLabel("Soviet Union")
 			.setInfluenceInit(-1)
-			.setGovernmentInit(Province.Government.COMMUNISM);
+			.setGovernmentInit(Government.COMMUNISM);
 		
 		// CENTRAL AMERICA
 		
@@ -175,7 +182,7 @@ public abstract class Client {
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Nicaragua")
 			.setInfluenceInit(1)
-			.setGovernmentInit(Province.Government.AUTOCRACY)
+			.setGovernmentInit(Government.AUTOCRACY)
 			.setLeaderInit("Anastasio Somoza García")
 			.addAdjacency(Province.Id.CUBA)
 			.addAdjacency(Province.Id.HONDURAS)
@@ -188,7 +195,7 @@ public abstract class Client {
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Costa Rica")
 			.setStabilityBase(2)
-			.setGovernmentInit(Province.Government.DEMOCRACY)
+			.setGovernmentInit(Government.DEMOCRACY)
 			.addAdjacency(Province.Id.NICARAGUA)
 			.addAdjacency(Province.Id.PANAMA);
 		
@@ -210,7 +217,8 @@ public abstract class Client {
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Cuba")
 			.setStabilityBase(2)
-			.setDissidentsInit(true)
+			.setDissidentsInit(Dissidents.newBuilder()
+					.setGov(Government.COMMUNISM))
 			.addAdjacency(Province.Id.USA)
 			.addAdjacency(Province.Id.NICARAGUA)
 			.addAdjacency(Province.Id.MEXICO)
@@ -229,7 +237,7 @@ public abstract class Client {
 			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Dominican Rep.")
-			.setGovernmentInit(Province.Government.AUTOCRACY)
+			.setGovernmentInit(Government.AUTOCRACY)
 			.addAdjacency(Province.Id.HAITI)
 			.addAdjacency(Province.Id.LESS_ANTILLES);
 		
@@ -269,7 +277,7 @@ public abstract class Client {
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Peru")
 			.setStabilityBase(2)
-			.setGovernmentInit(Province.Government.AUTOCRACY)
+			.setGovernmentInit(Government.AUTOCRACY)
 			.addAdjacency(Province.Id.ECUADOR)
 			.addAdjacency(Province.Id.BOLIVIA)
 			.addAdjacency(Province.Id.COLOMBIA)
@@ -281,7 +289,7 @@ public abstract class Client {
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Chile")
 			.setStabilityBase(2)
-			.setGovernmentInit(Province.Government.DEMOCRACY)
+			.setGovernmentInit(Government.DEMOCRACY)
 			.addAdjacency(Province.Id.PERU)
 			.addAdjacency(Province.Id.ARGENTINA)
 			.addAdjacency(Province.Id.BOLIVIA);
@@ -322,7 +330,7 @@ public abstract class Client {
 			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Guyana")
-			.setGovernmentInit(Province.Government.COLONY)
+			.setGovernmentInit(Government.COLONY)
 			.setOccupierInit(Province.Id.GREAT_BRITAIN)
 			.addAdjacency(Province.Id.VENEZUELA)
 			.addAdjacency(Province.Id.BRAZIL)

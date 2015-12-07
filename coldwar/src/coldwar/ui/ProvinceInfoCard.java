@@ -3,16 +3,19 @@ package coldwar.ui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
+import coldwar.DissidentsOuterClass.Government;
 import coldwar.GameSettingsOuterClass.ProvinceSettings;
 import coldwar.Logger;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.ProvinceOuterClass.Province.Region;
 import coldwar.logic.Client;
 import coldwar.logic.Client.Player;
+import coldwar.logic.ComputedGameState;
 
 public class ProvinceInfoCard extends Table {
 
@@ -78,10 +81,7 @@ public class ProvinceInfoCard extends Table {
 		stability.setFontScale((float)1.5);
 		influence.setFontScale((float)1.5);
 		
-		DynamicLabel modifiers = new DynamicLabel(client, c -> getModifiers(), skin);
-		
-		modifiers.setFontScale((float)0.75);
-		modifiers.setAlignment(1); //Center in cell
+		Table modifiers = getModifiers();
 		
 		ret.add(influence).left().padTop(12).expand();
 		ret.add(name).center();
@@ -94,7 +94,7 @@ public class ProvinceInfoCard extends Table {
 	}
 	
     protected String netStability() {
-    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.CIVIL_WAR) {
+    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.CIVIL_WAR) {
     		return "X ";
     	} else {
 	    	int netStab = client.getMoveBuilder().getComputedGameState().getNetStability(province.getId());
@@ -103,28 +103,48 @@ public class ProvinceInfoCard extends Table {
     	}
 	}
     
-    protected String getModifiers() {
-    	String ret = " ";
-    	if(client.getMoveBuilder().hasDissidents(province.getId())) {
-    		ret += "DISS ";
-    	}
-    	if(client.getMoveBuilder().getBaseOwner(province.getId()) == Player.USA) {
-    		ret += "(USA Base) ";
-    	}
-    	if(client.getMoveBuilder().getBaseOwner(province.getId()) == Player.USSR) {
-    		ret += "(USSR Base) ";
-    	}
-    	// Unique proto for each government to include string label?
-    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.CIVIL_WAR)
-    		ret += "CIVIL WAR ";
-    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.DEMOCRACY)
-    		ret += "DEM ";
-    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.AUTOCRACY)
-    		ret += "AUT ";
-    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Province.Government.COMMUNISM)
-    		ret += "COM ";
-    	if(client.getMoveBuilder().getComputedGameState().leaders.containsKey(province.getId()))
-    		ret += "LDR ";
+    protected Table getModifiers() {
+    	Table ret = new Table();
+		ret.add(new DynamicLabel(
+			client,
+			c -> c.getMoveBuilder().getComputedGameState().hasDissidents(province.getId()) ? "DISS" : "",
+			c -> !c.getMoveBuilder().getComputedGameState().hasDissidents(province.getId()) ? Color.BLACK :
+				 c.getMoveBuilder().getComputedGameState().getDissidentsGov(province.getId()) == Government.COMMUNISM ? Color.RED :
+				 c.getMoveBuilder().getComputedGameState().getDissidentsGov(province.getId()) == Government.DEMOCRACY ? Color.BLUE :
+			 	 Color.BLACK,
+			skin
+		));
+		ret.add(new DynamicLabel(
+				client,
+				c -> c.getMoveBuilder().getBaseOwner(province.getId()) != null ? "BASE" : "",
+				c -> c.getMoveBuilder().getBaseOwner(province.getId()) == Player.USSR ? Color.RED :
+					 c.getMoveBuilder().getBaseOwner(province.getId()) == Player.USA ? Color.BLUE :
+					 Color.BLACK,
+				skin
+		));
+		// TODO: Unique proto for each government to include string label?
+		ret.add(new DynamicLabel(
+				client,
+				c -> c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.CIVIL_WAR ? "CIVIL WAR" : "",
+				c -> Color.ORANGE,
+				skin
+		));
+		ret.add(new DynamicLabel(
+				client,
+				c -> c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.DEMOCRACY ? "DEM" :
+					 c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.AUTOCRACY ? "AUT" :
+					 c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.COMMUNISM ? "COM" :
+					 "",
+				c -> Color.BLACK,
+				skin
+		));
+		ret.add(new DynamicLabel(
+				client,
+				c -> c.getMoveBuilder().getComputedGameState().hasLeader(province.getId()) ? "LDR" :
+					 "",
+				c -> Color.BLACK,
+				skin
+		));
 		return ret;
     }
     
