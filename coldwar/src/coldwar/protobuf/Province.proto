@@ -79,10 +79,32 @@ message Province {
 	optional Leader leader = 12;
 	optional bool has_dissidents = 13;
 	optional Dissidents dissidents = 14;
+	optional Conflict conflict = 15;
 }
 
 message LeaderList {
 	repeated Leader leaders = 1;
 	optional Province.Id province = 2;
 	optional Culture culture = 3;
+}
+
+message Conflict {
+
+	enum Type {
+		CIVIL_WAR = 1;
+	}
+
+	optional bool active = 2 [default = false];
+	optional bool dormant = 3 [default = false];
+	optional Type type = 4;
+	optional int32 goal = 5 [default = 2];
+	optional int32 defender_progress = 6 [default = 0];
+	optional int32 attacker_progress = 7 [default = 0];
+	optional Dissidents rebels = 8;
+	repeated Province.Id attacker = 9;
+	optional int32 length = 10 [default = -1];
+	optional int32 ussr_time_funded = 11 [default = 0];
+	optional int32 usa_time_funded = 12 [default = 0];
+	optional string name = 13;
+	optional int32 base_stalemate_chance = 14 [default = 700000]; // Base chance
 }

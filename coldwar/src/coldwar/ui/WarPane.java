@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+import coldwar.DissidentsOuterClass.Government;
 import coldwar.GameSettingsOuterClass.ProvinceSettings;
 import coldwar.logic.Client;
 
@@ -26,31 +27,46 @@ public class WarPane extends FooterPane {
 		
 		Table warHeader = new Table();
 		
-		ProgressBar warProgress = new ProgressBar(-5, 5, 1, false, skin);
-		warProgress.setValue(0);
-		
 		DynamicLabel progressTitle = new DynamicLabel(client,
-				c -> "War Progress:",
+				c -> "War!",
 				c -> Color.ORANGE, 
 				skin);
 		
-		Label defenders = new Label("Defenders", skin);
-		defenders.setColor(Color.BLUE);
+		Label versus = new Label("versus", skin);
+		versus.setColor(Color.BLACK);
+		DynamicLabel defenderInfo = new DynamicLabel(client, 
+				c -> province.getLabel(),
+				c -> c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.DEMOCRACY ? Color.BLUE :
+					 c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.COMMUNISM ? Color.RED :
+					 Color.BLACK, skin); 
 		
 		Label attackers = new Label("Attackers", skin);
-		attackers.setColor(Color.RED);
+		attackers.setColor(Color.BLACK);
+		DynamicLabel attackerInfo = new DynamicLabel(client, 
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.DEMOCRACY ? "Freedom Fighters" :
+					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.COMMUNISM ? "Communist Rebels" :
+					 "Unaligned Rebels",
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.DEMOCRACY ? Color.BLUE :
+					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.COMMUNISM ? Color.RED :
+					 Color.BLACK, skin); 
 		
+		warHeader.row();
 		warHeader.add(progressTitle)
 			.center();
-		warHeader.row();
-		warHeader.add(warProgress);
+
 		
 		Table warFooter = new Table();
-		
-		warFooter.add(attackers)
+
+		warFooter.add(attackerInfo)
+			.center()
+			.expand();
+		warFooter.add(versus)
+			.padLeft(10)
+			.padRight(10)
 			.center();
-		warFooter.add(defenders)
-			.center();
+		warFooter.add(defenderInfo)
+			.center()
+			.expand();
 		
 		innerWar.add(warHeader);
 		innerWar.row();

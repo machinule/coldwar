@@ -22,6 +22,7 @@ message GameState {
   optional GameSettings settings = 11;
   repeated Leader initLeaders = 12;
   repeated Dissidents initDissidents = 13;
+  repeated Conflict initConflicts = 14;
 }
 
 message TurnLogEntry {

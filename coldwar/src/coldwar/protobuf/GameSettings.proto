@@ -49,25 +49,25 @@ message GameSettings {
   optional int32 random_province_republic_chance = 306 [default = 100000];
   optional int32 random_province_faux_pas_chance = 307 [default = 00000]; // TODO: Temporarily set to 0
 
-  optional int32 random_province_communism_dissidents_chance = 400 [default = 15000];
-  optional int32 random_province_democracy_dissidents_chance = 401 [default = 15000];
-  optional int32 random_province_authoritarian_dissidents_chance = 402 [default = 15000];
+  optional int32 random_communism_dissidents_chance = 400 [default = 15000];
+  optional int32 random_democracy_dissidents_chance = 401 [default = 15000];
+  optional int32 random_autocracy_dissidents_chance = 402 [default = 15000];
   optional int32 random_province_default_dissidents_chance = 403 [default = 30000];
 
-  optional int32 neutral_autocracy_neutral_dissidents = 404 [default = 500000];
-  optional int32 neutral_autocracy_communist_dissidents = 405 [default = 500000];
+  optional int32 neutral_autocracy_democratic_dissidents = 404 [default = 333333];
+  optional int32 neutral_autocracy_communist_dissidents = 405 [default = 333333];
   optional int32 influenced_autocracy_neutral_dissidents = 406 [default = 250000];
-  optional int32 influenced_autocracy_opposing_dissidents = 407 [default = 666667];
+  optional int32 influenced_autocracy_opposing_dissidents = 407 [default = 600000];
 
-  optional int32 neutral_republic_neutral_dissidents = 408 [default = 500000];
-  optional int32 neutral_republic_communist_dissidents = 409 [default = 500000];
-  optional int32 influenced_republic_neutral_dissidents = 410 [default = 250000];
-  optional int32 influenced_republic_opposing_dissidents = 411 [default = 666667];
+  optional int32 neutral_republic_democratic_dissidents = 408 [default = 333333];
+  optional int32 neutral_republic_communist_dissidents = 409 [default = 333333];
+  optional int32 influenced_republic_neutral_dissidents = 410 [default = 333333];
+  optional int32 influenced_republic_opposing_dissidents = 411 [default = 500000];
 
-  optional int32 neutral_democracy_neutral_dissidents = 412 [default = 500000];
-  optional int32 neutral_democracy_communist_dissidents = 413 [default = 333333];
-  optional int32 influenced_democracy_neutral_dissidents = 414 [default = 250000];
-  optional int32 influenced_democracy_opposing_dissidents = 415 [default = 6666667];
+  optional int32 neutral_democracy_democratic_dissidents = 412 [default = 500000];
+  optional int32 neutral_democracy_communist_dissidents = 413 [default = 250000];
+  optional int32 influenced_democracy_democratic_dissidents = 414 [default = 500000];
+  optional int32 influenced_democracy_communist_dissidents = 415 [default = 250000];
 
   optional int32 random_province_democracy_dissidents_suppressed_chance = 450 [default = 100000];
   optional int32 random_province_default_dissidents_suppressed_chance = 451 [default = 50000];
@@ -79,6 +79,8 @@ message GameSettings {
   optional int32 coup_success_chance = 500 [default = 650000];
   optional int32 coup_leader_chance = 501 [default = 200000];
   optional int32 coup_backfire_chance = 502 [default = 100000];
+
+  optional int32 conflict_leader_modifier = 510 [default = 50000];
   // National actions
   optional int32 kgb_cov_income_modifier = 600 [default = 2];
   optional int32 cia_cov_income_modifier = 601 [default = 2];

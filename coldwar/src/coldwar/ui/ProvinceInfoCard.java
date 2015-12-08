@@ -120,7 +120,7 @@ public class ProvinceInfoCard extends Table {
 	}
 	
     protected String netStability() {
-    	if(client.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.CIVIL_WAR) {
+    	if(client.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId())) {
     		return "X ";
     	} else {
 	    	int netStab = client.getMoveBuilder().getComputedGameState().getNetStability(province.getId());
@@ -151,7 +151,7 @@ public class ProvinceInfoCard extends Table {
 		// TODO: Unique proto for each government to include string label?
 		ret.add(new DynamicLabel(
 				client,
-				c -> c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.CIVIL_WAR ? "CIVIL WAR" : "",
+				c -> c.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId()) ? "CIVIL WAR" : "",
 				c -> Color.ORANGE,
 				skin
 		));

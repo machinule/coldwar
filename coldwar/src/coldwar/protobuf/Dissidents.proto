@@ -11,7 +11,6 @@ enum Government {
 	AUTOCRACY = 3;
 	COLONY = 4;
 	OCCUPIED = 5;
-	CIVIL_WAR = 6;
 }
 
 message Dissidents {
