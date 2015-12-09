@@ -106,5 +106,5 @@ message Conflict {
 	optional int32 ussr_time_funded = 11 [default = 0];
 	optional int32 usa_time_funded = 12 [default = 0];
 	optional string name = 13;
-	optional int32 base_stalemate_chance = 14 [default = 700000]; // Base chance
+	optional int32 base_chance = 14 [default = 400000]; // Base chance
 }

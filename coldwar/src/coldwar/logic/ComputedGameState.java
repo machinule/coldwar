@@ -195,6 +195,7 @@ public class ComputedGameState {
 			actedMap.put(p.getId(), false);
 			leaderMap.put(p.getId(), p.getLeader());
 			dissidentsMap.put(p.getId(), p.getDissidents());
+			activeConflictMap.put(p.getId(), p.getConflict());
 		});
 		
 		totalInfluenceMap.putAll(baseInfluenceMap);
@@ -657,25 +658,6 @@ public class ComputedGameState {
 				}
 			}
 		}
-		// EndCivilWar
-		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
-			if (p.getConflict() != null && p.getConflict() != Conflict.getDefaultInstance()) {
-				if (p.getConflict().getType() == Conflict.Type.CIVIL_WAR) {
-					if (happens.apply(this.state.getSettings().getRandomEndCivilWarChance())) {
-						Logger.Vrb("Ending civil war in " + p.getId());
-						p.setGov(Government.REPUBLIC);
-						p.setDissidents(Dissidents.getDefaultInstance());
-						nextStateBuilder.getTurnLogBuilder()
-							.addEvents(Event.newBuilder()
-								.setEndCivilWar(EndCivilWarEvent.newBuilder()
-									.setProvinceId(p.getId())
-									.build())
-								.build());
-						
-					}
-				}
-			}
-		}
 		// TODO: UsAllyDemocracy
 		// TODO: UssrAllyCommunism		
 		
@@ -683,36 +665,39 @@ public class ComputedGameState {
 		
 		// ProvinceCivilWar		
 		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
-			Logger.Dbg("Conflicts in " + p.getId() + ": " + activeConflictMap.get(p) );
 			if (isInArmedConflict(p.getId())) {
 				Logger.Vrb("Civil war in " + p.getId());
+				Logger.Vrb(p.getConflict().toString());
 				p.setInfluence(0);
 				coupMap.put(p.getId(), 0);
 				p.setBase(Province.Id.NONE);
 				p.setDissidents(Dissidents.getDefaultInstance());
 				stabilityModifierMap.put(p.getId(), 0);
-				Conflict.Builder c = p.getConflictBuilder();
+				Conflict.Builder c = p.getConflict().toBuilder();
+				Logger.Vrb("" + c);
 				if(c.getLength() != -1) {
 					c.setLength(c.getLength()+1);
-					int result = r.nextInt(1000000);
-					int chance = c.getBaseStalemateChance();
-					if (chance > result) {
+					int baseChance = c.getBaseChance();
+					boolean attacker, defender;
+					attacker = happens.apply(baseChance);
+					defender = happens.apply(baseChance);
+					if (attacker && defender)
 						c.setGoal(c.getGoal()+1);
-					} else {
-						result -= chance;
-						int defChance = (1000000 - chance)/2;
-						if(hasLeader(p.getId()))
-							defChance += this.state.getSettings().getConflictLeaderModifier();
-						if(hasLeader(p.getId()))
-							defChance -= this.state.getSettings().getConflictLeaderModifier();
-						if(result > defChance)
-							c.setDefenderProgress(c.getDefenderProgress()+1);
-						else
-							c.setAttackerProgress(c.getAttackerProgress()+1);
+					if (attacker)
+						c.setAttackerProgress(c.getAttackerProgress()+1);
+					if (defender)
+						c.setDefenderProgress(c.getDefenderProgress()+1);
+					if(c.getDefenderProgress() >= c.getGoal()) {
+						p.setDissidents(Dissidents.getDefaultInstance());
+						c = Conflict.getDefaultInstance().toBuilder();
+					} else if(c.getAttackerProgress() >= c.getGoal()) {
+						p.setGov(c.getRebels().getGov());
+						c = Conflict.getDefaultInstance().toBuilder();
 					}
 				} else
 					c.setLength(0);
-				c.build();
+				Logger.Vrb("" + c);
+				p.setConflict(c);
 				nextStateBuilder.getTurnLogBuilder()
 					.addEvents(Event.newBuilder()
 						.setCivilWar(CivilWarEvent.newBuilder()

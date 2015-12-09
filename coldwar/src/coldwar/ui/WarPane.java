@@ -31,6 +31,14 @@ public class WarPane extends FooterPane {
 				c -> "War!",
 				c -> Color.ORANGE, 
 				skin);
+		DynamicLabel year = new DynamicLabel(client,
+				c -> "Started: " + (c.getMoveBuilder().getComputedGameState().year - c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getLength() - 1), 
+				c -> Color.BLACK,
+				skin);
+		DynamicLabel goal = new DynamicLabel(client,
+				c -> "War Goal: " + c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getGoal(), 
+				c -> Color.BLACK,
+				skin);
 		
 		Label versus = new Label("versus", skin);
 		versus.setColor(Color.BLACK);
@@ -43,30 +51,67 @@ public class WarPane extends FooterPane {
 		Label attackers = new Label("Attackers", skin);
 		attackers.setColor(Color.BLACK);
 		DynamicLabel attackerInfo = new DynamicLabel(client, 
-				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.DEMOCRACY ? "Freedom Fighters" :
-					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.COMMUNISM ? "Communist Rebels" :
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.DEMOCRACY ? "Pro-Democracy Fighters" :
+					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.COMMUNISM ? "Communist Guerillas" :
 					 "Unaligned Rebels",
 				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.DEMOCRACY ? Color.BLUE :
 					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.COMMUNISM ? Color.RED :
 					 Color.BLACK, skin); 
 		
-		warHeader.row();
+		DynamicLabel defProgress = new DynamicLabel(client,
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getDefenderProgress() + "", 
+				c -> Color.BLACK,
+				skin);
+		DynamicLabel attProgress = new DynamicLabel(client,
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getAttackerProgress() + "", 
+				c -> Color.BLACK,
+				skin);
+		
+		DynamicLabel defChance = new DynamicLabel(client,
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getBaseChance()/10000 + "%", 
+				c -> Color.BLACK,
+				skin);
+		DynamicLabel attChance = new DynamicLabel(client,
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getBaseChance()/10000 + "%", 
+				c -> Color.BLACK,
+				skin);
+		
 		warHeader.add(progressTitle)
 			.center();
-
+		warHeader.row();
+		warHeader.add(goal);
+		warHeader.row();
+		warHeader.add(year);
 		
 		Table warFooter = new Table();
 
 		warFooter.add(attackerInfo)
-			.center()
-			.expand();
+			.center();
 		warFooter.add(versus)
 			.padLeft(10)
 			.padRight(10)
 			.center();
 		warFooter.add(defenderInfo)
-			.center()
-			.expand();
+			.center();
+		warFooter.row().top();
+		warFooter.add(attProgress)
+			.center();
+		warFooter.add()
+			.padLeft(10)
+			.padRight(10)
+			.center();
+		warFooter.add(defProgress)
+			.center();
+		warFooter.row().top();
+		warFooter.add(attChance)
+			.center();
+		warFooter.add()
+			.padLeft(10)
+			.padRight(10)
+			.center();
+		warFooter.add(defChance)
+			.center();
+		
 		
 		innerWar.add(warHeader);
 		innerWar.row();
