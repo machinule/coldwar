@@ -735,7 +735,7 @@ public class ComputedGameState {
 						if(isStrongGov(p.getGov()))
 							newInfl ++;
 						if(c.getAttackerSupporter() == Province.Id.USSR)
-							newInfl += getNetStability(p.getId());
+							newInfl += -1*getNetStability(p.getId());
 						if(c.getAttackerSupporter() == Province.Id.USA)
 							newInfl += getNetStability(p.getId());
 						p.setInfluence(newInfl);
