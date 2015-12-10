@@ -97,14 +97,16 @@ message Conflict {
 	optional bool active = 2 [default = false];
 	optional bool dormant = 3 [default = false];
 	optional Type type = 4;
-	optional int32 goal = 5 [default = 2];
+	optional int32 goal = 5 [default = 1];
 	optional int32 defender_progress = 6 [default = 0];
 	optional int32 attacker_progress = 7 [default = 0];
 	optional Dissidents rebels = 8;
 	repeated Province.Id attacker = 9;
 	optional int32 length = 10 [default = -1];
-	optional int32 ussr_time_funded = 11 [default = 0];
-	optional int32 usa_time_funded = 12 [default = 0];
+	optional Province.Id attacker_supporter = 11;
+	optional Province.Id defender_supporter = 12;
 	optional string name = 13;
-	optional int32 base_chance = 14 [default = 400000]; // Base chance
+	optional int32 base_chance = 14 [default = 200000]; // Base chance
+	optional int32 att_chance_mod = 15 [default = 000000];
+	optional int32 def_chance_mod = 16 [default = 000000];
 }

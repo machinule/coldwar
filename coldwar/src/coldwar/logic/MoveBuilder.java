@@ -3,6 +3,8 @@ package coldwar.logic;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.Logger;
 import coldwar.MoveOuterClass.MoveList;
+import coldwar.MoveOuterClass.ConflictOvertFundAttackerMove;
+import coldwar.MoveOuterClass.ConflictOvertFundDefenderMove;
 import coldwar.MoveOuterClass.CoupMove;
 import coldwar.MoveOuterClass.CovertMove;
 import coldwar.MoveOuterClass.DiplomacyMove;
@@ -96,6 +98,20 @@ public class MoveBuilder {
 		this.moves.addMoves(
 				Move.newBuilder().setCoupMove(CoupMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
 		Logger.Dbg("Preparing coup in " + id + " with extra support " + magnitude);
+		this.computeState();
+	}
+	
+	public void FundDefender(final Province.Id id) {
+		this.moves.addMoves(
+				Move.newBuilder().setConflictOvertFundDefenderMove(ConflictOvertFundDefenderMove.newBuilder().setProvinceId(id)).build());
+		Logger.Dbg("Sending military aid to defender in " + id);
+		this.computeState();
+	}
+	
+	public void FundAttacker(final Province.Id id) {
+		this.moves.addMoves(
+				Move.newBuilder().setConflictOvertFundAttackerMove(ConflictOvertFundAttackerMove.newBuilder().setProvinceId(id)).build());
+		Logger.Dbg("Sending military aid to attacker in " + id);
 		this.computeState();
 	}
 	

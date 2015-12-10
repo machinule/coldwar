@@ -1,14 +1,19 @@
 package coldwar.ui;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
+import coldwar.Logger;
 import coldwar.DissidentsOuterClass.Government;
 import coldwar.GameSettingsOuterClass.ProvinceSettings;
+import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.Client;
+import coldwar.logic.Client.Player;
 
 public class WarPane extends FooterPane {
 
@@ -68,13 +73,45 @@ public class WarPane extends FooterPane {
 				skin);
 		
 		DynamicLabel defChance = new DynamicLabel(client,
-				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getBaseChance()/10000 + "%", 
+				c -> (c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getBaseChance()
+					  + c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getDefChanceMod())/10000 + "%", 
 				c -> Color.BLACK,
 				skin);
 		DynamicLabel attChance = new DynamicLabel(client,
-				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getBaseChance()/10000 + "%", 
-				c -> Color.BLACK,
+				c -> (c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getBaseChance()
+					  + c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getAttChanceMod())/10000 + "%", c -> Color.BLACK,
 				skin);
+		
+		DynamicButton supportAttackerButton = new DynamicButton(client,
+				c -> (c.getMoveBuilder().getComputedGameState().isValidOvertFundAttackerMove(c.getPlayer(), province.getId()) &&
+				     !c.getMoveBuilder().getComputedGameState().hasActed(province.getId())),
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getAttackerSupporter() == Province.Id.USA ? "USA Backed" :
+					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getAttackerSupporter() == Province.Id.USSR ? "USSR Backed" :
+					 "Send Military Aid",
+				skin);
+		DynamicButton supportDefenderButton = new DynamicButton(client,
+				c -> (c.getMoveBuilder().getComputedGameState().isValidOvertFundDefenderMove(c.getPlayer(), province.getId()) &&
+					  !c.getMoveBuilder().getComputedGameState().hasActed(province.getId())),
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getDefenderSupporter() == Province.Id.USA ? "USA Backed" :
+					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getDefenderSupporter() == Province.Id.USSR ? "USSR Backed" :
+					 "Send Military Aid",
+				skin);
+		
+		supportAttackerButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				Logger.Info("\"Send Military Aid to Attackers\" button pressed on " + province.getId().getValueDescriptor().getName());
+				WarPane.this.client.getMoveBuilder().FundAttacker(province.getId());
+			}
+		});
+
+		supportDefenderButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				Logger.Info("\"Send Military Aid to Defenders\" button pressed on " + province.getId().getValueDescriptor().getName());
+				WarPane.this.client.getMoveBuilder().FundDefender(province.getId());
+			}
+		});
 		
 		warHeader.add(progressTitle)
 			.center();
@@ -85,6 +122,9 @@ public class WarPane extends FooterPane {
 		
 		Table warFooter = new Table();
 
+		warFooter.add(supportAttackerButton)
+			.center()
+			.padRight(10);
 		warFooter.add(attackerInfo)
 			.center();
 		warFooter.add(versus)
@@ -93,7 +133,11 @@ public class WarPane extends FooterPane {
 			.center();
 		warFooter.add(defenderInfo)
 			.center();
-		warFooter.row().top();
+		warFooter.add(supportDefenderButton)
+			.center()
+			.padLeft(10);	
+		warFooter.row();
+		warFooter.add();
 		warFooter.add(attProgress)
 			.center();
 		warFooter.add()
@@ -102,7 +146,8 @@ public class WarPane extends FooterPane {
 			.center();
 		warFooter.add(defProgress)
 			.center();
-		warFooter.row().top();
+		warFooter.row();
+		warFooter.add();
 		warFooter.add(attChance)
 			.center();
 		warFooter.add()
@@ -111,12 +156,12 @@ public class WarPane extends FooterPane {
 			.center();
 		warFooter.add(defChance)
 			.center();
+		warFooter.row();	
 		
-		
-		innerWar.add(warHeader);
+		innerWar.add(warHeader).center();
 		innerWar.row();
 		innerWar.add(warFooter)
-			.size(500, 100);
+			.center();
 		
 		this.add(innerWar);
 		this.row();

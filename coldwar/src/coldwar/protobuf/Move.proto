@@ -27,6 +27,9 @@ message Move {
 	optional PoliticalPressureMove political_pressure_move = 103;
 	optional CoupMove coup_move = 104;
 
+	optional ConflictOvertFundAttackerMove conflict_overt_fund_attacker_move = 110;
+	optional ConflictOvertFundDefenderMove conflict_overt_fund_defender_move = 111;
+
 	optional FoundCIAMove found_cia_move = 200;
 
 	optional FoundKGBMove found_kgb_move = 300;
@@ -86,6 +89,16 @@ message CoupMove {
 	optional int32 magnitude = 2;
 
 	//option (pol_cost) = 2;
+}
+
+// ========= CONFLICT ACTIONS ==========
+
+message ConflictOvertFundAttackerMove {
+	optional Province.Id province_id = 1;
+}
+
+message ConflictOvertFundDefenderMove {
+	optional Province.Id province_id = 1;
 }
 
 // ========== SPECIAL ACTIONS ==========

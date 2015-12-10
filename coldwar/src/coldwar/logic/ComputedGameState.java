@@ -1,6 +1,5 @@
 package coldwar.logic;
 
-import java.sql.ClientInfoStatus;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
@@ -16,7 +15,6 @@ import coldwar.DissidentsOuterClass.Dissidents;
 import coldwar.DissidentsOuterClass.Government;
 import coldwar.EventOuterClass.CivilWarEvent;
 import coldwar.EventOuterClass.CoupEvent;
-import coldwar.EventOuterClass.EndCivilWarEvent;
 import coldwar.EventOuterClass.Event;
 import coldwar.EventOuterClass.ProvinceDissidentsEvent;
 import coldwar.EventOuterClass.ProvinceDissidentsSuppressedEvent;
@@ -354,6 +352,37 @@ public class ComputedGameState {
 						actedMap.put(id, true);
 					}
 				}
+				if (move.hasConflictOvertFundAttackerMove()) {
+					Province.Id id = move.getConflictOvertFundAttackerMove().getProvinceId();
+					if(isValidOvertFundAttackerMove(player, id) || true) {
+						final int cost = getOvertFundAttackerCost();
+						Conflict.Builder c = activeConflictMap.get(id).toBuilder();
+						c.setActive(true);
+						c.setAttackerSupporter(toProvinceId(player));
+						c.setAttChanceMod(100000);
+						milStoreMap.compute(player,  (p, mil) -> mil == null ? -cost : mil - cost);
+						// TODO: Heat
+						c.build();
+						activeConflictMap.put(id, c.build());
+						Logger.Dbg(activeConflictMap.get(id) + "");
+						actedMap.put(id, true);
+					}
+				}
+				if (move.hasConflictOvertFundDefenderMove()) {
+					Province.Id id = move.getConflictOvertFundDefenderMove().getProvinceId();
+					if(isValidOvertFundAttackerMove(player, id) || true) {
+						final int cost = getOvertFundDefenderCost();
+						Conflict.Builder c = activeConflictMap.get(id).toBuilder();
+						c.setActive(true);
+						c.setDefenderSupporter(toProvinceId(player));
+						c.setDefChanceMod(100000);
+						milStoreMap.compute(player,  (p, mil) -> mil == null ? -cost : mil - cost);
+						// TODO: Heat
+						activeConflictMap.put(id, c.build());
+						Logger.Dbg(activeConflictMap.get(id) + "");
+						actedMap.put(id, true);
+					}
+				}
 				if (move.hasFoundNatoMove()) {
 					
 				}
@@ -385,7 +414,7 @@ public class ComputedGameState {
 		}
 		totalInfluenceMap.replaceAll((p, infl) -> infl + polInfluenceMap.getOrDefault(p, 0) + milInfluenceMap.getOrDefault(p, 0) + covInfluenceMap.getOrDefault(p, 0));
 		governmentMap.forEach((p, gov) -> {
-			if (gov == Government.DEMOCRACY || gov == Government.COMMUNISM || gov == Government.AUTOCRACY) {
+			if (isStrongGov(gov)) {
 				stabilityModifierMap.compute(p, (q, mod) -> mod == null ? 1 : mod + 1 );
 			}
 		});
@@ -423,7 +452,11 @@ public class ComputedGameState {
 			if(hasDissidents(p)) {
 				stabilityModifierMap.compute(p, (q, mod) -> mod == null ? -1 : mod - 1 );
 				if(getNetStability(p) < 1) {
-					Conflict.Builder c = Conflict.newBuilder();
+					Conflict.Builder c;
+					if (isInArmedConflict(p))
+						c = activeConflictMap.get(p).toBuilder();
+					else
+						c = Conflict.newBuilder();
 					c.setType(Conflict.Type.CIVIL_WAR);
 					c.setActive(true);
 					c.setRebels(dissidents);
@@ -463,11 +496,10 @@ public class ComputedGameState {
 			allianceMap.put(province.getId(), getAlly(province.getId()));
 			province.setGov(governmentMap.get(province.getId()));
 			province.setInfluence(totalInfluenceMap.get(province.getId()));
+			province.setConflict(activeConflictMap.get(province.getId()));
 			Player baseOwner = baseMap.get(province.getId());
 			if(hasDissidents(province.getId()))
 					province.setDissidents(dissidentsMap.get(province.getId()));
-			if(isInArmedConflict(province.getId()))
-				province.setConflict(activeConflictMap.get(province.getId()));
 			if(baseOwner != null)
 				province.setBase(toProvinceId(baseOwner));
 			int totalStability = getNetStability(province.getId());
@@ -677,10 +709,10 @@ public class ComputedGameState {
 				Logger.Vrb("" + c);
 				if(c.getLength() != -1) {
 					c.setLength(c.getLength()+1);
-					int baseChance = c.getBaseChance();
+					int chance = c.getBaseChance();
 					boolean attacker, defender;
-					attacker = happens.apply(baseChance);
-					defender = happens.apply(baseChance);
+					attacker = happens.apply(chance);
+					defender = happens.apply(chance);
 					if (attacker && defender)
 						c.setGoal(c.getGoal()+1);
 					if (attacker)
@@ -689,14 +721,28 @@ public class ComputedGameState {
 						c.setDefenderProgress(c.getDefenderProgress()+1);
 					if(c.getDefenderProgress() >= c.getGoal()) {
 						p.setDissidents(Dissidents.getDefaultInstance());
+						if(c.getDefenderSupporter() == Province.Id.USSR)
+							p.setInfluence(-getNetStability(p.getId()));
+						if(c.getDefenderSupporter() == Province.Id.USA)
+							p.setInfluence(getNetStability(p.getId()));
 						c = Conflict.getDefaultInstance().toBuilder();
 					} else if(c.getAttackerProgress() >= c.getGoal()) {
+						int newInfl = 0;
 						p.setGov(c.getRebels().getGov());
+						p.setLeader(c.getRebels().getLeader());
+						if(p.getHasLeader())
+							newInfl ++;
+						if(isStrongGov(p.getGov()))
+							newInfl ++;
+						if(c.getAttackerSupporter() == Province.Id.USSR)
+							newInfl += getNetStability(p.getId());
+						if(c.getAttackerSupporter() == Province.Id.USA)
+							newInfl += getNetStability(p.getId());
+						p.setInfluence(newInfl);
 						c = Conflict.getDefaultInstance().toBuilder();
 					}
 				} else
 					c.setLength(0);
-				Logger.Vrb("" + c);
 				p.setConflict(c);
 				nextStateBuilder.getTurnLogBuilder()
 					.addEvents(Event.newBuilder()
@@ -820,6 +866,51 @@ public class ComputedGameState {
 			   !isInArmedConflict(id);
 	}
 	
+	public boolean isValidOvertFundAttackerMove(Player player, Province.Id id) {
+		if(isInArmedConflict(id)) {
+			Conflict c = activeConflicts.get(id);
+			return milStore.get(player) >= getOvertFundAttackerCost() &&
+				   c.getRebels().getGov() != getIdealGov(otherPlayer(player)) &&
+				   c.getAttackerSupporter() != Province.Id.USSR &&
+				   c.getAttackerSupporter() != Province.Id.USA;
+		}
+		return false;
+			   
+	}
+	
+	public boolean isValidOvertFundDefenderMove(Player player, Province.Id id) {
+		if(isInArmedConflict(id)) {
+			Conflict c = activeConflicts.get(id);
+			return milStore.get(player) >= getOvertFundDefenderCost() &&
+				   governments.get(id) != getIdealGov(otherPlayer(player)) &&
+				   c.getDefenderSupporter() != Province.Id.USSR &&
+				   c.getDefenderSupporter() != Province.Id.USA;
+		}
+		return false;
+	}
+	
+	public boolean isValidCovertFundAttackerMove(Player player, Province.Id id) {
+		if(isInArmedConflict(id)) {
+			Conflict c = activeConflicts.get(id);
+			return covStore.get(player) >= getCovertFundAttackerCost() &&
+				   c.getRebels().getGov() != getIdealGov(otherPlayer(player)) &&
+				   c.getDefenderSupporter() != Province.Id.USSR &&
+				   c.getDefenderSupporter() != Province.Id.USA;
+		}
+		return false;
+	}
+	
+	public boolean isValidCovertFundDefenderMove(Player player, Province.Id id) {
+		if(isInArmedConflict(id)) {
+			Conflict c = activeConflicts.get(id);
+			return covStore.get(player) >= getCovertFundDefenderCost() &&
+				   governments.get(id) != getIdealGov(otherPlayer(player)) &&
+				   c.getDefenderSupporter() != Province.Id.USSR &&
+				   c.getDefenderSupporter() != Province.Id.USA;
+		}
+		return false;
+	}
+	
 	public boolean isValidFoundKGBMove() {
 		return !kgbFounded;
 	}
@@ -892,6 +983,22 @@ public class ComputedGameState {
 	
 	public int getCoupMoveCost(Province.Id id) {
 		return (Settings.getConstInt("action_coup_cost_per_stab") * getNetStability(id)) + 1;
+	}
+	
+	public int getOvertFundAttackerCost() {
+		return Settings.getConstInt("conflict_overt_fund_attacker");
+	}
+	
+	public int getOvertFundDefenderCost() {
+		return Settings.getConstInt("conflict_overt_fund_defender");
+	}
+	
+	public int getCovertFundAttackerCost() {
+		return Settings.getConstInt("conflict_covert_fund_attacker");
+	}
+	
+	public int getCovertFundDefenderCost() {
+		return Settings.getConstInt("conflict_overt_fund_defender");
 	}
 	
 	// OTHER HELPER FUNCTIONS
@@ -991,10 +1098,19 @@ public class ComputedGameState {
 	}
 	
 	public boolean isInArmedConflict(Province.Id id) {
-		if(activeConflicts.get(id) != null && activeConflicts.get(id) != Conflict.getDefaultInstance()) {
-			if(activeConflicts.get(id).getActive())
-				return true;
+		if(activeConflicts.get(id) != null &&
+		   activeConflicts.get(id) != Conflict.getDefaultInstance() &&
+		   activeConflicts.get(id).getActive()) {
+			return true;
 		}
+		return false;
+	}
+	
+	public boolean isStrongGov(Government gov) {
+		if(gov == Government.AUTOCRACY ||
+		   gov == Government.COMMUNISM ||
+		   gov == Government.DEMOCRACY)
+			return true;
 		return false;
 	}
 	
