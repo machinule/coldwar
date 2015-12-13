@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
 
+import coldwar.GameStateOuterClass.Crisis;
+import coldwar.GameStateOuterClass.Crisis.Builder;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.GameSettingsOuterClass.ProvinceSettings;
 import coldwar.GameStateOuterClass.TurnLogEntry;
@@ -770,6 +772,16 @@ public class ComputedGameState {
 						.build());
 				
 			}
+		}
+		
+		// CRISES
+		
+		if(state.getTurn() == 0) {
+			Crisis.Builder crisis = Crisis.newBuilder();
+			crisis.setBerlinBlockade(true);
+			crisis.setInfo("Blockade of Berlin");
+			crisis.setUsaOption1("Begin the Berlin Airlift");
+			crisis.setUssrOption1("Maintain the blockadge");
 		}
 		
 		nextStateBuilder.setSeed(r.nextLong());
