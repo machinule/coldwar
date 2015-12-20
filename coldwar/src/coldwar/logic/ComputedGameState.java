@@ -1229,6 +1229,7 @@ public class ComputedGameState {
 	
 	public String getCrisisUssrOption1() {
 		return state.getCrises().getUssrOption1();
+	}
 
 	/*
 	 * Retrieve a list of events that happened since the previous turn, from player's perspective.
