@@ -38,22 +38,62 @@ public class HeaderPane extends Table {
 		});
 
 		this.clearChildren();
-		this.add(new Label("POL:", this.skin));
-		this.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getPolStore()), this.skin));
-		this.add(new Label("MIL:", this.skin));
-		this.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getMilStore()), this.skin));
-		this.add(new Label("COV:", this.skin));
-		this.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getCovStore()), this.skin));
-		this.add(new Label("HEAT:", this.skin));
-		this.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getHeat()), this.skin));
-		this.add(new DynamicLabel(this.client, c -> client.getPlayer() == Player.USSR ? "PARTY UNITY:" : "PATRIOTISM:", this.skin));
-		this.add(new DynamicLabel(this.client, c -> client.getPlayer() == Player.USSR
+		
+		Table topBar = new Table();
+		topBar.setDebug(true);
+		
+		topBar.add(new Label("POL:", this.skin));
+		topBar.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getPolStore()), this.skin));
+		topBar.add(new Label("MIL:", this.skin));
+		topBar.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getMilStore()), this.skin));
+		topBar.add(new Label("COV:", this.skin));
+		topBar.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getCovStore()), this.skin));
+		topBar.add(new Label("HEAT:", this.skin));
+		topBar.add(new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getHeat()), this.skin));
+		topBar.add(new DynamicLabel(this.client, c -> c.getPlayer() == Player.USSR ? "PARTY UNITY:" : "PATRIOTISM:", this.skin));
+		topBar.add(new DynamicLabel(this.client, c -> c.getPlayer() == Player.USSR
 			? Integer.toString(c.getMoveBuilder().getComputedGameState().getNetPartyUnity())
 			: Integer.toString(c.getMoveBuilder().getComputedGameState().getNetPatriotism()),
 			this.skin));
-		this.add(yearLabel);
-		this.add(playerLabel);
-		this.add(endTurnButton);
+		topBar.add(yearLabel);
+		topBar.add(playerLabel);
+		topBar.add(endTurnButton);
+		topBar.row();
+		
+		Table botBar = new Table();
+		botBar.setDebug(true);
+		
+		DynamicButton berlinBlockadeButton = new DynamicButton(this.client,
+				c -> true,
+				c -> c.getMoveBuilder().getComputedGameState().isBerlinBlockadeActive(),
+				c -> c.getPlayer() == Player.USA ? c.getMoveBuilder().getComputedGameState().getCrisisUsaOption1() :
+					 c.getMoveBuilder().getComputedGameState().getCrisisUssrOption1(),
+				skin);
+		berlinBlockadeButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				Logger.Info("Action taken on berlin blockade.");
+				if(client.getPlayer() == Player.USA) {
+					HeaderPane.this.client.getMoveBuilder().BerlinAirlift();
+					berlinBlockadeButton.enabledFn = c -> client.getPlayer() == Player.USA ? false : true;
+				}
+				else {
+					HeaderPane.this.client.getMoveBuilder().LiftBerlinBlockade();
+					berlinBlockadeButton.enabledFn = c -> client.getPlayer() == Player.USSR ? false : true;
+				}
+			}
+		});
+		
+		
+		botBar.add(new DynamicLabel(this.client, c -> c.getMoveBuilder().getComputedGameState().getCrisisInfo(), this.skin))
+			.center()
+			.padRight(5);
+		botBar.add(berlinBlockadeButton);
+		
+		this.add(topBar)
+			.center();
 		this.row();
+		this.add(botBar)
+			.center();		
 	}
 }

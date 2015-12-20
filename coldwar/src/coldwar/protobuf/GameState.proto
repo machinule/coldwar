@@ -42,5 +42,13 @@ message Crisis {
 	optional string usa_option_1 = 97 [default = ""];
 	optional string usa_option_2 = 98 [default = ""];
 	optional string usa_option_3 = 99 [default = ""];
-	optional string info = 100 [default = ""];
+
+	optional bool ussr_acted_1 = 100 [default = false];
+	optional bool ussr_acted_2 = 101 [default = false];
+	optional bool ussr_acted_3 = 102 [default = false];
+	optional bool usa_acted_1 = 103 [default = false];
+	optional bool usa_acted_2 = 104 [default = false];
+	optional bool usa_acted_3 = 105 [default = false];
+
+	optional string info = 106 [default = ""];
 }

@@ -15,6 +15,7 @@ import coldwar.LeaderOuterClass.Leader;
 import coldwar.Logger;
 import coldwar.DissidentsOuterClass.Dissidents;
 import coldwar.DissidentsOuterClass.Government;
+import coldwar.EventOuterClass.BerlinBlockadeEvent;
 import coldwar.EventOuterClass.CivilWarEvent;
 import coldwar.EventOuterClass.CoupEvent;
 import coldwar.EventOuterClass.Event;
@@ -97,6 +98,8 @@ public class ComputedGameState {
 		int heatCounter = state.getHeat();
 		int partyUnityCounter = state.getUssr().getPartyUnity();
 		int patriotismCounter = state.getUsa().getPatriotism();
+		
+		Crisis.Builder crisis = state.getCrises().toBuilder();
 		
 		EnumMap<Player, Integer> polStoreMap = new EnumMap<Player, Integer>(Player.class);
 		this.polStore = Collections.unmodifiableMap(polStoreMap);
@@ -397,6 +400,17 @@ public class ComputedGameState {
 				if (move.hasFoundCiaMove()) {
 					ciaFoundedFlag = true;					
 				}
+				// Crises
+				if (move.hasUsaBerlinBlockadeAirliftMove()) {
+					int cost = 100; // TODO: Real value
+					milStoreMap.compute(player,  (p, mil) -> mil == null ? -cost : mil - cost);
+					crisis.setUsaActed1(true);
+				}
+				if (move.hasUssrBerlinBlockadeLiftBlockadeMove()) {
+					int cost = 100; // TODO: Real value
+					milStoreMap.compute(player,  (p, mil) -> mil == null ? -cost : mil - cost);
+					crisis.setUssrActed1(true);
+				}
 			}			
 		}
 		
@@ -478,6 +492,30 @@ public class ComputedGameState {
 		if (this.heat > Settings.getConstInt("heat_bleed_threshold")) {
 			patriotismCounter -= Settings.getConstInt("heat_bleed");
 			partyUnityCounter -= Settings.getConstInt("heat_bleed");
+		}
+		
+		// CRISIS HANDLING
+		
+		if(crisis.getBerlinBlockade()) {
+			Logger.Dbg("Resolving Berlin Blockade");
+			boolean airlift = crisis.getUsaActed1();
+			boolean blockade = !crisis.getUssrActed1();
+			if(airlift) {
+				if(blockade) { // Airlift while blockade maintained
+					patriotismCounter += 5; // TODO: Settings value
+				} else { // Airlift while blockade lifted
+					// Add 1 USSR influence to E. Ger
+				}
+			} else {
+				if(blockade) { // Blockade with no airlift
+					patriotismCounter -= 5;
+					// Berlin flag unset
+				} else { // No blockade and no airlift
+					// Add 1 USSR influence to E. Ger
+				}
+			}
+			Logger.Dbg("Berlin airlift enacted: " + airlift);
+			Logger.Dbg("Berlin blockade maintained: " + blockade);
 		}
 		
 		GameState.Builder nextStateBuilder = GameState.newBuilder()
@@ -776,14 +814,6 @@ public class ComputedGameState {
 		
 		// CRISES
 		
-		if(state.getTurn() == 0) {
-			Crisis.Builder crisis = Crisis.newBuilder();
-			crisis.setBerlinBlockade(true);
-			crisis.setInfo("Blockade of Berlin");
-			crisis.setUsaOption1("Begin the Berlin Airlift");
-			crisis.setUssrOption1("Maintain the blockadge");
-		}
-		
 		nextStateBuilder.setSeed(r.nextLong());
 		
 		this.patriotism = patriotismCounter;
@@ -929,6 +959,15 @@ public class ComputedGameState {
 	
 	public boolean isValidFoundCIAMove() {
 		return !ciaFounded;
+	}
+	
+	// Crises
+	
+	public boolean isBerlinBlockadeActive() {
+		if(state.getCrises().getBerlinBlockade()) {
+			return true;
+		}
+		return false;
 	}
 	
 	// COST AND COST RANGES
@@ -1176,5 +1215,17 @@ public class ComputedGameState {
 	
 	protected int inflSign(Player player) {
 		return player == Player.USA ? 1 : -1;
-	}	
+	}
+	
+	public String getCrisisInfo() {
+		return state.getCrises().getInfo();
+	}
+	
+	public String getCrisisUsaOption1() {
+		return state.getCrises().getUsaOption1();
+	}
+	
+	public String getCrisisUssrOption1() {
+		return state.getCrises().getUssrOption1();
+	}
 }

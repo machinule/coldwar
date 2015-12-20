@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.google.protobuf.TextFormat;
 
 import coldwar.GameSettingsOuterClass.GameSettings;
+import coldwar.GameStateOuterClass.Crisis;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.GameSettingsOuterClass.ProvinceSettings;
 import coldwar.InfluenceStoreOuterClass.InfluenceStore;
@@ -12,6 +13,8 @@ import coldwar.LeaderOuterClass.Leader;
 import coldwar.Logger;
 import coldwar.DissidentsOuterClass.Dissidents;
 import coldwar.DissidentsOuterClass.Government;
+import coldwar.EventOuterClass.BerlinBlockadeEvent;
+import coldwar.EventOuterClass.Event;
 import coldwar.MoveOuterClass.MoveList;
 import coldwar.ProvinceOuterClass.LeaderList;
 import coldwar.ProvinceOuterClass.Province;
@@ -79,6 +82,21 @@ public abstract class Client {
 				builder.setDissidents(p.getDissidentsInit());
 			}
 		}
+		
+		//Berlin Blockade
+		Crisis.Builder c = Crisis.newBuilder();
+		c.setBerlinBlockade(true);
+		c.setInfo("Blockade of Berlin");
+		c.setUsaOption1("Begin the Berlin Airlift");
+		c.setUssrOption1("End the Blockade");
+		state.setCrises(c.build());
+		
+		state.getTurnLogBuilder()
+		.addEvents(Event.newBuilder()
+			.setBerlinBlockadeEvent(BerlinBlockadeEvent.newBuilder()
+				.build())
+			.build());
+		
 		this.initialGameState = state.build();
 		Logger.Dbg("Initial game state: " + this.initialGameState);
 		return state;

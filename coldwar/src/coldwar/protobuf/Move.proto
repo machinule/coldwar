@@ -36,6 +36,11 @@ message Move {
 
 	optional FoundNATOMove found_nato_move = 1001;
 	optional FoundPactMove found_pact_move = 1002;
+
+	//Crises
+
+	optional USSRBerlinBlockadeLiftBlockadeMove ussr_berlin_blockade_lift_blockade_move = 2001;
+	optional USABerlinBlockadeAirliftMove usa_berlin_blockade_airlift_move = 2002;
 }
 
 // ========== DIRECT INFLUENCE ACTIONS ==========
@@ -87,8 +92,6 @@ message PoliticalPressureMove {
 message CoupMove {
 	optional Province.Id province_id = 1;
 	optional int32 magnitude = 2;
-
-	//option (pol_cost) = 2;
 }
 
 // ========= CONFLICT ACTIONS ==========
@@ -113,4 +116,12 @@ message FoundCIAMove {
 }
 
 message FoundKGBMove {
+}
+
+// =========== CRISES ==================
+
+message USSRBerlinBlockadeLiftBlockadeMove {
+}
+
+message USABerlinBlockadeAirliftMove {
 }

@@ -15,6 +15,8 @@ import coldwar.MoveOuterClass.FundDissidentsMove;
 import coldwar.MoveOuterClass.MilitaryMove;
 import coldwar.MoveOuterClass.Move;
 import coldwar.MoveOuterClass.PoliticalPressureMove;
+import coldwar.MoveOuterClass.USABerlinBlockadeAirliftMove;
+import coldwar.MoveOuterClass.USSRBerlinBlockadeLiftBlockadeMove;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.logic.Client.Player;
 
@@ -112,6 +114,22 @@ public class MoveBuilder {
 		this.moves.addMoves(
 				Move.newBuilder().setConflictOvertFundAttackerMove(ConflictOvertFundAttackerMove.newBuilder().setProvinceId(id)).build());
 		Logger.Dbg("Sending military aid to attacker in " + id);
+		this.computeState();
+	}
+	
+	// Crises
+	
+	public void BerlinAirlift() {
+		this.moves.addMoves(
+				Move.newBuilder().setUsaBerlinBlockadeAirliftMove(USABerlinBlockadeAirliftMove.newBuilder()).build());
+		Logger.Dbg("Airlifting Berlin");
+		this.computeState();
+	}
+	
+	public void LiftBerlinBlockade() {
+		this.moves.addMoves(
+				Move.newBuilder().setUssrBerlinBlockadeLiftBlockadeMove(USSRBerlinBlockadeLiftBlockadeMove.newBuilder()).build());
+		Logger.Dbg("Airlifting Berlin");
 		this.computeState();
 	}
 	

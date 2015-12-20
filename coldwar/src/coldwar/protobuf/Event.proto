@@ -20,6 +20,9 @@ message Event {
 	optional UsAllyDemocracyEvent us_ally_democracy = 13;
 	optional UssrAllyCommunismEvent ussr_ally_communism = 14;
 	optional CoupEvent coup_event = 15;
+
+	// Crises
+	optional BerlinBlockadeEvent berlin_blockade_event = 100;
 }
 
 message LeaderSpawnEvent {
@@ -78,4 +81,10 @@ message UssrAllyCommunismEvent {
 
 message CoupEvent {
 	optional Province.Id province_id = 1;
+}
+
+// Crises
+message BerlinBlockadeEvent {
+	optional bool maintain = 1 [default = true];
+	optional bool airlift = 2 [default = false];
 }
