@@ -1,7 +1,9 @@
 package coldwar.logic;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
@@ -1227,5 +1229,137 @@ public class ComputedGameState {
 	
 	public String getCrisisUssrOption1() {
 		return state.getCrises().getUssrOption1();
+
+	/*
+	 * Retrieve a list of events that happened since the previous turn, from player's perspective.
+	 */
+	static List<String> getEventMessages(GameState state, Player player) {
+		ArrayList<String> messages = new ArrayList<String>();
+		List<Event> events  = state.getTurnLog().getEventsList();
+		MoveList own;
+		MoveList other;
+		Player otherPlayer;
+		if (player == Player.USA) {
+			own = state.getTurnLog().getUsaMoves();
+			other = state.getTurnLog().getUssrMoves();
+			otherPlayer = Player.USSR;
+		} else {
+			own = state.getTurnLog().getUssrMoves();
+			other = state.getTurnLog().getUsaMoves();
+			otherPlayer = Player.USA;
+		}
+		for (Move move : own.getMovesList()) {
+			messages.addAll(getMoveMessages(move, player, true));
+ 		}
+		for (Move move : other.getMovesList()) {
+			messages.addAll(getMoveMessages(move, otherPlayer, false));
+ 		}
+		for (Event event : events) {
+			messages.addAll(getEventMessages(event));			
+		}
+		return messages;
+	}
+	
+	static private List<String> getMoveMessages(Move move, Player player, boolean hasCovertVisibility) {
+		ArrayList<String> messages = new ArrayList<String>();
+		if (move.hasDiaDipMove()) {
+			messages.add(String.format("%s directly influenced the government of %s.", player, move.getDiaDipMove().getProvinceId()));
+		}
+		if (move.hasDiaMilMove()) {				
+			messages.add(String.format("%s directly influenced the military of %s.", player, move.getDiaMilMove().getProvinceId()));
+		}
+		if (move.hasDiaCovMove()) {
+			if (hasCovertVisibility) {
+				messages.add(String.format("%s covertly influenced the leaders of %s.", player, move.getDiaCovMove().getProvinceId()));								
+			} else {
+				messages.add(String.format("The leaders of %s have been influenced.", player, move.getDiaCovMove().getProvinceId()));												
+			}
+		}
+		if (move.hasCoupMove()) {
+			if (hasCovertVisibility) {
+				messages.add(String.format("%s instigated a coup in %s.", player, move.getCoupMove().getProvinceId()));		
+			} else {
+				messages.add(String.format("The members of government in %s have been gruesomely murdered and replaced!", move.getCoupMove().getProvinceId()));												
+			}
+		}
+		if (move.hasConflictOvertFundAttackerMove()) {
+			messages.add(String.format("%s funded attackers in %s.", player, move.getConflictOvertFundAttackerMove().getProvinceId()));								
+		}
+		if (move.hasConflictOvertFundDefenderMove()) {
+			messages.add(String.format("%s funded defenders in %s.", player, move.getConflictOvertFundDefenderMove().getProvinceId()));												
+		}
+		if (move.hasEstablishBaseMove()) {
+			messages.add(String.format("%s established a base in %s.", player, move.getEstablishBaseMove().getProvinceId()));								
+		}
+		if (move.hasFoundCiaMove()) {
+			messages.add(String.format("%s founded the CIA.", player));												
+		}
+		if (move.hasFoundKgbMove()) {
+			messages.add(String.format("%s founded the KGB.", player));																
+		}
+		if (move.hasFoundPactMove()) {
+			messages.add(String.format("%s founded the Pact.", player));																
+		}
+		if (move.hasFoundNatoMove()) {
+			messages.add(String.format("%s founded NATO.", player));												
+		}
+		if (move.hasFundDissidentsMove()) {
+			if (hasCovertVisibility) {
+				messages.add(String.format("%s funded dissidents in %s.", player, move.getFundDissidentsMove().getProvinceId()));				
+			} else {
+				messages.add(String.format("The local rebels in %s are bored and acting up again.", move.getFundDissidentsMove().getProvinceId()));												
+			}
+		}
+		if (move.hasPoliticalPressureMove()) {
+			messages.add(String.format("%s pressured the government in %s.", player, move.getPoliticalPressureMove().getProvinceId()));												
+		}
+		return messages;
+	}
+	
+	static private List<String> getEventMessages(Event event) {
+		ArrayList<String> messages = new ArrayList<String>();
+		if (event.hasCivilWar()) {
+			messages.add(String.format("A civil war has started in %s!", event.getCivilWar().getProvinceId()));
+		}
+		if (event.hasEndCivilWar()) {
+			messages.add(String.format("The civil war in %s is over!", event.getEndCivilWar().getProvinceId()));
+		}
+		if (event.hasLeaderDeath()) {
+			messages.add(String.format("The glorious leader %s is dedified!", "%s"));
+		}
+		if (event.hasLeaderSpawn()) {
+			messages.add(String.format("The glorious leader %s is enlivened!", "%s"));
+		}
+		if (event.hasProvinceAutocracy()) {
+			messages.add(String.format("Oh noes! %s is now lead by an autocracy!", event.getProvinceAutocracy().getProvinceId()));
+		}
+		if (event.hasProvinceCommunism()) {
+			messages.add(String.format("Comrades rejoice, for %s is now a communist state.", event.getProvinceCommunism().getProvinceId()));
+		}
+		if (event.hasProvinceCoup()) {
+			messages.add(String.format("The members of government in %s have been gruesomely murdered and replaced!", event.getProvinceCoup().getProvinceId()));
+		}
+		if (event.hasProvinceDemocracy()) {			
+			messages.add(String.format("Citizens rejoice, for %s is now a democratic state.", event.getProvinceDemocracy().getProvinceId()));
+		}
+		if (event.hasProvinceDissidents()) {			
+			messages.add(String.format("The local rebels in %s are bored and acting up again.", event.getProvinceDissidents().getProvinceId()));												
+		}
+		if (event.hasProvinceDissidentsSuppressed()) {
+			messages.add(String.format("The dissidents in %s have been put down.", event.getProvinceDissidentsSuppressed().getProvinceId()));
+		}
+		if (event.hasProvinceFauxPas()) {
+			messages.add(String.format("Oopsies! It turns out that ordering pizza drunk and half naked outside the capitol of %s is frowned on.", event.getProvinceFauxPas().getProvinceId()));
+		}
+		if (event.hasProvinceRepublic()) {
+			messages.add(String.format("Republic? What is that? Oh, the new government of %s", event.getProvinceRepublic().getProvinceId()));
+		}
+		if (event.hasUsAllyDemocracy()) {
+			messages.add(String.format("The USA is pushing the democracy thing, as usual. %s is the next to fall.", event.getUsAllyDemocracy().getProvinceId()));
+		}
+		if (event.hasUssrAllyCommunism()) {
+			messages.add(String.format("The motherland has a new child, %s.", event.getUssrAllyCommunism().getProvinceId()));
+		}
+		return messages;
 	}
 }

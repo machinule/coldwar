@@ -125,14 +125,16 @@ public abstract class Client {
 		Logger.Info("Next game state: " + this.state.toString());
 		Logger.Dbg("Net party unity: " + computedState.getNetPartyUnity());
 		Logger.Dbg("Net patriotism: " + computedState.getNetPatriotism());
-		
+		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {
+			Logger.Info(msg);
+		}		
 	}
 	
 	protected boolean populateLeaders(GameSettings.Builder settings) {
         String file = "src/proto/Leaders.txt";
         
         Logger.Dbg("Reading leader file at " + file);
-        String input = new String(Gdx.files.internal("Leaders.txt").readString());
+        String input = new String(Gdx.files.internal("assets/Leaders.txt").readString());
         
         try {
         	TextFormat.merge(input, settings);
