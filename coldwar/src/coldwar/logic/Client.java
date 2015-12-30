@@ -164,7 +164,12 @@ public abstract class Client {
 			.setRegion(Province.Region.SUPERPOWERS)
 			.setLabel("Soviet Union")
 			.setInfluenceInit(-1)
-			.setGovernmentInit(Government.COMMUNISM);
+			.setGovernmentInit(Government.COMMUNISM)
+			.addAdjacency(Province.Id.ROMANIA)
+			.addAdjacency(Province.Id.POLAND)
+			.addAdjacency(Province.Id.FINLAND)
+			.addAdjacency(Province.Id.TURKEY);
+			//.addAdjacency(Province.Id.NORTH_KOREA);
 		
 		// CENTRAL AMERICA
 		
@@ -185,6 +190,15 @@ public abstract class Client {
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Guatemala")
 			.addAdjacency(Province.Id.MEXICO)
+			.addAdjacency(Province.Id.HONDURAS)
+			.addAdjacency(Province.Id.EL_SALVADOR);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.EL_SALVADOR)
+			.setCulture(Culture.SPANISH)
+			.setRegion(Province.Region.CENTRAL_AMERICA)
+			.setLabel("El Salvador")
+			.addAdjacency(Province.Id.GUATEMALA)
 			.addAdjacency(Province.Id.HONDURAS);
 		
 		settings.addProvincesBuilder()
@@ -194,7 +208,8 @@ public abstract class Client {
 			.setLabel("Honduras")
 			.addAdjacency(Province.Id.MEXICO)
 			.addAdjacency(Province.Id.GUATEMALA)
-			.addAdjacency(Province.Id.NICARAGUA);
+			.addAdjacency(Province.Id.NICARAGUA)
+			.addAdjacency(Province.Id.EL_SALVADOR);
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.NICARAGUA)
@@ -238,7 +253,8 @@ public abstract class Client {
 			.setLabel("Cuba")
 			.setStabilityBase(2)
 			.setDissidentsInit(Dissidents.newBuilder()
-					.setGov(Government.COMMUNISM))
+				.setGov(Government.COMMUNISM)
+				.setLeaderInit("Fidel Castro"))
 			.addAdjacency(Province.Id.USA)
 			.addAdjacency(Province.Id.NICARAGUA)
 			.addAdjacency(Province.Id.MEXICO)
@@ -257,6 +273,7 @@ public abstract class Client {
 			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Dominican Rep.")
+			//.setLeaderInit("Rafael Trujillo")
 			.setGovernmentInit(Government.AUTOCRACY)
 			.addAdjacency(Province.Id.HAITI)
 			.addAdjacency(Province.Id.LESS_ANTILLES);
@@ -332,8 +349,18 @@ public abstract class Client {
 			.setStabilityBase(2)
 			.setLeaderInit("Juan Perón")
 			.addAdjacency(Province.Id.BOLIVIA)
+			.addAdjacency(Province.Id.URUGUAY)
 			.addAdjacency(Province.Id.BRAZIL)
 			.addAdjacency(Province.Id.CHILE);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.URUGUAY)
+			.setCulture(Culture.SPANISH)
+			.setRegion(Province.Region.SOUTH_AMERICA)
+			.setLabel("Uruguay")
+			.setStabilityBase(2)
+			.addAdjacency(Province.Id.ARGENTINA)
+			.addAdjacency(Province.Id.BRAZIL);
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.BRAZIL)
@@ -341,20 +368,10 @@ public abstract class Client {
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Brazil")
 			.setStabilityBase(2)
-			.addAdjacency(Province.Id.GUYANA)
+			.addAdjacency(Province.Id.URUGUAY)
 			.addAdjacency(Province.Id.VENEZUELA)
-			.addAdjacency(Province.Id.ARGENTINA);
-		
-		settings.addProvincesBuilder()
-			.setId(Province.Id.GUYANA)
-			.setCulture(Culture.SPANISH)
-			.setRegion(Province.Region.SOUTH_AMERICA)
-			.setLabel("Guyana")
-			.setGovernmentInit(Government.COLONY)
-			.setOccupierInit(Province.Id.GREAT_BRITAIN)
-			.addAdjacency(Province.Id.VENEZUELA)
-			.addAdjacency(Province.Id.BRAZIL)
-			.addAdjacency(Province.Id.LESS_ANTILLES);
+			.addAdjacency(Province.Id.ARGENTINA)
+			.addAdjacency(Province.Id.GUYANA);
 		
 		settings.addProvincesBuilder()
 			.setId(Province.Id.VENEZUELA)
@@ -364,8 +381,265 @@ public abstract class Client {
 			.setStabilityBase(2)
 			.addAdjacency(Province.Id.COLOMBIA)
 			.addAdjacency(Province.Id.BRAZIL)
-			.addAdjacency(Province.Id.GUYANA)
+			.addAdjacency(Province.Id.LESS_ANTILLES)
+			.addAdjacency(Province.Id.GUYANA);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.GUYANA)
+			.setCulture(Culture.SPANISH)
+			.setRegion(Province.Region.SOUTH_AMERICA)
+			.setLabel("Guyana")
+			.addAdjacency(Province.Id.VENEZUELA)
+			.addAdjacency(Province.Id.BRAZIL)
 			.addAdjacency(Province.Id.LESS_ANTILLES);
+		
+		// WESTERN EUROPE
+		
+		settings.addProvincesBuilder()
+		.setId(Province.Id.CANADA)
+			.setCulture(Culture.ENGLISH)
+			.setRegion(Province.Region.WESTERN_EUROPE)
+			.setLabel("Canada")
+			.setStabilityBase(3)
+			.setInfluenceInit(1)
+			.setGovernmentInit(Government.DEMOCRACY)
+			.addAdjacency(Province.Id.USA)
+			.addAdjacency(Province.Id.GREAT_BRITAIN);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.GREAT_BRITAIN)
+			.setCulture(Culture.ENGLISH)
+			.setRegion(Province.Region.WESTERN_EUROPE)
+			.setLabel("United Kingdom")
+			.setStabilityBase(3)
+			.setInfluenceInit(2)
+			.setGovernmentInit(Government.DEMOCRACY)
+			.addAdjacency(Province.Id.FRANCE)
+			.addAdjacency(Province.Id.CANADA)
+			.addAdjacency(Province.Id.BENELUX)
+			.addAdjacency(Province.Id.NORWAY);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.FRANCE)
+			.setCulture(Culture.FRENCH)
+			.setRegion(Province.Region.WESTERN_EUROPE)
+			.setLabel("France")
+			.setStabilityBase(3)
+			.setGovernmentInit(Government.DEMOCRACY)
+			.addAdjacency(Province.Id.WEST_GERMANY)
+			.addAdjacency(Province.Id.GREAT_BRITAIN)
+			.addAdjacency(Province.Id.SPAIN)
+			//.addAdjacency(Province.Id.ALGERIA)
+			.addAdjacency(Province.Id.ITALY);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.WEST_GERMANY)
+			.setCulture(Culture.GERMAN)
+			.setRegion(Province.Region.WESTERN_EUROPE)
+			.setLabel("West Germany")
+			.setStabilityBase(3)
+			.setGovernmentInit(Government.OCCUPIED)
+			.setOccupierInit(Province.Id.USA)
+			.addAdjacency(Province.Id.FRANCE)
+			.addAdjacency(Province.Id.EAST_GERMANY)
+			.addAdjacency(Province.Id.BENELUX)
+			.addAdjacency(Province.Id.DENMARK);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.SPAIN)
+			.setCulture(Culture.SPANISH)
+			.setRegion(Province.Region.WESTERN_EUROPE)
+			.setLabel("Spain")
+			.setStabilityBase(2)
+			//.setLeaderInit("Francisco Franco")
+			.setGovernmentInit(Government.AUTOCRACY)
+			.setOccupierInit(Province.Id.USA)
+			//.addAdjacency(Province.Id.MOROCCO)
+			.addAdjacency(Province.Id.PORTUGAL)
+			.addAdjacency(Province.Id.FRANCE);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.PORTUGAL)
+			.setCulture(Culture.PORTUGUESE)
+			.setRegion(Province.Region.WESTERN_EUROPE)
+			.setLabel("Portugal")
+			.setStabilityBase(2)
+			//.setLeaderInit("António de Oliveira Salazar")
+			.setGovernmentInit(Government.AUTOCRACY)
+			.setOccupierInit(Province.Id.USA)
+			//.addAdjacency(Province.Id.MOROCCO)
+			.addAdjacency(Province.Id.SPAIN);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.BENELUX)
+			.setCulture(Culture.FRENCH) // TODO: Dutch
+			.setRegion(Province.Region.WESTERN_EUROPE)
+			.setLabel("Low Countries")
+			.setStabilityBase(3)
+			.setGovernmentInit(Government.AUTOCRACY)
+			.addAdjacency(Province.Id.WEST_GERMANY)
+			.addAdjacency(Province.Id.GREAT_BRITAIN);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.DENMARK)
+			.setCulture(Culture.GERMAN) // TODO: Culture
+			.setRegion(Province.Region.WESTERN_EUROPE)
+			.setLabel("Denmark")
+			.setStabilityBase(3)
+			.setGovernmentInit(Government.DEMOCRACY)
+			.addAdjacency(Province.Id.WEST_GERMANY)
+			.addAdjacency(Province.Id.NORWAY)
+			.addAdjacency(Province.Id.SWEDEN);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.NORWAY)
+			.setCulture(Culture.GERMAN) // TODO: Culture
+			.setRegion(Province.Region.WESTERN_EUROPE)
+			.setLabel("Norway")
+			.setStabilityBase(3)
+			.setGovernmentInit(Government.DEMOCRACY)
+			.addAdjacency(Province.Id.DENMARK)
+			.addAdjacency(Province.Id.SWEDEN)
+			.addAdjacency(Province.Id.GREAT_BRITAIN);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.ITALY)
+			//.setCulture(Culture.ITALIAN)
+			.setRegion(Province.Region.WESTERN_EUROPE)
+			.setLabel("Italy")
+			.setStabilityBase(3)
+			.addAdjacency(Province.Id.FRANCE)
+			//.addAdjacency(Province.Id.LIBYA)
+			.addAdjacency(Province.Id.YUGOSLAVIA);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.SWEDEN)
+			.setCulture(Culture.GERMAN) // TODO: Culture
+			.setRegion(Province.Region.WESTERN_EUROPE)
+			.setLabel("Sweden")
+			.setStabilityBase(3)
+			.setGovernmentInit(Government.DEMOCRACY)
+			.addAdjacency(Province.Id.DENMARK)
+			.addAdjacency(Province.Id.NORWAY)
+			.addAdjacency(Province.Id.FINLAND);
+		
+		// EASTERN EUROPE
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.EAST_GERMANY)
+			.setCulture(Culture.GERMAN)
+			.setRegion(Province.Region.EASTERN_EUROPE)
+			.setLabel("East Germany")
+			.setStabilityBase(3)
+			.setGovernmentInit(Government.OCCUPIED)
+			.setOccupierInit(Province.Id.USSR)
+			.addAdjacency(Province.Id.WEST_GERMANY)
+			.addAdjacency(Province.Id.CZECHOSLOVAKIA)
+			.addAdjacency(Province.Id.POLAND);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.POLAND)
+			//.setCulture(Culture.POLISH)
+			.setRegion(Province.Region.EASTERN_EUROPE)
+			.setLabel("Poland")
+			.setStabilityBase(3)
+			.setInfluenceInit(-1)
+			.setGovernmentInit(Government.COMMUNISM)
+			.addAdjacency(Province.Id.WEST_GERMANY)
+			.addAdjacency(Province.Id.CZECHOSLOVAKIA)
+			.addAdjacency(Province.Id.USSR);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.HUNGARY)
+			//.setCulture(Culture.HUNGARIAN)
+			.setRegion(Province.Region.EASTERN_EUROPE)
+			.setLabel("Hungary")
+			.setStabilityBase(2)
+			.setInfluenceInit(-1)
+			.setGovernmentInit(Government.COMMUNISM)
+			.addAdjacency(Province.Id.ROMANIA)
+			.addAdjacency(Province.Id.CZECHOSLOVAKIA);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.CZECHOSLOVAKIA)
+			//.setCulture(Culture.CZECH)
+			.setRegion(Province.Region.EASTERN_EUROPE)
+			.setLabel("Czechoslovakia")
+			.setStabilityBase(2)
+			.setInfluenceInit(-1)
+			.setGovernmentInit(Government.COMMUNISM)
+			.addAdjacency(Province.Id.EAST_GERMANY)
+			.addAdjacency(Province.Id.POLAND)
+			.addAdjacency(Province.Id.HUNGARY);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.ROMANIA)
+			//.setCulture(Culture.ROMANIAN)
+			.setRegion(Province.Region.EASTERN_EUROPE)
+			.setLabel("Romania")
+			.setStabilityBase(2)
+			.setInfluenceInit(-1)
+			.setGovernmentInit(Government.COMMUNISM)
+			.addAdjacency(Province.Id.USSR)
+			.addAdjacency(Province.Id.HUNGARY)
+			.addAdjacency(Province.Id.BULGARIA);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.BULGARIA)
+			//.setCulture(Culture.BULGARIAN)
+			.setRegion(Province.Region.EASTERN_EUROPE)
+			.setLabel("Bulgaria")
+			.setStabilityBase(2)
+			.setInfluenceInit(-1)
+			.setGovernmentInit(Government.COMMUNISM)
+			.addAdjacency(Province.Id.TURKEY)
+			.addAdjacency(Province.Id.ROMANIA);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.YUGOSLAVIA)
+			//.setCulture(Culture.YUGOSLAV)
+			.setRegion(Province.Region.EASTERN_EUROPE)
+			.setLabel("Yugoslavia")
+			.setStabilityBase(2)
+			//.setLeaderInit("Josip Broz Tito")
+			.setGovernmentInit(Government.COMMUNISM)
+			.addAdjacency(Province.Id.ITALY)
+			.addAdjacency(Province.Id.GREECE);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.GREECE)
+			//.setCulture(Culture.GREEK)
+			.setRegion(Province.Region.EASTERN_EUROPE)
+			.setLabel("Greece")
+			.setStabilityBase(2)
+			.setGovernmentInit(Government.DEMOCRACY)
+			// TODO: Set Conflict Init - Greek Civil War
+			.addAdjacency(Province.Id.YUGOSLAVIA)
+			.addAdjacency(Province.Id.TURKEY);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.TURKEY)
+			//.setCulture(Culture.TURKISH)
+			.setRegion(Province.Region.EASTERN_EUROPE)
+			.setLabel("Turkey")
+			.setStabilityBase(2)
+			.setStabilityBase(1)
+			.addAdjacency(Province.Id.USSR)
+			.addAdjacency(Province.Id.BULGARIA)
+			//.addAdjacency(Province.Id.SYRIA)
+			.addAdjacency(Province.Id.GREECE);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.FINLAND)
+			//.setCulture(Culture.FINNISH)
+			.setRegion(Province.Region.EASTERN_EUROPE)
+			.setLabel("Finland")
+			.setStabilityBase(3)
+			.setGovernmentInit(Government.DEMOCRACY)
+			.addAdjacency(Province.Id.USSR)
+			.addAdjacency(Province.Id.SWEDEN);
+		
+		// MIDDLE EAST
 	}
 
 	public abstract void endTurn();

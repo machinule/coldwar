@@ -6,6 +6,8 @@ enum Culture {
 	SPANISH = 1;
 	FRENCH = 2;
 	PORTUGUESE = 3;
+	ENGLISH = 4;
+	GERMAN = 5;
 }
 
 message Leader {

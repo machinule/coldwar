@@ -57,13 +57,13 @@ public class MapScreen extends AbstractScreen {
 			}
 		}
 		final Province.Id[][] provincePosition = {
-			{Province.Id.MEXICO,    Province.Id.CUBA,       Province.Id.HAITI,     null,                      null},
-			{Province.Id.GUATEMALA, Province.Id.HONDURAS,   Province.Id.NICARAGUA, Province.Id.DOMINICAN_REP, null},
-			{null,                  Province.Id.COSTA_RICA, Province.Id.PANAMA,    Province.Id.LESS_ANTILLES, null},
-			{null,                  null,                   Province.Id.COLOMBIA,  Province.Id.VENEZUELA,     Province.Id.GUYANA},
-			{null,                  Province.Id.ECUADOR,    Province.Id.PERU,      Province.Id.BRAZIL,        null},
-			{null,                  Province.Id.CHILE,      Province.Id.BOLIVIA,   null,                      null},
-			{null,                  null,                   Province.Id.ARGENTINA, null,                      null},
+			{Province.Id.MEXICO,      Province.Id.CUBA,       Province.Id.HAITI,     null,                      null, Province.Id.GREAT_BRITAIN},
+			{Province.Id.GUATEMALA,   Province.Id.HONDURAS,   Province.Id.NICARAGUA, Province.Id.DOMINICAN_REP, null},
+			{Province.Id.EL_SALVADOR, Province.Id.COSTA_RICA, Province.Id.PANAMA,    Province.Id.LESS_ANTILLES, null},
+			{null,                    null,                   Province.Id.COLOMBIA,  Province.Id.VENEZUELA,     null},
+			{null,                    Province.Id.ECUADOR,    Province.Id.PERU,      Province.Id.GUYANA,        null},
+			{null,                    Province.Id.CHILE,      Province.Id.BOLIVIA,   Province.Id.BRAZIL,        null},
+			{null,                    null,                   Province.Id.ARGENTINA, Province.Id.URUGUAY,       null},
 		};
 		for (int r=0; r<provincePosition.length; r++) {
 			for (int c=0; c<provincePosition[r].length; c++) {

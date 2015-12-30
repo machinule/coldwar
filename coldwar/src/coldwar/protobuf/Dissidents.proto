@@ -16,4 +16,5 @@ enum Government {
 message Dissidents {
 	optional Government gov = 1 [default = REPUBLIC];
 	optional Leader leader = 2;
+	optional string LeaderInit = 3;
 }

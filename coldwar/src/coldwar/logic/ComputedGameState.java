@@ -1144,10 +1144,16 @@ public class ComputedGameState {
 	}
 	
 	public boolean hasInfluence(Player player, Province.Id id) {
-		if((inflSign(player) * totalInfluence.get(id) > 0 ||
-				bases.get(id) == player ||
-				governments.get(id) == getIdealGov(player))) return true;
-		return false;
+		try {
+			if((inflSign(player) * totalInfluence.get(id) > 0 ||
+					bases.get(id) == player ||
+					governments.get(id) == getIdealGov(player))) return true;
+			return false;
+		} catch (Exception e) {
+			Logger.Dbg("Error getting influence for - " + id);
+			throw e;
+		} finally { }
+		//return false;
 	}
 	
 	public boolean isInArmedConflict(Province.Id id) {
