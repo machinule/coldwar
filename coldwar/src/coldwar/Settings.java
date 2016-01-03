@@ -21,7 +21,7 @@ public class Settings {
 	
 	public static void initPreferences() {
 		Settings.prefs.putString("player", "Player");
-		Settings.prefs.putInteger("resolution_width", 1280);
+		Settings.prefs.putInteger("resolution_width", 1680);
 		Settings.prefs.putInteger("resolution_height", 960);
 		Settings.prefs.putBoolean("fullscreen", false);
 

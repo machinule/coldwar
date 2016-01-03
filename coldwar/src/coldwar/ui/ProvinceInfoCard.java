@@ -178,13 +178,16 @@ public class ProvinceInfoCard extends Table {
     	Color ret;
     	switch (region) {
 	        case CENTRAL_AMERICA:
-	        	ret = new Color(0, (float)201/255, (float)201/255, 1);
+	        	ret = new Color(0, (float)201/255, (float)170/255, 1);
 	            break;
 	        case SOUTH_AMERICA:
-	        	ret = new Color(0, (float)155/255, (float)155/255, 1);
+	        	ret = new Color((float)51/255, (float)201/255, (float)0/255, 1);
 	            break;
 	        case WESTERN_EUROPE:
-	        	ret = new Color((float)51/255, (float)201/255, (float)0/255, 1);
+	        	ret = new Color(0, (float)155/255, (float)201/255, 1);
+	            break;
+	        case EASTERN_EUROPE:
+	        	ret = new Color((float)201/255, (float)101/255, (float)101/255, 1);
 	            break;
 	        default:
 	        	ret = Color.BLUE;
@@ -197,11 +200,17 @@ public class ProvinceInfoCard extends Table {
     	Color ret;
     	switch (region) {
 	        case CENTRAL_AMERICA:
-	        	ret = new Color(0, (float)153/255, (float)153/255, 1);
+	        	ret = new Color(0, (float)170/255, (float)153/255, 1);
 	            break;
 	        case SOUTH_AMERICA:
-	        	ret = new Color((float)25/255, (float)153/255, (float)0/255, 1);
-	            break;
+	        	ret = new Color((float)51/255, (float)153/255, (float)0/255, 1);
+	            break;	        
+	        case WESTERN_EUROPE:
+	        	ret = new Color(0, (float)100/255, (float)170/255, 1);
+		        break;
+	        case EASTERN_EUROPE:
+	        	ret = new Color((float)201/255, (float)51/255, (float)51/255, 1);
+	        	break;
 	        default:
 	        	ret = Color.BLACK;
 	        	break;

@@ -60,7 +60,7 @@ public abstract class AbstractScreen implements Screen {
 	public void resume() {
 		Logger.Dbg("Resuming screen: " + this.getName());
 	}
-
+	
 	@Override
 	public void show() {
 		Logger.Dbg("Showing screen: " + this.getName());

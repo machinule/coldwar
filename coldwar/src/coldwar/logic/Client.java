@@ -16,6 +16,7 @@ import coldwar.DissidentsOuterClass.Government;
 import coldwar.EventOuterClass.BerlinBlockadeEvent;
 import coldwar.EventOuterClass.Event;
 import coldwar.MoveOuterClass.MoveList;
+import coldwar.ProvinceOuterClass.Conflict;
 import coldwar.ProvinceOuterClass.LeaderList;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.SovietUnionOuterClass.SovietUnion;
@@ -76,10 +77,14 @@ public abstract class Client {
 				builder.setOccupier(p.getOccupierInit());
 			}
 			if (p.hasLeaderInit()) {
+				Logger.Dbg("Leader init - " + p.getLeaderInit());
 				builder.setLeader(getLeader(settings, p.getLeaderInit()));
 			}
 			if (p.hasDissidentsInit()) {
 				builder.setDissidents(p.getDissidentsInit());
+			}
+			if (p.hasConflictInit()) {
+				builder.setConflict(p.getConflictInit());
 			}
 		}
 		
@@ -218,7 +223,7 @@ public abstract class Client {
 			.setLabel("Nicaragua")
 			.setInfluenceInit(1)
 			.setGovernmentInit(Government.AUTOCRACY)
-			.setLeaderInit("Anastasio Somoza García")
+			.setLeaderInit("Anastasio Somoza Garcia")
 			.addAdjacency(Province.Id.CUBA)
 			.addAdjacency(Province.Id.HONDURAS)
 			.addAdjacency(Province.Id.PANAMA)
@@ -273,7 +278,7 @@ public abstract class Client {
 			.setCulture(Culture.SPANISH)
 			.setRegion(Province.Region.CENTRAL_AMERICA)
 			.setLabel("Dominican Rep.")
-			//.setLeaderInit("Rafael Trujillo")
+			.setLeaderInit("Rafael Trujillo")
 			.setGovernmentInit(Government.AUTOCRACY)
 			.addAdjacency(Province.Id.HAITI)
 			.addAdjacency(Province.Id.LESS_ANTILLES);
@@ -347,7 +352,7 @@ public abstract class Client {
 			.setRegion(Province.Region.SOUTH_AMERICA)
 			.setLabel("Argentina")
 			.setStabilityBase(2)
-			.setLeaderInit("Juan Perón")
+			.setLeaderInit("Juan Peron")
 			.addAdjacency(Province.Id.BOLIVIA)
 			.addAdjacency(Province.Id.URUGUAY)
 			.addAdjacency(Province.Id.BRAZIL)
@@ -613,7 +618,18 @@ public abstract class Client {
 			.setLabel("Greece")
 			.setStabilityBase(2)
 			.setGovernmentInit(Government.DEMOCRACY)
-			// TODO: Set Conflict Init - Greek Civil War
+			.setConflictInit(Conflict.newBuilder()
+				.setActive(true)
+				.setLength(1)
+				.setGoal(3)
+				.setDefenderProgress(2)
+				.setDefenderSupporter(Province.Id.USA)
+				.setDefChanceMod(100000)
+				.setRebels(Dissidents.newBuilder()
+						.setGov(Government.COMMUNISM)
+						.build())
+				.setName("Greek Civil War")
+				.build())
 			.addAdjacency(Province.Id.YUGOSLAVIA)
 			.addAdjacency(Province.Id.TURKEY);
 		
@@ -623,7 +639,6 @@ public abstract class Client {
 			.setRegion(Province.Region.EASTERN_EUROPE)
 			.setLabel("Turkey")
 			.setStabilityBase(2)
-			.setStabilityBase(1)
 			.addAdjacency(Province.Id.USSR)
 			.addAdjacency(Province.Id.BULGARIA)
 			//.addAdjacency(Province.Id.SYRIA)

@@ -29,6 +29,8 @@ message Leader {
 	optional int32 birth = 2;
 	optional string name = 3;
 	optional Allegiance allegiance = 4 [default = NONE];
+	optional int32 start = 5;
+	optional int32 end = 6;
 
 	//Used for initial population
 	optional Culture culture = 10;

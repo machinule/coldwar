@@ -101,4 +101,5 @@ message ProvinceSettings {
 	optional Province.Id ally_init = 11;
 	optional Province.Region region = 12;
 	optional Culture culture = 13;
+	optional Conflict conflictInit = 14;
 }

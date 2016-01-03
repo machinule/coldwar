@@ -9,7 +9,6 @@ import java.util.Random;
 import java.util.function.Function;
 
 import coldwar.GameStateOuterClass.Crisis;
-import coldwar.GameStateOuterClass.Crisis.Builder;
 import coldwar.GameStateOuterClass.GameState;
 import coldwar.GameSettingsOuterClass.ProvinceSettings;
 import coldwar.GameStateOuterClass.TurnLogEntry;
@@ -17,7 +16,6 @@ import coldwar.LeaderOuterClass.Leader;
 import coldwar.Logger;
 import coldwar.DissidentsOuterClass.Dissidents;
 import coldwar.DissidentsOuterClass.Government;
-import coldwar.EventOuterClass.BerlinBlockadeEvent;
 import coldwar.EventOuterClass.CivilWarEvent;
 import coldwar.EventOuterClass.CoupEvent;
 import coldwar.EventOuterClass.Event;
@@ -145,7 +143,7 @@ public class ComputedGameState {
 		EnumMap<Province.Id, Player> allianceMap = new EnumMap<Province.Id, Player>(Province.Id.class);
 		this.alliances = Collections.unmodifiableMap(allianceMap);
 		EnumMap<Province.Id, Boolean> usaAdjacencyMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
-		this.usaAdjacencies = Collections.unmodifiableMap(usaAdjacencyMap);EnumMap<Province.Id, Boolean> adjacencyMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
+		this.usaAdjacencies = Collections.unmodifiableMap(usaAdjacencyMap);
 		EnumMap<Province.Id, Boolean> ussrAdjacencyMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
 		this.ussrAdjacencies = Collections.unmodifiableMap(ussrAdjacencyMap);
 
@@ -506,14 +504,14 @@ public class ComputedGameState {
 				if(blockade) { // Airlift while blockade maintained
 					patriotismCounter += 5; // TODO: Settings value
 				} else { // Airlift while blockade lifted
-					// Add 1 USSR influence to E. Ger
+					totalInfluenceMap.compute(Province.Id.EAST_GERMANY, (i, infl) -> infl == null ? -1 : infl - 1);
 				}
 			} else {
 				if(blockade) { // Blockade with no airlift
 					patriotismCounter -= 5;
 					// Berlin flag unset
 				} else { // No blockade and no airlift
-					// Add 1 USSR influence to E. Ger
+					totalInfluenceMap.compute(Province.Id.EAST_GERMANY, (i, infl) -> infl == null ? -1 : infl - 1);
 				}
 			}
 			Logger.Dbg("Berlin airlift enacted: " + airlift);

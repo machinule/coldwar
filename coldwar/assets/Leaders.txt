@@ -184,7 +184,7 @@ candidates {
 	
 	leaders {
 		historical: true
-		name: "Roberto Suazo Córdoba"
+		name: "Roberto Suazo Córdova"
 		birth: 1927
 		start: 1970
 		end: 2000
@@ -201,7 +201,8 @@ candidates {
 	leaders {
 		# In power at start
 		historical: true
-		name: "Anastasio Somoza García"
+		#name: "Anastasio Somoza García"
+		name: "Anastasio Somoza Garcia"
 		birth: 1896
 		elected: false
 	}
@@ -254,6 +255,9 @@ candidates {
 
 # Costa Rica
 
+candidates {
+	province: COSTA_RICA
+	
 	leaders {
 		historical: true
 		name: "Otilio Ulate Blanco"
@@ -265,7 +269,7 @@ candidates {
 	
 	leaders {
 		historical: true
-		name: "José María Hipólito Figueres Ferrer"
+		name: "José Figueres Ferrer"
 		birth: 1906
 		start: 1948
 		end: 1965
@@ -273,7 +277,7 @@ candidates {
 	
 	leaders {
 		historical: true
-		name: "Rafael Ángel Calderón"
+		name: "Rafael Ángel Calderón Guardia"
 		birth: 1900
 		start: 1950
 		end: 1975
@@ -289,8 +293,13 @@ candidates {
 		elected: true
 	}
 	
+}
+	
 # Panama
 
+candidates {
+	province: PANAMA
+	
 	leaders {
 		historical: true
 		name: "Luis Alberto Monge"
@@ -317,6 +326,8 @@ candidates {
 		end: 2000
 		elected: false
 	}
+
+}
 
 # Cuba
 
@@ -623,7 +634,8 @@ candidates {
 
 	leaders {
 		# In power at start
-		name: "Juan Perón"
+		#name: "Juan Perón"
+		name: "Juan Peron"
 		birth: 1895
 		elected: true
 	}
@@ -729,6 +741,7 @@ candidates {
 		birth: 1884
 		start: 1948
 		end: 1955
+	}
 }
 
 # Guyana
