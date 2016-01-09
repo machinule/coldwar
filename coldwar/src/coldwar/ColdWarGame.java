@@ -3,7 +3,7 @@ package coldwar;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.tools.texturepacker.TexturePacker;
+import com.badlogic.gdx.Graphics.DisplayMode;
 
 import coldwar.ui.SplashScreen;
 
@@ -27,16 +27,15 @@ public class ColdWarGame extends Game {
 		Logger.setLogLevel(Application.LOG_DEBUG);
 		Settings.init();
 		Logger.setLogLevel(Settings.getLogLevel());
-		if (!Settings.getConstBool("pack_textures")) { // Set to false for JAR
+		/*if (!Settings.getConstBool("pack_textures")) { // Set to false for JAR
 			final TexturePacker.Settings settings = new TexturePacker.Settings();
 			settings.maxWidth = 16384;
 			settings.maxHeight = 8192;
 			TexturePacker.process(settings, "assets", "textures", "pack");	
-		}
-		Gdx.app.getGraphics().setDisplayMode(
+		}*/
+		Gdx.app.getGraphics().setWindowedMode(
 				Settings.consts.getInteger("splash_y"),
-				Settings.consts.getInteger("splash_x"),
-				Settings.prefs.getBoolean("fullscreen"));
+				Settings.consts.getInteger("splash_x"));
 		this.setScreen(new SplashScreen(this));
 	}
 
@@ -61,17 +60,15 @@ public class ColdWarGame extends Game {
 	}
 
 	public void setRes() {
-		Gdx.app.getGraphics().setDisplayMode(
+		Gdx.app.getGraphics().setWindowedMode(
 				Settings.prefs.getInteger("resolution_width"),
-				Settings.prefs.getInteger("resolution_height"),
-				Settings.prefs.getBoolean("fullscreen"));
+				Settings.prefs.getInteger("resolution_height"));
 	}
 	
 	public void setRes(int x, int y) {
-		Gdx.app.getGraphics().setDisplayMode(
+		Gdx.app.getGraphics().setWindowedMode(
 				x,
-				y,
-				Settings.prefs.getBoolean("fullscreen"));
+				y);
 	}
 	
 }
