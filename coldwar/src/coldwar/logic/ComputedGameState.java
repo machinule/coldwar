@@ -402,7 +402,7 @@ public class ComputedGameState {
 				}
 				// Crises
 				if (move.hasUsaBerlinBlockadeAirliftMove()) {
-					int cost = 100; // TODO: Real value
+					int cost = 3; // TODO: Real value; starting MIL point cost
 					milStoreMap.compute(player,  (p, mil) -> mil == null ? -cost : mil - cost);
 					crisis.setUsaActed1(true);
 				}
@@ -1303,7 +1303,7 @@ public class ComputedGameState {
 			messages.add(String.format("%s founded the KGB.", player));																
 		}
 		if (move.hasFoundPactMove()) {
-			messages.add(String.format("%s founded the Pact.", player));																
+			messages.add(String.format("%s founded the Warsaw Pact.", player));																
 		}
 		if (move.hasFoundNatoMove()) {
 			messages.add(String.format("%s founded NATO.", player));												

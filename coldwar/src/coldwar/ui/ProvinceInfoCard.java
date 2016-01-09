@@ -2,10 +2,17 @@ package coldwar.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip.TextTooltipStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
+import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import coldwar.DissidentsOuterClass.Government;
 import coldwar.GameSettingsOuterClass.ProvinceSettings;
@@ -61,6 +68,17 @@ public class ProvinceInfoCard extends Table {
 				currentSelection.infoBox.setColor(new Color(1, 1, 1, 1));
 			}
 		});
+		TooltipManager manager = new TooltipManager();
+		manager.initialTime = 0;
+		manager.subsequentTime = 0;
+		manager.resetTime = 0;
+		manager.animations = false;
+		manager.hideAll();
+		Table test = new Table();
+		test.add(new Label("This is", skin));
+		test.row();
+		test.add(new Label("But a test", skin));
+		infoBox.addCaptureListener(new Tooltip<Table>(test, manager));
 		this.add(infoBox).size(180, 40);
 	}
 	
