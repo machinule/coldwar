@@ -675,7 +675,287 @@ public abstract class Client {
 			.addAdjacency(Province.Id.USSR)
 			.addAdjacency(Province.Id.SWEDEN);
 		
-		// MIDDLE EAST
+		// TODO: adjust settings after this point.
+		settings.addProvincesBuilder()
+			.setId(Province.Id.LIBYA)
+			.setRegion(Province.Region.MIDDLE_EAST)
+			.setLabel("Libya")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.EGYPT)
+			.setRegion(Province.Region.MIDDLE_EAST)
+			.setLabel("Egypt")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.ISRAEL)
+			.setRegion(Province.Region.MIDDLE_EAST)
+			.setLabel("Israel")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.SYRIA)
+			.setRegion(Province.Region.MIDDLE_EAST)
+			.setLabel("Syria")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.IRAQ)
+			.setRegion(Province.Region.MIDDLE_EAST)
+			.setLabel("Iraw")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.IRAN)
+			.setRegion(Province.Region.MIDDLE_EAST)
+			.setLabel("Iran")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.GULF_STATES)
+			.setRegion(Province.Region.MIDDLE_EAST)
+			.setLabel("Gulf States")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.SAUDI_ARABIA)
+			.setRegion(Province.Region.MIDDLE_EAST)
+			.setLabel("Saudi Arabia")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.YEMEN)
+			.setRegion(Province.Region.MIDDLE_EAST)
+			.setLabel("Yemen")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.JORDAN)
+			.setRegion(Province.Region.MIDDLE_EAST)
+			.setLabel("Jordan")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+		
+		// Africa
+		settings.addProvincesBuilder()
+			.setId(Province.Id.MOROCCO)
+			.setRegion(Province.Region.AFRICA)
+			.setLabel("Morocco")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.IVORY_GOLD_COAST)
+			.setRegion(Province.Region.AFRICA)
+			.setLabel("Ivory/Gold Coast")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.NIGERIA)
+			.setRegion(Province.Region.AFRICA)
+			.setLabel("Nigeria")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.ALGERIA)
+			.setRegion(Province.Region.AFRICA)
+			.setLabel("Algeria")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.WEST_AFRICA)
+			.setRegion(Province.Region.AFRICA)
+			.setLabel("West Africa")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.ZAIRE)
+			.setRegion(Province.Region.AFRICA)
+			.setLabel("Zaire")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.ANGOLA)
+			.setRegion(Province.Region.AFRICA)
+			.setLabel("Angola")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.SOUTH_AFRICA)
+			.setRegion(Province.Region.AFRICA)
+			.setLabel("South Africa")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.MOZAMBIQUE)
+			.setRegion(Province.Region.AFRICA)
+			.setLabel("Mozambique")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+		
+		settings.addProvincesBuilder()
+			.setId(Province.Id.EAST_AFRICA)
+			.setRegion(Province.Region.AFRICA)
+			.setLabel("East Africa")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.ETHIOPIA)
+			.setRegion(Province.Region.AFRICA)
+			.setLabel("Ethiopia")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+		
+		// East Asia
+		settings.addProvincesBuilder()
+			.setId(Province.Id.CHINA)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("China")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.NORTH_KOREA)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Glorious North Korea")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.SOUTH_KOREA)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("South Korea")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.JAPAN)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Japan")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.TAIWAN)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Taiwan")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.PHILIPPINES)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Philippines")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.VIETNAM)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Vietnam")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.LAOS)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("LAOS")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.CAMBODIA)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Cambodia")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.AFGHANISTAN)
+			.setRegion(Province.Region.SOUTH_ASIA)
+			.setLabel("Afghanistan")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.PAKISTAN)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Pakistan")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.BANGLADESH)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Bangladesh")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.INDIA)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("India")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.BURMA)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Burma")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.THAILAND)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Thailand")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.MALAYSIA)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Malaysia")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.INDONESIA)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Indonesia")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+
+		settings.addProvincesBuilder()
+			.setId(Province.Id.AUSTRALIA)
+			.setRegion(Province.Region.EAST_ASIA)
+			.setLabel("Australia")
+			.setStabilityBase(3000)
+			.setGovernmentInit(Government.DEMOCRACY);
+		
+
+
+
+
+
 	}
 
 	public abstract Future<Boolean> endTurn();
