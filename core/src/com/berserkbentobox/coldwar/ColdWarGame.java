@@ -1,27 +1,74 @@
-package com.berserkbentobox.coldwar;
+package coldwar;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Graphics.DisplayMode;
 
-public class ColdWarGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+import coldwar.ui.SplashScreen;
+
+/**
+ * ColdWarGame coordinates the application life cycle. It should not contain
+ * game logic.
+ * 
+ * @see com.badlogic.gdx.Game
+ */
+public class ColdWarGame extends Game {
 	
+	/**
+	 * Called when the application is created. Immediately enters the splash
+	 * screen.
+	 * 
+	 * @see com.badlogic.gdx.ApplicationListener#create()
+	 */
 	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+	public void create() {
+		// Set the logger to DEBUG for initialization. It will be reset based on preferences later.
+		Logger.setLogLevel(Application.LOG_DEBUG);
+		Settings.init();
+		Logger.setLogLevel(Settings.getLogLevel());
+		/*if (!Settings.getConstBool("pack_textures")) { // Set to false for JAR
+			final TexturePacker.Settings settings = new TexturePacker.Settings();
+			settings.maxWidth = 16384;
+			settings.maxHeight = 8192;
+			TexturePacker.process(settings, "assets", "textures", "pack");	
+		}*/
+		Gdx.app.getGraphics().setWindowedMode(
+				Settings.consts.getInteger("splash_y"),
+				Settings.consts.getInteger("splash_x"));
+		this.setScreen(new SplashScreen(this));
 	}
 
+	/**
+	 * Called when the application is rendered.
+	 * 
+	 * @see com.badlogic.gdx.Game#render()
+	 */
 	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+	public void render() {
+		super.render();
 	}
+
+	/**
+	 * Called when the application is disposed.
+	 * 
+	 * @see com.badlogic.gdx.Game#dispose()
+	 */
+	@Override
+	public void dispose() {
+		// TODO: clean up application elements.
+	}
+
+	public void setRes() {
+		Gdx.app.getGraphics().setWindowedMode(
+				Settings.prefs.getInteger("resolution_width"),
+				Settings.prefs.getInteger("resolution_height"));
+	}
+	
+	public void setRes(int x, int y) {
+		Gdx.app.getGraphics().setWindowedMode(
+				x,
+				y);
+	}
+	
 }
