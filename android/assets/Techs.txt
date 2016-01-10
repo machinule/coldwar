@@ -1,0 +1,29 @@
+techs {
+	interval: 4
+	id: MILITARY
+	label: "Military"
+	
+	tech_settings {
+		id: ATOM_BOMB
+		label: "Atomic Weaponry"
+		progressions: 1
+	}
+	
+	tech_settings {
+		id: HYDROGEN_BOMB
+		label: "Hydrogen Bomb"
+		progressions: 1
+	}
+}
+
+tech_init {
+	
+	usa {
+		id: ATOM_BOMB
+		progress: 1
+	}
+	ussr: {
+		id: ATOM_BOMB
+		progress: 1
+	}
+}

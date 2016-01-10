@@ -146,7 +146,7 @@ public abstract class Client {
 	
 	protected boolean populateLeaders(GameSettings.Builder settings) {
         Logger.Dbg("Reading leader file");
-        String input = new String(Gdx.files.internal("assets/Leaders.txt").readString());
+        String input = new String(Gdx.files.internal("Leaders.txt").readString());
         
         try {
         	TextFormat.merge(input, settings);
@@ -160,7 +160,7 @@ public abstract class Client {
 
 	protected boolean populateTechs(GameSettings.Builder settings) {
         Logger.Dbg("Reading technology file");
-        String input = new String(Gdx.files.internal("assets/Techs.txt").readString());
+        String input = new String(Gdx.files.internal("Techs.txt").readString());
         
         try {
         	TextFormat.merge(input, settings);
