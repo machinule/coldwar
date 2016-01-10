@@ -1,5 +1,8 @@
 package coldwar.logic;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
+
 import coldwar.MoveOuterClass.MoveList;
 
 public class HotseatClient extends Client {
@@ -26,7 +29,7 @@ public class HotseatClient extends Client {
 	}
 
 	@Override
-	public void endTurn() {
+	public Future<Boolean> endTurn() {
 		if (this.player == Player.USA) {
 			this.usa = this.currentMoveBuilder.getMoveList();
 			this.player = Player.USSR;
@@ -39,6 +42,7 @@ public class HotseatClient extends Client {
 			this.usa = null;
 			this.ussr = null;
 		}
+		return CompletableFuture.completedFuture(true);
 	}
 	
 	@Override

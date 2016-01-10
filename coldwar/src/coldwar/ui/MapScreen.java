@@ -3,7 +3,9 @@ package coldwar.ui;
 import java.util.EnumMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
@@ -35,11 +37,11 @@ public class MapScreen extends AbstractScreen {
 		final Skin skin = new Skin(Gdx.files.internal("uiskin.json"), atlas); // When creating JAR
 		
 		// Nations
-		
 		final Table nations = new Table(skin);
-		nations.setFillParent(true);
 		nations.setDebug(Settings.isDebug());
-		this.stage.addActor(nations);
+		final ScrollPane scrollPane = new ScrollPane(nations, skin);
+		scrollPane.setFillParent(true);
+		this.stage.addActor(scrollPane);
 		
 		final ActionPane actionPane = new ActionPane(this.client, skin);
 		actionPane.setDebug(Settings.isDebug());
