@@ -16,6 +16,37 @@ techs {
 	}
 }
 
+techs {
+	interval: 4
+	id: SPACE
+	label: "Space"
+	
+	tech_settings {
+		id: BASIC_ROCKETRY
+		label: "Basic Rocketry"
+		progressions: 2
+	}
+	
+	tech_settings {
+		id: ARTIFICIAL_SATELLITES
+		label: "Artificial Satellites"
+		progressions: 3
+	}
+	
+	tech_settings {
+		id: ANIMAL_IN_SPACE
+		label: "First Animal in Space"
+		progressions: 2
+	}
+	
+	tech_settings {
+		id: MANNED_SPACEFLIGHT
+		label: "Manned Spaceflight"
+		progressions: 2
+	}
+
+}
+
 tech_init {
 	
 	usa {

@@ -105,6 +105,5 @@ public class MapScreen extends AbstractScreen {
 		this.stage.addActor(superpowerPane);
 		superpowerPane.left().top();
 		superpowerPane.show();
-		
 	}
 }

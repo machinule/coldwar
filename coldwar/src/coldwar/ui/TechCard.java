@@ -9,7 +9,6 @@ import coldwar.Logger;
 import coldwar.TechOuterClass.Tech;
 import coldwar.TechOuterClass.TechSettings;
 import coldwar.logic.Client;
-import coldwar.logic.Client.Player;
 
 public class TechCard extends Table {
 	

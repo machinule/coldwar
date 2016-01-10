@@ -26,6 +26,11 @@ message Tech {
 	enum Id {
 		ATOM_BOMB = 1;
 		HYDROGEN_BOMB = 2;
+
+		BASIC_ROCKETRY = 101;
+		ARTIFICIAL_SATELLITES = 102;
+		ANIMAL_IN_SPACE = 103;
+		MANNED_SPACEFLIGHT=104;
 	}
 	optional Id id = 1;
 	optional int32 progress = 2 [default = 0];
