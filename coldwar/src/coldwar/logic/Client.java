@@ -1,5 +1,7 @@
 package coldwar.logic;
 
+import java.util.concurrent.Future;
+
 import com.badlogic.gdx.Gdx;
 import com.google.protobuf.TextFormat;
 
@@ -34,7 +36,11 @@ public abstract class Client {
 	protected GameState state;
 	protected Player player;
 	public GameState initialGameState;
+	protected Boolean isWaitingOnPlayer = false;
 		
+	public Boolean isWaitingOnPlayer() {
+		return this.isWaitingOnPlayer;
+	}
 	protected GameState.Builder getInitialGameState() {
 		// Just use the defaults in the proto for now.
 		GameSettings.Builder settings = GameSettings.newBuilder();
@@ -657,7 +663,7 @@ public abstract class Client {
 		// MIDDLE EAST
 	}
 
-	public abstract void endTurn();
+	public abstract Future<Boolean> endTurn();
 	public abstract MoveList getUSAMove();
 	public abstract MoveList getUSSRMove();
 	public abstract MoveBuilder getMoveBuilder();	
