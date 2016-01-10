@@ -1,4 +1,4 @@
-package coldwar.ui;
+package com.berserkbentobox.coldwar.ui;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -6,8 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import coldwar.logic.Client;
-import coldwar.logic.MoveBuilder;
+import com.berserkbentobox.coldwar.logic.Client;
+import com.berserkbentobox.coldwar.logic.MoveBuilder;
 
 public class SuperpowerPane extends Table {
 	

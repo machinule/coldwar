@@ -1,4 +1,4 @@
-package coldwar.logic;
+package com.berserkbentobox.coldwar.logic;
 
 import static org.junit.Assert.*;
 
@@ -14,8 +14,8 @@ import org.junit.runners.Parameterized.Parameters;
 import com.google.protobuf.TextFormat;
 import com.google.protobuf.TextFormat.ParseException;
 
-import coldwar.GameStateOuterClass.GameState;
-import coldwar.MoveOuterClass.MoveList;
+import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
+import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
 
 public class ComputedGameStateTest {
 

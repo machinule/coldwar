@@ -1,4 +1,4 @@
-package coldwar.ui;
+package com.berserkbentobox.coldwar.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -10,12 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import coldwar.DissidentsOuterClass.Government;
-import coldwar.GameSettingsOuterClass.ProvinceSettings;
-import coldwar.Logger;
-import coldwar.ProvinceOuterClass.Province.Region;
-import coldwar.logic.Client;
-import coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
+import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.ProvinceOuterClass.Province.Region;
+import com.berserkbentobox.coldwar.logic.Client;
+import com.berserkbentobox.coldwar.logic.Client.Player;
 
 public class ProvinceInfoCard extends Table {
 

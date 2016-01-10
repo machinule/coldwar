@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-package coldwar;
+package com.berserkbentobox.coldwar;
 
 message InfluenceStore {
 	optional int32 political = 1;

@@ -1,4 +1,4 @@
-package coldwar;
+package com.berserkbentobox.coldwar;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -14,8 +14,8 @@ import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 
-import coldwar.GameStateOuterClass.GameState;
-import coldwar.MoveOuterClass.MoveList;
+import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
+import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
 
 public class Peer {
 

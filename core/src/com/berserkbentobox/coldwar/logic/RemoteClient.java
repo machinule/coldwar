@@ -1,4 +1,4 @@
-package coldwar.logic;
+package com.berserkbentobox.coldwar.logic;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -6,10 +6,10 @@ import java.util.concurrent.FutureTask;
 
 import com.badlogic.gdx.Gdx;
 
-import coldwar.MoveOuterClass.MoveList;
-import coldwar.Logger;
-import coldwar.Peer;
-import coldwar.GameStateOuterClass.GameState;
+import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
+import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.Peer;
+import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
 
 public class RemoteClient extends Client {
 

@@ -1,4 +1,4 @@
-package coldwar;
+package com.berserkbentobox.coldwar;
 
 import com.badlogic.gdx.Gdx;
 

@@ -1,4 +1,4 @@
-package coldwar.ui;
+package com.berserkbentobox.coldwar.ui;
 
 import java.util.function.Function;
 
@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import coldwar.logic.Client;
+import com.berserkbentobox.coldwar.logic.Client;
 
 public class DynamicLabel extends Label {
 

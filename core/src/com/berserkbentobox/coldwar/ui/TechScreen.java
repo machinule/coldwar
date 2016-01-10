@@ -1,4 +1,4 @@
-package coldwar.ui;
+package com.berserkbentobox.coldwar.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -8,11 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import coldwar.ColdWarGame;
-import coldwar.Logger;
-import coldwar.Settings;
-import coldwar.TechOuterClass.Tech;
-import coldwar.logic.Client;
+import com.berserkbentobox.coldwar.ColdWarGame;
+import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.Settings;
+import com.berserkbentobox.coldwar.TechOuterClass.Tech;
+import com.berserkbentobox.coldwar.logic.Client;
 
 public class TechScreen extends AbstractScreen {
 

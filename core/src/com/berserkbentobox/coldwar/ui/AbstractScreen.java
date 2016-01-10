@@ -1,4 +1,4 @@
-package coldwar.ui;
+package com.berserkbentobox.coldwar.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import coldwar.ColdWarGame;
-import coldwar.Logger;
+import com.berserkbentobox.coldwar.ColdWarGame;
+import com.berserkbentobox.coldwar.Logger;
 
 public abstract class AbstractScreen implements Screen {
 	protected final ColdWarGame game;

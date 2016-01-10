@@ -1,4 +1,4 @@
-package coldwar.ui;
+package com.berserkbentobox.coldwar.ui;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,13 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import coldwar.GameSettingsOuterClass.ProvinceSettings;
-import coldwar.LeaderOuterClass.Leader;
-import coldwar.ProvinceOuterClass.Province;
-import coldwar.Logger;
-import coldwar.Settings;
-import coldwar.logic.Client;
-import coldwar.logic.ComputedGameState;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
+import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
+import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
+import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.Settings;
+import com.berserkbentobox.coldwar.logic.Client;
+import com.berserkbentobox.coldwar.logic.ComputedGameState;
 
 public class ActionPane extends FooterPane {
 

@@ -1,4 +1,4 @@
-package coldwar.ui;
+package com.berserkbentobox.coldwar.ui;
 
 import java.util.EnumMap;
 
@@ -9,11 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import coldwar.ColdWarGame;
-import coldwar.GameSettingsOuterClass.ProvinceSettings;
-import coldwar.Settings;
-import coldwar.ProvinceOuterClass.Province;
-import coldwar.logic.Client;
+import com.berserkbentobox.coldwar.ColdWarGame;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
+import com.berserkbentobox.coldwar.Settings;
+import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
+import com.berserkbentobox.coldwar.logic.Client;
 
 public class MapScreen extends AbstractScreen {
 

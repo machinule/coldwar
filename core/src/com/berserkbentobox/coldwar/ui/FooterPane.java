@@ -1,10 +1,10 @@
-package coldwar.ui;
+package com.berserkbentobox.coldwar.ui;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import coldwar.GameSettingsOuterClass.ProvinceSettings;
-import coldwar.logic.Client;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
+import com.berserkbentobox.coldwar.logic.Client;
 
 public abstract class FooterPane extends Table {
 

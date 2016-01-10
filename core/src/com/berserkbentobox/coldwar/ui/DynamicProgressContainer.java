@@ -1,10 +1,10 @@
-package coldwar.ui;
+package com.berserkbentobox.coldwar.ui;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import coldwar.logic.Client;
+import com.berserkbentobox.coldwar.logic.Client;
 
 public class DynamicProgressContainer extends Table {
 

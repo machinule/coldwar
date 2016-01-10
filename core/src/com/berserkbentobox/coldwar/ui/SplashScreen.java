@@ -1,4 +1,4 @@
-package coldwar.ui;
+package com.berserkbentobox.coldwar.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 
-import coldwar.ColdWarGame;
-import coldwar.Logger;
+import com.berserkbentobox.coldwar.ColdWarGame;
+import com.berserkbentobox.coldwar.Logger;
 
 public class SplashScreen extends AbstractScreen {
 

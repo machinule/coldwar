@@ -1,15 +1,15 @@
-package coldwar.ui;
+package com.berserkbentobox.coldwar.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import coldwar.Logger;
-import coldwar.TechOuterClass.Tech;
-import coldwar.TechOuterClass.TechSettings;
-import coldwar.logic.Client;
-import coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.TechOuterClass.Tech;
+import com.berserkbentobox.coldwar.TechOuterClass.TechSettings;
+import com.berserkbentobox.coldwar.logic.Client;
+import com.berserkbentobox.coldwar.logic.Client.Player;
 
 public class TechCard extends Table {
 	

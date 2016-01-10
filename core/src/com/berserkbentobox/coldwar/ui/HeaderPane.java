@@ -1,4 +1,4 @@
-package coldwar.ui;
+package com.berserkbentobox.coldwar.ui;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -11,10 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import coldwar.Logger;
-import coldwar.logic.Client;
-import coldwar.logic.MoveBuilder;
-import coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.logic.Client;
+import com.berserkbentobox.coldwar.logic.MoveBuilder;
+import com.berserkbentobox.coldwar.logic.Client.Player;
 
 public class HeaderPane extends Table {
 

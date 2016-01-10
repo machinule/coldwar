@@ -1,9 +1,9 @@
-package coldwar.logic;
+package com.berserkbentobox.coldwar.logic;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-import coldwar.MoveOuterClass.MoveList;
+import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
 
 public class HotseatClient extends Client {
 

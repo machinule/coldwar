@@ -1,11 +1,11 @@
-package coldwar;
+package com.berserkbentobox.coldwar;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 
-import coldwar.ui.SplashScreen;
+import com.berserkbentobox.coldwar.ui.SplashScreen;
 
 /**
  * ColdWarGame coordinates the application life cycle. It should not contain

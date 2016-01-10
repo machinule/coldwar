@@ -1,24 +1,24 @@
-package coldwar.logic;
+package com.berserkbentobox.coldwar.logic;
 
-import coldwar.GameStateOuterClass.GameState;
-import coldwar.Logger;
-import coldwar.MoveOuterClass.MoveList;
-import coldwar.MoveOuterClass.ConflictOvertFundAttackerMove;
-import coldwar.MoveOuterClass.ConflictOvertFundDefenderMove;
-import coldwar.MoveOuterClass.CoupMove;
-import coldwar.MoveOuterClass.CovertMove;
-import coldwar.MoveOuterClass.DiplomacyMove;
-import coldwar.MoveOuterClass.EstablishBaseMove;
-import coldwar.MoveOuterClass.FoundCIAMove;
-import coldwar.MoveOuterClass.FoundKGBMove;
-import coldwar.MoveOuterClass.FundDissidentsMove;
-import coldwar.MoveOuterClass.MilitaryMove;
-import coldwar.MoveOuterClass.Move;
-import coldwar.MoveOuterClass.PoliticalPressureMove;
-import coldwar.MoveOuterClass.USABerlinBlockadeAirliftMove;
-import coldwar.MoveOuterClass.USSRBerlinBlockadeLiftBlockadeMove;
-import coldwar.ProvinceOuterClass.Province;
-import coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
+import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
+import com.berserkbentobox.coldwar.MoveOuterClass.ConflictOvertFundAttackerMove;
+import com.berserkbentobox.coldwar.MoveOuterClass.ConflictOvertFundDefenderMove;
+import com.berserkbentobox.coldwar.MoveOuterClass.CoupMove;
+import com.berserkbentobox.coldwar.MoveOuterClass.CovertMove;
+import com.berserkbentobox.coldwar.MoveOuterClass.DiplomacyMove;
+import com.berserkbentobox.coldwar.MoveOuterClass.EstablishBaseMove;
+import com.berserkbentobox.coldwar.MoveOuterClass.FoundCIAMove;
+import com.berserkbentobox.coldwar.MoveOuterClass.FoundKGBMove;
+import com.berserkbentobox.coldwar.MoveOuterClass.FundDissidentsMove;
+import com.berserkbentobox.coldwar.MoveOuterClass.MilitaryMove;
+import com.berserkbentobox.coldwar.MoveOuterClass.Move;
+import com.berserkbentobox.coldwar.MoveOuterClass.PoliticalPressureMove;
+import com.berserkbentobox.coldwar.MoveOuterClass.USABerlinBlockadeAirliftMove;
+import com.berserkbentobox.coldwar.MoveOuterClass.USSRBerlinBlockadeLiftBlockadeMove;
+import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
+import com.berserkbentobox.coldwar.logic.Client.Player;
 
 public class MoveBuilder {
 
