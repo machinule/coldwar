@@ -28,6 +28,9 @@ import coldwar.MoveOuterClass.Move;
 import coldwar.ProvinceOuterClass.Conflict;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.Settings;
+import coldwar.TechOuterClass.Tech;
+import coldwar.TechOuterClass.TechGroup;
+import coldwar.TechOuterClass.TechSettings;
 import coldwar.logic.Client.Player;
 
 /**
@@ -77,7 +80,7 @@ public class ComputedGameState {
 	public final Map<Province.Id, Leader> leaders;
 	public final Map<Province.Id, Conflict> activeConflicts;
 	public final Map<Province.Id, Conflict> conflictZones;
-
+	
 	public final Map<Province.Id, Integer> stabilityBase;
 	public final Map<Province.Id, Integer> stabilityModifier;
 	
@@ -1234,7 +1237,34 @@ public class ComputedGameState {
 	public String getCrisisUssrOption1() {
 		return state.getCrises().getUssrOption1();
 	}
+	
+	public TechGroup getTechGroup(TechGroup.Id id) {
+		for (TechGroup t : state.getSettings().getTechsList())
+			if (t.getId() == id) return t;
+		return null;
+	}
 
+	public TechSettings getTechSettings(Tech.Id id) {
+		for (TechGroup g : state.getSettings().getTechsList()) {
+			for (TechSettings t : g.getTechSettingsList())
+				if (t.getId() == id) return t;
+		}
+		return null;
+	}
+	
+	public Tech getTech(Player player, Tech.Id id) {
+		if(player == Player.USA) {
+			for (Tech t : state.getTechs().getUsaList()) {
+				if (t.getId() == id) return t;
+			}
+		} else {
+			for (Tech t : state.getTechs().getUssrList()) {
+				if (t.getId() == id) return t;
+			}
+		}
+		return Tech.getDefaultInstance();
+	}
+	
 	/*
 	 * Retrieve a list of events that happened since the previous turn, from player's perspective.
 	 */

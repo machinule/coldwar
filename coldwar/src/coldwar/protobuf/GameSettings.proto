@@ -5,6 +5,7 @@ package coldwar;
 import "Province.proto";
 import "Leader.proto";
 import "Dissidents.proto";
+import "Tech.proto";
 
 // GameSettings contains constants over the course of the game.
 // These are not logged each turn, but merely copied to the top level GameState.
@@ -16,6 +17,8 @@ message GameSettings {
   optional int64 seed_init = 5 [default = 1];
   repeated ProvinceSettings provinces = 6;
   repeated LeaderList candidates = 7;
+  repeated TechGroup techs = 8;
+  optional TechTree tech_init = 9;
 
   // USA Settings.
   optional string usa_alias = 100 [default = "USA"];

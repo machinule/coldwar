@@ -20,6 +20,7 @@ import coldwar.ProvinceOuterClass.Conflict;
 import coldwar.ProvinceOuterClass.LeaderList;
 import coldwar.ProvinceOuterClass.Province;
 import coldwar.SovietUnionOuterClass.SovietUnion;
+import coldwar.TechOuterClass.Tech;
 import coldwar.UnitedStatesOuterClass.UnitedStates;
 
 /**
@@ -39,6 +40,7 @@ public abstract class Client {
 		// Just use the defaults in the proto for now.
 		GameSettings.Builder settings = GameSettings.newBuilder();
 		if(!populateLeaders(settings)) return null;
+		if(!populateTechs(settings)) return null;
 		populateProvinces(settings);
 		
 		GameState.Builder state = GameState.newBuilder()
@@ -61,7 +63,8 @@ public abstract class Client {
 								.setCovert(settings.getUssrCovStoreInit())
 								.build())
 						.setPartyUnity(settings.getUssrInitPartyUnity())
-						.build());
+						.build())
+				.setTechs(settings.getTechInit());
 		for (ProvinceSettings p : settings.getProvincesList()) {
 			Province.Builder builder = state.addProvincesBuilder()
 				.setId(p.getId())
@@ -136,9 +139,7 @@ public abstract class Client {
 	}
 	
 	protected boolean populateLeaders(GameSettings.Builder settings) {
-        String file = "src/proto/Leaders.txt";
-        
-        Logger.Dbg("Reading leader file at " + file);
+        Logger.Dbg("Reading leader file");
         String input = new String(Gdx.files.internal("assets/Leaders.txt").readString());
         
         try {
@@ -151,6 +152,20 @@ public abstract class Client {
         return true;
     }
 
+	protected boolean populateTechs(GameSettings.Builder settings) {
+        Logger.Dbg("Reading technology file");
+        String input = new String(Gdx.files.internal("assets/Techs.txt").readString());
+        
+        try {
+        	TextFormat.merge(input, settings);
+        }
+        catch(TextFormat.ParseException ex) {
+        	Logger.Err(ex.toString());
+        	return false;
+        }
+        return true;
+    }
+	
 	protected void populateProvinces(GameSettings.Builder settings) {
 		
 		// SUPERPOWERS

@@ -48,7 +48,7 @@ public class MapScreen extends AbstractScreen {
 		
 		final HeaderPane headerPane = new HeaderPane(this.client, skin);
 		headerPane.setDebug(Settings.isDebug());
-		final SuperpowerPane superpowerPane = new SuperpowerPane(this.client, skin);
+		final SuperpowerPane superpowerPane = new SuperpowerPane(this, this.client, skin);
 		superpowerPane.setDebug(Settings.isDebug());
 		final EnumMap<Province.Id, ProvinceInfoCard> cards = new EnumMap<Province.Id, ProvinceInfoCard>(Province.Id.class);
 		for (final ProvinceSettings p : this.client.initialGameState.getSettings().getProvincesList()) {
@@ -101,7 +101,7 @@ public class MapScreen extends AbstractScreen {
 		
 		superpowerPane.setFillParent(true);
 		this.stage.addActor(superpowerPane);
-		superpowerPane.left();
+		superpowerPane.left().top();
 		superpowerPane.show();
 		
 	}
