@@ -490,7 +490,7 @@ public abstract class Client {
 			.setRegion(Province.Region.WESTERN_EUROPE)
 			.setLabel("Portugal")
 			.setStabilityBase(2)
-			//.setLeaderInit("António de Oliveira Salazar")
+			//.setLeaderInit("Antonio de Oliveira Salazar")
 			.setGovernmentInit(Government.AUTOCRACY)
 			.setOccupierInit(Province.Id.USA)
 			//.addAdjacency(Province.Id.MOROCCO)

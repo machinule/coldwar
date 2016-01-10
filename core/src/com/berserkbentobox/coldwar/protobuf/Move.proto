@@ -3,13 +3,13 @@ syntax = "proto2";
 package com.berserkbentobox.coldwar;
 
 import "Province.proto";
-import "google/protobuf/descriptor.proto";
+//import "google/protobuf/descriptor.proto";
 
-extend google.protobuf.MessageOptions {
-  optional int32 pol_cost = 76000;
-  optional int32 mil_cost = 76001;
-  optional int32 cov_cost = 76002;
-}
+//extend google.protobuf.MessageOptions {
+//  optional int32 pol_cost = 76000;
+//  optional int32 mil_cost = 76001;
+//  optional int32 cov_cost = 76002;
+//}
 
 message MoveList {
 	repeated Move moves = 1;
@@ -50,7 +50,7 @@ message DiplomacyMove {
 	optional Province.Id province_id = 1;
 	optional int32 magnitude = 2;
 
-	option (pol_cost) = 1;
+//	option (pol_cost) = 1;
 }
 
 // Influence by spending MIL points
@@ -58,7 +58,7 @@ message MilitaryMove {
 	optional Province.Id province_id = 1;
 	optional int32 magnitude = 2;
 
-	option (mil_cost) = 1;
+//	option (mil_cost) = 1;
 }
 
 // Influence by spending COV points
@@ -66,7 +66,7 @@ message CovertMove {
 	optional Province.Id province_id = 1;
 	optional int32 magnitude = 2;
 
-	option (cov_cost) = 1;
+//	option (cov_cost) = 1;
 }
 
 // ========== TARGETED ACTIONS ==========
@@ -74,19 +74,19 @@ message CovertMove {
 message FundDissidentsMove {
 	optional Province.Id province_id = 1;
 
-	option (cov_cost) = 1;
+//	option (cov_cost) = 1;
 }
 
 message EstablishBaseMove {
 	optional Province.Id province_id = 1;
 
-	option (mil_cost) = 2;
+//	option (mil_cost) = 2;
 }
 
 message PoliticalPressureMove {
 	optional Province.Id province_id = 1;
 
-	option (pol_cost) = 2;
+//	option (pol_cost) = 2;
 }
 
 message CoupMove {
