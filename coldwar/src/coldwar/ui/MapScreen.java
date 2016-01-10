@@ -59,12 +59,12 @@ public class MapScreen extends AbstractScreen {
 			}
 		}
 		final Province.Id[][] provincePosition = {
-			{Province.Id.CANADA,      null,       			  null,     			 null,                      null,                 Province.Id.GREAT_BRITAIN, Province.Id.NORWAY,       Province.Id.SWEDEN,         Province.Id.FINLAND, Province.Id.TURKEY, Province.Id.GREECE},
+			{Province.Id.CANADA,      null,       			  null,     			 null,                      null,                 Province.Id.GREAT_BRITAIN, Province.Id.NORWAY,       Province.Id.SWEDEN,         Province.Id.FINLAND},
 			{null,      			  null,       			  null,     			 null,                      null,                 Province.Id.BENELUX, 		 Province.Id.DENMARK,      Province.Id.EAST_GERMANY,   Province.Id.POLAND},
 			{Province.Id.MEXICO,      Province.Id.CUBA,       Province.Id.HAITI,     null,                      null,                 Province.Id.FRANCE, 		 Province.Id.WEST_GERMANY, Province.Id.CZECHOSLOVAKIA, Province.Id.HUNGARY},
 			{Province.Id.GUATEMALA,   Province.Id.HONDURAS,   Province.Id.NICARAGUA, Province.Id.DOMINICAN_REP, Province.Id.PORTUGAL, Province.Id.SPAIN, 		 Province.Id.ITALY, 	   Province.Id.YUGOSLAVIA, 	   Province.Id.ROMANIA},
 			{Province.Id.EL_SALVADOR, Province.Id.COSTA_RICA, Province.Id.PANAMA,    Province.Id.LESS_ANTILLES, null,				  null, 					 null, 					   Province.Id.BULGARIA,       null},
-			{null,                    null,                   Province.Id.COLOMBIA,  Province.Id.VENEZUELA,     null,				  null, 					 null 					   },
+			{null,                    null,                   Province.Id.COLOMBIA,  Province.Id.VENEZUELA,     null,				  null, 					 null, 					   Province.Id.GREECE,         Province.Id.TURKEY},
 			{null,                    Province.Id.ECUADOR,    Province.Id.PERU,      Province.Id.GUYANA,        null},
 			{null,                    Province.Id.CHILE,      Province.Id.BOLIVIA,   Province.Id.BRAZIL,        null},
 			{null,                    null,                   Province.Id.ARGENTINA, Province.Id.URUGUAY,       null},
