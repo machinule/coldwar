@@ -99,7 +99,7 @@ message Province {
 		BANGLADESH = 123;
 		BURMA = 124;
 		THAILAND = 125;
-		MAYALSIA = 126;
+		MALAYSIA = 126;
 		INDONESIA = 127;
 		AUSTRALIA = 128;
 
