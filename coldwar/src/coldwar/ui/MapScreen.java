@@ -3,7 +3,9 @@ package coldwar.ui;
 import java.util.EnumMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
@@ -35,11 +37,11 @@ public class MapScreen extends AbstractScreen {
 		final Skin skin = new Skin(Gdx.files.internal("uiskin.json"), atlas); // When creating JAR
 		
 		// Nations
-		
 		final Table nations = new Table(skin);
-		nations.setFillParent(true);
 		nations.setDebug(Settings.isDebug());
-		this.stage.addActor(nations);
+		final ScrollPane scrollPane = new ScrollPane(nations, skin);
+		scrollPane.setFillParent(true);
+		this.stage.addActor(scrollPane);
 		
 		final ActionPane actionPane = new ActionPane(this.client, skin);
 		actionPane.setDebug(Settings.isDebug());
@@ -57,12 +59,12 @@ public class MapScreen extends AbstractScreen {
 			}
 		}
 		final Province.Id[][] provincePosition = {
-			{Province.Id.CANADA,      null,       			  null,     			 null,                      null,                 Province.Id.GREAT_BRITAIN, Province.Id.NORWAY,       Province.Id.SWEDEN,         Province.Id.FINLAND},
+			{Province.Id.CANADA,      null,       			  null,     			 null,                      null,                 Province.Id.GREAT_BRITAIN, Province.Id.NORWAY,       Province.Id.SWEDEN,         Province.Id.FINLAND, Province.Id.TURKEY, Province.Id.GREECE},
 			{null,      			  null,       			  null,     			 null,                      null,                 Province.Id.BENELUX, 		 Province.Id.DENMARK,      Province.Id.EAST_GERMANY,   Province.Id.POLAND},
 			{Province.Id.MEXICO,      Province.Id.CUBA,       Province.Id.HAITI,     null,                      null,                 Province.Id.FRANCE, 		 Province.Id.WEST_GERMANY, Province.Id.CZECHOSLOVAKIA, Province.Id.HUNGARY},
 			{Province.Id.GUATEMALA,   Province.Id.HONDURAS,   Province.Id.NICARAGUA, Province.Id.DOMINICAN_REP, Province.Id.PORTUGAL, Province.Id.SPAIN, 		 Province.Id.ITALY, 	   Province.Id.YUGOSLAVIA, 	   Province.Id.ROMANIA},
 			{Province.Id.EL_SALVADOR, Province.Id.COSTA_RICA, Province.Id.PANAMA,    Province.Id.LESS_ANTILLES, null,				  null, 					 null, 					   Province.Id.BULGARIA,       null},
-			{null,                    null,                   Province.Id.COLOMBIA,  Province.Id.VENEZUELA,     null,				  null, 					 null, 					   Province.Id.GREECE,         Province.Id.TURKEY},
+			{null,                    null,                   Province.Id.COLOMBIA,  Province.Id.VENEZUELA,     null,				  null, 					 null 					   },
 			{null,                    Province.Id.ECUADOR,    Province.Id.PERU,      Province.Id.GUYANA,        null},
 			{null,                    Province.Id.CHILE,      Province.Id.BOLIVIA,   Province.Id.BRAZIL,        null},
 			{null,                    null,                   Province.Id.ARGENTINA, Province.Id.URUGUAY,       null},
