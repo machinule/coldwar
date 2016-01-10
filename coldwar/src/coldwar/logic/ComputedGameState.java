@@ -566,6 +566,8 @@ public class ComputedGameState {
 		nextStateBuilder.getUsaBuilder().setCiaFounded(ciaFoundedFlag);
 		nextStateBuilder.getUssrBuilder().setKgbFounded(kgbFoundedFlag);
 		
+		nextStateBuilder.setTechs(state.getTechs());
+		
 		// Random events.
 		Random r = new Random(this.state.getSeed());
 		Function<Integer, Boolean> happens = c -> r.nextInt(1000000) < c;
