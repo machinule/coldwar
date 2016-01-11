@@ -1,0 +1,43 @@
+syntax = "proto2";
+
+package coldwar;
+
+import "Province.proto";
+
+message TechGroup {
+	enum Id {
+		MILITARY = 1;
+		SPACE = 2;
+		POLITICAL = 3;
+	}
+	optional int32 interval = 1;
+	optional Id id = 2;
+	optional string label = 3;
+	repeated TechSettings tech_settings = 4;
+}
+
+message TechSettings {
+	optional int32 progressions = 1;
+	optional Tech.Id id = 2;
+	optional string label = 3;
+	repeated Tech.Id prereqs = 4;
+}
+
+message Tech {
+	enum Id {
+		ATOM_BOMB = 1;
+		HYDROGEN_BOMB = 2;
+
+		BASIC_ROCKETRY = 101;
+		ARTIFICIAL_SATELLITES = 102;
+		ANIMAL_IN_SPACE = 103;
+		MANNED_SPACEFLIGHT=104;
+	}
+	optional Id id = 1;
+	optional int32 progress = 2 [default = 0];
+}
+
+message TechTree {
+	repeated Tech usa = 1;
+	repeated Tech ussr = 2;
+}

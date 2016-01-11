@@ -1,0 +1,64 @@
+techs {
+	interval: 4
+	id: MILITARY
+	label: "Military"
+	
+	tech_settings {
+		id: ATOM_BOMB
+		label: "Atomic Weaponry"
+		progressions: 1
+	}
+	
+	tech_settings {
+		id: HYDROGEN_BOMB
+		label: "Hydrogen Bomb"
+		progressions: 1
+		prereqs: ATOM_BOMB
+	}
+}
+
+techs {
+	interval: 4
+	id: SPACE
+	label: "Space"
+	
+	tech_settings {
+		id: BASIC_ROCKETRY
+		label: "Basic Rocketry"
+		progressions: 2
+	}
+	
+	tech_settings {
+		id: ARTIFICIAL_SATELLITES
+		label: "Artificial Satellites"
+		progressions: 3
+		prereqs: BASIC_ROCKETRY
+	}
+	
+	tech_settings {
+		id: ANIMAL_IN_SPACE
+		label: "First Animal in Space"
+		progressions: 2
+		prereqs: ARTIFICIAL_SATELLITES
+	}
+	
+	tech_settings {
+		id: MANNED_SPACEFLIGHT
+		label: "Manned Spaceflight"
+		progressions: 2
+		prereqs: ANIMAL_IN_SPACE
+	}
+
+}
+
+tech_init {
+	
+	usa {
+		id: ATOM_BOMB
+		progress: 1
+	}
+	ussr: {
+		id: ATOM_BOMB
+		progress: 1
+	}
+}

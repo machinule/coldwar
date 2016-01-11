@@ -1,28 +1,29 @@
-package com.berserkbentobox.coldwar.logic;
+package coldwar.logic;
 
 import java.util.concurrent.Future;
 
 import com.badlogic.gdx.Gdx;
 import com.google.protobuf.TextFormat;
 
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
-import com.berserkbentobox.coldwar.GameStateOuterClass.Crisis;
-import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
-import com.berserkbentobox.coldwar.InfluenceStoreOuterClass.InfluenceStore;
-import com.berserkbentobox.coldwar.LeaderOuterClass.Culture;
-import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
-import com.berserkbentobox.coldwar.Logger;
-import com.berserkbentobox.coldwar.DissidentsOuterClass.Dissidents;
-import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
-import com.berserkbentobox.coldwar.EventOuterClass.BerlinBlockadeEvent;
-import com.berserkbentobox.coldwar.EventOuterClass.Event;
-import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Conflict;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.LeaderList;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
-import com.berserkbentobox.coldwar.SovietUnionOuterClass.SovietUnion;
-import com.berserkbentobox.coldwar.UnitedStatesOuterClass.UnitedStates;
+import coldwar.GameSettingsOuterClass.GameSettings;
+import coldwar.GameStateOuterClass.Crisis;
+import coldwar.GameStateOuterClass.GameState;
+import coldwar.GameSettingsOuterClass.ProvinceSettings;
+import coldwar.InfluenceStoreOuterClass.InfluenceStore;
+import coldwar.LeaderOuterClass.Culture;
+import coldwar.LeaderOuterClass.Leader;
+import coldwar.Logger;
+import coldwar.DissidentsOuterClass.Dissidents;
+import coldwar.DissidentsOuterClass.Government;
+import coldwar.EventOuterClass.BerlinBlockadeEvent;
+import coldwar.EventOuterClass.Event;
+import coldwar.MoveOuterClass.MoveList;
+import coldwar.ProvinceOuterClass.Conflict;
+import coldwar.ProvinceOuterClass.LeaderList;
+import coldwar.ProvinceOuterClass.Province;
+import coldwar.SovietUnionOuterClass.SovietUnion;
+import coldwar.TechOuterClass.Tech;
+import coldwar.UnitedStatesOuterClass.UnitedStates;
 
 /**
  * Client manages the game state, making moves and taking turns.
@@ -145,7 +146,7 @@ public abstract class Client {
 	
 	protected boolean populateLeaders(GameSettings.Builder settings) {
         Logger.Dbg("Reading leader file");
-        String input = new String(Gdx.files.internal("Leaders.txt").readString());
+        String input = new String(Gdx.files.internal("assets/Leaders.txt").readString());
         
         try {
         	TextFormat.merge(input, settings);
@@ -159,7 +160,7 @@ public abstract class Client {
 
 	protected boolean populateTechs(GameSettings.Builder settings) {
         Logger.Dbg("Reading technology file");
-        String input = new String(Gdx.files.internal("Techs.txt").readString());
+        String input = new String(Gdx.files.internal("assets/Techs.txt").readString());
         
         try {
         	TextFormat.merge(input, settings);
@@ -949,6 +950,11 @@ public abstract class Client {
 			.setLabel("Australia")
 			.setStabilityBase(3000)
 			.setGovernmentInit(Government.DEMOCRACY);
+		
+
+
+
+
 
 	}
 

@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic;
+package coldwar.logic;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,30 +8,30 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
 
-import com.berserkbentobox.coldwar.GameStateOuterClass.Crisis;
-import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
-import com.berserkbentobox.coldwar.GameStateOuterClass.TurnLogEntry;
-import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
-import com.berserkbentobox.coldwar.Logger;
-import com.berserkbentobox.coldwar.DissidentsOuterClass.Dissidents;
-import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
-import com.berserkbentobox.coldwar.EventOuterClass.CivilWarEvent;
-import com.berserkbentobox.coldwar.EventOuterClass.CoupEvent;
-import com.berserkbentobox.coldwar.EventOuterClass.Event;
-import com.berserkbentobox.coldwar.EventOuterClass.ProvinceDissidentsEvent;
-import com.berserkbentobox.coldwar.EventOuterClass.ProvinceDissidentsSuppressedEvent;
-import com.berserkbentobox.coldwar.EventOuterClass.ProvinceFauxPasEvent;
-import com.berserkbentobox.coldwar.EventOuterClass.ProvinceRepublicEvent;
-import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
-import com.berserkbentobox.coldwar.MoveOuterClass.Move;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Conflict;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
-import com.berserkbentobox.coldwar.Settings;
-import com.berserkbentobox.coldwar.TechOuterClass.Tech;
-import com.berserkbentobox.coldwar.TechOuterClass.TechGroup;
-import com.berserkbentobox.coldwar.TechOuterClass.TechSettings;
-import com.berserkbentobox.coldwar.logic.Client.Player;
+import coldwar.GameStateOuterClass.Crisis;
+import coldwar.GameStateOuterClass.GameState;
+import coldwar.GameSettingsOuterClass.ProvinceSettings;
+import coldwar.GameStateOuterClass.TurnLogEntry;
+import coldwar.LeaderOuterClass.Leader;
+import coldwar.Logger;
+import coldwar.DissidentsOuterClass.Dissidents;
+import coldwar.DissidentsOuterClass.Government;
+import coldwar.EventOuterClass.CivilWarEvent;
+import coldwar.EventOuterClass.CoupEvent;
+import coldwar.EventOuterClass.Event;
+import coldwar.EventOuterClass.ProvinceDissidentsEvent;
+import coldwar.EventOuterClass.ProvinceDissidentsSuppressedEvent;
+import coldwar.EventOuterClass.ProvinceFauxPasEvent;
+import coldwar.EventOuterClass.ProvinceRepublicEvent;
+import coldwar.MoveOuterClass.MoveList;
+import coldwar.MoveOuterClass.Move;
+import coldwar.ProvinceOuterClass.Conflict;
+import coldwar.ProvinceOuterClass.Province;
+import coldwar.Settings;
+import coldwar.TechOuterClass.Tech;
+import coldwar.TechOuterClass.TechGroup;
+import coldwar.TechOuterClass.TechSettings;
+import coldwar.logic.Client.Player;
 
 /**
  * A ComputedGameState contains public, final variables representing variables computed from a given game state and move lists.
@@ -974,6 +974,7 @@ public class ComputedGameState {
 		}
 		return false;
 	}
+	
 	
 	// Crises
 	
