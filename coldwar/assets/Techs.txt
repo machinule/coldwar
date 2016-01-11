@@ -13,6 +13,7 @@ techs {
 		id: HYDROGEN_BOMB
 		label: "Hydrogen Bomb"
 		progressions: 1
+		prereqs: ATOM_BOMB
 	}
 }
 
@@ -31,18 +32,21 @@ techs {
 		id: ARTIFICIAL_SATELLITES
 		label: "Artificial Satellites"
 		progressions: 3
+		prereqs: BASIC_ROCKETRY
 	}
 	
 	tech_settings {
 		id: ANIMAL_IN_SPACE
 		label: "First Animal in Space"
 		progressions: 2
+		prereqs: ARTIFICIAL_SATELLITES
 	}
 	
 	tech_settings {
 		id: MANNED_SPACEFLIGHT
 		label: "Manned Spaceflight"
 		progressions: 2
+		prereqs: ANIMAL_IN_SPACE
 	}
 
 }

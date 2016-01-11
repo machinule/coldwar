@@ -47,6 +47,12 @@ public class TechCard extends Table {
 				c -> "" + techSettings.getLabel(),
 				skin);
 		
+		if(client.getMoveBuilder().getComputedGameState().isTechAvailable(client.getPlayer(), id)) {
+			ret.setColor(Color.LIGHT_GRAY);
+		} else if(!client.getMoveBuilder().getComputedGameState().isTechCompleted(client.getPlayer(), id)) {
+			ret.setColor(Color.DARK_GRAY);
+		}	
+		
 		name.setAlignment(1); //Center in cell
 		name.setFontScale((float)0.75);
 		progressions.setFontScale((float)1.5);
@@ -57,6 +63,7 @@ public class TechCard extends Table {
 		ret.add(progress).right().padTop(5).expand();
 		ret.row();
 		ret.add();
+		
 		return ret;
 	}
 }

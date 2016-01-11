@@ -966,6 +966,16 @@ public class ComputedGameState {
 		return !ciaFounded;
 	}
 	
+	public boolean isTechAvailable(Player player, Tech.Id id) {
+		if (!isTechCompleted(player, id)) {
+			for (Tech.Id prereq : getTechSettings(id).getPrereqsList())
+				if(!isTechCompleted(player, prereq)) return false;
+			return true;
+		}
+		return false;
+	}
+	
+	
 	// Crises
 	
 	public boolean isBerlinBlockadeActive() {
@@ -1265,6 +1275,13 @@ public class ComputedGameState {
 			}
 		}
 		return Tech.getDefaultInstance();
+	}
+	
+	public boolean isTechCompleted(Player player, Tech.Id id) {
+		Tech t = getTech(player, id);
+		TechSettings ts = getTechSettings(id);
+		if (t.getProgress() >= ts.getProgressions()) return true;
+		return false;
 	}
 	
 	/*

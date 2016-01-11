@@ -20,6 +20,7 @@ message TechSettings {
 	optional int32 progressions = 1;
 	optional Tech.Id id = 2;
 	optional string label = 3;
+	repeated Tech.Id prereqs = 4;
 }
 
 message Tech {

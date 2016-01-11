@@ -707,7 +707,7 @@ public abstract class Client {
 		settings.addProvincesBuilder()
 			.setId(Province.Id.IRAQ)
 			.setRegion(Province.Region.MIDDLE_EAST)
-			.setLabel("Iraw")
+			.setLabel("Iraq")
 			.setStabilityBase(3000)
 			.setGovernmentInit(Government.DEMOCRACY);
 		
@@ -835,7 +835,7 @@ public abstract class Client {
 		settings.addProvincesBuilder()
 			.setId(Province.Id.NORTH_KOREA)
 			.setRegion(Province.Region.EAST_ASIA)
-			.setLabel("Glorious North Korea")
+			.setLabel("Best Korea")
 			.setStabilityBase(3000)
 			.setGovernmentInit(Government.DEMOCRACY);
 
@@ -877,7 +877,7 @@ public abstract class Client {
 		settings.addProvincesBuilder()
 			.setId(Province.Id.LAOS)
 			.setRegion(Province.Region.EAST_ASIA)
-			.setLabel("LAOS")
+			.setLabel("Laos")
 			.setStabilityBase(3000)
 			.setGovernmentInit(Government.DEMOCRACY);
 
@@ -933,7 +933,7 @@ public abstract class Client {
 		settings.addProvincesBuilder()
 			.setId(Province.Id.MALAYSIA)
 			.setRegion(Province.Region.EAST_ASIA)
-			.setLabel("Malaysia")
+			.setLabel("Mayalisa")
 			.setStabilityBase(3000)
 			.setGovernmentInit(Government.DEMOCRACY);
 

@@ -3,6 +3,7 @@ syntax = "proto2";
 package coldwar;
 
 import "Province.proto";
+import "Tech.proto";
 import "google/protobuf/descriptor.proto";
 
 extend google.protobuf.MessageOptions {
@@ -102,6 +103,20 @@ message ConflictOvertFundAttackerMove {
 
 message ConflictOvertFundDefenderMove {
 	optional Province.Id province_id = 1;
+}
+
+// ===============TECHS=================
+
+message InvestMilTech {
+	optional Tech.Id tech_id = 1;
+}
+
+message InvestSpaceTech {
+	optional Tech.Id tech_id = 1;
+}
+
+message InvestPolTech {
+	optional Tech.Id tech_id = 1;
 }
 
 // ========== SPECIAL ACTIONS ==========
