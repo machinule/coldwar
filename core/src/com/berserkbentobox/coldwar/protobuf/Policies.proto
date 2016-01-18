@@ -1,0 +1,28 @@
+message Policy {
+	enum Id {
+		MARSHALL_PLAN = 1;
+		
+		CAMBRIDGE_SPY_RING = 100;
+	}
+	optional Id id = 1;
+	optional bool active = 2;
+	optional bool available = 3;
+}
+
+message PolicySettings {
+	optional Policy.Id id = 1;
+	optional string label = 2;
+	optional int32 cost = 3;
+	// Lots o' stuff
+}
+
+message PolicyPool {
+	repeated Policy usa = 1;
+	repeated Policy ussr = 2;
+}
+
+message PolicyPoolSettings {
+	optional int32 num_policies = 1;
+	repeated PolicySettings usa_policies = 2;
+	repeated PolicySettings ussr_policies = 3;
+}

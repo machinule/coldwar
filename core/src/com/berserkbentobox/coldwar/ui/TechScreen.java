@@ -21,7 +21,7 @@ import com.berserkbentobox.coldwar.logic.Client;
 public class TechScreen extends AbstractScreen {
 
 	private Client client;
-	private TechGroup.Id activeTechGroup = TechGroup.Id.MILITARY;
+	private TechGroup.Id activeTechGroup = TechGroup.Id.ARMY;
 	
 	public TechScreen(final ColdWarGame game, Client client) {
 		super(game);
@@ -54,14 +54,13 @@ public class TechScreen extends AbstractScreen {
 				{Tech.Id.MANNED_SPACEFLIGHT}
 			};
 		
-		final Tech.Id[][] milTechPosition = {
-			{Tech.Id.ATOM_BOMB,     null},     			  
+		final Tech.Id[][] milTechPosition = {   			  
 			{Tech.Id.HYDROGEN_BOMB, null}
 		};
 		
 		Tech.Id[][] activeTechPosition;
 		switch (activeTechGroup) {
-			case MILITARY:
+			case ARMY:
 				activeTechPosition = milTechPosition;
 				break;
 			case SPACE:
@@ -101,7 +100,7 @@ public class TechScreen extends AbstractScreen {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Dbg("\"Military\" tech button pressed.");
-				TechScreen.this.activeTechGroup = TechGroup.Id.MILITARY;
+				TechScreen.this.activeTechGroup = TechGroup.Id.ARMY;
 				TechScreen.this.stage.clear();
 				TechScreen.this.show();
 			}

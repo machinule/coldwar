@@ -11,6 +11,7 @@ import "Event.proto";
 import "Leader.proto";
 import "Dissidents.proto";
 import "Tech.proto";
+import "Policies.proto";
 
 message GameState {
   optional int32 heat = 2; // 0 - 100
@@ -24,8 +25,9 @@ message GameState {
   repeated Leader initLeaders = 12;
   repeated Dissidents initDissidents = 13;
   repeated Conflict initConflicts = 14;
-  optional TechTree techs = 15;
+  optional Research tech = 15;
   optional Crisis crises = 16;
+  optional PolicyPool policy_pool = 17;
 }
 
 message TurnLogEntry {
