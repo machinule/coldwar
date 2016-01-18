@@ -7,6 +7,8 @@ import "Leader.proto";
 import "Dissidents.proto";
 import "Tech.proto";
 import "Policies.proto";
+import "SuperpowerLeaders.proto";
+import "Treaties.proto";
 
 // GameSettings contains constants over the course of the game.
 // These are not logged each turn, but merely copied to the top level GameState.
@@ -21,6 +23,10 @@ message GameSettings {
   repeated TechGroupSettings tech_groups = 8;
   optional Research tech_init = 9;
   optional PolicyPoolSettings policy_pool_settings = 10;
+  repeated UssrLeader ussr_leader_settings = 11;
+  repeated UsaLeader usa_leader_settings = 12;
+  repeated TreatySettings treaty_settings = 13;
+  repeated Treaty init_treaties = 14;
 
   // USA Settings.
   optional string usa_alias = 100 [default = "USA"];
@@ -90,6 +96,8 @@ message GameSettings {
   optional int32 kgb_cov_income_modifier = 600 [default = 2];
   optional int32 cia_cov_income_modifier = 601 [default = 2];
 
+  optional int32 deescalation_point_cost = 700 [default = 1];
+  optional int32 deescalation_deterrence_cost = 703 [default = 5];
 }
 
 message ProvinceSettings {
@@ -106,5 +114,6 @@ message ProvinceSettings {
 	optional Province.Id ally_init = 11;
 	optional Province.Region region = 12;
 	optional Culture culture = 13;
-	optional Conflict conflictInit = 14;
+	optional Conflict conflict_init = 14;
+	optional bool coastal = 15 [default = false];
 }

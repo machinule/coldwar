@@ -40,6 +40,9 @@ message TechSettings {
 	optional string label = 3;
 	repeated Tech.Id prereqs = 4;
 	repeated Tech.Id unlocks = 5;
+	optional int32 deterrence = 6 [default = 0]; //Military techs only
+	optional int32 base_vp = 7 [default = 0]; //Space only
+	optional int32 first_vp = 8 [default = 0]; //Space only
 }
 
 message TechGroupSettings {

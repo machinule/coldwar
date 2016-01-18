@@ -5,6 +5,7 @@ package com.berserkbentobox.coldwar;
 import "Province.proto";
 import "Tech.proto";
 import "Policies.proto";
+import "SuperpowerLeaders.proto";
 //import "google/protobuf/descriptor.proto";
 
 //extend google.protobuf.MessageOptions {
@@ -28,6 +29,7 @@ message Move {
 	optional EstablishBaseMove establish_base_move = 102;
 	optional PoliticalPressureMove political_pressure_move = 103;
 	optional CoupMove coup_move = 104;
+	optional MilitaryActionMove military_action_move = 105;
 
 	optional ConflictOvertFundAttackerMove conflict_overt_fund_attacker_move = 110;
 	optional ConflictOvertFundDefenderMove conflict_overt_fund_defender_move = 111;
@@ -110,6 +112,10 @@ message ConflictOvertFundDefenderMove {
 	optional Province.Id province_id = 1;
 }
 
+message MilitaryActionMove {
+	optional Province.Id province_id = 1;
+}
+
 // ===============TECHS=================
 
 message ResearchMove {
@@ -124,7 +130,28 @@ message EnactPolicyMove {
 	optional int32 slot = 2;
 }
 
+// ============USSR LEADERS=============
+
+message SupportLeaderMove {
+	optional UssrLeader.Id leader_id = 1;
+	optional int32 magnitude = 2;
+}
+
+message SabotageLeaderMove {
+	optional UssrLeader.Id leader_id = 1;
+	optional int32 magnitude = 2;
+}
+
+// =============USA LEADERS=============
+
+message PrimaryMove {
+	optional UsaLeader.Id leader_id = 1;
+}
+
 // ========== SPECIAL ACTIONS ==========
+
+message DeescalationMove {
+}
 
 message FoundNATOMove {
 }

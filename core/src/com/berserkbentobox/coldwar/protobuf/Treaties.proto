@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+message TreatySettings {
+	optional Treaty.Id id = 1;
+	optional string label = 2;
+	optional int32 deterrence_reduce = 3;
+	optional int32 heat_reduce = 4;
+	repeated Treaty.Id prereqs = 5;
+	repeated Treaty.Id unlocks = 6;
+	optional int32 chance = 7;
+}
+
+message Treaty {
+	enum Id {
+		PARTIAL_TEST_BAN = 1;
+	}
+	optional Id id = 1;
+	optional bool signed = 2;
+}

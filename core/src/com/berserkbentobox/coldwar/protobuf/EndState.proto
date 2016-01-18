@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+message EndState {
+	enum EndCondition {
+		NUCLEAR_ANNIHILATION = 1;
+		TIME_EXPIRE = 2;
+		VICTORY_POINTS = 3;
+	}
+	optional bool usa_wins = 1;
+	optional bool ussr_wins = 2;
+	optional EndCondition win_type = 3; 
+}
