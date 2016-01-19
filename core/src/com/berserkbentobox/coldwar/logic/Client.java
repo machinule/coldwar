@@ -35,6 +35,7 @@ public abstract class Client {
 		
 		GameState.Builder state = GameState.newBuilder()
 				.setSettings(settings)
+				.setSuperpowerState(Superpower.buildInitialState(settings.getSuperpowerSettings()))
 				.setHeat(settings.getHeatSettings().getHeatInit())
 				.setSeed(settings.getSoftwareSettings().getSeedInit())
 				.setTurn(0);

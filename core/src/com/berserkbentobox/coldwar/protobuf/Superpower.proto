@@ -29,11 +29,16 @@ message UsaLeaderSettings {
 	optional UsaLeader.Party party = 3;
 	optional int32 start_year = 4;
 	optional int32 end_year = 5;
+	optional int32 init_num_terms_as_president = 6;
+	optional int32 init_num_terms_as_vice_president = 7;
+	optional bool init_available = 8;
 }
 
 // Settings for the USA presidency.
 message PresidencySettings {
 	optional int32 max_terms = 1;
+	optional UsaLeader.Id init_president = 2;
+	optional UsaLeader.Id init_vice_president = 3;
 }
 
 // Settings for the USSR.
@@ -50,7 +55,8 @@ message UssrLeaderSettings {
 	repeated SuperpowerLeaderTrait traits = 2;
 	optional int32 start_year = 4;
 	optional int32 end_year = 5;
-	optional int32 initial_support = 6;
+	optional int32 init_party_support = 6;
+	optional bool init_available = 7;
 }
 
 // Settings for the USSR secretariat.
@@ -60,6 +66,8 @@ message SecretariatSettings {
 	optional int32 troika_decay_magnitude = 3;
 	optional int32 troika_num_decay = 4;
 	optional int32 troika_decay_chance = 5;
+	optional UssrLeader.Id init_premier = 6;
+	repeated UssrLeader.Id init_troika = 7;
 }
 
 // ========== State ==========
@@ -89,13 +97,13 @@ message UsaLeader {
 	}
 	optional Id id = 1;
 	optional bool available = 2;
-	optional bool num_terms_as_president = 3;
-	optional bool num_terms_as_vice_president = 4;
+	optional int32 num_terms_as_president = 3;
+	optional int32 num_terms_as_vice_president = 4;
 }
 
 message UssrState {
-	optional UssrLeader premier = 1;
-	repeated UssrLeader troika = 2;
+	optional UssrLeader.Id premier = 1;
+	repeated UssrLeader.Id troika = 2;
 	repeated UssrLeader leader = 3;
 	optional int32 party_unity = 4;
 	optional InfluenceStoreState influence_store = 5;

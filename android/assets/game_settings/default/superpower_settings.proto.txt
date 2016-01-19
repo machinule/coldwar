@@ -23,7 +23,7 @@ ussr_settings {
   	id: STALIN
   	start_year: 1922
   	end_year: 1960
-  	initial_support: 4
+  	init_party_support: 4
   }
   secretariat_settings {
   	support_cost {
