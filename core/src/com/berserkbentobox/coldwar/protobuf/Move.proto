@@ -98,13 +98,6 @@ message Move {
 
 	optional EnactPolicyMove enact_policy_move = 160;
 
-	optional FoundCIAMove found_cia_move = 200;
-
-	optional FoundKGBMove found_kgb_move = 300;
-
-	optional FoundNATOMove found_nato_move = 1001;
-	optional FoundPactMove found_pact_move = 1002;
-
 	//Crises
 
 	optional USSRBerlinBlockadeLiftBlockadeMove ussr_berlin_blockade_lift_blockade_move = 2001;
@@ -204,18 +197,6 @@ message PrimaryMove {
 // ========== SPECIAL ACTIONS ==========
 
 message DeescalationMove {
-}
-
-message FoundNATOMove {
-}
-
-message FoundPactMove {
-}
-
-message FoundCIAMove {
-}
-
-message FoundKGBMove {
 }
 
 // =========== CRISES ==================

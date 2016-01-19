@@ -10,7 +10,6 @@ import java.util.function.Function;
 
 import com.berserkbentobox.coldwar.GameStateOuterClass.Crisis;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.SingleProvinceSettings;
 import com.berserkbentobox.coldwar.GameStateOuterClass.TurnLogEntry;
 import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
@@ -28,7 +27,6 @@ import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Conflict;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
-import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 
 /**
@@ -43,8 +41,6 @@ public class ComputedGameState {
 	public final int heat;
 	public final int partyUnity;
 	public final int patriotism;
-//	public final boolean kgbFounded;
-//	public final boolean ciaFounded;
 		
 	public final Map<Player, Integer> polStore;
 	public final Map<Player, Integer> milStore;
@@ -176,15 +172,9 @@ public class ComputedGameState {
 		EnumMap<Province.Id, Boolean> actedMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
 		this.acted = Collections.unmodifiableMap(actedMap);
 		
-		boolean ciaFoundedFlag = false;
-		boolean kgbFoundedFlag = false;
-		
 		// Computations:
 		// NOTE: computations should only expose a read-only version of themselves as public variables.
 		// For collections, Collections.unmodifiable* produces an appropriate view.
-		
-		ciaFoundedFlag = false; //this.state.getUsa().getCiaFounded();
-		kgbFoundedFlag = false; //this.state.getUssr().getKgbFounded();
 		
 		this.state.getSettings().getProvinceSettings().getProvinceList().forEach(p -> {
 			stabilityBaseMap.put(p.getId(), p.getStabilityBase());
@@ -389,18 +379,6 @@ public class ComputedGameState {
 						actedMap.put(id, true);
 					}
 				}
-				if (move.hasFoundNatoMove()) {
-					
-				}
-				if (move.hasFoundPactMove()) {
-					
-				}
-				if (move.hasFoundKgbMove()) {
-					kgbFoundedFlag = true;
-				}
-				if (move.hasFoundCiaMove()) {
-					ciaFoundedFlag = true;					
-				}
 				// Crises
 				if (move.hasUsaBerlinBlockadeAirliftMove()) {
 					int cost = 3; // TODO: Real value; starting MIL point cost
@@ -415,20 +393,6 @@ public class ComputedGameState {
 			}			
 		}
 		
-//		kgbFounded = kgbFoundedFlag;
-//		ciaFounded = ciaFoundedFlag;
-//		
-//		if (kgbFoundedFlag) {
-//			int covModifier = this.state.getSettings().getKgbCovIncomeModifier();
-//			covIncomeModifierMap.putIfAbsent(Player.USSR, 0);
-//			covIncomeModifierMap.computeIfPresent(Player.USSR, (p, i) -> i + covModifier);
-//		}
-//		
-//		if (ciaFoundedFlag) {
-//			int covModifier = this.state.getSettings().getCiaCovIncomeModifier();
-//			covIncomeModifierMap.putIfAbsent(Player.USA, 0);
-//			covIncomeModifierMap.computeIfPresent(Player.USA, (p, i) -> i + covModifier);
-//		}
 		totalInfluenceMap.replaceAll((p, infl) -> infl + polInfluenceMap.getOrDefault(p, 0) + milInfluenceMap.getOrDefault(p, 0) + covInfluenceMap.getOrDefault(p, 0));
 		governmentMap.forEach((p, gov) -> {
 			if (isStrongGov(gov)) {
@@ -560,10 +524,7 @@ public class ComputedGameState {
 		
 //		nextStateBuilder.getUsaBuilder().setPatriotism(patriotismCounter);
 //		nextStateBuilder.getUssrBuilder().setPartyUnity(partyUnityCounter);
-//		
-//		nextStateBuilder.getUsaBuilder().setCiaFounded(ciaFoundedFlag);
-//		nextStateBuilder.getUssrBuilder().setKgbFounded(kgbFoundedFlag);
-		
+//				
 //		nextStateBuilder.setTechs(state.getTechs());
 		
 		// Random events.
@@ -956,14 +917,6 @@ public class ComputedGameState {
 		return false;
 	}
 	
-//	public boolean isValidFoundKGBMove() {
-//		return !kgbFounded;
-//	}
-//	
-//	public boolean isValidFoundCIAMove() {
-//		return !ciaFounded;
-//	}
-	
 //	public boolean isTechAvailable(Player player, Tech.Id id) {
 //		if (!isTechCompleted(player, id)) {
 //			for (Tech.Id prereq : getTechSettings(id).getPrereqsList())
@@ -1341,18 +1294,6 @@ public class ComputedGameState {
 		}
 		if (move.hasEstablishBaseMove()) {
 			messages.add(String.format("%s established a base in %s.", player, move.getEstablishBaseMove().getProvinceId()));								
-		}
-		if (move.hasFoundCiaMove()) {
-			messages.add(String.format("%s founded the CIA.", player));												
-		}
-		if (move.hasFoundKgbMove()) {
-			messages.add(String.format("%s founded the KGB.", player));																
-		}
-		if (move.hasFoundPactMove()) {
-			messages.add(String.format("%s founded the Warsaw Pact.", player));																
-		}
-		if (move.hasFoundNatoMove()) {
-			messages.add(String.format("%s founded NATO.", player));												
 		}
 		if (move.hasFundDissidentsMove()) {
 			if (hasCovertVisibility) {

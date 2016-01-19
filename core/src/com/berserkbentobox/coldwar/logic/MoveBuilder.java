@@ -9,8 +9,6 @@ import com.berserkbentobox.coldwar.MoveOuterClass.CoupMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.CovertMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.DiplomacyMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.EstablishBaseMove;
-import com.berserkbentobox.coldwar.MoveOuterClass.FoundCIAMove;
-import com.berserkbentobox.coldwar.MoveOuterClass.FoundKGBMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.FundDissidentsMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.MilitaryMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
@@ -60,18 +58,6 @@ public class MoveBuilder {
 		this.moves.addMoves(
 				Move.newBuilder().setDiaCovMove(CovertMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
 		Logger.Dbg("Adding influence from covert points in " + id + " with magnitude " + magnitude);
-		this.computeState();
-	}
-	
-	public void foundKGB() {
-		this.moves.addMoves(
-				Move.newBuilder().setFoundKgbMove(FoundKGBMove.getDefaultInstance()));
-		this.computeState();
-	}
-
-	public void foundCIA() {
-		this.moves.addMoves(
-				Move.newBuilder().setFoundCiaMove(FoundCIAMove.getDefaultInstance()));
 		this.computeState();
 	}
 	
