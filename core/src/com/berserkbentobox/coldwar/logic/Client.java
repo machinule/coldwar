@@ -36,8 +36,8 @@ public abstract class Client {
 		GameState.Builder state = GameState.newBuilder()
 				.setSettings(settings)
 				.setSuperpowerState(Superpower.buildInitialState(settings.getSuperpowerSettings()))
+				.setPseudorandomState(Pseudorandom.buildInitialState(settings.getPseudorandomSettings()))
 				.setHeat(settings.getHeatSettings().getHeatInit())
-				.setSeed(settings.getSoftwareSettings().getSeedInit())
 				.setTurn(0);
 //				.setTechs(settings.getTechInit());
 		for (ProvinceSettings p : settings.getProvinceSettings().getProvinceList()) {

@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+message PseudorandomGameSettings {
+	optional int64 init_seed = 1;
+}
+
+message PseudorandomGameState {
+	optional int64 seed = 1;
+}

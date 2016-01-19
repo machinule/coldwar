@@ -10,10 +10,11 @@ import com.berserkbentobox.coldwar.Heat.HeatGameSettings;
 import com.berserkbentobox.coldwar.LeaderOuterClass.LeaderGameSettings;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveGameSettings;
 import com.berserkbentobox.coldwar.PolicyOuterClass.PolicyGameSettings;
-import com.berserkbentobox.coldwar.Software.SoftwareGameSettings;
+import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomGameSettings;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerGameSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyGameSettings;
 import com.berserkbentobox.coldwar.TreatyOuterClass.TreatyGameSettings;
+import com.berserkbentobox.coldwar.Version.VersionGameSettings;
 import com.google.protobuf.TextFormat;
 import com.google.protobuf.TextFormat.ParseException;
 
@@ -27,7 +28,7 @@ public class GameSettingsFactory {
 	public GameSettings load(String gameName) {
 		GameSettings.Builder settings = GameSettings.newBuilder();
 		try {
-			this.loadSoftware(settings.getSoftwareSettingsBuilder());
+			this.loadVersion(settings.getVersionSettingsBuilder());
 			this.loadPolicies(gameName, settings.getPolicySettingsBuilder());
 			this.loadLeaders(gameName, settings.getLeaderSettingsBuilder());
 			this.loadTreaties(gameName, settings.getTreatySettingsBuilder());
@@ -37,6 +38,7 @@ public class GameSettingsFactory {
 			this.loadTechnologies(gameName, settings.getTechnologySettingsBuilder());
 			this.loadHeat(gameName, settings.getHeatSettingsBuilder());
 			this.loadProvinces(gameName, settings.getProvinceSettingsBuilder());
+			this.loadPseudorandom(settings.getPseudorandomSettingsBuilder());
 		} catch (ParseException e) {
 			Logger.Info(e.toString());
 		}
@@ -52,9 +54,12 @@ public class GameSettingsFactory {
 		return new String(Gdx.files.internal(joinPath(this.settingsPath, fileName)).readString());
 	}
 	
-	protected void loadSoftware(SoftwareGameSettings.Builder settings) {
-		settings.setSeedInit(0);
+	protected void loadVersion(VersionGameSettings.Builder settings) {
 		settings.setVersion("0.0.1");
+	}
+	
+	protected void loadPseudorandom(PseudorandomGameSettings.Builder settings) {
+		settings.setInitSeed(0);
 	}
 	
 	protected void loadPolicies(String gameName, PolicyGameSettings.Builder settings) throws ParseException {

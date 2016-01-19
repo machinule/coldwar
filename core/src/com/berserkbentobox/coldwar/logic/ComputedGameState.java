@@ -528,7 +528,7 @@ public class ComputedGameState {
 //		nextStateBuilder.setTechs(state.getTechs());
 		
 		// Random events.
-		Random r = new Random(this.state.getSeed());
+		Random r = new Random(this.state.getPseudorandomState().getSeed());
 		Function<Integer, Boolean> happens = c -> r.nextInt(1000000) < c;
 		// TODO: LeaderSpawn
 		// TODO: LeaderDeath
@@ -778,7 +778,7 @@ public class ComputedGameState {
 		
 		// CRISES
 		
-		nextStateBuilder.setSeed(r.nextLong());
+		nextStateBuilder.getPseudorandomStateBuilder().setSeed(r.nextLong());
 		
 		this.patriotism = patriotismCounter;
 		this.partyUnity = partyUnityCounter;

@@ -10,14 +10,15 @@ import "Technology.proto";
 import "Policy.proto";
 import "Superpower.proto";
 import "Treaty.proto";
-import "Software.proto";
+import "Pseudorandom.proto";
 import "Move.proto";
 import "Event.proto";
+import "Version.proto";
 
 // GameSettings contains constants over the course of the game.
 // These are not logged each turn, but merely copied to the top level GameState.
 message GameSettings {
-	optional SoftwareGameSettings software_settings = 1;
+	optional VersionGameSettings version_settings = 1;
 	optional PolicyGameSettings policy_settings = 2;
 	optional LeaderGameSettings leader_settings = 3;
 	optional TreatyGameSettings treaty_settings = 4;
@@ -27,6 +28,7 @@ message GameSettings {
 	optional TechnologyGameSettings technology_settings = 8;
 	optional HeatGameSettings heat_settings = 9;
 	optional ProvinceGameSettings province_settings = 10;
+	optional PseudorandomGameSettings pseudorandom_settings = 11;
 }
 
 message ProvinceGameSettings {
