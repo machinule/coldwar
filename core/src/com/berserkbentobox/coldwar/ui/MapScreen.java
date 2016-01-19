@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import com.berserkbentobox.coldwar.ColdWarGame;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.SingleProvinceSettings;
 import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
 import com.berserkbentobox.coldwar.logic.Client;
@@ -53,7 +54,7 @@ public class MapScreen extends AbstractScreen {
 		final SuperpowerPane superpowerPane = new SuperpowerPane(this, this.client, skin);
 		superpowerPane.setDebug(Settings.isDebug());
 		final EnumMap<Province.Id, ProvinceInfoCard> cards = new EnumMap<Province.Id, ProvinceInfoCard>(Province.Id.class);
-		for (final ProvinceSettings p : this.client.initialGameState.getSettings().getProvincesList()) {
+		for (final SingleProvinceSettings p : this.client.initialGameState.getSettings().getProvinceSettings().getProvinceList()) {
 			if(p.getRegion() != Province.Region.SUPERPOWERS) {
 				cards.put(p.getId(), new ProvinceInfoCard(this.client, p, actionPane, warPane, skin));
 			}

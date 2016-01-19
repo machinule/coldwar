@@ -2,11 +2,11 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
-import "InfluenceStore.proto";
-
-message SovietUnion {
-	optional int32 party_unity = 1;
-	optional InfluenceStore influence_store = 2;
-	optional bool kgb_founded = 3 [default = false];
-}
+//import "InfluenceStore.proto";
+//
+//message SovietUnion {
+//	optional int32 party_unity = 1;
+//	optional InfluenceStore influence_store = 2;
+//	optional bool kgb_founded = 3 [default = false];
+//}
 

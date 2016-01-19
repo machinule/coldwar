@@ -1,0 +1,8 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+message SoftwareSettings {
+	optional string version = 1;
+	optional int64 seed_init = 2;
+}

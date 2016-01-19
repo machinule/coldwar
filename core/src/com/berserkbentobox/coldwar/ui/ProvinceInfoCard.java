@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.SingleProvinceSettings;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Province.Region;
 import com.berserkbentobox.coldwar.logic.Client;
@@ -20,7 +21,7 @@ import com.berserkbentobox.coldwar.logic.Client.Player;
 public class ProvinceInfoCard extends Table {
 
 	protected Client client;
-	protected ProvinceSettings province;
+	protected SingleProvinceSettings province;
 	protected Skin skin;
 	protected ActionPane actionPane;
 	protected WarPane warPane;
@@ -33,7 +34,7 @@ public class ProvinceInfoCard extends Table {
 	public boolean inConflict = false;
 	
 	public ProvinceInfoCard(final Client client,
-							final ProvinceSettings province,
+							final SingleProvinceSettings province,
 							final ActionPane actionPane,
 							final WarPane warPane,
 							final Skin skin) {

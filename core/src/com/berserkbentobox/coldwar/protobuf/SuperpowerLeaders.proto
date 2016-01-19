@@ -1,67 +1,67 @@
-syntax = "proto2";
-
-package com.berserkbentobox.coldwar;
-
-message Trait {
-	// Lots o' stuff
-}
-
-message UsaLeaderSettings {
-	optional UsaLeader.Id id = 1;
-	repeated Trait traits = 2;
-	optional UsaLeader.Party party = 3;
-	optional int32 start_year = 4;
-	optional int32 end_year = 5;
-}
-
-message UsaLeader {
-	enum Id {
-		EISENHOWER = 1;
-	}
-	enum Party {
-		REPUBLICAN = 1;
-		DEMOCRAT = 2;
-	}
-	optional Id id = 1;
-}
-
-message Presidency {
-	optional UsaLeader.Id president = 1;
-	optional UsaLeader.Id vice_president = 2;
-	repeated UsaLeader.Id unavailable = 3;
-	repeated UsaLeader.Id ex_vice_presidents = 4;
-}
-
-message PresidencySettings {
-	optional int32 term = 1;
-}
-
-message UssrLeaderSettings {
-	optional UssrLeader.Id id = 1;
-	repeated Trait traits = 2;
-	optional int32 start_year = 4;
-	optional int32 end_year = 5;
-	optional int32 initial_support = 6;
-}
-
-message UssrLeader {
-	enum Id {
-		STALIN = 1;
-	}
-	optional Id id = 1;
-	optional int32 party_support = 2;
-}
-
-message Secretariat {
-	optional UssrLeader.Id premier = 1;
-	repeated UssrLeader.Id troika = 2;
-	repeated UssrLeader.Id unavailable = 3;
-}
-
-message SecretariatSettings {
-	optional int32 support_cost = 1;
-	optional int32 sabotage_cost = 2;
-	optional int32 troika_decay_magnitude = 3;
-	optional int32 troika_num_decay = 4;
-	optional int32 troika_decay_chance = 5;
-}
+//syntax = "proto2";
+//
+//package com.berserkbentobox.coldwar;
+//
+//message Trait {
+//	// Lots o' stuff
+//}
+//
+//message UsaLeaderSettings {
+//	optional UsaLeader.Id id = 1;
+//	repeated Trait traits = 2;
+//	optional UsaLeader.Party party = 3;
+//	optional int32 start_year = 4;
+//	optional int32 end_year = 5;
+//}
+//
+//message UsaLeader {
+//	enum Id {
+//		EISENHOWER = 1;
+//	}
+//	enum Party {
+//		REPUBLICAN = 1;
+//		DEMOCRAT = 2;
+//	}
+//	optional Id id = 1;
+//}
+//
+//message Presidency {
+//	optional UsaLeader.Id president = 1;
+//	optional UsaLeader.Id vice_president = 2;
+//	repeated UsaLeader.Id unavailable = 3;
+//	repeated UsaLeader.Id ex_vice_presidents = 4;
+//}
+//
+//message PresidencySettings {
+//	optional int32 term = 1;
+//}
+//
+//message UssrLeaderSettings {
+//	optional UssrLeader.Id id = 1;
+//	repeated Trait traits = 2;
+//	optional int32 start_year = 4;
+//	optional int32 end_year = 5;
+//	optional int32 initial_support = 6;
+//}
+//
+//message UssrLeader {
+//	enum Id {
+//		STALIN = 1;
+//	}
+//	optional Id id = 1;
+//	optional int32 party_support = 2;
+//}
+//
+//message Secretariat {
+//	optional UssrLeader.Id premier = 1;
+//	repeated UssrLeader.Id troika = 2;
+//	repeated UssrLeader.Id unavailable = 3;
+//}
+//
+//message SecretariatSettings {
+//	optional int32 support_cost = 1;
+//	optional int32 sabotage_cost = 2;
+//	optional int32 troika_decay_magnitude = 3;
+//	optional int32 troika_num_decay = 4;
+//	optional int32 troika_decay_chance = 5;
+//}

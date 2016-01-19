@@ -1,0 +1,74 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+import "Province.proto";
+
+
+// ========== Settings ==========
+
+// The top-level settings proto included in GameSettings.
+// Immutable over the duration of a single game.
+message TechnologySettings {
+	repeated TechnologyGroupSettings technology_group = 1;
+	repeated Tech usa_init = 2;
+	repeated Tech ussr_init = 3;
+}
+
+// Settings for a single technology group.
+message TechnologyGroupSettings {
+	optional TechGroup.Id id = 1;
+	optional string label = 2;
+	repeated SingleTechnologySettings technology = 3;
+    optional int32 base_research_chance = 4;
+    optional int32 research_effect = 5; //Increase to probability when player spents points on research
+    // Mag = 1 >> +10% research for that tech group if research effect = 100000
+}
+
+// Settings for a single technology.
+message SingleTechnologySettings {
+	optional int32 num_progressions = 1;
+	optional Tech.Id id = 2;
+	optional string label = 3;
+	repeated Tech.Id requires = 4;
+	repeated Tech.Id unlocks = 5;
+	optional int32 deterrence = 6 [default = 0]; //Military techs only
+	optional int32 base_vp = 7 [default = 0]; //Space only
+	optional int32 first_vp = 8 [default = 0]; //Space only
+}
+
+message TechGroup {
+	enum Id {
+		NUCLEAR = 1;
+		SPACE = 2;
+		ARMY = 3;
+		SURFACE_NAVY = 4;
+		AIR = 5;
+		SUBMARINES = 6;
+	}
+	optional TechGroup.Id id = 1;
+	repeated Tech techs = 2;
+}
+
+message Tech {
+	enum Id {
+		ATOM_BOMB = 1;
+		HYDROGEN_BOMB = 2;
+
+		BASIC_ROCKETRY = 101;
+		ARTIFICIAL_SATELLITES = 102;
+		ANIMAL_IN_SPACE = 103;
+		MANNED_SPACEFLIGHT = 104;
+
+		VETERAN_ARMY = 201;
+
+		SUBMARINES = 202;
+	}
+	optional Id id = 1;
+	optional int32 progress = 2 [default = 0];
+}
+
+message Research {
+	optional TechGroup usa = 1;
+	optional TechGroup ussr = 2;
+}

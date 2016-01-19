@@ -1,0 +1,115 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+import "Cost.proto";
+import "InfluenceStore.proto";
+
+// ========== Settings ==========
+
+// The top-level settings proto included in GameSettings.
+// Immutable over the duration of a single game.
+message SuperpowerSettings {
+	optional UsaSettings usa_settings = 1;
+	optional UssrSettings ussr_settings = 2;
+}
+
+// Settings for the USA.
+message UsaSettings {
+	repeated UsaLeaderSettings leader_settings = 1;
+	optional PresidencySettings presidency_settings = 2;
+	optional InfluenceStoreSettings influence_store_settings = 3;
+	optional int32 init_patriotism = 4;
+}
+
+// Settings for a single USA leader.
+message UsaLeaderSettings {
+	optional UsaLeader.Id id = 1;
+	repeated SuperpowerLeaderTrait traits = 2;
+	optional UsaLeader.Party party = 3;
+	optional int32 start_year = 4;
+	optional int32 end_year = 5;
+}
+
+// Settings for the USA presidency.
+message PresidencySettings {
+	optional int32 max_terms = 1;
+}
+
+// Settings for the USSR.
+message UssrSettings {
+	repeated UssrLeaderSettings leader_settings = 1;
+	optional SecretariatSettings secretariat_settings = 2;
+	optional InfluenceStoreSettings influence_store_settings = 3;
+    optional int32 init_party_unity = 4;
+}
+
+// Settings for a single USSR leader.
+message UssrLeaderSettings {
+	optional UssrLeader.Id id = 1;
+	repeated SuperpowerLeaderTrait traits = 2;
+	optional int32 start_year = 4;
+	optional int32 end_year = 5;
+	optional int32 initial_support = 6;
+}
+
+// Settings for the USSR secretariat.
+message SecretariatSettings {
+	optional Cost support_cost = 1;
+	optional Cost sabotage_cost = 2;
+	optional int32 troika_decay_magnitude = 3;
+	optional int32 troika_num_decay = 4;
+	optional int32 troika_decay_chance = 5;
+}
+
+// ========== State ==========
+
+// The top-level state proto included in GameState.
+// Mutated each turn based on moves.
+message SuperpowerState {
+	optional UsaState usa_state = 1;
+	optional UssrState ussr_state = 2;
+}
+
+message UsaState {
+	optional UsaLeader.Id president = 1;
+	optional UsaLeader.Id vice_president = 2;
+	repeated UsaLeader leader = 3;
+	optional int32 patriotism = 4;
+	optional InfluenceStoreState influence_store = 5;
+}
+
+message UsaLeader {
+	enum Id {
+		EISENHOWER = 1;
+	}
+	enum Party {
+		REPUBLICAN = 1;
+		DEMOCRAT = 2;
+	}
+	optional Id id = 1;
+	optional bool available = 2;
+	optional bool num_terms_as_president = 3;
+	optional bool num_terms_as_vice_president = 4;
+}
+
+message UssrState {
+	optional UssrLeader premier = 1;
+	repeated UssrLeader troika = 2;
+	repeated UssrLeader leader = 3;
+	optional int32 party_unity = 4;
+	optional InfluenceStoreState influence_store = 5;
+}
+
+message UssrLeader {
+	enum Id {
+		STALIN = 1;
+	}
+	optional Id id = 1;
+	optional int32 party_support = 2;
+	optional bool available = 3;
+}
+
+message SuperpowerLeaderTrait {
+	// Lots o' stuff
+}

@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.SingleProvinceSettings;
 import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
 import com.berserkbentobox.coldwar.Logger;
@@ -29,7 +30,7 @@ public class ActionPane extends FooterPane {
 	}
 
 	@Override
-	public void onSelect(final ProvinceSettings province) {
+	public void onSelect(final SingleProvinceSettings province) {
 		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
 		
 		DynamicButton diplomaticInfluenceButton;
@@ -255,7 +256,7 @@ public class ActionPane extends FooterPane {
 		this.row();
 	}
 	
-	protected String formattedLabel(final ProvinceSettings province) {
+	protected String formattedLabel(final SingleProvinceSettings province) {
 		String ret = province.getLabel() + " | " + province.getStabilityBase();
 		int modifier = client.getMoveBuilder().getStabilityModifier(province.getId());
 		if (modifier > 0) {
@@ -275,7 +276,7 @@ public class ActionPane extends FooterPane {
 		selected.isSelected = true;
 	}
 	
-	protected String getFormattedAdjacencies(final ProvinceSettings province) {
+	protected String getFormattedAdjacencies(final SingleProvinceSettings province) {
 		String ret = "";
 		int count = 0;
 		int max = province.getAdjacencyCount();
@@ -287,28 +288,28 @@ public class ActionPane extends FooterPane {
 		return ret;
 	}
 	
-	protected String getFormattedLeader(final ProvinceSettings province) {
+	protected String getFormattedLeader(final SingleProvinceSettings province) {
 		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
-		if (state.hasLeader(province.getId())) {
-			Leader l = state.leaders.get(province.getId());
-			String ret = l.getName();
-			ret += " (" + (state.year - l.getBirth()) + ") ";
-			switch (l.getType()) {
-				case POLITICAL:
-					ret += "+" + Settings.getConstInt("leader_income_pol") + " POL";
-					break;
-				case MILITARY:
-					ret += "+" + Settings.getConstInt("leader_income_mil") + " MIL";
-					break;
-				case COVERT:
-					ret += "+" + Settings.getConstInt("leader_income_cov") + " COV";
-					break;
-				default:
-					break;
-			}
-			return ret;
-		}
-		else
+//		if (state.hasLeader(province.getId())) {
+//			Leader l = state.leaders.get(province.getId());
+//			String ret = l.getName();
+//			ret += " (" + (state.year - l.getBirth()) + ") ";
+//			switch (l.getType()) {
+//				case POLITICAL:
+//					ret += "+" + Settings.getConstInt("leader_income_pol") + " POL";
+//					break;
+//				case MILITARY:
+//					ret += "+" + Settings.getConstInt("leader_income_mil") + " MIL";
+//					break;
+//				case COVERT:
+//					ret += "+" + Settings.getConstInt("leader_income_cov") + " COV";
+//					break;
+//				default:
+//					break;
+//			}
+//			return ret;
+//		}
+//		else
 			return "None";
 	}
 }

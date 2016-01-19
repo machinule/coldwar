@@ -2,10 +2,11 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
+import "Cost.proto";
 import "Province.proto";
-import "Tech.proto";
-import "Policies.proto";
-import "SuperpowerLeaders.proto";
+import "Technology.proto";
+import "Policy.proto";
+import "Superpower.proto";
 //import "google/protobuf/descriptor.proto";
 
 //extend google.protobuf.MessageOptions {
@@ -13,6 +14,33 @@ import "SuperpowerLeaders.proto";
 //  optional int32 mil_cost = 76001;
 //  optional int32 cov_cost = 76002;
 //}
+
+// ========== Settings ==========
+
+// The top-level settings proto included in GameSettings.
+// Immutable over the duration of a single game.
+// TODO: this should probably be empty, and have settings included from other parts.
+message MoveSettings {
+	optional Cost dia_dip_move_cost = 1;
+	optional Cost dia_mil_move_cost = 2;
+	optional Cost dia_cov_move_cost = 3;
+
+	optional Cost fund_dissidents_move_cost = 101;
+	optional Cost establish_base_move_cost = 102;
+	optional Cost political_pressure_move_cost = 103;
+	optional Cost coup_move_cost = 104;
+	optional Cost military_action_move_cost = 105;
+
+	optional Cost conflict_overt_fund_attacker_move_cost = 110;
+	optional Cost conflict_overt_fund_defender_move_cost = 111;
+  optional int32 coup_success_chance = 500;
+  optional int32 coup_leader_chance = 501;
+  optional int32 coup_backfire_chance = 502;
+
+  optional int32 conflict_leader_modifier = 510;
+
+  optional Cost deescalation_cost = 700;
+}
 
 message MoveList {
 	repeated Move moves = 1;
@@ -121,13 +149,6 @@ message MilitaryActionMove {
 message ResearchMove {
 	optional TechGroup.Id tech_id = 1;
 	optional int32 magnitude = 2;
-}
-
-// ==============POLICIES===============
-
-message EnactPolicyMove {
-	optional Policy.Id policy_id = 1;
-	optional int32 slot = 2;
 }
 
 // ============USSR LEADERS=============

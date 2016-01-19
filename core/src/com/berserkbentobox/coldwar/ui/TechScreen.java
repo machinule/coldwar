@@ -13,9 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.berserkbentobox.coldwar.ColdWarGame;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.Settings;
-import com.berserkbentobox.coldwar.TechOuterClass.Tech;
-import com.berserkbentobox.coldwar.TechOuterClass.TechGroup;
-import com.berserkbentobox.coldwar.TechOuterClass.TechSettings;
+import com.berserkbentobox.coldwar.Technology.SingleTechnologySettings;
+import com.berserkbentobox.coldwar.Technology.Tech;
+import com.berserkbentobox.coldwar.Technology.TechGroup;
+import com.berserkbentobox.coldwar.Technology.TechnologyGroupSettings;
+import com.berserkbentobox.coldwar.Technology.TechnologySettings;
 import com.berserkbentobox.coldwar.logic.Client;
 
 public class TechScreen extends AbstractScreen {
@@ -42,8 +44,8 @@ public class TechScreen extends AbstractScreen {
 		techs.setDebug(Settings.isDebug());
 
 		final EnumMap<Tech.Id, TechCard> cards = new EnumMap<Tech.Id, TechCard>(Tech.Id.class);
-		for (final TechGroup g : this.client.initialGameState.getSettings().getTechsList()) {
-			for (final TechSettings t : g.getTechSettingsList())
+		for (final TechnologyGroupSettings g : this.client.initialGameState.getSettings().getTechnologySettings().getTechnologyGroupList()) {
+			for (final SingleTechnologySettings t : g.getTechnologyList())
 				cards.put(t.getId(), new TechCard(this.client, t.getId(), skin));
 		}
 		

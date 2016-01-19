@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
-import "Leader.proto";
+//import "Leader.proto";
 import "Dissidents.proto";
 
 message Province {
@@ -141,17 +141,17 @@ message Province {
 	optional Id base = 9;
 	optional Id ally = 10;
 	optional bool has_leader = 11;
-	optional Leader leader = 12;
+//	optional Leader leader = 12;
 	optional bool has_dissidents = 13;
 	optional Dissidents dissidents = 14;
 	optional Conflict conflict = 15;
 }
 
-message LeaderList {
-	repeated Leader leaders = 1;
-	optional Province.Id province = 2;
-	optional Culture culture = 3;
-}
+//message LeaderList {
+//	repeated Leader leaders = 1;
+//	optional Province.Id province = 2;
+//	optional Leader.Culture culture = 3;
+//}
 
 message Conflict {
 

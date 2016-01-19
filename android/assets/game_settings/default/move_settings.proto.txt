@@ -1,0 +1,36 @@
+dia_dip_move_cost {
+	political_points: 1
+}
+dia_mil_move_cost {
+	military_points: 1
+}
+dia_cov_move_cost {
+	covert_points: 1
+}
+fund_dissidents_move_cost {
+	covert_points: 1
+}
+establish_base_move_cost {
+	military_points: 5
+}
+political_pressure_move_cost {
+	political_points: 2
+}
+coup_move_cost {
+	military_points: 1
+	covert_points: 1
+}
+military_action_move_cost {
+	military_points: 1
+}
+conflict_overt_fund_attacker_move_cost {
+	political_points: 1
+}
+conflict_overt_fund_defender_move_cost {
+	political_points: 1
+}
+coup_success_chance: 650000
+coup_leader_chance: 200000
+coup_backfire_chance: 100000
+
+conflict_leader_modifier: 50000

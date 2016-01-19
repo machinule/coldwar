@@ -11,6 +11,7 @@ import java.util.function.Function;
 import com.berserkbentobox.coldwar.GameStateOuterClass.Crisis;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.SingleProvinceSettings;
 import com.berserkbentobox.coldwar.GameStateOuterClass.TurnLogEntry;
 import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
 import com.berserkbentobox.coldwar.Logger;
@@ -28,9 +29,6 @@ import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Conflict;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
 import com.berserkbentobox.coldwar.Settings;
-import com.berserkbentobox.coldwar.TechOuterClass.Tech;
-import com.berserkbentobox.coldwar.TechOuterClass.TechGroup;
-import com.berserkbentobox.coldwar.TechOuterClass.TechSettings;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 
 /**
@@ -45,8 +43,8 @@ public class ComputedGameState {
 	public final int heat;
 	public final int partyUnity;
 	public final int patriotism;
-	public final boolean kgbFounded;
-	public final boolean ciaFounded;
+//	public final boolean kgbFounded;
+//	public final boolean ciaFounded;
 		
 	public final Map<Player, Integer> polStore;
 	public final Map<Player, Integer> milStore;
@@ -84,7 +82,7 @@ public class ComputedGameState {
 	public final Map<Province.Id, Integer> stabilityBase;
 	public final Map<Province.Id, Integer> stabilityModifier;
 	
-	public final Map<Province.Id, ProvinceSettings> provinceSettings;
+	public final Map<Province.Id, SingleProvinceSettings> provinceSettings;
 	
 	public final Map<Province.Id, Integer> coups;
 	
@@ -99,8 +97,8 @@ public class ComputedGameState {
 		
 		this.year = state.getTurn() + 1948;
 		int heatCounter = state.getHeat();
-		int partyUnityCounter = state.getUssr().getPartyUnity();
-		int patriotismCounter = state.getUsa().getPatriotism();
+		int partyUnityCounter = 0; //state.getUssr().getPartyUnity();
+		int patriotismCounter = 0; //state.getUsa().getPatriotism();
 		
 		Crisis.Builder crisis = state.getCrises().toBuilder();
 		
@@ -169,7 +167,7 @@ public class ComputedGameState {
 		EnumMap<Province.Id, Integer> stabilityModifierMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.stabilityModifier = Collections.unmodifiableMap(stabilityModifierMap);	
 
-		EnumMap<Province.Id, ProvinceSettings> provinceSettingsMap = new EnumMap<Province.Id, ProvinceSettings>(Province.Id.class);
+		EnumMap<Province.Id, SingleProvinceSettings> provinceSettingsMap = new EnumMap<Province.Id, SingleProvinceSettings>(Province.Id.class);
 		this.provinceSettings = Collections.unmodifiableMap(provinceSettingsMap);
 
 		EnumMap<Province.Id, Integer> coupMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
@@ -185,10 +183,10 @@ public class ComputedGameState {
 		// NOTE: computations should only expose a read-only version of themselves as public variables.
 		// For collections, Collections.unmodifiable* produces an appropriate view.
 		
-		ciaFoundedFlag = this.state.getUsa().getCiaFounded();
-		kgbFoundedFlag = this.state.getUssr().getKgbFounded();
+		ciaFoundedFlag = false; //this.state.getUsa().getCiaFounded();
+		kgbFoundedFlag = false; //this.state.getUssr().getKgbFounded();
 		
-		this.state.getSettings().getProvincesList().forEach(p -> {
+		this.state.getSettings().getProvinceSettings().getProvinceList().forEach(p -> {
 			stabilityBaseMap.put(p.getId(), p.getStabilityBase());
 			provinceSettingsMap.put(p.getId(), p);
 			regionTotalMap.put(p.getRegion(), regionTotalMap.getOrDefault(p.getRegion(), 0) + 1);
@@ -199,7 +197,7 @@ public class ComputedGameState {
 			baseMap.put(p.getId(), toPlayer(p.getBase()));
 			governmentMap.put(p.getId(), p.getGov());
 			actedMap.put(p.getId(), false);
-			leaderMap.put(p.getId(), p.getLeader());
+			//leaderMap.put(p.getId(), p.getLeader());
 			dissidentsMap.put(p.getId(), p.getDissidents());
 			activeConflictMap.put(p.getId(), p.getConflict());
 		});
@@ -211,21 +209,21 @@ public class ComputedGameState {
 			ussrAdjacencyMap.put(p.getId(), hasAdjacencyInfluence(Player.USSR, p.getId()));
 		});
 		
-		polStoreMap.put(Player.USA, state.getUsa().getInfluenceStore().getPolitical());
-		milStoreMap.put(Player.USA, state.getUsa().getInfluenceStore().getMilitary());
-		covStoreMap.put(Player.USA, state.getUsa().getInfluenceStore().getCovert());
+		polStoreMap.put(Player.USA, 0);//state.getUsa().getInfluenceStore().getPolitical());
+		milStoreMap.put(Player.USA, 0);//state.getUsa().getInfluenceStore().getMilitary());
+		covStoreMap.put(Player.USA, 0);//state.getUsa().getInfluenceStore().getCovert());
 		
-		polStoreMap.put(Player.USSR, state.getUssr().getInfluenceStore().getPolitical());
-		milStoreMap.put(Player.USSR, state.getUssr().getInfluenceStore().getMilitary());
-		covStoreMap.put(Player.USSR, state.getUssr().getInfluenceStore().getCovert());
+		polStoreMap.put(Player.USSR, 0);//state.getUssr().getInfluenceStore().getPolitical());
+		milStoreMap.put(Player.USSR, 0);//state.getUssr().getInfluenceStore().getMilitary());
+		covStoreMap.put(Player.USSR, 0);//state.getUssr().getInfluenceStore().getCovert());
 		
-		basePolIncomeMap.put(Player.USA, state.getSettings().getUsaPolIncomeBase());
-		baseMilIncomeMap.put(Player.USA, state.getSettings().getUsaMilIncomeBase());
-		baseCovIncomeMap.put(Player.USA, state.getSettings().getUsaCovIncomeBase());
+		basePolIncomeMap.put(Player.USA, state.getSettings().getSuperpowerSettings().getUsaSettings().getInfluenceStoreSettings().getPoliticalIncomeBase());
+		baseMilIncomeMap.put(Player.USA, state.getSettings().getSuperpowerSettings().getUsaSettings().getInfluenceStoreSettings().getMilitaryIncomeBase());
+		baseCovIncomeMap.put(Player.USA, state.getSettings().getSuperpowerSettings().getUsaSettings().getInfluenceStoreSettings().getCovertIncomeBase());
 
-		basePolIncomeMap.put(Player.USSR, state.getSettings().getUssrPolIncomeBase());
-		baseMilIncomeMap.put(Player.USSR, state.getSettings().getUssrMilIncomeBase());
-		baseCovIncomeMap.put(Player.USSR, state.getSettings().getUssrCovIncomeBase());
+		basePolIncomeMap.put(Player.USSR, state.getSettings().getSuperpowerSettings().getUssrSettings().getInfluenceStoreSettings().getPoliticalIncomeBase());
+		baseMilIncomeMap.put(Player.USSR, state.getSettings().getSuperpowerSettings().getUssrSettings().getInfluenceStoreSettings().getMilitaryIncomeBase());
+		baseCovIncomeMap.put(Player.USSR, state.getSettings().getSuperpowerSettings().getUssrSettings().getInfluenceStoreSettings().getCovertIncomeBase());
 
 		for (Player player : new Player[]{Player.USA, Player.USSR}) {
 			MoveList moves;
@@ -417,56 +415,56 @@ public class ComputedGameState {
 			}			
 		}
 		
-		kgbFounded = kgbFoundedFlag;
-		ciaFounded = ciaFoundedFlag;
-		
-		if (kgbFoundedFlag) {
-			int covModifier = this.state.getSettings().getKgbCovIncomeModifier();
-			covIncomeModifierMap.putIfAbsent(Player.USSR, 0);
-			covIncomeModifierMap.computeIfPresent(Player.USSR, (p, i) -> i + covModifier);
-		}
-		
-		if (ciaFoundedFlag) {
-			int covModifier = this.state.getSettings().getCiaCovIncomeModifier();
-			covIncomeModifierMap.putIfAbsent(Player.USA, 0);
-			covIncomeModifierMap.computeIfPresent(Player.USA, (p, i) -> i + covModifier);
-		}
+//		kgbFounded = kgbFoundedFlag;
+//		ciaFounded = ciaFoundedFlag;
+//		
+//		if (kgbFoundedFlag) {
+//			int covModifier = this.state.getSettings().getKgbCovIncomeModifier();
+//			covIncomeModifierMap.putIfAbsent(Player.USSR, 0);
+//			covIncomeModifierMap.computeIfPresent(Player.USSR, (p, i) -> i + covModifier);
+//		}
+//		
+//		if (ciaFoundedFlag) {
+//			int covModifier = this.state.getSettings().getCiaCovIncomeModifier();
+//			covIncomeModifierMap.putIfAbsent(Player.USA, 0);
+//			covIncomeModifierMap.computeIfPresent(Player.USA, (p, i) -> i + covModifier);
+//		}
 		totalInfluenceMap.replaceAll((p, infl) -> infl + polInfluenceMap.getOrDefault(p, 0) + milInfluenceMap.getOrDefault(p, 0) + covInfluenceMap.getOrDefault(p, 0));
 		governmentMap.forEach((p, gov) -> {
 			if (isStrongGov(gov)) {
 				stabilityModifierMap.compute(p, (q, mod) -> mod == null ? 1 : mod + 1 );
 			}
 		});
-		leaderMap.forEach((p, l) -> {
-			if(hasLeader(p)) {
-				stabilityModifierMap.compute(p, (q, mod) -> mod == null ? 1 : mod + 1 );
-				Leader.Type type = l.getType();
-				Player player = getAlly(p);
-				if(player != null) {
-					int lead_income;
-					switch (type) {
-						case POLITICAL:
-							lead_income = Settings.getConstInt("leader_income_pol");
-							polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
-							break;
-						case MILITARY:
-							lead_income = Settings.getConstInt("leader_income_mil");
-							polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
-							break;
-						case COVERT:
-							lead_income = Settings.getConstInt("leader_income_cov");
-							polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
-							break;
-						default:
-							Logger.Err("Leader " + l.getName() + " has no type!");
-							break;				
-					}
-				}
-				if(type == Leader.Type.ISOLATIONIST) {
-					polInfluenceMap.compute(p, (i, infl) -> infl == null ? -1 * inflSign(player) : infl + -1 * inflSign(player));
-				}
-			}
-		});
+//		leaderMap.forEach((p, l) -> {
+//			if(hasLeader(p)) {
+//				stabilityModifierMap.compute(p, (q, mod) -> mod == null ? 1 : mod + 1 );
+//				Leader.Type type = l.getType();
+//				Player player = getAlly(p);
+//				if(player != null) {
+//					int lead_income;
+//					switch (type) {
+//						case POLITICAL:
+//							lead_income = Settings.getConstInt("leader_income_pol");
+//							polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
+//							break;
+//						case MILITARY:
+//							lead_income = Settings.getConstInt("leader_income_mil");
+//							polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
+//							break;
+//						case COVERT:
+//							lead_income = Settings.getConstInt("leader_income_cov");
+//							polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
+//							break;
+//						default:
+//							Logger.Err("Leader " + l.getName() + " has no type!");
+//							break;				
+//					}
+//				}
+//				if(type == Leader.Type.ISOLATIONIST) {
+//					polInfluenceMap.compute(p, (i, infl) -> infl == null ? -1 * inflSign(player) : infl + -1 * inflSign(player));
+//				}
+//			}
+//		});
 		dissidentsMap.forEach((p, dissidents) -> {
 			if(hasDissidents(p)) {
 				stabilityModifierMap.compute(p, (q, mod) -> mod == null ? -1 : mod - 1 );
@@ -486,11 +484,11 @@ public class ComputedGameState {
 			}
 		});
 		
-		heatCounter = Math.max(heatCounter - 10, this.state.getSettings().getHeatMin());
+		heatCounter = Math.max(heatCounter - 10, this.state.getSettings().getHeatSettings().getHeatMin());
 		this.heat = heatCounter;
 		
-		patriotismCounter = this.state.getUsa().getPatriotism();
-		partyUnityCounter = this.state.getUssr().getPartyUnity();
+		patriotismCounter = 0; //this.state.getUsa().getPatriotism();
+		partyUnityCounter = 0; //this.state.getUssr().getPartyUnity();
 		
 		if (this.heat > Settings.getConstInt("heat_bleed_threshold")) {
 			patriotismCounter -= Settings.getConstInt("heat_bleed");
@@ -551,22 +549,22 @@ public class ComputedGameState {
 			}
 		}
 		
-		nextStateBuilder.getUsaBuilder().getInfluenceStoreBuilder()
-		    .setPolitical(polStoreMap.get(Player.USA) + basePolIncomeMap.get(Player.USA) + polIncomeModifierMap.getOrDefault(Player.USA, 0))
-		    .setMilitary(milStoreMap.get(Player.USA) + baseMilIncomeMap.get(Player.USA) + milIncomeModifierMap.getOrDefault(Player.USA, 0))
-		    .setCovert(covStoreMap.get(Player.USA) + baseCovIncomeMap.get(Player.USA) + covIncomeModifierMap.getOrDefault(Player.USA, 0));
-		nextStateBuilder.getUssrBuilder().getInfluenceStoreBuilder()
-			.setPolitical(polStoreMap.get(Player.USSR) + basePolIncomeMap.get(Player.USSR) + polIncomeModifierMap.getOrDefault(Player.USSR, 0))
-			.setMilitary(milStoreMap.get(Player.USSR) + baseMilIncomeMap.get(Player.USSR) + milIncomeModifierMap.getOrDefault(Player.USSR, 0))
-			.setCovert(covStoreMap.get(Player.USSR) + baseCovIncomeMap.get(Player.USSR) + covIncomeModifierMap.getOrDefault(Player.USSR, 0));
+//		nextStateBuilder.getUsaBuilder().getInfluenceStoreBuilder()
+//		    .setPolitical(polStoreMap.get(Player.USA) + basePolIncomeMap.get(Player.USA) + polIncomeModifierMap.getOrDefault(Player.USA, 0))
+//		    .setMilitary(milStoreMap.get(Player.USA) + baseMilIncomeMap.get(Player.USA) + milIncomeModifierMap.getOrDefault(Player.USA, 0))
+//		    .setCovert(covStoreMap.get(Player.USA) + baseCovIncomeMap.get(Player.USA) + covIncomeModifierMap.getOrDefault(Player.USA, 0));
+//		nextStateBuilder.getUssrBuilder().getInfluenceStoreBuilder()
+//			.setPolitical(polStoreMap.get(Player.USSR) + basePolIncomeMap.get(Player.USSR) + polIncomeModifierMap.getOrDefault(Player.USSR, 0))
+//			.setMilitary(milStoreMap.get(Player.USSR) + baseMilIncomeMap.get(Player.USSR) + milIncomeModifierMap.getOrDefault(Player.USSR, 0))
+//			.setCovert(covStoreMap.get(Player.USSR) + baseCovIncomeMap.get(Player.USSR) + covIncomeModifierMap.getOrDefault(Player.USSR, 0));
 		
-		nextStateBuilder.getUsaBuilder().setPatriotism(patriotismCounter);
-		nextStateBuilder.getUssrBuilder().setPartyUnity(partyUnityCounter);
+//		nextStateBuilder.getUsaBuilder().setPatriotism(patriotismCounter);
+//		nextStateBuilder.getUssrBuilder().setPartyUnity(partyUnityCounter);
+//		
+//		nextStateBuilder.getUsaBuilder().setCiaFounded(ciaFoundedFlag);
+//		nextStateBuilder.getUssrBuilder().setKgbFounded(kgbFoundedFlag);
 		
-		nextStateBuilder.getUsaBuilder().setCiaFounded(ciaFoundedFlag);
-		nextStateBuilder.getUssrBuilder().setKgbFounded(kgbFoundedFlag);
-		
-		nextStateBuilder.setTechs(state.getTechs());
+//		nextStateBuilder.setTechs(state.getTechs());
 		
 		// Random events.
 		Random r = new Random(this.state.getSeed());
@@ -580,7 +578,7 @@ public class ComputedGameState {
 		// ProvinceRepublic
 		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
 			if (p.getGov() == Government.AUTOCRACY) {
-				if (happens.apply(this.state.getSettings().getRandomProvinceRepublicChance())) {
+				if (happens.apply(this.state.getSettings().getEventSettings().getRandomProvinceRepublicChance())) {
 					p.setGov(Government.REPUBLIC);
 					nextStateBuilder.getTurnLogBuilder()
 						.addEvents(Event.newBuilder()
@@ -595,7 +593,7 @@ public class ComputedGameState {
 		// ProvinceFauxPas
 		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
 			if (p.getInfluence() != 0) {
-				if (happens.apply(this.state.getSettings().getRandomProvinceFauxPasChance())) {
+				if (happens.apply(this.state.getSettings().getEventSettings().getRandomProvinceFauxPasChance())) {
 					int sgn;
 				    if (p.getInfluence() < 0) {
 				    	sgn = -1;
@@ -621,12 +619,12 @@ public class ComputedGameState {
 			if (!hasDissidents(p.getId())) {
 				int chance;
 				if (p.getGov() == Government.AUTOCRACY) 
-					chance = this.state.getSettings().getRandomAutocracyDissidentsChance();
+					chance = this.state.getSettings().getEventSettings().getRandomAutocracyDissidentsChance();
 				else if (p.getGov() == Government.COMMUNISM)
-					chance = this.state.getSettings().getRandomCommunismDissidentsChance();
+					chance = this.state.getSettings().getEventSettings().getRandomCommunismDissidentsChance();
 				else if (p.getGov() == Government.DEMOCRACY)
-					chance = this.state.getSettings().getRandomDemocracyDissidentsChance();
-				else chance = this.state.getSettings().getRandomProvinceDefaultDissidentsChance();
+					chance = this.state.getSettings().getEventSettings().getRandomDemocracyDissidentsChance();
+				else chance = this.state.getSettings().getEventSettings().getRandomProvinceDefaultDissidentsChance();
 				if (happens.apply(chance)) {
 					Logger.Dbg("Adding random dissidents to " + p.getId());
 					Dissidents.Builder d = Dissidents.newBuilder();
@@ -635,28 +633,28 @@ public class ComputedGameState {
 					if(!p.hasAlly()) {
 						switch (gov) {
 							case AUTOCRACY:
-								if(result < this.state.getSettings().getNeutralAutocracyDemocraticDissidents())
+								if(result < this.state.getSettings().getEventSettings().getNeutralAutocracyDemocraticDissidents())
 									d.setGov(Government.DEMOCRACY);
-								else if (result - this.state.getSettings().getNeutralAutocracyDemocraticDissidents()
-										< this.state.getSettings().getNeutralAutocracyCommunistDissidents())
+								else if (result - this.state.getSettings().getEventSettings().getNeutralAutocracyDemocraticDissidents()
+										< this.state.getSettings().getEventSettings().getNeutralAutocracyCommunistDissidents())
 									d.setGov(Government.COMMUNISM);
 								else
 									d.setGov(Government.REPUBLIC);
 								break;
 							case REPUBLIC:
-								if(result < this.state.getSettings().getNeutralRepublicDemocraticDissidents())
+								if(result < this.state.getSettings().getEventSettings().getNeutralRepublicDemocraticDissidents())
 									d.setGov(Government.DEMOCRACY);
-								else if (result - this.state.getSettings().getNeutralRepublicDemocraticDissidents() < 
-										this.state.getSettings().getNeutralRepublicCommunistDissidents())
+								else if (result - this.state.getSettings().getEventSettings().getNeutralRepublicDemocraticDissidents() < 
+										this.state.getSettings().getEventSettings().getNeutralRepublicCommunistDissidents())
 									d.setGov(Government.COMMUNISM);
 								else
 									d.setGov(Government.REPUBLIC);
 								break;
 							case DEMOCRACY:
-								if(happens.apply(this.state.getSettings().getNeutralDemocracyDemocraticDissidents()))
+								if(happens.apply(this.state.getSettings().getEventSettings().getNeutralDemocracyDemocraticDissidents()))
 									d.setGov(Government.DEMOCRACY);
-								else if (result - this.state.getSettings().getNeutralDemocracyDemocraticDissidents() < 
-										this.state.getSettings().getNeutralDemocracyCommunistDissidents())
+								else if (result - this.state.getSettings().getEventSettings().getNeutralDemocracyDemocraticDissidents() < 
+										this.state.getSettings().getEventSettings().getNeutralDemocracyCommunistDissidents())
 									d.setGov(Government.COMMUNISM);
 								else
 									d.setGov(Government.REPUBLIC);
@@ -669,28 +667,28 @@ public class ComputedGameState {
 					} else {
 						switch (gov) {
 							case AUTOCRACY:
-								if(happens.apply(this.state.getSettings().getInfluencedAutocracyNeutralDissidents()))
+								if(happens.apply(this.state.getSettings().getEventSettings().getInfluencedAutocracyNeutralDissidents()))
 									d.setGov(Government.REPUBLIC);
-								else if (result - this.state.getSettings().getInfluencedAutocracyNeutralDissidents() < 
-										this.state.getSettings().getInfluencedAutocracyOpposingDissidents())
+								else if (result - this.state.getSettings().getEventSettings().getInfluencedAutocracyNeutralDissidents() < 
+										this.state.getSettings().getEventSettings().getInfluencedAutocracyOpposingDissidents())
 									d.setGov(getAlly(p.getId()) == Player.USA ? Government.DEMOCRACY : Government.COMMUNISM);
 								else
 									d.setGov(getIdealGov(getAlly(p.getId())));
 								break;
 							case REPUBLIC:
-								if(happens.apply(this.state.getSettings().getInfluencedRepublicNeutralDissidents()))
+								if(happens.apply(this.state.getSettings().getEventSettings().getInfluencedRepublicNeutralDissidents()))
 									d.setGov(Government.REPUBLIC);
-								else if (result - this.state.getSettings().getInfluencedRepublicNeutralDissidents() < 
-										this.state.getSettings().getInfluencedRepublicOpposingDissidents())
+								else if (result - this.state.getSettings().getEventSettings().getInfluencedRepublicNeutralDissidents() < 
+										this.state.getSettings().getEventSettings().getInfluencedRepublicOpposingDissidents())
 									d.setGov(getAlly(p.getId()) == Player.USA ? Government.DEMOCRACY : Government.COMMUNISM);
 								else
 									d.setGov(getIdealGov(getAlly(p.getId())));
 								break;
 							case DEMOCRACY:
-								if(happens.apply(this.state.getSettings().getInfluencedDemocracyDemocraticDissidents()))
+								if(happens.apply(this.state.getSettings().getEventSettings().getInfluencedDemocracyDemocraticDissidents()))
 									d.setGov(Government.REPUBLIC);
-								else if (result - this.state.getSettings().getInfluencedDemocracyDemocraticDissidents() < 
-										this.state.getSettings().getInfluencedDemocracyCommunistDissidents())
+								else if (result - this.state.getSettings().getEventSettings().getInfluencedDemocracyDemocraticDissidents() < 
+										this.state.getSettings().getEventSettings().getInfluencedDemocracyCommunistDissidents())
 									d.setGov(getAlly(p.getId()) == Player.USA ? Government.DEMOCRACY : Government.COMMUNISM);
 								else
 									d.setGov(getIdealGov(getAlly(p.getId())));
@@ -718,9 +716,9 @@ public class ComputedGameState {
 			if (hasDissidents(p.getId())) {
 				int chance;
 				if (p.getGov() == Government.DEMOCRACY) {
-					chance = this.state.getSettings().getRandomProvinceDemocracyDissidentsSuppressedChance();
+					chance = this.state.getSettings().getEventSettings().getRandomProvinceDemocracyDissidentsSuppressedChance();
 				} else {
-					chance = this.state.getSettings().getRandomProvinceDefaultDissidentsSuppressedChance();
+					chance = this.state.getSettings().getEventSettings().getRandomProvinceDefaultDissidentsSuppressedChance();
 				}
 				if (happens.apply(chance)) {
 					Logger.Vrb("Dissidents suppressed in " + p.getId());
@@ -774,7 +772,7 @@ public class ComputedGameState {
 					} else if(c.getAttackerProgress() >= c.getGoal()) {
 						int newInfl = 0;
 						p.setGov(c.getRebels().getGov());
-						p.setLeader(c.getRebels().getLeader());
+//						p.setLeader(c.getRebels().getLeader());
 						if(p.getHasLeader())
 							newInfl ++;
 						if(isStrongGov(p.getGov()))
@@ -803,7 +801,7 @@ public class ComputedGameState {
 		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
 			if (coups.getOrDefault(p.getId(), 0) != 0) {
 				int result = coups.get(p.getId());
-				if (happens.apply(this.state.getSettings().getCoupSuccessChance())) {
+				if (happens.apply(this.state.getSettings().getMoveSettings().getCoupSuccessChance())) {
 					p.setInfluence(result);
 					Logger.Dbg("Coup success in " + p.getId() + "; result = " + result);
 				}
@@ -827,7 +825,7 @@ public class ComputedGameState {
 		int ussrCentralAmerica = 0, usaCentralAmerica = 0,
 			ussrSouthAmerica = 0, usaSouthAmerica = 0;
 		
-		for (ProvinceSettings p : this.state.getSettings().getProvincesList()) {
+		for (SingleProvinceSettings p : this.state.getSettings().getProvinceSettings().getProvinceList()) {
 			switch (p.getRegion()) {
 				case CENTRAL_AMERICA:
 					if (getAlly(p.getId()) == Player.USSR)
@@ -857,8 +855,8 @@ public class ComputedGameState {
 		ussrRegionControlMap.put(Province.Region.CENTRAL_AMERICA, ussrCentralAmerica);
 		ussrRegionControlMap.put(Province.Region.SOUTH_AMERICA, ussrSouthAmerica);
 		
-		nextStateBuilder.getUsaBuilder().setPatriotism(patriotism);
-		nextStateBuilder.getUssrBuilder().setPartyUnity(partyUnity);
+//		nextStateBuilder.getUsaBuilder().setPatriotism(patriotism);
+//		nextStateBuilder.getUssrBuilder().setPartyUnity(partyUnity);
 		
 		if(getPatriotismModifier() <= 0) {} // Lose
 		if(getPartyUnityModifier() <= 0) {} // Lose
@@ -958,22 +956,22 @@ public class ComputedGameState {
 		return false;
 	}
 	
-	public boolean isValidFoundKGBMove() {
-		return !kgbFounded;
-	}
+//	public boolean isValidFoundKGBMove() {
+//		return !kgbFounded;
+//	}
+//	
+//	public boolean isValidFoundCIAMove() {
+//		return !ciaFounded;
+//	}
 	
-	public boolean isValidFoundCIAMove() {
-		return !ciaFounded;
-	}
-	
-	public boolean isTechAvailable(Player player, Tech.Id id) {
-		if (!isTechCompleted(player, id)) {
-			for (Tech.Id prereq : getTechSettings(id).getPrereqsList())
-				if(!isTechCompleted(player, prereq)) return false;
-			return true;
-		}
-		return false;
-	}
+//	public boolean isTechAvailable(Player player, Tech.Id id) {
+//		if (!isTechCompleted(player, id)) {
+//			for (Tech.Id prereq : getTechSettings(id).getPrereqsList())
+//				if(!isTechCompleted(player, prereq)) return false;
+//			return true;
+//		}
+//		return false;
+//	}
 	
 	// Crises
 	
@@ -1225,13 +1223,13 @@ public class ComputedGameState {
 		return sum;
 	}
 	
-	public int getNetPatriotism() {
-		return state.getUsa().getPatriotism() + getPatriotismModifier();
-	}
-	
-	public int getNetPartyUnity() {
-		return state.getUssr().getPartyUnity() + getPartyUnityModifier();
-	}
+//	public int getNetPatriotism() {
+//		return state.getUsa().getPatriotism() + getPatriotismModifier();
+//	}
+//	
+//	public int getNetPartyUnity() {
+//		return state.getUssr().getPartyUnity() + getPartyUnityModifier();
+//	}
 	
 	protected int inflSign(Player player) {
 		return player == Player.USA ? 1 : -1;
@@ -1249,39 +1247,39 @@ public class ComputedGameState {
 		return state.getCrises().getUssrOption1();
 	}
 	
-	public TechGroup getTechGroup(TechGroup.Id id) {
-		for (TechGroup t : state.getSettings().getTechsList())
-			if (t.getId() == id) return t;
-		return null;
-	}
-
-	public TechSettings getTechSettings(Tech.Id id) {
-		for (TechGroup g : state.getSettings().getTechsList()) {
-			for (TechSettings t : g.getTechSettingsList())
-				if (t.getId() == id) return t;
-		}
-		return null;
-	}
-	
-	public Tech getTech(Player player, Tech.Id id) {
-		if(player == Player.USA) {
-			for (Tech t : state.getTechs().getUsaList()) {
-				if (t.getId() == id) return t;
-			}
-		} else {
-			for (Tech t : state.getTechs().getUssrList()) {
-				if (t.getId() == id) return t;
-			}
-		}
-		return Tech.getDefaultInstance();
-	}
-	
-	public boolean isTechCompleted(Player player, Tech.Id id) {
-		Tech t = getTech(player, id);
-		TechSettings ts = getTechSettings(id);
-		if (t.getProgress() >= ts.getProgressions()) return true;
-		return false;
-	}
+//	public TechGroup getTechGroup(TechGroup.Id id) {
+//		for (TechGroup t : state.getSettings().getTechsList())
+//			if (t.getId() == id) return t;
+//		return null;
+//	}
+//
+//	public TechSettings getTechSettings(Tech.Id id) {
+//		for (TechGroup g : state.getSettings().getTechsList()) {
+//			for (TechSettings t : g.getTechSettingsList())
+//				if (t.getId() == id) return t;
+//		}
+//		return null;
+//	}
+//	
+//	public Tech getTech(Player player, Tech.Id id) {
+//		if(player == Player.USA) {
+//			for (Tech t : state.getTechs().getUsaList()) {
+//				if (t.getId() == id) return t;
+//			}
+//		} else {
+//			for (Tech t : state.getTechs().getUssrList()) {
+//				if (t.getId() == id) return t;
+//			}
+//		}
+//		return Tech.getDefaultInstance();
+//	}
+//	
+//	public boolean isTechCompleted(Player player, Tech.Id id) {
+//		Tech t = getTech(player, id);
+//		TechSettings ts = getTechSettings(id);
+//		if (t.getProgress() >= ts.getProgressions()) return true;
+//		return false;
+//	}
 	
 	/*
 	 * Retrieve a list of events that happened since the previous turn, from player's perspective.

@@ -4,23 +4,20 @@ package com.berserkbentobox.coldwar;
 
 import "GameSettings.proto";
 import "Province.proto";
-import "UnitedStates.proto";
-import "SovietUnion.proto";
 import "Move.proto";
 import "Event.proto";
 import "Leader.proto";
 import "Dissidents.proto";
-import "Tech.proto";
-import "Policies.proto";
-import "SuperpowerLeaders.proto";
-import "Treaties.proto";
+import "Technology.proto";
+import "Policy.proto";
+import "Superpower.proto";
+import "Treaty.proto";
 import "EndState.proto";
 
 message GameState {
   optional int32 heat = 2; // 0 - 100
   repeated Province provinces = 3;
-  optional UnitedStates usa= 4;
-  optional SovietUnion ussr = 5;
+  optional SuperpowerState superpower_state = 4;
   optional int64 seed = 6;
   optional int32 turn = 9;
   optional TurnLogEntry turn_log = 10;
@@ -30,9 +27,7 @@ message GameState {
   repeated Conflict initConflicts = 14;
   optional Research tech = 15;
   optional Crisis crises = 16;
-  optional PolicyPool policy_pool = 17;
-  optional Presidency presidency = 18;
-  optional Secretariat secretariat = 19;
+  optional PolicyState policy_state = 17;
   repeated Treaty treaties = 20;
   optional EndState end_state = 21;
 }
