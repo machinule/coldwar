@@ -14,9 +14,10 @@ import "Superpower.proto";
 import "Treaty.proto";
 import "EndState.proto";
 import "Pseudorandom.proto";
+import "Heat.proto";
 
 message GameState {
-  optional int32 heat = 2; // 0 - 100
+  optional HeatGameState heat_state = 2;
   repeated Province provinces = 3;
   optional SuperpowerGameState superpower_state = 4;
   optional PseudorandomGameState pseudorandom_state = 5;

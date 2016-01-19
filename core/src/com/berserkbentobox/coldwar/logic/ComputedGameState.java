@@ -12,6 +12,7 @@ import com.berserkbentobox.coldwar.GameStateOuterClass.Crisis;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.GameStateOuterClass.TurnLogEntry;
+import com.berserkbentobox.coldwar.Heat.HeatGameState;
 import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Dissidents;
@@ -92,7 +93,7 @@ public class ComputedGameState {
 		this.ussrMoves = ussrMoves;
 		
 		this.year = state.getTurn() + 1948;
-		int heatCounter = state.getHeat();
+		int heatCounter = state.getHeatState().getHeat();
 		int partyUnityCounter = 0; //state.getUssr().getPartyUnity();
 		int patriotismCounter = 0; //state.getUsa().getPatriotism();
 		
@@ -448,7 +449,7 @@ public class ComputedGameState {
 			}
 		});
 		
-		heatCounter = Math.max(heatCounter - 10, this.state.getSettings().getHeatSettings().getHeatMin());
+		heatCounter = Math.max(heatCounter - 10, this.state.getSettings().getHeatSettings().getMinHeat());
 		this.heat = heatCounter;
 		
 		patriotismCounter = 0; //this.state.getUsa().getPatriotism();
@@ -494,7 +495,9 @@ public class ComputedGameState {
 						.setUssrMoves(this.ussrMoves)
 						.build())
 				.setTurn(this.state.getTurn() + 1)
-				.setHeat(heatCounter)
+				.setHeatState(HeatGameState.newBuilder()
+						.setHeat(heatCounter)
+						.build())
 				.addAllProvinces(this.state.getProvincesList());
 		
 		for (final Province.Builder province : nextStateBuilder.getProvincesBuilderList()) {

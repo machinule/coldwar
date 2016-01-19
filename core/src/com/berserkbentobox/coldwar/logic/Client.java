@@ -38,7 +38,7 @@ public abstract class Client {
 				.setSuperpowerState(Superpower.buildInitialState(settings.getSuperpowerSettings()))
 				.setPseudorandomState(Pseudorandom.buildInitialState(settings.getPseudorandomSettings()))
 				.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
-				.setHeat(settings.getHeatSettings().getHeatInit())
+				.setHeatState(Heat.buildInitialState(settings.getHeatSettings()))
 				.setTurn(0);
 //				.setTechs(settings.getTechInit());
 		for (ProvinceSettings p : settings.getProvinceSettings().getProvinceList()) {
