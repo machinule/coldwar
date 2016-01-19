@@ -2,8 +2,7 @@ package com.berserkbentobox.coldwar.logic;
 
 import com.berserkbentobox.coldwar.InfluenceStore.InfluenceStoreSettingsOrBuilder;
 import com.berserkbentobox.coldwar.InfluenceStore.InfluenceStoreState;
-import com.berserkbentobox.coldwar.Superpower.SuperpowerSettingsOrBuilder;
-import com.berserkbentobox.coldwar.Superpower.SuperpowerStateOrBuilder;
+import com.berserkbentobox.coldwar.InfluenceStore.InfluenceStoreStateOrBuilder;
 
 
 public class InfluenceStore {
@@ -16,11 +15,11 @@ public class InfluenceStore {
 		return state;
 	}
 	
-	static Status validateSettings(SuperpowerSettingsOrBuilder settings) {
+	static Status validateSettings(InfluenceStoreSettingsOrBuilder settings) {
 		return Status.OK;
 	}
 	
-	static Status validateState(SuperpowerStateOrBuilder state) {
+	static Status validateState(InfluenceStoreStateOrBuilder state) {
 		return Status.OK;
 	}
 

@@ -21,7 +21,7 @@ message GameSettings {
 	optional PolicySettings policy_settings = 2;
 	optional LeaderSettings leader_settings = 3;
 	optional TreatySettings treaty_settings = 4;
-	optional SuperpowerSettings superpower_settings = 5;
+	optional SuperpowerGameSettings superpower_settings = 5;
 	optional MoveSettings move_settings = 6;
 	optional EventSettings event_settings = 7;
 	optional TechnologySettings technology_settings = 8;

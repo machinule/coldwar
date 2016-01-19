@@ -1,8 +1,7 @@
 package com.berserkbentobox.coldwar.logic;
 
-import com.berserkbentobox.coldwar.Superpower.SuperpowerSettingsOrBuilder;
-import com.berserkbentobox.coldwar.Superpower.SuperpowerStateOrBuilder;
 import com.berserkbentobox.coldwar.Superpower.UsaLeaderState;
+import com.berserkbentobox.coldwar.Superpower.UsaLeaderStateOrBuilder;
 import com.berserkbentobox.coldwar.Superpower.UsaLeaderSettingsOrBuilder;
 
 	
@@ -17,11 +16,11 @@ public class UsaLeader {
 		return state;
 	}
 	
-	static Status validateSettings(SuperpowerSettingsOrBuilder settings) {
+	static Status validateSettings(UsaLeaderSettingsOrBuilder settings) {
 		return Status.OK;
 	}
 	
-	static Status validateState(SuperpowerStateOrBuilder state) {
+	static Status validateState(UsaLeaderStateOrBuilder state) {
 		return Status.OK;
 	}
 }

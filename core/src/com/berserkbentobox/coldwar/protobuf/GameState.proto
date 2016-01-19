@@ -17,7 +17,7 @@ import "EndState.proto";
 message GameState {
   optional int32 heat = 2; // 0 - 100
   repeated Province provinces = 3;
-  optional SuperpowerState superpower_state = 4;
+  optional SuperpowerGameState superpower_state = 4;
   optional int64 seed = 6;
   optional int32 turn = 9;
   optional TurnLogEntry turn_log = 10;

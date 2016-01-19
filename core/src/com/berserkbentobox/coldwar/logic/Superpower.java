@@ -2,27 +2,25 @@ package com.berserkbentobox.coldwar.logic;
 
 import java.util.stream.Collectors;
 
-import com.berserkbentobox.coldwar.InfluenceStore.InfluenceStoreSettingsOrBuilder;
-import com.berserkbentobox.coldwar.InfluenceStore.InfluenceStoreState;
-import com.berserkbentobox.coldwar.Superpower.SuperpowerSettingsOrBuilder;
-import com.berserkbentobox.coldwar.Superpower.SuperpowerState;
-import com.berserkbentobox.coldwar.Superpower.SuperpowerStateOrBuilder;
+import com.berserkbentobox.coldwar.Superpower.SuperpowerGameSettingsOrBuilder;
+import com.berserkbentobox.coldwar.Superpower.SuperpowerGameState;
+import com.berserkbentobox.coldwar.Superpower.SuperpowerGameStateOrBuilder;
 import com.berserkbentobox.coldwar.logic.UsaLeader;
 import com.berserkbentobox.coldwar.logic.UssrLeader;
 import com.berserkbentobox.coldwar.logic.InfluenceStore;
 
 public class Superpower {
 	
-	static Status validateSettings(SuperpowerSettingsOrBuilder settings) {
+	static Status validateSettings(SuperpowerGameSettingsOrBuilder settings) {
 		return Status.OK;
 	}
 
-	static Status validateState(SuperpowerStateOrBuilder state) {
+	static Status validateState(SuperpowerGameStateOrBuilder state) {
 		return Status.OK;
 	}
 	
-	static SuperpowerState.Builder buildInitialState(SuperpowerSettingsOrBuilder settings) {
-		SuperpowerState.Builder state = SuperpowerState.newBuilder();
+	static SuperpowerGameState.Builder buildInitialState(SuperpowerGameSettingsOrBuilder settings) {
+		SuperpowerGameState.Builder state = SuperpowerGameState.newBuilder();
 		state
 			.getUsaStateBuilder()
 				.setPresident(settings.getUsaSettings().getPresidencySettings().getInitPresident())
