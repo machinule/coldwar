@@ -39,6 +39,7 @@ public abstract class Client {
 				.setPseudorandomState(Pseudorandom.buildInitialState(settings.getPseudorandomSettings()))
 				.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
 				.setHeatState(Heat.buildInitialState(settings.getHeatSettings()))
+				.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
 				.setTurn(0);
 //				.setTechs(settings.getTechInit());
 		for (ProvinceSettings p : settings.getProvinceSettings().getProvinceList()) {

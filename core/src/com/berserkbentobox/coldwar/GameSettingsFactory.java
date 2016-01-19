@@ -13,7 +13,7 @@ import com.berserkbentobox.coldwar.Policy.PolicyGameSettings;
 import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomGameSettings;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerGameSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyGameSettings;
-import com.berserkbentobox.coldwar.TreatyOuterClass.TreatyGameSettings;
+import com.berserkbentobox.coldwar.Treaty.TreatyGameSettings;
 import com.berserkbentobox.coldwar.Version.VersionGameSettings;
 import com.google.protobuf.TextFormat;
 import com.google.protobuf.TextFormat.ParseException;

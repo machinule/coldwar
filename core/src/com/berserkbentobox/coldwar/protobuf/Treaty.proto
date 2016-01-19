@@ -2,6 +2,16 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
+// ========== Ids ==========
+
+enum TreatyId {
+	PARTIAL_TEST_BAN = 1;
+	NUCLEAR_NON_PROLIFERATION = 2;
+	SALT_I = 3;
+	THRESHOLD_TEST_BAN = 4;
+	STRATEGIC_ARMS_LIMITATION = 5;
+}
+
 // ========== Settings ==========
 
 // The top-level settings proto included in GameSettings.
@@ -12,11 +22,11 @@ message TreatyGameSettings {
 
 // Settings for a single treaty.
 message TreatySettings {
-	optional Treaty.Id id = 1;
+	optional TreatyId id = 1;
 	optional int32 deterrence_reduction = 2;
 	optional int32 heat_reduction = 3;
-	repeated Treaty.Id requires = 4;
-	repeated Treaty.Id unlocks = 5;
+	repeated TreatyId requires = 4;
+	repeated TreatyId unlocks = 5;
 	optional int32 signing_chance = 6;
 	optional bool init_signed = 7;
 }
@@ -25,19 +35,12 @@ message TreatySettings {
 
 // The top-level state proto included in GameState.
 // Mutated each turn based on moves.
-message TreatyState {
-	repeated Treaty treaty = 1;
+message TreatyGameState {
+	repeated TreatyState treaty = 1;
 }
 
 // The state for a single Treaty.
-message Treaty {
-	enum Id {
-		PARTIAL_TEST_BAN = 1;
-		NUCLEAR_NON_PROLIFERATION = 2;
-		SALT_I = 3;
-		THRESHOLD_TEST_BAN = 4;
-		STRATEGIC_ARMS_LIMITATION = 5;
-	}
-	optional Id id = 1;
+message TreatyState {
+	optional TreatyId id = 1;
 	optional bool signed = 2;
 }
