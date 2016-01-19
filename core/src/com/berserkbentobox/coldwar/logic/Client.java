@@ -39,22 +39,6 @@ public abstract class Client {
 				.setHeat(settings.getHeatSettings().getHeatInit())
 				.setSeed(settings.getSoftwareSettings().getSeedInit())
 				.setTurn(0);
-//				.setUsa(UnitedStates.newBuilder()
-//						.setInfluenceStore(InfluenceStore.newBuilder()
-//								.setPolitical(settings.getUsaPolStoreInit())
-//								.setMilitary(settings.getUsaMilStoreInit())
-//								.setCovert(settings.getUsaCovStoreInit())
-//								.build())
-//						.setPatriotism(settings.getUsaInitPatriotism())
-//						.build())
-//				.setUssr(SovietUnion.newBuilder()
-//						.setInfluenceStore(InfluenceStore.newBuilder()
-//								.setPolitical(settings.getUssrPolStoreInit())
-//								.setMilitary(settings.getUssrMilStoreInit())
-//								.setCovert(settings.getUssrCovStoreInit())
-//								.build())
-//						.setPartyUnity(settings.getUssrInitPartyUnity())
-//						.build())
 //				.setTechs(settings.getTechInit());
 		for (SingleProvinceSettings p : settings.getProvinceSettings().getProvinceList()) {
 			Province.Builder builder = state.addProvincesBuilder()
