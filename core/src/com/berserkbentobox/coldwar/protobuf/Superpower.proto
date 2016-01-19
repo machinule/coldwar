@@ -6,6 +6,7 @@ import "Cost.proto";
 import "InfluenceStore.proto";
 
 // ========== Ids ==========
+
 enum UsaLeaderId {
 	EISENHOWER = 1;
 }

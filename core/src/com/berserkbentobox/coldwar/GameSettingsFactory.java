@@ -9,7 +9,7 @@ import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceGameSettings;
 import com.berserkbentobox.coldwar.Heat.HeatGameSettings;
 import com.berserkbentobox.coldwar.LeaderOuterClass.LeaderGameSettings;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveGameSettings;
-import com.berserkbentobox.coldwar.PolicyOuterClass.PolicyGameSettings;
+import com.berserkbentobox.coldwar.Policy.PolicyGameSettings;
 import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomGameSettings;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerGameSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyGameSettings;
