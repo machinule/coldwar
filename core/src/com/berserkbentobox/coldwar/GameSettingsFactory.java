@@ -24,85 +24,90 @@ import com.google.protobuf.TextFormat.ParseException;
 
 public class GameSettingsFactory {
 	private String settingsPath = "";
+	
 	public GameSettingsFactory(String settingsPath) {
 		this.settingsPath = settingsPath;
 	}
-//	optional SoftwareSettings software_settings = 1;
-//	optional PolicySettings policy_settings = 2;
-//	optional LeaderSettings leader_settings = 3;
-//	optional TreatySettings treaty_settings = 4;
-//	optional SuperpowerSettings superpower_settings = 5;
-//	optional MoveSettings move_settings = 6;
-//	optional EventSettings event_settings = 7;
-//	optional TechnologySettings technology_settings = 8;
-//	optional HeatSettings heat_settings = 9;
-//	optional ProvinceSettings province_settings = 10;
-	public GameSettings Load(String gameName) {
+	
+	public GameSettings load(String gameName) {
 		GameSettings.Builder settings = GameSettings.newBuilder();
 		try {
-			this.LoadSoftware(settings.getSoftwareSettingsBuilder());
-			this.LoadPolicies(gameName, settings.getPolicySettingsBuilder());
-			this.LoadLeaders(gameName, settings.getLeaderSettingsBuilder());
-			this.LoadTreaties(gameName, settings.getTreatySettingsBuilder());
-			this.LoadSuperpowers(gameName, settings.getSuperpowerSettingsBuilder());
-			this.LoadMoves(gameName, settings.getMoveSettingsBuilder());
-			this.LoadEvents(gameName, settings.getEventSettingsBuilder());
-			this.LoadTechnologies(gameName, settings.getTechnologySettingsBuilder());
-			this.LoadHeat(gameName, settings.getHeatSettingsBuilder());
-			this.LoadProvinces(gameName, settings.getProvinceSettingsBuilder());
+			this.loadSoftware(settings.getSoftwareSettingsBuilder());
+			this.loadPolicies(gameName, settings.getPolicySettingsBuilder());
+			this.loadLeaders(gameName, settings.getLeaderSettingsBuilder());
+			this.loadTreaties(gameName, settings.getTreatySettingsBuilder());
+			this.loadSuperpowers(gameName, settings.getSuperpowerSettingsBuilder());
+			this.loadMoves(gameName, settings.getMoveSettingsBuilder());
+			this.loadEvents(gameName, settings.getEventSettingsBuilder());
+			this.loadTechnologies(gameName, settings.getTechnologySettingsBuilder());
+			this.loadHeat(gameName, settings.getHeatSettingsBuilder());
+			this.loadProvinces(gameName, settings.getProvinceSettingsBuilder());
 		} catch (ParseException e) {
 			Logger.Info(e.toString());
 		}
 		Logger.Info(settings.toString());
 		return settings.build();
 	}
-	private static String JoinPath(String a, String b) {
+	
+	private static String joinPath(String a, String b) {
 		return new File(a, b).toString();
 	}
-	protected String LoadFile(String fileName) {
-		return new String(Gdx.files.internal(JoinPath(this.settingsPath, fileName)).readString());
+	
+	protected String loadFile(String fileName) {
+		return new String(Gdx.files.internal(joinPath(this.settingsPath, fileName)).readString());
 	}
-	protected void LoadSoftware(SoftwareSettings.Builder settings) {
+	
+	protected void loadSoftware(SoftwareSettings.Builder settings) {
 		settings.setSeedInit(0);
 		settings.setVersion("0.0.1");
 	}
-	protected void LoadPolicies(String gameName, PolicySettings.Builder settings) throws ParseException {
-		String input = LoadFile(JoinPath(gameName, "policy_settings.proto.txt"));        
+	
+	protected void loadPolicies(String gameName, PolicySettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "policy_settings.proto.txt"));        
         TextFormat.merge(input, settings);
 	}
-	protected void LoadLeaders(String gameName, LeaderSettings.Builder settings) throws ParseException {
-		String input = LoadFile(JoinPath(gameName, "leader_settings.proto.txt"));        
+	
+	protected void loadLeaders(String gameName, LeaderSettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "leader_settings.proto.txt"));        
 	    TextFormat.merge(input, settings);
 	}
-	protected void LoadTreaties(String gameName, TreatySettings.Builder settings) throws ParseException {
-		String input = LoadFile(JoinPath(gameName, "treaty_settings.proto.txt"));        
+	
+	protected void loadTreaties(String gameName, TreatySettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "treaty_settings.proto.txt"));        
 		TextFormat.merge(input, settings);
 	}
-	protected void LoadSuperpowers(String gameName, SuperpowerSettings.Builder settings) throws ParseException {
-		String input = LoadFile(JoinPath(gameName, "superpower_settings.proto.txt"));        
+	
+	protected void loadSuperpowers(String gameName, SuperpowerSettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "superpower_settings.proto.txt"));        
 	    TextFormat.merge(input, settings);
 	}
-	protected void LoadMoves(String gameName, MoveSettings.Builder settings) throws ParseException {
-		String input = LoadFile(JoinPath(gameName, "move_settings.proto.txt"));        
+	
+	protected void loadMoves(String gameName, MoveSettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "move_settings.proto.txt"));        
 	    TextFormat.merge(input, settings);
 	}
-	protected void LoadEvents(String gameName, EventSettings.Builder settings) throws ParseException {
-		String input = LoadFile(JoinPath(gameName, "event_settings.proto.txt"));        
+	
+	protected void loadEvents(String gameName, EventSettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "event_settings.proto.txt"));        
 	    TextFormat.merge(input, settings);
 	}
-	protected void LoadTechnologies(String gameName, TechnologySettings.Builder settings) throws ParseException {
-		String input = LoadFile(JoinPath(gameName, "technology_settings.proto.txt"));        
+	
+	protected void loadTechnologies(String gameName, TechnologySettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "technology_settings.proto.txt"));        
         TextFormat.merge(input, settings);
 	}
-	protected void LoadHeat(String gameName, HeatSettings.Builder settings) throws ParseException {
-		String input = LoadFile(JoinPath(gameName, "heat_settings.proto.txt"));        
+	
+	protected void loadHeat(String gameName, HeatSettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "heat_settings.proto.txt"));        
         TextFormat.merge(input, settings);
 	}
-	protected void LoadProvinces(String gameName, ProvinceSettings.Builder settings) throws ParseException {
-		String input = LoadFile(JoinPath(gameName, "province_settings.proto.txt"));        
+	
+	protected void loadProvinces(String gameName, ProvinceSettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "province_settings.proto.txt"));        
         TextFormat.merge(input, settings);
 	}
-	public GameSettings New() {
-		return this.Load("default");
+	
+	public GameSettings newGameSettings() {
+		return this.load("default");
 	}
 }

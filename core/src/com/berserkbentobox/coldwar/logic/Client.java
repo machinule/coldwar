@@ -39,7 +39,7 @@ public abstract class Client {
 		return this.isWaitingOnPlayer;
 	}
 	protected GameState.Builder getInitialGameState() {
-		GameSettings settings = new GameSettingsFactory("game_settings").New();
+		GameSettings settings = new GameSettingsFactory("game_settings").newGameSettings();
 		
 		GameState.Builder state = GameState.newBuilder()
 				.setSettings(settings)
