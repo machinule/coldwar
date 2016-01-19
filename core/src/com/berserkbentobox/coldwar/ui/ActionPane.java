@@ -12,11 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
-import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
 import com.berserkbentobox.coldwar.Logger;
-import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.logic.Client;
 import com.berserkbentobox.coldwar.logic.ComputedGameState;
 

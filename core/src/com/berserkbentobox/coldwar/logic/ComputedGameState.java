@@ -13,7 +13,6 @@ import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.GameStateOuterClass.TurnLogEntry;
 import com.berserkbentobox.coldwar.Heat.HeatGameState;
-import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Dissidents;
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
@@ -72,7 +71,7 @@ public class ComputedGameState {
 	public final Map<Province.Id, Dissidents> dissidents;
 	public final Map<Province.Id, Player> bases;
 	public final Map<Province.Id, Government> governments;
-	public final Map<Province.Id, Leader> leaders;
+//	public final Map<Province.Id, Leader> leaders;
 	public final Map<Province.Id, Conflict> activeConflicts;
 	public final Map<Province.Id, Conflict> conflictZones;
 	
@@ -156,8 +155,8 @@ public class ComputedGameState {
 		EnumMap<Province.Id, Conflict> conflictZoneMap = new EnumMap<Province.Id, Conflict>(Province.Id.class);
 		this.conflictZones = Collections.unmodifiableMap(conflictZoneMap);
 		
-		EnumMap<Province.Id, Leader> leaderMap = new EnumMap<Province.Id, Leader>(Province.Id.class);
-		this.leaders = Collections.unmodifiableMap(leaderMap);
+//		EnumMap<Province.Id, Leader> leaderMap = new EnumMap<Province.Id, Leader>(Province.Id.class);
+//		this.leaders = Collections.unmodifiableMap(leaderMap);
 
 		EnumMap<Province.Id, Integer> stabilityBaseMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.stabilityBase = Collections.unmodifiableMap(stabilityBaseMap);
@@ -1072,11 +1071,11 @@ public class ComputedGameState {
 		return false;
 	}
 	
-	public boolean hasLeader(final Province.Id id) {
-		if( leaders.get(id) != Leader.getDefaultInstance() && leaders.get(id) != null )
-			return true;
-		return false;
-	}
+//	public boolean hasLeader(final Province.Id id) {
+//		if( leaders.get(id) != Leader.getDefaultInstance() && leaders.get(id) != null )
+//			return true;
+//		return false;
+//	}
 	
 	public Government getDissidentsGov(final Province.Id id) {
 		return dissidents.get(id).getGov();

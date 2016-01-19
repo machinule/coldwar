@@ -4,6 +4,20 @@ package com.berserkbentobox.coldwar;
 
 import "Province.proto";
 
+enum LeaderAllegiance {
+	NONE = 0;
+	ANTI_USA = 1;
+	ANTI_USSR = 2;
+}
+
+enum LeaderCulture {
+	SPANISH = 1;
+	FRENCH = 2;
+	PORTUGUESE = 3;
+	ENGLISH = 4;
+	GERMAN = 5;
+}
+
 // ========== Settings ==========
 
 // The top-level settings proto included in GameSettings.
@@ -16,31 +30,11 @@ message LeaderGameSettings {
 message LeaderSettings {
 	optional string id = 1;
 	optional int32 birth_year = 2;
-	optional Leader.Allegiance allegiance = 3;
+	optional LeaderAllegiance allegiance = 3;
 	optional int32 start_year = 4;
 	optional int32 end_year = 5;
-	optional Leader.Culture culture_restriction = 6;
+	optional LeaderCulture culture_restriction = 6;
 	optional Province.Id province_restriction = 7;
 	optional bool elected = 8;
 	optional bool isolationist = 9;
-}
-
-// ========== State ==========
-
-// Leader state is tracked as part of province state.
-
-message Leader {
-	enum Allegiance {
-		NONE = 0;
-		ANTI_USA = 1;
-		ANTI_USSR = 2;
-	}
-
-	enum Culture {
-		SPANISH = 1;
-		FRENCH = 2;
-		PORTUGUESE = 3;
-		ENGLISH = 4;
-		GERMAN = 5;
-	}
 }

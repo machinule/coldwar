@@ -179,13 +179,13 @@ public class ProvinceInfoCard extends Table {
 				c -> Color.BLACK,
 				skin
 		));
-		ret.add(new DynamicLabel(
-				client,
-				c -> c.getMoveBuilder().getComputedGameState().hasLeader(province.getId()) ? "LDR" :
-					 "",
-				c -> Color.BLACK,
-				skin
-		));
+//		ret.add(new DynamicLabel(
+//				client,
+//				c -> c.getMoveBuilder().getComputedGameState().hasLeader(province.getId()) ? "LDR" :
+//					 "",
+//				c -> Color.BLACK,
+//				skin
+//		));
 		return ret;
     }
     
