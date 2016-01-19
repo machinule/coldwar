@@ -14,15 +14,15 @@ import com.berserkbentobox.coldwar.ColdWarGame;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;
-import com.berserkbentobox.coldwar.Technology.Tech;
-import com.berserkbentobox.coldwar.Technology.TechGroup;
+import com.berserkbentobox.coldwar.Technology.TechnologyGroupId;
 import com.berserkbentobox.coldwar.Technology.TechnologyGroupSettings;
+import com.berserkbentobox.coldwar.Technology.TechnologyId;
 import com.berserkbentobox.coldwar.logic.Client;
 
 public class TechScreen extends AbstractScreen {
 
 	private Client client;
-	private TechGroup.Id activeTechGroup = TechGroup.Id.ARMY;
+	private TechnologyGroupId activeTechGroup = TechnologyGroupId.ARMY;
 	
 	public TechScreen(final ColdWarGame game, Client client) {
 		super(game);
@@ -42,24 +42,24 @@ public class TechScreen extends AbstractScreen {
 		techs.setFillParent(true);
 		techs.setDebug(Settings.isDebug());
 
-		final EnumMap<Tech.Id, TechCard> cards = new EnumMap<Tech.Id, TechCard>(Tech.Id.class);
+		final EnumMap<TechnologyId, TechCard> cards = new EnumMap<TechnologyId, TechCard>(TechnologyId.class);
 		for (final TechnologyGroupSettings g : this.client.initialGameState.getSettings().getTechnologySettings().getTechnologyGroupList()) {
 			for (final TechnologySettings t : g.getTechnologyList())
 				cards.put(t.getId(), new TechCard(this.client, t.getId(), skin));
 		}
 		
-		final Tech.Id[][] spaceTechPosition = {
-				{Tech.Id.BASIC_ROCKETRY},     			  
-				{Tech.Id.ARTIFICIAL_SATELLITES},     			  
-				{Tech.Id.ANIMAL_IN_SPACE},     			  
-				{Tech.Id.MANNED_SPACEFLIGHT}
+		final TechnologyId[][] spaceTechPosition = {
+				{TechnologyId.BASIC_ROCKETRY},     			  
+				{TechnologyId.ARTIFICIAL_SATELLITES},     			  
+				{TechnologyId.ANIMAL_IN_SPACE},     			  
+				{TechnologyId.MANNED_SPACEFLIGHT}
 			};
 		
-		final Tech.Id[][] milTechPosition = {   			  
-			{Tech.Id.HYDROGEN_BOMB, null}
+		final TechnologyId[][] milTechPosition = {   			  
+			{TechnologyId.HYDROGEN_BOMB, null}
 		};
 		
-		Tech.Id[][] activeTechPosition;
+		TechnologyId[][] activeTechPosition;
 		switch (activeTechGroup) {
 			case ARMY:
 				activeTechPosition = milTechPosition;
@@ -101,7 +101,7 @@ public class TechScreen extends AbstractScreen {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Dbg("\"Military\" tech button pressed.");
-				TechScreen.this.activeTechGroup = TechGroup.Id.ARMY;
+				TechScreen.this.activeTechGroup = TechnologyGroupId.ARMY;
 				TechScreen.this.stage.clear();
 				TechScreen.this.show();
 			}
@@ -111,7 +111,7 @@ public class TechScreen extends AbstractScreen {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Dbg("\"Space\" tech button pressed.");
-				TechScreen.this.activeTechGroup = TechGroup.Id.SPACE;
+				TechScreen.this.activeTechGroup = TechnologyGroupId.SPACE;
 				TechScreen.this.stage.clear();
 				TechScreen.this.show();
 			}

@@ -40,6 +40,7 @@ public abstract class Client {
 				.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
 				.setHeatState(Heat.buildInitialState(settings.getHeatSettings()))
 				.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
+				.setTechnologyState(Technology.buildInitialState(settings.getTechnologySettings()))
 				.setTurn(0);
 //				.setTechs(settings.getTechInit());
 		for (ProvinceSettings p : settings.getProvinceSettings().getProvinceList()) {

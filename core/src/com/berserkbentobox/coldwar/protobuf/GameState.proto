@@ -23,12 +23,12 @@ message GameState {
   optional PseudorandomGameState pseudorandom_state = 5;
   optional PolicyGameState policy_state = 6;
   optional TreatyGameState treaty_state = 7;
+  optional TechnologyGameState technology_state = 8;
   optional int32 turn = 9;
   optional TurnLogEntry turn_log = 10;
   optional GameSettings settings = 11;
   repeated Dissidents initDissidents = 13;
   repeated Conflict initConflicts = 14;
-  optional Research tech = 15;
   optional Crisis crises = 16;
   optional EndState end_state = 21;
 }

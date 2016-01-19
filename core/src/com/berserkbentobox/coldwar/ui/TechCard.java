@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import com.berserkbentobox.coldwar.Logger;
-import com.berserkbentobox.coldwar.Technology.Tech;
+import com.berserkbentobox.coldwar.Technology.TechnologyId;
 import com.berserkbentobox.coldwar.logic.Client;
 
 public class TechCard extends Table {
@@ -16,11 +16,11 @@ public class TechCard extends Table {
 	protected Color color;
 	protected Button infoBox;
 	
-	protected Tech.Id id;
+	protected TechnologyId id;
 //	protected TechSettings techSettings;
 	
 	public TechCard(final Client client,
-					final Tech.Id id,
+					final TechnologyId id,
 					final Skin skin) {
 		super();
 		this.client = client;
