@@ -20,14 +20,14 @@ import "Version.proto";
 message GameSettings {
 	optional VersionGameSettings version_settings = 1;
 	optional PolicyGameSettings policy_settings = 2;
-	optional LeaderGameSettings leader_settings = 3;
-	optional TreatyGameSettings treaty_settings = 4;
-	optional SuperpowerGameSettings superpower_settings = 5;
-	optional MoveGameSettings move_settings = 6;
-	optional EventGameSettings event_settings = 7;
-	optional TechnologyGameSettings technology_settings = 8;
-	optional HeatGameSettings heat_settings = 9;
-	optional ProvinceGameSettings province_settings = 10;
+	optional LeaderGameSettings leader_settings = 3; //TODO: cleanup
+	optional TreatyGameSettings treaty_settings = 4; //TODO: cleanup
+	optional SuperpowerGameSettings superpower_settings = 5; //TODO: cleanup
+	optional MoveGameSettings move_settings = 6; //TODO: cleanup
+	optional EventGameSettings event_settings = 7; //TODO: cleanup
+	optional TechnologyGameSettings technology_settings = 8; //TODO: cleanup
+	optional HeatGameSettings heat_settings = 9; //TODO: cleanup
+	optional ProvinceGameSettings province_settings = 10; //TODO: cleanup
 	optional PseudorandomGameSettings pseudorandom_settings = 11;
 }
 
