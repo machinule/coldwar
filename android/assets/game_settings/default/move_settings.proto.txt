@@ -34,3 +34,35 @@ coup_leader_chance: 200000
 coup_backfire_chance: 100000
 
 conflict_leader_modifier: 50000
+
+heat_bleed_threshold: 65
+heat_bleed: 5
+		
+non_adjacent_cost: 2
+
+leader_income_pol: 2
+leader_income_mil: 2
+leader_income_cov: 1
+		
+action_dissidents_cost: 2
+action_dissidents_heat: 4
+		
+action_pressure_cost: 2
+action_pressure_heat: 4
+action_pressure_heat_extra: 4
+		
+action_base_cost: 2
+action_base_heat: 4
+
+action_coup_cost_per_stab: 1
+action_coup_heat_fixed: 5
+action_coup_heat_per_stab: 2
+action_coup_lock_time: 2
+action_coup_stab_threshold: 2
+		
+conflict_overt_fund_attacker: 2
+conflict_overt_fund_defender: 2
+conflict_covert_fund_attacker: 2
+conflict_covert_fund_defender: 2
+		
+vp_region_modifier: 5

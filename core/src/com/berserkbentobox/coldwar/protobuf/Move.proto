@@ -40,6 +40,38 @@ message MoveSettings {
   optional int32 conflict_leader_modifier = 510;
 
   optional Cost deescalation_cost = 700;
+
+  optional int32 heat_bleed_threshold = 800;
+  optional int32 heat_bleed = 801;
+
+  optional int32 non_adjacent_cost = 802;
+
+  optional int32 leader_income_pol = 803;
+  optional int32 leader_income_mil = 804;
+  optional int32 leader_income_cov = 806;
+
+  optional int32 action_dissidents_cost = 807;
+  optional int32 action_dissidents_heat = 808;
+
+  optional int32 action_pressure_cost = 809;
+  optional int32 action_pressure_heat = 810;
+  optional int32 action_pressure_heat_extra = 811;
+
+  optional int32 action_base_cost = 812;
+  optional int32 action_base_heat = 813;
+
+  optional int32 action_coup_cost_per_stab = 814;
+  optional int32 action_coup_heat_fixed = 815;
+  optional int32 action_coup_heat_per_stab = 816;
+  optional int32 action_coup_lock_time = 817;
+  optional int32 action_coup_stab_threshold = 818;
+
+  optional int32 conflict_overt_fund_attacker = 819;
+  optional int32 conflict_overt_fund_defender = 820;
+  optional int32 conflict_covert_fund_attacker = 821;
+  optional int32 conflict_covert_fund_defender = 822;
+
+  optional int32 vp_region_modifier = 823;
 }
 
 message MoveList {

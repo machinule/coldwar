@@ -299,7 +299,7 @@ public class ComputedGameState {
 						// TODO: Dissident leaders
 						dissidentsMap.put(id, d.build());
 						covStoreMap.compute(player, (p, cov) -> cov == null ? -cost : cov - cost);
-						heatCounter += Settings.getConstInt("action_dissidents_heat");
+						heatCounter += this.state.getSettings().getMoveSettings().getActionDissidentsHeat();
 						actedMap.put(id, true);
 					}
 				}
@@ -309,7 +309,7 @@ public class ComputedGameState {
 						final int cost = getEstablishBaseMoveCost();
 						baseMap.put(id, player);
 						milStoreMap.compute(player,  (p, mil) -> mil == null ? -cost : mil - cost);
-						heatCounter += Settings.getConstInt("action_dissidents_heat");
+						heatCounter += this.state.getSettings().getMoveSettings().getActionDissidentsHeat();
 						actedMap.put(id, true);
 					}
 				}
@@ -340,9 +340,9 @@ public class ComputedGameState {
 						polInfluenceMap.compute(id, (i, infl) -> infl == null ? finInfl : infl + finInfl);
 						polStoreMap.compute(player,  (p, pol) -> pol == null ? -cost : pol - cost);
 						if(getAlly(id) != null) {
-							heatCounter += Settings.getConstInt("action_pressure_heat_extra"); // More if enemy ally
+							heatCounter += this.state.getSettings().getMoveSettings().getActionPressureHeatExtra(); // More if enemy ally
 						}
-						heatCounter += Settings.getConstInt("action_pressure_heat");
+						heatCounter += this.state.getSettings().getMoveSettings().getActionPressureHeat();
 						actedMap.put(id, true);
 					}
 				}
@@ -353,8 +353,8 @@ public class ComputedGameState {
 						coupMap.put(id, result);
 						int cov_cost = getCoupMoveCost(id);
 						covStoreMap.compute(player,  (p, mil) -> mil == null ? -cov_cost : mil - cov_cost);
-						int heatPerStab = Settings.getConstInt("action_coup_heat_per_stab")*getNetStability(id);
-						heatCounter += Settings.getConstInt("action_coup_heat_fixed") + heatPerStab;
+						int heatPerStab = this.state.getSettings().getMoveSettings().getActionCoupHeatPerStab()*getNetStability(id);
+						heatCounter += this.state.getSettings().getMoveSettings().getActionCoupHeatFixed() + heatPerStab;
 						actedMap.put(id, true);
 					}
 				}
@@ -490,9 +490,9 @@ public class ComputedGameState {
 		patriotismCounter = 0; //this.state.getUsa().getPatriotism();
 		partyUnityCounter = 0; //this.state.getUssr().getPartyUnity();
 		
-		if (this.heat > Settings.getConstInt("heat_bleed_threshold")) {
-			patriotismCounter -= Settings.getConstInt("heat_bleed");
-			partyUnityCounter -= Settings.getConstInt("heat_bleed");
+		if (this.heat > this.state.getSettings().getMoveSettings().getHeatBleedThreshold()) {
+			patriotismCounter -= this.state.getSettings().getMoveSettings().getHeatBleed();
+			partyUnityCounter -= this.state.getSettings().getMoveSettings().getHeatBleed();
 		}
 		
 		// CRISIS HANDLING
@@ -907,7 +907,7 @@ public class ComputedGameState {
 		return covStore.get(player) >= getCoupMoveCost(id) &&
 			   bases.get(id) == null &&
 			   !hasInfluence(player, id) &&
-			   getNetStability(id) <= Settings.getConstInt("action_coup_stab_threshold") &&
+			   getNetStability(id) <= this.state.getSettings().getMoveSettings().getActionCoupStabThreshold() &&
 			   !isInArmedConflict(id);
 	}
 	
@@ -987,7 +987,7 @@ public class ComputedGameState {
 	public int getNonAdjacentDiaMoveCost(Player player, Province.Id id) {
 		if((player == Player.USA && !usaAdjacencies.get(id)) ||
 		   (player == Player.USSR && !ussrAdjacencies.get(id)) )
-			return Settings.getConstInt("non_adjacent_cost");
+			return this.state.getSettings().getMoveSettings().getNonAdjacentCost();
 		return 0;
 	}
 	
@@ -1033,35 +1033,35 @@ public class ComputedGameState {
 	}
 	
 	public int getFundDissidentsMoveCost() {
-		return Settings.getConstInt("action_dissidents_cost");
+		return this.state.getSettings().getMoveSettings().getActionDissidentsCost();
 	}
 	
 	public int getEstablishBaseMoveCost() {
-		return Settings.getConstInt("action_base_cost");
+		return this.state.getSettings().getMoveSettings().getActionBaseCost();
 	}
 	
 	public int getPoliticalPressureMoveCost() {
-		return Settings.getConstInt("action_pressure_cost");
+		return this.state.getSettings().getMoveSettings().getActionPressureCost();
 	}
 	
 	public int getCoupMoveCost(Province.Id id) {
-		return (Settings.getConstInt("action_coup_cost_per_stab") * getNetStability(id)) + 1;
+		return (this.state.getSettings().getMoveSettings().getActionCoupCostPerStab() * getNetStability(id)) + 1;
 	}
 	
 	public int getOvertFundAttackerCost() {
-		return Settings.getConstInt("conflict_overt_fund_attacker");
+		return this.state.getSettings().getMoveSettings().getConflictOvertFundAttacker();
 	}
 	
 	public int getOvertFundDefenderCost() {
-		return Settings.getConstInt("conflict_overt_fund_defender");
+		return this.state.getSettings().getMoveSettings().getConflictOvertFundDefender();
 	}
 	
 	public int getCovertFundAttackerCost() {
-		return Settings.getConstInt("conflict_covert_fund_attacker");
+		return this.state.getSettings().getMoveSettings().getConflictCovertFundAttacker();
 	}
 	
 	public int getCovertFundDefenderCost() {
-		return Settings.getConstInt("conflict_overt_fund_defender");
+		return this.state.getSettings().getMoveSettings().getConflictCovertFundDefender();
 	}
 	
 	// OTHER HELPER FUNCTIONS
@@ -1199,7 +1199,7 @@ public class ComputedGameState {
 				sum--;
 			}
 		}
-		sum = sum*Settings.getConstInt("vp_region_modifier");
+		sum = sum*this.state.getSettings().getMoveSettings().getVpRegionModifier();
 		return sum;
 	}
 	
@@ -1219,7 +1219,7 @@ public class ComputedGameState {
 				sum--;
 			}
 		}
-		sum = sum*Settings.getConstInt("vp_region_modifier");
+		sum = sum*this.state.getSettings().getMoveSettings().getVpRegionModifier();
 		return sum;
 	}
 	

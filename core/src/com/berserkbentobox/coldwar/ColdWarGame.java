@@ -3,7 +3,6 @@ package com.berserkbentobox.coldwar;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics.DisplayMode;
 
 import com.berserkbentobox.coldwar.ui.SplashScreen;
 
@@ -34,8 +33,8 @@ public class ColdWarGame extends Game {
 			TexturePacker.process(settings, "assets", "textures", "pack");	
 		}*/
 		Gdx.app.getGraphics().setWindowedMode(
-				Settings.consts.getInteger("splash_y"),
-				Settings.consts.getInteger("splash_x"));
+				Settings.prefs.getInteger("splash_height"),
+				Settings.prefs.getInteger("splash_width"));
 		this.setScreen(new SplashScreen(this));
 	}
 

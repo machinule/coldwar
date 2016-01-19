@@ -3,18 +3,13 @@ package com.berserkbentobox.coldwar;
 import java.io.File;
 
 import com.badlogic.gdx.Gdx;
-import com.berserkbentobox.coldwar.DissidentsOuterClass.Dissidents;
-import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
 import com.berserkbentobox.coldwar.EventOuterClass.EventSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.Heat.HeatSettings;
-import com.berserkbentobox.coldwar.LeaderOuterClass.Leader.Culture;
 import com.berserkbentobox.coldwar.LeaderOuterClass.LeaderSettings;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveSettings;
 import com.berserkbentobox.coldwar.PolicyOuterClass.PolicySettings;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Conflict;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
 import com.berserkbentobox.coldwar.Software.SoftwareSettings;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;

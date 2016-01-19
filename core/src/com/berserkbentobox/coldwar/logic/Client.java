@@ -2,23 +2,15 @@ package com.berserkbentobox.coldwar.logic;
 
 import java.util.concurrent.Future;
 
-import com.badlogic.gdx.Gdx;
-import com.google.protobuf.TextFormat;
-
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.GameStateOuterClass.Crisis;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.SingleProvinceSettings;
-import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
 import com.berserkbentobox.coldwar.GameSettingsFactory;
 import com.berserkbentobox.coldwar.Logger;
-import com.berserkbentobox.coldwar.DissidentsOuterClass.Dissidents;
-import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
 import com.berserkbentobox.coldwar.EventOuterClass.BerlinBlockadeEvent;
 import com.berserkbentobox.coldwar.EventOuterClass.Event;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Conflict;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
 
 /**
