@@ -5,7 +5,7 @@ package com.berserkbentobox.coldwar;
 import "Province.proto";
 
 enum LeaderAllegiance {
-	NONE = 0;
+	NO_ALLEGIANCE = 0;
 	ANTI_USA = 1;
 	ANTI_USSR = 2;
 }
@@ -34,7 +34,7 @@ message LeaderSettings {
 	optional int32 start_year = 4;
 	optional int32 end_year = 5;
 	optional LeaderCulture culture_restriction = 6;
-	optional Province.Id province_restriction = 7;
+	optional ProvinceId province_restriction = 7;
 	optional bool elected = 8;
 	optional bool isolationist = 9;
 }

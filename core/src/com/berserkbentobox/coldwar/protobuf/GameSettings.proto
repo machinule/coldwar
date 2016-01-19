@@ -27,7 +27,7 @@ message GameSettings {
 	optional EventGameSettings event_settings = 7; //TODO: cleanup
 	optional TechnologyGameSettings technology_settings = 8;
 	optional HeatGameSettings heat_settings = 9;
-	optional ProvinceGameSettings province_settings = 10; //TODO: cleanup
+	optional ProvinceGameSettings province_settings = 10;
 	optional PseudorandomGameSettings pseudorandom_settings = 11;
 }
 
@@ -36,19 +36,19 @@ message ProvinceGameSettings {
 }
 
 message ProvinceSettings {
-	optional Province.Id id = 1;
+	optional ProvinceId id = 1;
 	optional string label = 2;
-	repeated Province.Id adjacency = 3;
+	repeated ProvinceId adjacency = 3;
 	optional int32 stability_base = 4 [default = 1];
-	optional int32 influence_init = 5 [default = 0];
-	optional Government government_init = 6 [default = REPUBLIC];
-	optional string leader_init = 7;
-	optional Province.Id occupier_init = 8;
-	optional Dissidents dissidents_init = 9;
-	optional Province.Id military_base_init = 10;
-	optional Province.Id ally_init = 11;
-	optional Province.Region region = 12;
+	optional int32 init_influence = 5 [default = 0];
+	optional Government init_government = 6 [default = REPUBLIC];
+	optional string init_leader = 7;
+	optional ProvinceId init_occupier = 8;
+	optional Dissidents init_dissidents = 9;
+	optional ProvinceId init_military_base = 10;
+	optional ProvinceId init_ally = 11;
+	optional ProvinceRegion region = 12;
 	optional LeaderCulture culture = 13;
-	optional Conflict conflict_init = 14;
+	optional Conflict init_conflict = 14;
 	optional bool coastal = 15 [default = false];
 }

@@ -15,7 +15,7 @@ import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.MoveOuterClass.PoliticalPressureMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.USABerlinBlockadeAirliftMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.USSRBerlinBlockadeLiftBlockadeMove;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
+import com.berserkbentobox.coldwar.Province.ProvinceId;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 
 public class MoveBuilder {
@@ -40,63 +40,63 @@ public class MoveBuilder {
 		}
 	}
 
-	public void influenceDip(final Province.Id id, int magnitude) {
+	public void influenceDip(final ProvinceId id, int magnitude) {
 		this.moves.addMoves(
 				Move.newBuilder().setDiaDipMove(DiplomacyMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
 		Logger.Dbg("Adding influence from political points in " + id + " with magnitude " + magnitude);
 		this.computeState();
 	}
 	
-	public void influenceMil(final Province.Id id, int magnitude) {
+	public void influenceMil(final ProvinceId id, int magnitude) {
 		this.moves.addMoves(
 				Move.newBuilder().setDiaMilMove(MilitaryMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
 		Logger.Dbg("Adding influence from military points in " + id + " with magnitude " + magnitude);
 		this.computeState();
 	}
 	
-	public void influenceCov(final Province.Id id, int magnitude) {
+	public void influenceCov(final ProvinceId id, int magnitude) {
 		this.moves.addMoves(
 				Move.newBuilder().setDiaCovMove(CovertMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
 		Logger.Dbg("Adding influence from covert points in " + id + " with magnitude " + magnitude);
 		this.computeState();
 	}
 	
-	public void FundDissidents(final Province.Id id) {
+	public void FundDissidents(final ProvinceId id) {
 		this.moves.addMoves(
 				Move.newBuilder().setFundDissidentsMove(FundDissidentsMove.newBuilder().setProvinceId(id)).build());
 		Logger.Dbg("Funding dissidents in " + id);
 		this.computeState();
 	}
 	
-	public void EstablishBase(final Province.Id id) {
+	public void EstablishBase(final ProvinceId id) {
 		this.moves.addMoves(
 				Move.newBuilder().setEstablishBaseMove(EstablishBaseMove.newBuilder().setProvinceId(id)).build());
 		Logger.Dbg("Establishing " + player + " base in " + id);
 		this.computeState();
 	}
 	
-	public void PoliticalPressure(final Province.Id id) {
+	public void PoliticalPressure(final ProvinceId id) {
 		this.moves.addMoves(
 				Move.newBuilder().setPoliticalPressureMove(PoliticalPressureMove.newBuilder().setProvinceId(id)).build());
 		Logger.Dbg("Applying political pressure in " + id);
 		this.computeState();
 	}
 	
-	public void Coup(final Province.Id id, final int magnitude) {
+	public void Coup(final ProvinceId id, final int magnitude) {
 		this.moves.addMoves(
 				Move.newBuilder().setCoupMove(CoupMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
 		Logger.Dbg("Preparing coup in " + id + " with extra support " + magnitude);
 		this.computeState();
 	}
 	
-	public void FundDefender(final Province.Id id) {
+	public void FundDefender(final ProvinceId id) {
 		this.moves.addMoves(
 				Move.newBuilder().setConflictOvertFundDefenderMove(ConflictOvertFundDefenderMove.newBuilder().setProvinceId(id)).build());
 		Logger.Dbg("Sending military aid to defender in " + id);
 		this.computeState();
 	}
 	
-	public void FundAttacker(final Province.Id id) {
+	public void FundAttacker(final ProvinceId id) {
 		this.moves.addMoves(
 				Move.newBuilder().setConflictOvertFundAttackerMove(ConflictOvertFundAttackerMove.newBuilder().setProvinceId(id)).build());
 		Logger.Dbg("Sending military aid to attacker in " + id);
@@ -123,7 +123,7 @@ public class MoveBuilder {
 		return this.computedState;
 	}
 
-	public int getInfluence(final Province.Id provinceId) {
+	public int getInfluence(final ProvinceId provinceId) {
 		return this.computedState.totalInfluence.get(provinceId);
 	}
 	
@@ -155,7 +155,7 @@ public class MoveBuilder {
 		return this.moves.build();
 	}
 	
-	public Player getBaseOwner(final Province.Id provinceId) {
+	public Player getBaseOwner(final ProvinceId provinceId) {
 		return this.computedState.bases.get(provinceId);
 	}
 
@@ -168,7 +168,7 @@ public class MoveBuilder {
 		return this.computedState.year;
 	}
 
-	public int getStabilityModifier(Province.Id provinceId) {
+	public int getStabilityModifier(ProvinceId provinceId) {
 		return this.computedState.stabilityModifier.getOrDefault(provinceId, 0);
 	}
 

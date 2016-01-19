@@ -6,15 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.Province.ProvinceId;
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
 import com.berserkbentobox.coldwar.logic.Client;
-import com.berserkbentobox.coldwar.logic.Client.Player;
 
 public class WarPane extends FooterPane {
 
@@ -86,15 +83,15 @@ public class WarPane extends FooterPane {
 		DynamicButton supportAttackerButton = new DynamicButton(client,
 				c -> (c.getMoveBuilder().getComputedGameState().isValidOvertFundAttackerMove(c.getPlayer(), province.getId()) &&
 				     !c.getMoveBuilder().getComputedGameState().hasActed(province.getId())),
-				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getAttackerSupporter() == Province.Id.USA ? "USA Backed" :
-					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getAttackerSupporter() == Province.Id.USSR ? "USSR Backed" :
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getAttackerSupporter() == ProvinceId.USA ? "USA Backed" :
+					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getAttackerSupporter() == ProvinceId.USSR ? "USSR Backed" :
 					 "Send Military Aid",
 				skin);
 		DynamicButton supportDefenderButton = new DynamicButton(client,
 				c -> (c.getMoveBuilder().getComputedGameState().isValidOvertFundDefenderMove(c.getPlayer(), province.getId()) &&
 					  !c.getMoveBuilder().getComputedGameState().hasActed(province.getId())),
-				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getDefenderSupporter() == Province.Id.USA ? "USA Backed" :
-					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getDefenderSupporter() == Province.Id.USSR ? "USSR Backed" :
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getDefenderSupporter() == ProvinceId.USA ? "USA Backed" :
+					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getDefenderSupporter() == ProvinceId.USSR ? "USSR Backed" :
 					 "Send Military Aid",
 				skin);
 		

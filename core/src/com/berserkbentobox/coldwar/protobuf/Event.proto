@@ -77,55 +77,55 @@ message LeaderDeathEvent {
 }
 
 message ProvinceCoupEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message ProvinceDemocracyEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message ProvinceCommunismEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message ProvinceAutocracyEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message ProvinceRepublicEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message ProvinceFauxPasEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
 }
 
 message ProvinceDissidentsEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message ProvinceDissidentsSuppressedEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message CivilWarEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message EndCivilWarEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 message UsAllyDemocracyEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message UssrAllyCommunismEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message CoupEvent {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 // Crises

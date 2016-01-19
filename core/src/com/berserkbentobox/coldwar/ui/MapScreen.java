@@ -11,9 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import com.berserkbentobox.coldwar.ColdWarGame;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.Settings;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
+import com.berserkbentobox.coldwar.Province.ProvinceId;
+import com.berserkbentobox.coldwar.Province.ProvinceRegion;
 import com.berserkbentobox.coldwar.logic.Client;
 
 public class MapScreen extends AbstractScreen {
@@ -53,21 +53,21 @@ public class MapScreen extends AbstractScreen {
 		headerPane.setDebug(Settings.isDebug());
 		final SuperpowerPane superpowerPane = new SuperpowerPane(this, this.client, skin);
 		superpowerPane.setDebug(Settings.isDebug());
-		final EnumMap<Province.Id, ProvinceInfoCard> cards = new EnumMap<Province.Id, ProvinceInfoCard>(Province.Id.class);
+		final EnumMap<ProvinceId, ProvinceInfoCard> cards = new EnumMap<ProvinceId, ProvinceInfoCard>(ProvinceId.class);
 		for (final ProvinceSettings p : this.client.initialGameState.getSettings().getProvinceSettings().getProvinceList()) {
-			if(p.getRegion() != Province.Region.SUPERPOWERS) {
+			if(p.getRegion() != ProvinceRegion.SUPERPOWERS) {
 				cards.put(p.getId(), new ProvinceInfoCard(this.client, p, actionPane, warPane, skin));
 			}
 		}
-		final Province.Id[][] provincePosition = {
-				{null,null,null,null,null,Province.Id.BENELUX,Province.Id.DENMARK,Province.Id.EAST_GERMANY,Province.Id.POLAND,null,null,null,Province.Id.NORTH_KOREA,null},
-				{Province.Id.MEXICO,Province.Id.CUBA,Province.Id.HAITI,null,null,Province.Id.FRANCE,Province.Id.WEST_GERMANY,Province.Id.CZECHOSLOVAKIA,Province.Id.HUNGARY,null,Province.Id.AFGHANISTAN,null,Province.Id.SOUTH_KOREA,Province.Id.JAPAN},
-				{Province.Id.GUATEMALA,Province.Id.HONDURAS,Province.Id.NICARAGUA,Province.Id.DOMINICAN_REP,Province.Id.PORTUGAL,Province.Id.SPAIN,Province.Id.ITALY,Province.Id.YUGOSLAVIA,Province.Id.ROMANIA,Province.Id.IRAN,Province.Id.PAKISTAN,Province.Id.BANGLADESH,Province.Id.CHINA,Province.Id.TAIWAN},
-				{Province.Id.EL_SALVADOR,Province.Id.COSTA_RICA,Province.Id.PANAMA,Province.Id.LESS_ANTILLES,null,null,Province.Id.ALGERIA,Province.Id.BULGARIA,Province.Id.TURKEY,Province.Id.SYRIA,Province.Id.IRAQ,Province.Id.INDIA,Province.Id.VIETNAM,Province.Id.PHILIPPINES},
-				{null,null,Province.Id.COLOMBIA,Province.Id.VENEZUELA,null,Province.Id.MOROCCO,Province.Id.WEST_AFRICA,Province.Id.GREECE,Province.Id.ISRAEL,Province.Id.SAUDI_ARABIA,Province.Id.GULF_STATES,Province.Id.BURMA,Province.Id.LAOS,Province.Id.INDONESIA},
-				{null,Province.Id.ECUADOR,Province.Id.PERU,Province.Id.GUYANA,null,Province.Id.IVORY_GOLD_COAST,Province.Id.ZAIRE,Province.Id.LIBYA,Province.Id.EGYPT,Province.Id.YEMEN,null,Province.Id.THAILAND,Province.Id.CAMBODIA,null},
-				{null,Province.Id.CHILE,Province.Id.BOLIVIA,Province.Id.BRAZIL,null,Province.Id.NIGERIA,Province.Id.ANGOLA,Province.Id.EAST_AFRICA,Province.Id.ETHIOPIA,null,null,null,Province.Id.MALAYSIA,Province.Id.AUSTRALIA},
-				{null,null,Province.Id.ARGENTINA,Province.Id.URUGUAY,null,null,Province.Id.SOUTH_AFRICA,Province.Id.MOZAMBIQUE,null,null,null,null,null,null},		};
+		final ProvinceId[][] provincePosition = {
+				{null,null,null,null,null,ProvinceId.BENELUX,ProvinceId.DENMARK,ProvinceId.EAST_GERMANY,ProvinceId.POLAND,null,null,null,ProvinceId.NORTH_KOREA,null},
+				{ProvinceId.MEXICO,ProvinceId.CUBA,ProvinceId.HAITI,null,null,ProvinceId.FRANCE,ProvinceId.WEST_GERMANY,ProvinceId.CZECHOSLOVAKIA,ProvinceId.HUNGARY,null,ProvinceId.AFGHANISTAN,null,ProvinceId.SOUTH_KOREA,ProvinceId.JAPAN},
+				{ProvinceId.GUATEMALA,ProvinceId.HONDURAS,ProvinceId.NICARAGUA,ProvinceId.DOMINICAN_REP,ProvinceId.PORTUGAL,ProvinceId.SPAIN,ProvinceId.ITALY,ProvinceId.YUGOSLAVIA,ProvinceId.ROMANIA,ProvinceId.IRAN,ProvinceId.PAKISTAN,ProvinceId.BANGLADESH,ProvinceId.CHINA,ProvinceId.TAIWAN},
+				{ProvinceId.EL_SALVADOR,ProvinceId.COSTA_RICA,ProvinceId.PANAMA,ProvinceId.LESS_ANTILLES,null,null,ProvinceId.ALGERIA,ProvinceId.BULGARIA,ProvinceId.TURKEY,ProvinceId.SYRIA,ProvinceId.IRAQ,ProvinceId.INDIA,ProvinceId.VIETNAM,ProvinceId.PHILIPPINES},
+				{null,null,ProvinceId.COLOMBIA,ProvinceId.VENEZUELA,null,ProvinceId.MOROCCO,ProvinceId.WEST_AFRICA,ProvinceId.GREECE,ProvinceId.ISRAEL,ProvinceId.SAUDI_ARABIA,ProvinceId.GULF_STATES,ProvinceId.BURMA,ProvinceId.LAOS,ProvinceId.INDONESIA},
+				{null,ProvinceId.ECUADOR,ProvinceId.PERU,ProvinceId.GUYANA,null,ProvinceId.IVORY_GOLD_COAST,ProvinceId.ZAIRE,ProvinceId.LIBYA,ProvinceId.EGYPT,ProvinceId.YEMEN,null,ProvinceId.THAILAND,ProvinceId.CAMBODIA,null},
+				{null,ProvinceId.CHILE,ProvinceId.BOLIVIA,ProvinceId.BRAZIL,null,ProvinceId.NIGERIA,ProvinceId.ANGOLA,ProvinceId.EAST_AFRICA,ProvinceId.ETHIOPIA,null,null,null,ProvinceId.MALAYSIA,ProvinceId.AUSTRALIA},
+				{null,null,ProvinceId.ARGENTINA,ProvinceId.URUGUAY,null,null,ProvinceId.SOUTH_AFRICA,ProvinceId.MOZAMBIQUE,null,null,null,null,null,null},		};
 		for (int r=0; r<provincePosition.length; r++) {
 			for (int c=0; c<provincePosition[r].length; c++) {
 				ProvinceInfoCard pic = cards.getOrDefault(provincePosition[r][c], null);

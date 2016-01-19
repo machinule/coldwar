@@ -108,7 +108,7 @@ message Move {
 
 // Influence by spending DIP points
 message DiplomacyMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
 
 //	option (pol_cost) = 1;
@@ -116,7 +116,7 @@ message DiplomacyMove {
 
 // Influence by spending MIL points
 message MilitaryMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
 
 //	option (mil_cost) = 1;
@@ -124,7 +124,7 @@ message MilitaryMove {
 
 // Influence by spending COV points
 message CovertMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
 
 //	option (cov_cost) = 1;
@@ -133,40 +133,40 @@ message CovertMove {
 // ========== TARGETED ACTIONS ==========
 
 message FundDissidentsMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 
 //	option (cov_cost) = 1;
 }
 
 message EstablishBaseMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 
 //	option (mil_cost) = 2;
 }
 
 message PoliticalPressureMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 
 //	option (pol_cost) = 2;
 }
 
 message CoupMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
 }
 
 // ========= CONFLICT ACTIONS ==========
 
 message ConflictOvertFundAttackerMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message ConflictOvertFundDefenderMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message MilitaryActionMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 // ===============TECHS=================

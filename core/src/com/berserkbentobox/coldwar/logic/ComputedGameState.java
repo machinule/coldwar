@@ -24,9 +24,12 @@ import com.berserkbentobox.coldwar.EventOuterClass.ProvinceDissidentsSuppressedE
 import com.berserkbentobox.coldwar.EventOuterClass.ProvinceFauxPasEvent;
 import com.berserkbentobox.coldwar.EventOuterClass.ProvinceRepublicEvent;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
+import com.berserkbentobox.coldwar.Province.Conflict;
+import com.berserkbentobox.coldwar.Province.ProvinceGameState;
+import com.berserkbentobox.coldwar.Province.ProvinceId;
+import com.berserkbentobox.coldwar.Province.ProvinceRegion;
+import com.berserkbentobox.coldwar.Province.ProvinceState;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Conflict;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 
 /**
@@ -54,35 +57,35 @@ public class ComputedGameState {
 	public final Map<Player, Integer> milIncomeModifier;
 	public final Map<Player, Integer> covIncomeModifier;
 	
-	public final Map<Province.Region, Integer> usaRegionControl;
-	public final Map<Province.Region, Integer> ussrRegionControl;
-	public final Map<Province.Region, Integer> regionTotal;
+	public final Map<ProvinceRegion, Integer> usaRegionControl;
+	public final Map<ProvinceRegion, Integer> ussrRegionControl;
+	public final Map<ProvinceRegion, Integer> regionTotal;
 	
-	public final Map<Province.Id, Integer> initialInfluence;
-	public final Map<Province.Id, Integer> polInfluence;
-	public final Map<Province.Id, Integer> milInfluence;
-	public final Map<Province.Id, Integer> covInfluence;
-	public final Map<Province.Id, Integer> totalInfluence;
+	public final Map<ProvinceId, Integer> initialInfluence;
+	public final Map<ProvinceId, Integer> polInfluence;
+	public final Map<ProvinceId, Integer> milInfluence;
+	public final Map<ProvinceId, Integer> covInfluence;
+	public final Map<ProvinceId, Integer> totalInfluence;
 
-	public final Map<Province.Id, Player>  alliances; // NULL -> Neither player
-	public final Map<Province.Id, Boolean> usaAdjacencies;
-	public final Map<Province.Id, Boolean> ussrAdjacencies;
+	public final Map<ProvinceId, Player>  alliances; // NULL -> Neither player
+	public final Map<ProvinceId, Boolean> usaAdjacencies;
+	public final Map<ProvinceId, Boolean> ussrAdjacencies;
 	
-	public final Map<Province.Id, Dissidents> dissidents;
-	public final Map<Province.Id, Player> bases;
-	public final Map<Province.Id, Government> governments;
-//	public final Map<Province.Id, Leader> leaders;
-	public final Map<Province.Id, Conflict> activeConflicts;
-	public final Map<Province.Id, Conflict> conflictZones;
+	public final Map<ProvinceId, Dissidents> dissidents;
+	public final Map<ProvinceId, Player> bases;
+	public final Map<ProvinceId, Government> governments;
+//	public final Map<ProvinceId, Leader> leaders;
+	public final Map<ProvinceId, Conflict> activeConflicts;
+	public final Map<ProvinceId, Conflict> conflictZones;
 	
-	public final Map<Province.Id, Integer> stabilityBase;
-	public final Map<Province.Id, Integer> stabilityModifier;
+	public final Map<ProvinceId, Integer> stabilityBase;
+	public final Map<ProvinceId, Integer> stabilityModifier;
 	
-	public final Map<Province.Id, ProvinceSettings> provinceSettings;
+	public final Map<ProvinceId, ProvinceSettings> provinceSettings;
 	
-	public final Map<Province.Id, Integer> coups;
+	public final Map<ProvinceId, Integer> coups;
 	
-	public final Map<Province.Id, Boolean> acted;
+	public final Map<ProvinceId, Boolean> acted;
 	
 	public final GameState nextState;
 	
@@ -119,57 +122,57 @@ public class ComputedGameState {
 		EnumMap<Player, Integer> covIncomeModifierMap = new EnumMap<Player, Integer>(Player.class);
 		this.covIncomeModifier = Collections.unmodifiableMap(covIncomeModifierMap);
 		
-		EnumMap<Province.Region, Integer> usaRegionControlMap = new EnumMap<Province.Region, Integer>(Province.Region.class);
+		EnumMap<ProvinceRegion, Integer> usaRegionControlMap = new EnumMap<ProvinceRegion, Integer>(ProvinceRegion.class);
 		this.usaRegionControl = Collections.unmodifiableMap(usaRegionControlMap);
-		EnumMap<Province.Region, Integer> ussrRegionControlMap = new EnumMap<Province.Region, Integer>(Province.Region.class);
+		EnumMap<ProvinceRegion, Integer> ussrRegionControlMap = new EnumMap<ProvinceRegion, Integer>(ProvinceRegion.class);
 		this.ussrRegionControl = Collections.unmodifiableMap(ussrRegionControlMap);
-		EnumMap<Province.Region, Integer> regionTotalMap = new EnumMap<Province.Region, Integer>(Province.Region.class);
+		EnumMap<ProvinceRegion, Integer> regionTotalMap = new EnumMap<ProvinceRegion, Integer>(ProvinceRegion.class);
 		this.regionTotal = Collections.unmodifiableMap(regionTotalMap);
 		
-		EnumMap<Province.Id, Integer> baseInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
+		EnumMap<ProvinceId, Integer> baseInfluenceMap = new EnumMap<ProvinceId, Integer>(ProvinceId.class);
 		this.initialInfluence = Collections.unmodifiableMap(baseInfluenceMap);
-		EnumMap<Province.Id, Integer> polInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
+		EnumMap<ProvinceId, Integer> polInfluenceMap = new EnumMap<ProvinceId, Integer>(ProvinceId.class);
 		this.polInfluence = Collections.unmodifiableMap(polInfluenceMap);
-		EnumMap<Province.Id, Integer> milInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
+		EnumMap<ProvinceId, Integer> milInfluenceMap = new EnumMap<ProvinceId, Integer>(ProvinceId.class);
 		this.milInfluence = Collections.unmodifiableMap(milInfluenceMap);
-		EnumMap<Province.Id, Integer> covInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
+		EnumMap<ProvinceId, Integer> covInfluenceMap = new EnumMap<ProvinceId, Integer>(ProvinceId.class);
 		this.covInfluence = Collections.unmodifiableMap(covInfluenceMap);
-		EnumMap<Province.Id, Integer> totalInfluenceMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
+		EnumMap<ProvinceId, Integer> totalInfluenceMap = new EnumMap<ProvinceId, Integer>(ProvinceId.class);
 		this.totalInfluence = Collections.unmodifiableMap(totalInfluenceMap);
 		
-		EnumMap<Province.Id, Player> allianceMap = new EnumMap<Province.Id, Player>(Province.Id.class);
+		EnumMap<ProvinceId, Player> allianceMap = new EnumMap<ProvinceId, Player>(ProvinceId.class);
 		this.alliances = Collections.unmodifiableMap(allianceMap);
-		EnumMap<Province.Id, Boolean> usaAdjacencyMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
+		EnumMap<ProvinceId, Boolean> usaAdjacencyMap = new EnumMap<ProvinceId, Boolean>(ProvinceId.class);
 		this.usaAdjacencies = Collections.unmodifiableMap(usaAdjacencyMap);
-		EnumMap<Province.Id, Boolean> ussrAdjacencyMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
+		EnumMap<ProvinceId, Boolean> ussrAdjacencyMap = new EnumMap<ProvinceId, Boolean>(ProvinceId.class);
 		this.ussrAdjacencies = Collections.unmodifiableMap(ussrAdjacencyMap);
 
-		EnumMap<Province.Id, Dissidents> dissidentsMap = new EnumMap<Province.Id, Dissidents>(Province.Id.class);
+		EnumMap<ProvinceId, Dissidents> dissidentsMap = new EnumMap<ProvinceId, Dissidents>(ProvinceId.class);
 		this.dissidents = Collections.unmodifiableMap(dissidentsMap);
-		EnumMap<Province.Id, Player> baseMap = new EnumMap<Province.Id, Player>(Province.Id.class);
+		EnumMap<ProvinceId, Player> baseMap = new EnumMap<ProvinceId, Player>(ProvinceId.class);
 		this.bases = Collections.unmodifiableMap(baseMap);
-		EnumMap<Province.Id, Government> governmentMap = new EnumMap<Province.Id, Government>(Province.Id.class);
+		EnumMap<ProvinceId, Government> governmentMap = new EnumMap<ProvinceId, Government>(ProvinceId.class);
 		this.governments = Collections.unmodifiableMap(governmentMap);
-		EnumMap<Province.Id, Conflict> activeConflictMap = new EnumMap<Province.Id, Conflict>(Province.Id.class);
+		EnumMap<ProvinceId, Conflict> activeConflictMap = new EnumMap<ProvinceId, Conflict>(ProvinceId.class);
 		this.activeConflicts = Collections.unmodifiableMap(activeConflictMap);
-		EnumMap<Province.Id, Conflict> conflictZoneMap = new EnumMap<Province.Id, Conflict>(Province.Id.class);
+		EnumMap<ProvinceId, Conflict> conflictZoneMap = new EnumMap<ProvinceId, Conflict>(ProvinceId.class);
 		this.conflictZones = Collections.unmodifiableMap(conflictZoneMap);
 		
-//		EnumMap<Province.Id, Leader> leaderMap = new EnumMap<Province.Id, Leader>(Province.Id.class);
+//		EnumMap<ProvinceId, Leader> leaderMap = new EnumMap<ProvinceId, Leader>(ProvinceId.class);
 //		this.leaders = Collections.unmodifiableMap(leaderMap);
 
-		EnumMap<Province.Id, Integer> stabilityBaseMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
+		EnumMap<ProvinceId, Integer> stabilityBaseMap = new EnumMap<ProvinceId, Integer>(ProvinceId.class);
 		this.stabilityBase = Collections.unmodifiableMap(stabilityBaseMap);
-		EnumMap<Province.Id, Integer> stabilityModifierMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
+		EnumMap<ProvinceId, Integer> stabilityModifierMap = new EnumMap<ProvinceId, Integer>(ProvinceId.class);
 		this.stabilityModifier = Collections.unmodifiableMap(stabilityModifierMap);	
 
-		EnumMap<Province.Id, ProvinceSettings> provinceSettingsMap = new EnumMap<Province.Id, ProvinceSettings>(Province.Id.class);
+		EnumMap<ProvinceId, ProvinceSettings> provinceSettingsMap = new EnumMap<ProvinceId, ProvinceSettings>(ProvinceId.class);
 		this.provinceSettings = Collections.unmodifiableMap(provinceSettingsMap);
 
-		EnumMap<Province.Id, Integer> coupMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
+		EnumMap<ProvinceId, Integer> coupMap = new EnumMap<ProvinceId, Integer>(ProvinceId.class);
 		this.coups = Collections.unmodifiableMap(coupMap);
 
-		EnumMap<Province.Id, Boolean> actedMap = new EnumMap<Province.Id, Boolean>(Province.Id.class);
+		EnumMap<ProvinceId, Boolean> actedMap = new EnumMap<ProvinceId, Boolean>(ProvinceId.class);
 		this.acted = Collections.unmodifiableMap(actedMap);
 		
 		// Computations:
@@ -182,7 +185,7 @@ public class ComputedGameState {
 			regionTotalMap.put(p.getRegion(), regionTotalMap.getOrDefault(p.getRegion(), 0) + 1);
 		});
 		
-		this.state.getProvincesList().forEach(p -> {
+		this.state.getProvinceState().getProvinceStateList().forEach(p -> {
 			baseInfluenceMap.put(p.getId(), p.getInfluence());
 			baseMap.put(p.getId(), toPlayer(p.getBase()));
 			governmentMap.put(p.getId(), p.getGov());
@@ -194,7 +197,7 @@ public class ComputedGameState {
 		
 		totalInfluenceMap.putAll(baseInfluenceMap);
 		
-		this.state.getProvincesList().forEach(p -> {
+		this.state.getProvinceState().getProvinceStateList().forEach(p -> {
 			usaAdjacencyMap.put(p.getId(), hasAdjacencyInfluence(Player.USA, p.getId()));
 			ussrAdjacencyMap.put(p.getId(), hasAdjacencyInfluence(Player.USSR, p.getId()));
 		});
@@ -227,7 +230,7 @@ public class ComputedGameState {
 			}
 			for (Move move : moves.getMovesList()) {
 				if (move.hasDiaDipMove()) {
-					Province.Id id = move.getDiaDipMove().getProvinceId();
+					ProvinceId id = move.getDiaDipMove().getProvinceId();
 					if(isValidDiaDipMove(player, id)) {
 						final int mag = move.getDiaDipMove().getMagnitude();
 						final int effect_multiplier;
@@ -248,7 +251,7 @@ public class ComputedGameState {
 					
 				}
 				if (move.hasDiaMilMove()) {
-					Province.Id id = move.getDiaMilMove().getProvinceId();
+					ProvinceId id = move.getDiaMilMove().getProvinceId();
 					if(isValidDiaMilMove(player, id)) {
 						final int mag = move.getDiaMilMove().getMagnitude();
 						milInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
@@ -262,7 +265,7 @@ public class ComputedGameState {
 					}
 				}
 				if (move.hasDiaCovMove()) {
-					Province.Id id = move.getDiaCovMove().getProvinceId();
+					ProvinceId id = move.getDiaCovMove().getProvinceId();
 					if(isValidDiaCovMove(player, id)) {
 						final int mag = move.getDiaCovMove().getMagnitude();
 						covInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
@@ -276,7 +279,7 @@ public class ComputedGameState {
 					}
 				}
 				if (move.hasFundDissidentsMove()) {
-					Province.Id id = move.getFundDissidentsMove().getProvinceId();
+					ProvinceId id = move.getFundDissidentsMove().getProvinceId();
 					if(isValidFundDissidentsMove(player, id)) {
 						final int cost = getFundDissidentsMoveCost();
 						Dissidents.Builder d = Dissidents.newBuilder();
@@ -294,7 +297,7 @@ public class ComputedGameState {
 					}
 				}
 				if (move.hasEstablishBaseMove()) {
-					Province.Id id = move.getEstablishBaseMove().getProvinceId();
+					ProvinceId id = move.getEstablishBaseMove().getProvinceId();
 					if(isValidEstablishBaseMove(player, id)) {
 						final int cost = getEstablishBaseMoveCost();
 						baseMap.put(id, player);
@@ -304,11 +307,11 @@ public class ComputedGameState {
 					}
 				}
 				if (move.hasPoliticalPressureMove()) {
-					Province.Id id = move.getPoliticalPressureMove().getProvinceId();
+					ProvinceId id = move.getPoliticalPressureMove().getProvinceId();
 					if(isValidPoliticalPressureMove(player, id)) {
 						final int cost = getPoliticalPressureMoveCost();
 						int netInfl = 0;
-						for (Province.Id adj : provinceSettingsMap.get(id).getAdjacencyList()) {
+						for (ProvinceId adj : provinceSettingsMap.get(id).getAdjacencyList()) {
 							Logger.Dbg("Seeing pressure from: " + adj);
 							if(getAlly(adj) == otherPlayer(player)) {
 								netInfl -= 1;
@@ -337,7 +340,7 @@ public class ComputedGameState {
 					}
 				}
 				if (move.hasCoupMove()) {
-					Province.Id id = move.getCoupMove().getProvinceId();
+					ProvinceId id = move.getCoupMove().getProvinceId();
 					if(isValidCoupMove(player, id)) {
 						int result = inflSign * (getAllianceThreshold(id) + 1);
 						coupMap.put(id, result);
@@ -349,7 +352,7 @@ public class ComputedGameState {
 					}
 				}
 				if (move.hasConflictOvertFundAttackerMove()) {
-					Province.Id id = move.getConflictOvertFundAttackerMove().getProvinceId();
+					ProvinceId id = move.getConflictOvertFundAttackerMove().getProvinceId();
 					if(isValidOvertFundAttackerMove(player, id) || true) {
 						final int cost = getOvertFundAttackerCost();
 						Conflict.Builder c = activeConflictMap.get(id).toBuilder();
@@ -365,7 +368,7 @@ public class ComputedGameState {
 					}
 				}
 				if (move.hasConflictOvertFundDefenderMove()) {
-					Province.Id id = move.getConflictOvertFundDefenderMove().getProvinceId();
+					ProvinceId id = move.getConflictOvertFundDefenderMove().getProvinceId();
 					if(isValidOvertFundAttackerMove(player, id) || true) {
 						final int cost = getOvertFundDefenderCost();
 						Conflict.Builder c = activeConflictMap.get(id).toBuilder();
@@ -469,14 +472,14 @@ public class ComputedGameState {
 				if(blockade) { // Airlift while blockade maintained
 					patriotismCounter += 5; // TODO: Settings value
 				} else { // Airlift while blockade lifted
-					totalInfluenceMap.compute(Province.Id.EAST_GERMANY, (i, infl) -> infl == null ? -1 : infl - 1);
+					totalInfluenceMap.compute(ProvinceId.EAST_GERMANY, (i, infl) -> infl == null ? -1 : infl - 1);
 				}
 			} else {
 				if(blockade) { // Blockade with no airlift
 					patriotismCounter -= 5;
 					// Berlin flag unset
 				} else { // No blockade and no airlift
-					totalInfluenceMap.compute(Province.Id.EAST_GERMANY, (i, infl) -> infl == null ? -1 : infl - 1);
+					totalInfluenceMap.compute(ProvinceId.EAST_GERMANY, (i, infl) -> infl == null ? -1 : infl - 1);
 				}
 			}
 			Logger.Dbg("Berlin airlift enacted: " + airlift);
@@ -497,9 +500,10 @@ public class ComputedGameState {
 				.setHeatState(HeatGameState.newBuilder()
 						.setHeat(heatCounter)
 						.build())
-				.addAllProvinces(this.state.getProvincesList());
+				.setProvinceState(ProvinceGameState.newBuilder()
+						.addAllProvinceState(this.state.getProvinceState().getProvinceStateList()));
 		
-		for (final Province.Builder province : nextStateBuilder.getProvincesBuilderList()) {
+		for (final ProvinceState.Builder province : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
 			allianceMap.put(province.getId(), getAlly(province.getId()));
 			province.setGov(governmentMap.get(province.getId()));
 			province.setInfluence(totalInfluenceMap.get(province.getId()));
@@ -539,7 +543,7 @@ public class ComputedGameState {
 		// TODO: ProvinceCommunism
 		// TODO: ProvinceAutocracy
 		// ProvinceRepublic
-		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
+		for (ProvinceState.Builder p : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
 			if (p.getGov() == Government.AUTOCRACY) {
 				if (happens.apply(this.state.getSettings().getEventSettings().getRandomProvinceRepublicChance())) {
 					p.setGov(Government.REPUBLIC);
@@ -554,7 +558,7 @@ public class ComputedGameState {
 			}
 		}
 		// ProvinceFauxPas
-		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
+		for (ProvinceState.Builder p : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
 			if (p.getInfluence() != 0) {
 				if (happens.apply(this.state.getSettings().getEventSettings().getRandomProvinceFauxPasChance())) {
 					int sgn;
@@ -578,7 +582,7 @@ public class ComputedGameState {
 			}
 		}
 		// ProvinceDissidents
-		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
+		for (ProvinceState.Builder p : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
 			if (!hasDissidents(p.getId())) {
 				int chance;
 				if (p.getGov() == Government.AUTOCRACY) 
@@ -675,7 +679,7 @@ public class ComputedGameState {
 			}
 		}
 		// ProvinceDissidentsSuppressed
-		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
+		for (ProvinceState.Builder p : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
 			if (hasDissidents(p.getId())) {
 				int chance;
 				if (p.getGov() == Government.DEMOCRACY) {
@@ -702,13 +706,13 @@ public class ComputedGameState {
 		// ACTION CONSEQUENCES
 		
 		// ProvinceCivilWar		
-		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
+		for (ProvinceState.Builder p : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
 			if (isInArmedConflict(p.getId())) {
 				Logger.Vrb("Civil war in " + p.getId());
 				Logger.Vrb(p.getConflict().toString());
 				p.setInfluence(0);
 				coupMap.put(p.getId(), 0);
-				p.setBase(Province.Id.NONE);
+				p.setBase(ProvinceId.UNKNOWN_PROVINCE);
 				p.setDissidents(Dissidents.getDefaultInstance());
 				stabilityModifierMap.put(p.getId(), 0);
 				Conflict.Builder c = p.getConflict().toBuilder();
@@ -727,9 +731,9 @@ public class ComputedGameState {
 						c.setDefenderProgress(c.getDefenderProgress()+1);
 					if(c.getDefenderProgress() >= c.getGoal()) {
 						p.setDissidents(Dissidents.getDefaultInstance());
-						if(c.getDefenderSupporter() == Province.Id.USSR)
+						if(c.getDefenderSupporter() == ProvinceId.USSR)
 							p.setInfluence(-getNetStability(p.getId()));
-						if(c.getDefenderSupporter() == Province.Id.USA)
+						if(c.getDefenderSupporter() == ProvinceId.USA)
 							p.setInfluence(getNetStability(p.getId()));
 						c = Conflict.getDefaultInstance().toBuilder();
 					} else if(c.getAttackerProgress() >= c.getGoal()) {
@@ -740,9 +744,9 @@ public class ComputedGameState {
 							newInfl ++;
 						if(isStrongGov(p.getGov()))
 							newInfl ++;
-						if(c.getAttackerSupporter() == Province.Id.USSR)
+						if(c.getAttackerSupporter() == ProvinceId.USSR)
 							newInfl += -1*getNetStability(p.getId());
-						if(c.getAttackerSupporter() == Province.Id.USA)
+						if(c.getAttackerSupporter() == ProvinceId.USA)
 							newInfl += getNetStability(p.getId());
 						p.setInfluence(newInfl);
 						c = Conflict.getDefaultInstance().toBuilder();
@@ -761,7 +765,7 @@ public class ComputedGameState {
 		}
 		
 		// Coup
-		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
+		for (ProvinceState.Builder p : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
 			if (coups.getOrDefault(p.getId(), 0) != 0) {
 				int result = coups.get(p.getId());
 				if (happens.apply(this.state.getSettings().getMoveSettings().getCoupSuccessChance())) {
@@ -812,11 +816,11 @@ public class ComputedGameState {
 		Logger.Dbg("USA currently holds " + usaSouthAmerica + " provinces in South America");
 		Logger.Dbg("USSR currently holds " + ussrSouthAmerica + " provinces in South America");
 		
-		usaRegionControlMap.put(Province.Region.CENTRAL_AMERICA, usaCentralAmerica);
-		usaRegionControlMap.put(Province.Region.SOUTH_AMERICA, usaSouthAmerica);
+		usaRegionControlMap.put(ProvinceRegion.CENTRAL_AMERICA, usaCentralAmerica);
+		usaRegionControlMap.put(ProvinceRegion.SOUTH_AMERICA, usaSouthAmerica);
 		
-		ussrRegionControlMap.put(Province.Region.CENTRAL_AMERICA, ussrCentralAmerica);
-		ussrRegionControlMap.put(Province.Region.SOUTH_AMERICA, ussrSouthAmerica);
+		ussrRegionControlMap.put(ProvinceRegion.CENTRAL_AMERICA, ussrCentralAmerica);
+		ussrRegionControlMap.put(ProvinceRegion.SOUTH_AMERICA, ussrSouthAmerica);
 		
 //		nextStateBuilder.getUsaBuilder().setPatriotism(patriotism);
 //		nextStateBuilder.getUssrBuilder().setPartyUnity(partyUnity);
@@ -829,44 +833,44 @@ public class ComputedGameState {
 	
 	// VALIDATION
 	
-	public boolean isValidDiaDipMove(Player player, Province.Id id){
+	public boolean isValidDiaDipMove(Player player, ProvinceId id){
 		return polStore.get(player) >= getDiaDipMoveMin(player, id) + getNonAdjacentDiaMoveCost(player, id) &&
 			   !isInArmedConflict(id);
 	}
 	
-	public boolean isValidDiaMilMove (Player player, Province.Id id){
+	public boolean isValidDiaMilMove (Player player, ProvinceId id){
 		return milStore.get(player) >= getDiaMilMoveMin() &&
 			   polStore.get(player) >= getNonAdjacentDiaMoveCost(player, id) && 
 			   getAlly(id) != otherPlayer(player) && 
 			   !isInArmedConflict(id);
 	}
 	
-	public boolean isValidDiaCovMove (Player player, Province.Id id){
+	public boolean isValidDiaCovMove (Player player, ProvinceId id){
 		return covStore.get(player) >= getDiaCovMoveMin() && 
 			   polStore.get(player) >= getNonAdjacentDiaMoveCost(player, id) && 
 			   !isInArmedConflict(id);
 	}
 	
-	public boolean isValidFundDissidentsMove(Player player, Province.Id id) {
+	public boolean isValidFundDissidentsMove(Player player, ProvinceId id) {
 		return covStore.get(player) >= getFundDissidentsMoveCost() &&
 			   !(hasDissidents(id)) && 
 			   !isInArmedConflict(id);
 	}
 	
-	public boolean isValidEstablishBaseMove(Player player, Province.Id id) {
+	public boolean isValidEstablishBaseMove(Player player, ProvinceId id) {
 		return milStore.get(player) >= getEstablishBaseMoveCost() &&
 			   bases.get(id) == null &&
 			   getAlly(id) == player &&
 			   !isInArmedConflict(id);
 	}
 	
-	public boolean isValidPoliticalPressureMove(Player player, Province.Id id) {
+	public boolean isValidPoliticalPressureMove(Player player, ProvinceId id) {
 		return polStore.get(player) >= getPoliticalPressureMoveCost() && 
 			   !isInArmedConflict(id) &&
 			   bases.get(id) != otherPlayer(player);
 	}
 	
-	public boolean isValidCoupMove(Player player, Province.Id id) {
+	public boolean isValidCoupMove(Player player, ProvinceId id) {
 		return covStore.get(player) >= getCoupMoveCost(id) &&
 			   bases.get(id) == null &&
 			   !hasInfluence(player, id) &&
@@ -874,47 +878,47 @@ public class ComputedGameState {
 			   !isInArmedConflict(id);
 	}
 	
-	public boolean isValidOvertFundAttackerMove(Player player, Province.Id id) {
+	public boolean isValidOvertFundAttackerMove(Player player, ProvinceId id) {
 		if(isInArmedConflict(id)) {
 			Conflict c = activeConflicts.get(id);
 			return milStore.get(player) >= getOvertFundAttackerCost() &&
 				   c.getRebels().getGov() != getIdealGov(otherPlayer(player)) &&
-				   c.getAttackerSupporter() != Province.Id.USSR &&
-				   c.getAttackerSupporter() != Province.Id.USA;
+				   c.getAttackerSupporter() != ProvinceId.USSR &&
+				   c.getAttackerSupporter() != ProvinceId.USA;
 		}
 		return false;
 			   
 	}
 	
-	public boolean isValidOvertFundDefenderMove(Player player, Province.Id id) {
+	public boolean isValidOvertFundDefenderMove(Player player, ProvinceId id) {
 		if(isInArmedConflict(id)) {
 			Conflict c = activeConflicts.get(id);
 			return milStore.get(player) >= getOvertFundDefenderCost() &&
 				   governments.get(id) != getIdealGov(otherPlayer(player)) &&
-				   c.getDefenderSupporter() != Province.Id.USSR &&
-				   c.getDefenderSupporter() != Province.Id.USA;
+				   c.getDefenderSupporter() != ProvinceId.USSR &&
+				   c.getDefenderSupporter() != ProvinceId.USA;
 		}
 		return false;
 	}
 	
-	public boolean isValidCovertFundAttackerMove(Player player, Province.Id id) {
+	public boolean isValidCovertFundAttackerMove(Player player, ProvinceId id) {
 		if(isInArmedConflict(id)) {
 			Conflict c = activeConflicts.get(id);
 			return covStore.get(player) >= getCovertFundAttackerCost() &&
 				   c.getRebels().getGov() != getIdealGov(otherPlayer(player)) &&
-				   c.getDefenderSupporter() != Province.Id.USSR &&
-				   c.getDefenderSupporter() != Province.Id.USA;
+				   c.getDefenderSupporter() != ProvinceId.USSR &&
+				   c.getDefenderSupporter() != ProvinceId.USA;
 		}
 		return false;
 	}
 	
-	public boolean isValidCovertFundDefenderMove(Player player, Province.Id id) {
+	public boolean isValidCovertFundDefenderMove(Player player, ProvinceId id) {
 		if(isInArmedConflict(id)) {
 			Conflict c = activeConflicts.get(id);
 			return covStore.get(player) >= getCovertFundDefenderCost() &&
 				   governments.get(id) != getIdealGov(otherPlayer(player)) &&
-				   c.getDefenderSupporter() != Province.Id.USSR &&
-				   c.getDefenderSupporter() != Province.Id.USA;
+				   c.getDefenderSupporter() != ProvinceId.USSR &&
+				   c.getDefenderSupporter() != ProvinceId.USA;
 		}
 		return false;
 	}
@@ -939,24 +943,24 @@ public class ComputedGameState {
 	
 	// COST AND COST RANGES
 
-	public int getNonAdjacentDiaMoveCost(Player player, Province.Id id) {
+	public int getNonAdjacentDiaMoveCost(Player player, ProvinceId id) {
 		if((player == Player.USA && !usaAdjacencies.get(id)) ||
 		   (player == Player.USSR && !ussrAdjacencies.get(id)) )
 			return this.state.getSettings().getMoveSettings().getNonAdjacentCost();
 		return 0;
 	}
 	
-	public int getDiaDipMoveMin(Player player, Province.Id id) {
+	public int getDiaDipMoveMin(Player player, ProvinceId id) {
 		if(getDiaDipMoveIncrement(player, id) == 2) return 2;
 		return 1;
 	}
 	
-	public int getDiaDipMoveMax(Player player, Province.Id id) {
+	public int getDiaDipMoveMax(Player player, ProvinceId id) {
 		int ret = Math.min(polStore.get(player), 2*getNetStability(id));
 		return ret;
 	}
 	
-	public int getDiaDipMoveIncrement(Player player, Province.Id id) {
+	public int getDiaDipMoveIncrement(Player player, ProvinceId id) {
 		if(getAlly(id) == otherPlayer(player)) return 2;
 		return 1;
 	}
@@ -965,7 +969,7 @@ public class ComputedGameState {
 		return 1;
 	}
 	
-	public int getDiaMilMoveMax(Player player, Province.Id id) {
+	public int getDiaMilMoveMax(Player player, ProvinceId id) {
 		int ret = Math.min(milStore.get(player), 2*getNetStability(id));
 		return ret;
 	}
@@ -978,7 +982,7 @@ public class ComputedGameState {
 		return 1;
 	}
 	
-	public int getDiaCovMoveMax(Player player, Province.Id id) {
+	public int getDiaCovMoveMax(Player player, ProvinceId id) {
 		int ret = Math.min(covStore.get(player), 2*getNetStability(id));
 		return ret;
 	}
@@ -999,7 +1003,7 @@ public class ComputedGameState {
 		return this.state.getSettings().getMoveSettings().getActionPressureCost();
 	}
 	
-	public int getCoupMoveCost(Province.Id id) {
+	public int getCoupMoveCost(ProvinceId id) {
 		return (this.state.getSettings().getMoveSettings().getActionCoupCostPerStab() * getNetStability(id)) + 1;
 	}
 	
@@ -1021,11 +1025,11 @@ public class ComputedGameState {
 	
 	// OTHER HELPER FUNCTIONS
 	
-	public boolean hasActed(Province.Id id) {
+	public boolean hasActed(ProvinceId id) {
 		return acted.get(id);
 	}
 	
-	public Player getAlly(Province.Id province) {
+	public Player getAlly(ProvinceId province) {
 		if(totalInfluence.get(province) > getAllianceThreshold(province) &&
 				governments.get(province) != Government.COMMUNISM) {
 			return Player.USA;
@@ -1036,7 +1040,7 @@ public class ComputedGameState {
 		return null;
 	}
 	
-	public int getNetStability(Province.Id province) {
+	public int getNetStability(ProvinceId province) {
 		return stabilityBase.get(province) + stabilityModifier.getOrDefault(province, 0);
 	}
 	
@@ -1048,40 +1052,40 @@ public class ComputedGameState {
 		}
 	}
 	
-	public int getAllianceThreshold(Province.Id province) {
+	public int getAllianceThreshold(ProvinceId province) {
 		if(getNetStability(province) > 0) return getNetStability(province)-1;
 		return 0;
 	}
 	
-	public static Player toPlayer(Province.Id id) {
-		if (id == Province.Id.USA) return Player.USA;
-		if (id == Province.Id.USSR) return Player.USSR;
+	public static Player toPlayer(ProvinceId id) {
+		if (id == ProvinceId.USA) return Player.USA;
+		if (id == ProvinceId.USSR) return Player.USSR;
 		return null;
 	}
 	
-	public static Province.Id toProvinceId(Player player) {
-		if (player == Player.USA) return Province.Id.USA;
-		if (player == Player.USSR) return Province.Id.USSR;
+	public static ProvinceId toProvinceId(Player player) {
+		if (player == Player.USA) return ProvinceId.USA;
+		if (player == Player.USSR) return ProvinceId.USSR;
 		return null;
 	}
 	
-	public boolean hasDissidents(final Province.Id id) {
+	public boolean hasDissidents(final ProvinceId id) {
 		if( dissidents.get(id) != Dissidents.getDefaultInstance() && dissidents.get(id) != null )
 			return true;
 		return false;
 	}
 	
-//	public boolean hasLeader(final Province.Id id) {
+//	public boolean hasLeader(final ProvinceId id) {
 //		if( leaders.get(id) != Leader.getDefaultInstance() && leaders.get(id) != null )
 //			return true;
 //		return false;
 //	}
 	
-	public Government getDissidentsGov(final Province.Id id) {
+	public Government getDissidentsGov(final ProvinceId id) {
 		return dissidents.get(id).getGov();
 	}
 	
-	public Conflict getConflict(final Province.Id id) {
+	public Conflict getConflict(final ProvinceId id) {
 		return activeConflicts.get(id);
 	}
 	
@@ -1093,22 +1097,22 @@ public class ComputedGameState {
 		} 
 	}
 	
-	protected boolean hasAdjacencyInfluence(Player player, Province.Id id) {
+	protected boolean hasAdjacencyInfluence(Player player, ProvinceId id) {
 		if(hasInfluence(player, id)) return true;
-		for (Province.Id adj : provinceSettings.get(id).getAdjacencyList()) {
+		for (ProvinceId adj : provinceSettings.get(id).getAdjacencyList()) {
 			if(hasInfluence(player, adj)) return true;
 		}
 		return false;
 	}
 	
-	public boolean isInRange(Player player, Province.Id id) {
+	public boolean isInRange(Player player, ProvinceId id) {
 		if (player == Player.USA)
 			return usaAdjacencies.get(id);
 		else //if (player == Player.USSR)
 			return ussrAdjacencies.get(id);
 	}
 	
-	public boolean hasInfluence(Player player, Province.Id id) {
+	public boolean hasInfluence(Player player, ProvinceId id) {
 		try {
 			if((inflSign(player) * totalInfluence.get(id) > 0 ||
 					bases.get(id) == player ||
@@ -1121,7 +1125,7 @@ public class ComputedGameState {
 		//return false;
 	}
 	
-	public boolean isInArmedConflict(Province.Id id) {
+	public boolean isInArmedConflict(ProvinceId id) {
 		if(activeConflicts.get(id) != null &&
 		   activeConflicts.get(id) != Conflict.getDefaultInstance() &&
 		   activeConflicts.get(id).getActive()) {
@@ -1140,7 +1144,7 @@ public class ComputedGameState {
 	
 	public int getPatriotismModifier() {
 		int sum = 0;
-		for(Province.Region r : Province.Region.values()) {
+		for(ProvinceRegion r : ProvinceRegion.values()) {
 			int usaControl = usaRegionControl.getOrDefault(r, 0); 
 			int ussrControl = ussrRegionControl.getOrDefault(r, 0); 
 			if(usaControl > regionTotal.getOrDefault(r, 0)/2) { // TODO: Wrong getOrDefault
@@ -1160,7 +1164,7 @@ public class ComputedGameState {
 	
 	public int getPartyUnityModifier() {
 		int sum = 0;
-		for(Province.Region r : Province.Region.values()) {
+		for(ProvinceRegion r : ProvinceRegion.values()) {
 			int usaControl = usaRegionControl.getOrDefault(r, 0); 
 			int ussrControl = ussrRegionControl.getOrDefault(r, 0); 
 			if(ussrControl > regionTotal.getOrDefault(r, 0)/2) { // TODO: Wrong getOrDefault

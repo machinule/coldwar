@@ -11,7 +11,6 @@ import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.EventOuterClass.BerlinBlockadeEvent;
 import com.berserkbentobox.coldwar.EventOuterClass.Event;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
 
 /**
  * Client manages the game state, making moves and taking turns.
@@ -41,33 +40,8 @@ public abstract class Client {
 				.setHeatState(Heat.buildInitialState(settings.getHeatSettings()))
 				.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
 				.setTechnologyState(Technology.buildInitialState(settings.getTechnologySettings()))
+				.setProvinceState(Province.buildInitialState(settings.getProvinceSettings()))
 				.setTurn(0);
-//				.setTechs(settings.getTechInit());
-		for (ProvinceSettings p : settings.getProvinceSettings().getProvinceList()) {
-			Province.Builder builder = state.addProvincesBuilder()
-				.setId(p.getId())
-				.setGov(p.getGovernmentInit())
-				.setInfluence(p.getInfluenceInit());
-			if (p.hasAllyInit()) {
-				builder.setAlly(p.getAllyInit());
-			}
-			if (p.hasMilitaryBaseInit()) {
-				builder.setBase(p.getMilitaryBaseInit());
-			}
-			if (p.hasOccupierInit()) {
-				builder.setOccupier(p.getOccupierInit());
-			}
-			if (p.hasLeaderInit()) {
-				Logger.Dbg("Leader init - " + p.getLeaderInit());
-//				builder.setLeader(getLeader(settings, p.getLeaderInit()));
-			}
-			if (p.hasDissidentsInit()) {
-				builder.setDissidents(p.getDissidentsInit());
-			}
-			if (p.hasConflictInit()) {
-				builder.setConflict(p.getConflictInit());
-			}
-		}
 		
 		//Berlin Blockade
 		Crisis.Builder c = Crisis.newBuilder();
