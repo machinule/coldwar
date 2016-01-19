@@ -179,19 +179,19 @@ message ResearchMove {
 // ============USSR LEADERS=============
 
 message SupportLeaderMove {
-	optional UssrLeader.Id leader_id = 1;
+	optional UssrLeaderId leader_id = 1;
 	optional int32 magnitude = 2;
 }
 
 message SabotageLeaderMove {
-	optional UssrLeader.Id leader_id = 1;
+	optional UssrLeaderId leader_id = 1;
 	optional int32 magnitude = 2;
 }
 
 // =============USA LEADERS=============
 
 message PrimaryMove {
-	optional UsaLeader.Id leader_id = 1;
+	optional UsaLeaderId leader_id = 1;
 }
 
 // ========== SPECIAL ACTIONS ==========
