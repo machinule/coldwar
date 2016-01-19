@@ -5,7 +5,7 @@ import java.util.concurrent.Future;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.GameStateOuterClass.Crisis;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.SingleProvinceSettings;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.GameSettingsFactory;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.EventOuterClass.BerlinBlockadeEvent;
@@ -40,7 +40,7 @@ public abstract class Client {
 				.setSeed(settings.getSoftwareSettings().getSeedInit())
 				.setTurn(0);
 //				.setTechs(settings.getTechInit());
-		for (SingleProvinceSettings p : settings.getProvinceSettings().getProvinceList()) {
+		for (ProvinceSettings p : settings.getProvinceSettings().getProvinceList()) {
 			Province.Builder builder = state.addProvincesBuilder()
 				.setId(p.getId())
 				.setGov(p.getGovernmentInit())

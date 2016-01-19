@@ -10,7 +10,7 @@ import java.util.function.Function;
 
 import com.berserkbentobox.coldwar.GameStateOuterClass.Crisis;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.SingleProvinceSettings;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.GameStateOuterClass.TurnLogEntry;
 import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
 import com.berserkbentobox.coldwar.Logger;
@@ -78,7 +78,7 @@ public class ComputedGameState {
 	public final Map<Province.Id, Integer> stabilityBase;
 	public final Map<Province.Id, Integer> stabilityModifier;
 	
-	public final Map<Province.Id, SingleProvinceSettings> provinceSettings;
+	public final Map<Province.Id, ProvinceSettings> provinceSettings;
 	
 	public final Map<Province.Id, Integer> coups;
 	
@@ -163,7 +163,7 @@ public class ComputedGameState {
 		EnumMap<Province.Id, Integer> stabilityModifierMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
 		this.stabilityModifier = Collections.unmodifiableMap(stabilityModifierMap);	
 
-		EnumMap<Province.Id, SingleProvinceSettings> provinceSettingsMap = new EnumMap<Province.Id, SingleProvinceSettings>(Province.Id.class);
+		EnumMap<Province.Id, ProvinceSettings> provinceSettingsMap = new EnumMap<Province.Id, ProvinceSettings>(Province.Id.class);
 		this.provinceSettings = Collections.unmodifiableMap(provinceSettingsMap);
 
 		EnumMap<Province.Id, Integer> coupMap = new EnumMap<Province.Id, Integer>(Province.Id.class);
@@ -786,7 +786,7 @@ public class ComputedGameState {
 		int ussrCentralAmerica = 0, usaCentralAmerica = 0,
 			ussrSouthAmerica = 0, usaSouthAmerica = 0;
 		
-		for (SingleProvinceSettings p : this.state.getSettings().getProvinceSettings().getProvinceList()) {
+		for (ProvinceSettings p : this.state.getSettings().getProvinceSettings().getProvinceList()) {
 			switch (p.getRegion()) {
 				case CENTRAL_AMERICA:
 					if (getAlly(p.getId()) == Player.USSR)

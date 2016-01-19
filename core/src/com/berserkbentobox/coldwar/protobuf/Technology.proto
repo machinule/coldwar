@@ -9,7 +9,7 @@ import "Province.proto";
 
 // The top-level settings proto included in GameSettings.
 // Immutable over the duration of a single game.
-message TechnologySettings {
+message TechnologyGameSettings {
 	repeated TechnologyGroupSettings technology_group = 1;
 	repeated Tech usa_init = 2;
 	repeated Tech ussr_init = 3;
@@ -19,14 +19,14 @@ message TechnologySettings {
 message TechnologyGroupSettings {
 	optional TechGroup.Id id = 1;
 	optional string label = 2;
-	repeated SingleTechnologySettings technology = 3;
+	repeated TechnologySettings technology = 3;
     optional int32 base_research_chance = 4;
     optional int32 research_effect = 5; //Increase to probability when player spents points on research
     // Mag = 1 >> +10% research for that tech group if research effect = 100000
 }
 
 // Settings for a single technology.
-message SingleTechnologySettings {
+message TechnologySettings {
 	optional int32 num_progressions = 1;
 	optional Tech.Id id = 2;
 	optional string label = 3;

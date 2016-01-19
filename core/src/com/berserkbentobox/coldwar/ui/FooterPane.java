@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.SingleProvinceSettings;
 import com.berserkbentobox.coldwar.logic.Client;
 
 public abstract class FooterPane extends Table {
@@ -21,5 +20,5 @@ public abstract class FooterPane extends Table {
 		this.setDebug(true);
 	}
 	
-	abstract public void onSelect(SingleProvinceSettings province);
+	abstract public void onSelect(ProvinceSettings province);
 }

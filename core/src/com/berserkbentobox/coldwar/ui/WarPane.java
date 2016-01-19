@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.SingleProvinceSettings;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
 import com.berserkbentobox.coldwar.logic.Client;
 import com.berserkbentobox.coldwar.logic.Client.Player;
@@ -26,7 +26,7 @@ public class WarPane extends FooterPane {
 	}
 
 	@Override
-	public void onSelect(final SingleProvinceSettings province) {
+	public void onSelect(final ProvinceSettings province) {
 		this.clearChildren();
 		
 		Table innerWar = new Table();

@@ -17,23 +17,23 @@ import "Event.proto";
 // GameSettings contains constants over the course of the game.
 // These are not logged each turn, but merely copied to the top level GameState.
 message GameSettings {
-	optional SoftwareSettings software_settings = 1;
-	optional PolicySettings policy_settings = 2;
-	optional LeaderSettings leader_settings = 3;
-	optional TreatySettings treaty_settings = 4;
+	optional SoftwareGameSettings software_settings = 1;
+	optional PolicyGameSettings policy_settings = 2;
+	optional LeaderGameSettings leader_settings = 3;
+	optional TreatyGameSettings treaty_settings = 4;
 	optional SuperpowerGameSettings superpower_settings = 5;
-	optional MoveSettings move_settings = 6;
-	optional EventSettings event_settings = 7;
-	optional TechnologySettings technology_settings = 8;
-	optional HeatSettings heat_settings = 9;
-	optional ProvinceSettings province_settings = 10;
+	optional MoveGameSettings move_settings = 6;
+	optional EventGameSettings event_settings = 7;
+	optional TechnologyGameSettings technology_settings = 8;
+	optional HeatGameSettings heat_settings = 9;
+	optional ProvinceGameSettings province_settings = 10;
+}
+
+message ProvinceGameSettings {
+	repeated ProvinceSettings province = 1;
 }
 
 message ProvinceSettings {
-	repeated SingleProvinceSettings province = 1;
-}
-
-message SingleProvinceSettings {
 	optional Province.Id id = 1;
 	optional string label = 2;
 	repeated Province.Id adjacency = 3;

@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.SingleProvinceSettings;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
 import com.berserkbentobox.coldwar.Logger;
@@ -30,7 +30,7 @@ public class ActionPane extends FooterPane {
 	}
 
 	@Override
-	public void onSelect(final SingleProvinceSettings province) {
+	public void onSelect(final ProvinceSettings province) {
 		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
 		
 		DynamicButton diplomaticInfluenceButton;
@@ -256,7 +256,7 @@ public class ActionPane extends FooterPane {
 		this.row();
 	}
 	
-	protected String formattedLabel(final SingleProvinceSettings province) {
+	protected String formattedLabel(final ProvinceSettings province) {
 		String ret = province.getLabel() + " | " + province.getStabilityBase();
 		int modifier = client.getMoveBuilder().getStabilityModifier(province.getId());
 		if (modifier > 0) {
@@ -276,7 +276,7 @@ public class ActionPane extends FooterPane {
 		selected.isSelected = true;
 	}
 	
-	protected String getFormattedAdjacencies(final SingleProvinceSettings province) {
+	protected String getFormattedAdjacencies(final ProvinceSettings province) {
 		String ret = "";
 		int count = 0;
 		int max = province.getAdjacencyCount();
@@ -288,7 +288,7 @@ public class ActionPane extends FooterPane {
 		return ret;
 	}
 	
-	protected String getFormattedLeader(final SingleProvinceSettings province) {
+	protected String getFormattedLeader(final ProvinceSettings province) {
 		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
 //		if (state.hasLeader(province.getId())) {
 //			Leader l = state.leaders.get(province.getId());

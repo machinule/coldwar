@@ -8,12 +8,12 @@ import "Province.proto";
 
 // The top-level settings proto included in GameSettings.
 // Immutable over the duration of a single game.
-message LeaderSettings {
-	repeated SingleLeaderSettings leader = 1;
+message LeaderGameSettings {
+	repeated LeaderSettings leader = 1;
 }
 
 // Settings for a single leader.
-message SingleLeaderSettings {
+message LeaderSettings {
 	optional string id = 1;
 	optional int32 birth_year = 2;
 	optional Leader.Allegiance allegiance = 3;

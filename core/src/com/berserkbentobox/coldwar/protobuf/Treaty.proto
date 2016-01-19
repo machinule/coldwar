@@ -6,12 +6,12 @@ package com.berserkbentobox.coldwar;
 
 // The top-level settings proto included in GameSettings.
 // Immutable over the duration of a single game.
-message TreatySettings {
-	repeated SingleTreatySettings treaty = 1;
+message TreatyGameSettings {
+	repeated TreatySettings treaty = 1;
 }
 
 // Settings for a single treaty.
-message SingleTreatySettings {
+message TreatySettings {
 	optional Treaty.Id id = 1;
 	optional int32 deterrence_reduction = 2;
 	optional int32 heat_reduction = 3;

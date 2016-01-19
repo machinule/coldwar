@@ -8,14 +8,14 @@ import "Cost.proto";
 
 // The top-level settings proto included in GameSettings.
 // Immutable over the duration of a single game.
-message PolicySettings {
+message PolicyGameSettings {
 	optional int32 num_policy_slots = 1;
-	repeated SinglePolicySettings usa_policy = 2;
-	repeated SinglePolicySettings ussr_policy = 3;
+	repeated PolicySettings usa_policy = 2;
+	repeated PolicySettings ussr_policy = 3;
 }
 
 // Settings for a single policy.
-message SinglePolicySettings {
+message PolicySettings {
 	optional Policy.Id id = 1;
 	optional Cost cost_to_adopt = 2;
 	optional bool init_active = 3;
