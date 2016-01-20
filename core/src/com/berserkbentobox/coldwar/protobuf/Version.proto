@@ -1,0 +1,7 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+message VersionGameSettings {
+	optional string version = 1;
+}

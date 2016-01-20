@@ -12,10 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
-import com.berserkbentobox.coldwar.LeaderOuterClass.Leader;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
+import com.berserkbentobox.coldwar.Province.ProvinceId;
 import com.berserkbentobox.coldwar.Logger;
-import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.logic.Client;
 import com.berserkbentobox.coldwar.logic.ComputedGameState;
 
@@ -279,7 +277,7 @@ public class ActionPane extends FooterPane {
 		String ret = "";
 		int count = 0;
 		int max = province.getAdjacencyCount();
-		for(Province.Id id : province.getAdjacencyList()) {
+		for(ProvinceId id : province.getAdjacencyList()) {
 			count++;
 			ret += client.getMoveBuilder().getComputedGameState().provinceSettings.get(id).getLabel();
 			if(count < max) ret += ", ";
@@ -289,13 +287,26 @@ public class ActionPane extends FooterPane {
 	
 	protected String getFormattedLeader(final ProvinceSettings province) {
 		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
-		if (state.hasLeader(province.getId())) {
-			Leader l = state.leaders.get(province.getId());
-			String ret = l.getName();
-			ret += " (" + (state.year - l.getBirth()) + ") ";
-			return ret;
-		}
-		else
+//		if (state.hasLeader(province.getId())) {
+//			Leader l = state.leaders.get(province.getId());
+//			String ret = l.getName();
+//			ret += " (" + (state.year - l.getBirth()) + ") ";
+//			switch (l.getType()) {
+//				case POLITICAL:
+//					ret += "+" + Settings.getConstInt("leader_income_pol") + " POL";
+//					break;
+//				case MILITARY:
+//					ret += "+" + Settings.getConstInt("leader_income_mil") + " MIL";
+//					break;
+//				case COVERT:
+//					ret += "+" + Settings.getConstInt("leader_income_cov") + " COV";
+//					break;
+//				default:
+//					break;
+//			}
+//			return ret;
+//		}
+//		else
 			return "None";
 	}
 }

@@ -1,0 +1,17 @@
+num_policy_slots: 3
+usa_policy {
+	id: MARSHALL_PLAN
+	cost_to_adopt {
+		political_points: 3
+	}
+	init_active: false
+	init_available: false
+}
+ussr_policy {
+	id: CAMBRIDGE_SPY_RING
+	cost_to_adopt {
+		covert_points: 2
+	}
+	init_active: false
+	init_available: false
+}

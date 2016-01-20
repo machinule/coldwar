@@ -2,10 +2,11 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
+import "Cost.proto";
 import "Province.proto";
-import "Tech.proto";
-import "Policies.proto";
-import "SuperpowerLeaders.proto";
+import "Technology.proto";
+import "Policy.proto";
+import "Superpower.proto";
 //import "google/protobuf/descriptor.proto";
 
 //extend google.protobuf.MessageOptions {
@@ -13,6 +14,67 @@ import "SuperpowerLeaders.proto";
 //  optional int32 mil_cost = 76001;
 //  optional int32 cov_cost = 76002;
 //}
+
+// ========== Settings ==========
+
+// The top-level settings proto included in GameSettings.
+// Immutable over the duration of a single game.
+// TODO: this should probably be empty, and have settings included from other parts.
+message MoveGameSettings {
+	optional Cost dia_dip_move_cost = 1;
+	optional Cost dia_mil_move_cost = 2;
+	optional Cost dia_cov_move_cost = 3;
+
+	optional Cost fund_dissidents_move_cost = 101;
+	optional Cost establish_base_move_cost = 102;
+	optional Cost political_pressure_move_cost = 103;
+	optional Cost coup_move_cost = 104;
+	optional Cost military_action_move_cost = 105;
+
+	optional Cost conflict_overt_fund_attacker_move_cost = 110;
+	optional Cost conflict_overt_fund_defender_move_cost = 111;
+  optional int32 coup_success_chance = 500;
+  optional int32 coup_leader_chance = 501;
+  optional int32 coup_backfire_chance = 502;
+
+  optional int32 conflict_leader_modifier = 510;
+
+  optional Cost deescalation_cost = 700;
+
+  optional int32 heat_bleed_threshold = 800;
+  optional int32 heat_bleed = 801;
+
+  optional int32 non_adjacent_cost = 802;
+
+  optional int32 leader_income_pol = 803;
+  optional int32 leader_income_mil = 804;
+  optional int32 leader_income_cov = 806;
+
+  optional int32 action_dissidents_cost = 807;
+  optional int32 action_dissidents_heat = 808;
+
+  optional int32 action_pressure_cost = 809;
+  optional int32 action_pressure_heat = 810;
+  optional int32 action_pressure_heat_extra = 811;
+
+  optional int32 action_base_cost = 812;
+  optional int32 action_base_heat = 813;
+
+  optional int32 action_influence_autocracy_mod = 823;
+
+  optional int32 action_coup_cost_per_stab = 814;
+  optional int32 action_coup_heat_fixed = 815;
+  optional int32 action_coup_heat_per_stab = 816;
+  optional int32 action_coup_lock_time = 817;
+  optional int32 action_coup_stab_threshold = 818;
+
+  optional int32 conflict_overt_fund_attacker = 819;
+  optional int32 conflict_overt_fund_defender = 820;
+  optional int32 conflict_covert_fund_attacker = 821;
+  optional int32 conflict_covert_fund_defender = 822;
+
+  optional int32 vp_region_modifier = 824;
+}
 
 message MoveList {
 	repeated Move moves = 1;
@@ -38,13 +100,6 @@ message Move {
 
 	optional EnactPolicyMove enact_policy_move = 160;
 
-	optional FoundCIAMove found_cia_move = 200;
-
-	optional FoundKGBMove found_kgb_move = 300;
-
-	optional FoundNATOMove found_nato_move = 1001;
-	optional FoundPactMove found_pact_move = 1002;
-
 	//Crises
 
 	optional USSRBerlinBlockadeLiftBlockadeMove ussr_berlin_blockade_lift_blockade_move = 2001;
@@ -55,7 +110,7 @@ message Move {
 
 // Influence by spending DIP points
 message DiplomacyMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
 
 //	option (pol_cost) = 1;
@@ -63,7 +118,7 @@ message DiplomacyMove {
 
 // Influence by spending MIL points
 message MilitaryMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
 
 //	option (mil_cost) = 1;
@@ -71,7 +126,7 @@ message MilitaryMove {
 
 // Influence by spending COV points
 message CovertMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
 
 //	option (cov_cost) = 1;
@@ -80,89 +135,70 @@ message CovertMove {
 // ========== TARGETED ACTIONS ==========
 
 message FundDissidentsMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 
 //	option (cov_cost) = 1;
 }
 
 message EstablishBaseMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 
 //	option (mil_cost) = 2;
 }
 
 message PoliticalPressureMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 
 //	option (pol_cost) = 2;
 }
 
 message CoupMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
 }
 
 // ========= CONFLICT ACTIONS ==========
 
 message ConflictOvertFundAttackerMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message ConflictOvertFundDefenderMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 message MilitaryActionMove {
-	optional Province.Id province_id = 1;
+	optional ProvinceId province_id = 1;
 }
 
 // ===============TECHS=================
 
 message ResearchMove {
-	optional TechGroup.Id tech_id = 1;
+	optional TechnologyGroupId tech_id = 1;
 	optional int32 magnitude = 2;
-}
-
-// ==============POLICIES===============
-
-message EnactPolicyMove {
-	optional Policy.Id policy_id = 1;
-	optional int32 slot = 2;
 }
 
 // ============USSR LEADERS=============
 
 message SupportLeaderMove {
-	optional UssrLeader.Id leader_id = 1;
+	optional UssrLeaderId leader_id = 1;
 	optional int32 magnitude = 2;
 }
 
 message SabotageLeaderMove {
-	optional UssrLeader.Id leader_id = 1;
+	optional UssrLeaderId leader_id = 1;
 	optional int32 magnitude = 2;
 }
 
 // =============USA LEADERS=============
 
 message PrimaryMove {
-	optional UsaLeader.Id leader_id = 1;
+	optional UsaLeaderId leader_id = 1;
 }
 
 // ========== SPECIAL ACTIONS ==========
 
 message DeescalationMove {
-}
-
-message FoundNATOMove {
-}
-
-message FoundPactMove {
-}
-
-message FoundCIAMove {
-}
-
-message FoundKGBMove {
 }
 
 // =========== CRISES ==================

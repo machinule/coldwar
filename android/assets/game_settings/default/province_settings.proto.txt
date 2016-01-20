@@ -1,0 +1,746 @@
+  province {
+    id: USA
+    label: "United States"
+    adjacency: MEXICO
+    adjacency: CUBA
+    init_influence: 1
+    init_government: DEMOCRACY
+    region: SUPERPOWERS
+  }
+  province {
+    id: USSR
+    label: "Soviet Union"
+    adjacency: ROMANIA
+    adjacency: POLAND
+    adjacency: FINLAND
+    adjacency: TURKEY
+    init_influence: -1
+    init_government: COMMUNISM
+    region: SUPERPOWERS
+  }
+  province {
+    id: MEXICO
+    label: "Mexico"
+    adjacency: USA
+    adjacency: GUATEMALA
+    adjacency: HONDURAS
+    adjacency: CUBA
+    stability_base: 2
+    region: CENTRAL_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: GUATEMALA
+    label: "Guatemala"
+    adjacency: MEXICO
+    adjacency: HONDURAS
+    adjacency: EL_SALVADOR
+    region: CENTRAL_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: EL_SALVADOR
+    label: "El Salvador"
+    adjacency: GUATEMALA
+    adjacency: HONDURAS
+    region: CENTRAL_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: HONDURAS
+    label: "Honduras"
+    adjacency: MEXICO
+    adjacency: GUATEMALA
+    adjacency: NICARAGUA
+    adjacency: EL_SALVADOR
+    region: CENTRAL_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: NICARAGUA
+    label: "Nicaragua"
+    adjacency: CUBA
+    adjacency: HONDURAS
+    adjacency: PANAMA
+    adjacency: COSTA_RICA
+    init_influence: 1
+    init_government: AUTOCRACY
+    init_leader: "Anastasio Somoza Garcia"
+    region: CENTRAL_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: COSTA_RICA
+    label: "Costa Rica"
+    adjacency: NICARAGUA
+    adjacency: PANAMA
+    stability_base: 2
+    init_government: DEMOCRACY
+    region: CENTRAL_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: PANAMA
+    label: "Panama"
+    adjacency: NICARAGUA
+    adjacency: COSTA_RICA
+    adjacency: COLOMBIA
+    stability_base: 2
+    init_influence: 1
+    init_military_base: USA
+    region: CENTRAL_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: CUBA
+    label: "Cuba"
+    adjacency: USA
+    adjacency: NICARAGUA
+    adjacency: MEXICO
+    adjacency: HAITI
+    stability_base: 2
+    init_dissidents {
+      gov: COMMUNISM
+      LeaderInit: "Fidel Castro"
+    }
+    region: CENTRAL_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: HAITI
+    label: "Haiti"
+    adjacency: CUBA
+    adjacency: DOMINICAN_REP
+    region: CENTRAL_AMERICA
+    culture: FRENCH
+  }
+  province {
+    id: DOMINICAN_REP
+    label: "Dominican Rep."
+    adjacency: HAITI
+    adjacency: LESS_ANTILLES
+    init_government: AUTOCRACY
+    init_leader: "Rafael Trujillo"
+    region: CENTRAL_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: LESS_ANTILLES
+    label: "Lesser Antilles"
+    adjacency: DOMINICAN_REP
+    adjacency: VENEZUELA
+    adjacency: GUYANA
+    region: CENTRAL_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: COLOMBIA
+    label: "Colombia"
+    adjacency: PANAMA
+    adjacency: VENEZUELA
+    adjacency: ECUADOR
+    adjacency: PERU
+    region: SOUTH_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: ECUADOR
+    label: "Ecuador"
+    adjacency: COLOMBIA
+    adjacency: PERU
+    stability_base: 2
+    region: SOUTH_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: PERU
+    label: "Peru"
+    adjacency: ECUADOR
+    adjacency: BOLIVIA
+    adjacency: COLOMBIA
+    adjacency: CHILE
+    stability_base: 2
+    init_government: AUTOCRACY
+    region: SOUTH_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: CHILE
+    label: "Chile"
+    adjacency: PERU
+    adjacency: ARGENTINA
+    adjacency: BOLIVIA
+    stability_base: 2
+    init_government: DEMOCRACY
+    region: SOUTH_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: BOLIVIA
+    label: "Bolivia"
+    adjacency: PERU
+    adjacency: ARGENTINA
+    adjacency: CHILE
+    stability_base: 2
+    region: SOUTH_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: ARGENTINA
+    label: "Argentina"
+    adjacency: BOLIVIA
+    adjacency: URUGUAY
+    adjacency: BRAZIL
+    adjacency: CHILE
+    stability_base: 2
+    init_leader: "Juan Peron"
+    region: SOUTH_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: URUGUAY
+    label: "Uruguay"
+    adjacency: ARGENTINA
+    adjacency: BRAZIL
+    stability_base: 2
+    region: SOUTH_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: BRAZIL
+    label: "Brazil"
+    adjacency: URUGUAY
+    adjacency: VENEZUELA
+    adjacency: ARGENTINA
+    adjacency: GUYANA
+    stability_base: 2
+    region: SOUTH_AMERICA
+    culture: PORTUGUESE
+  }
+  province {
+    id: VENEZUELA
+    label: "Venezuela"
+    adjacency: COLOMBIA
+    adjacency: BRAZIL
+    adjacency: LESS_ANTILLES
+    adjacency: GUYANA
+    stability_base: 2
+    region: SOUTH_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: GUYANA
+    label: "Guyana"
+    adjacency: VENEZUELA
+    adjacency: BRAZIL
+    adjacency: LESS_ANTILLES
+    region: SOUTH_AMERICA
+    culture: SPANISH
+  }
+  province {
+    id: CANADA
+    label: "Canada"
+    adjacency: USA
+    adjacency: GREAT_BRITAIN
+    stability_base: 3
+    init_influence: 1
+    init_government: DEMOCRACY
+    region: WESTERN_EUROPE
+    culture: ENGLISH
+  }
+  province {
+    id: GREAT_BRITAIN
+    label: "United Kingdom"
+    adjacency: FRANCE
+    adjacency: CANADA
+    adjacency: BENELUX
+    adjacency: NORWAY
+    stability_base: 3
+    init_influence: 2
+    init_government: DEMOCRACY
+    region: WESTERN_EUROPE
+    culture: ENGLISH
+  }
+  province {
+    id: FRANCE
+    label: "France"
+    adjacency: WEST_GERMANY
+    adjacency: GREAT_BRITAIN
+    adjacency: SPAIN
+    adjacency: ITALY
+    stability_base: 3
+    init_government: DEMOCRACY
+    region: WESTERN_EUROPE
+    culture: FRENCH
+  }
+  province {
+    id: WEST_GERMANY
+    label: "West Germany"
+    adjacency: FRANCE
+    adjacency: EAST_GERMANY
+    adjacency: BENELUX
+    adjacency: DENMARK
+    stability_base: 3
+    init_government: OCCUPIED
+    init_occupier: USA
+    region: WESTERN_EUROPE
+    culture: GERMAN
+  }
+  province {
+    id: SPAIN
+    label: "Spain"
+    adjacency: PORTUGAL
+    adjacency: FRANCE
+    stability_base: 2
+    init_government: AUTOCRACY
+    init_occupier: USA
+    region: WESTERN_EUROPE
+    culture: SPANISH
+  }
+  province {
+    id: PORTUGAL
+    label: "Portugal"
+    adjacency: SPAIN
+    stability_base: 2
+    init_government: AUTOCRACY
+    init_occupier: USA
+    region: WESTERN_EUROPE
+    culture: PORTUGUESE
+  }
+  province {
+    id: BENELUX
+    label: "Low Countries"
+    adjacency: WEST_GERMANY
+    adjacency: GREAT_BRITAIN
+    stability_base: 3
+    init_government: AUTOCRACY
+    region: WESTERN_EUROPE
+    culture: FRENCH
+  }
+  province {
+    id: DENMARK
+    label: "Denmark"
+    adjacency: WEST_GERMANY
+    adjacency: NORWAY
+    adjacency: SWEDEN
+    stability_base: 3
+    init_government: DEMOCRACY
+    region: WESTERN_EUROPE
+    culture: GERMAN
+  }
+  province {
+    id: NORWAY
+    label: "Norway"
+    adjacency: DENMARK
+    adjacency: SWEDEN
+    adjacency: GREAT_BRITAIN
+    stability_base: 3
+    init_government: DEMOCRACY
+    region: WESTERN_EUROPE
+    culture: GERMAN
+  }
+  province {
+    id: ITALY
+    label: "Italy"
+    adjacency: FRANCE
+    adjacency: YUGOSLAVIA
+    stability_base: 3
+    region: WESTERN_EUROPE
+  }
+  province {
+    id: SWEDEN
+    label: "Sweden"
+    adjacency: DENMARK
+    adjacency: NORWAY
+    adjacency: FINLAND
+    stability_base: 3
+    init_government: DEMOCRACY
+    region: WESTERN_EUROPE
+    culture: GERMAN
+  }
+  province {
+    id: EAST_GERMANY
+    label: "East Germany"
+    adjacency: WEST_GERMANY
+    adjacency: CZECHOSLOVAKIA
+    adjacency: POLAND
+    stability_base: 3
+    init_government: OCCUPIED
+    init_occupier: USSR
+    region: EASTERN_EUROPE
+    culture: GERMAN
+  }
+  province {
+    id: POLAND
+    label: "Poland"
+    adjacency: WEST_GERMANY
+    adjacency: CZECHOSLOVAKIA
+    adjacency: USSR
+    stability_base: 3
+    init_influence: -1
+    init_government: COMMUNISM
+    region: EASTERN_EUROPE
+  }
+  province {
+    id: HUNGARY
+    label: "Hungary"
+    adjacency: ROMANIA
+    adjacency: CZECHOSLOVAKIA
+    stability_base: 2
+    init_influence: -1
+    init_government: COMMUNISM
+    region: EASTERN_EUROPE
+  }
+  province {
+    id: CZECHOSLOVAKIA
+    label: "Czechoslovakia"
+    adjacency: EAST_GERMANY
+    adjacency: POLAND
+    adjacency: HUNGARY
+    stability_base: 2
+    init_influence: -1
+    init_government: COMMUNISM
+    region: EASTERN_EUROPE
+  }
+  province {
+    id: ROMANIA
+    label: "Romania"
+    adjacency: USSR
+    adjacency: HUNGARY
+    adjacency: BULGARIA
+    stability_base: 2
+    init_influence: -1
+    init_government: COMMUNISM
+    region: EASTERN_EUROPE
+  }
+  province {
+    id: BULGARIA
+    label: "Bulgaria"
+    adjacency: TURKEY
+    adjacency: ROMANIA
+    stability_base: 2
+    init_influence: -1
+    init_government: COMMUNISM
+    region: EASTERN_EUROPE
+  }
+  province {
+    id: YUGOSLAVIA
+    label: "Yugoslavia"
+    adjacency: ITALY
+    adjacency: GREECE
+    stability_base: 2
+    init_government: COMMUNISM
+    region: EASTERN_EUROPE
+  }
+  province {
+    id: GREECE
+    label: "Greece"
+    adjacency: YUGOSLAVIA
+    adjacency: TURKEY
+    stability_base: 2
+    init_government: DEMOCRACY
+    region: EASTERN_EUROPE
+    init_conflict {
+      active: true
+      goal: 3
+      defender_progress: 2
+      rebels {
+        gov: COMMUNISM
+      }
+      length: 1
+      defender_supporter: USA
+      name: "Greek Civil War"
+      def_chance_mod: 100000
+    }
+  }
+  province {
+    id: TURKEY
+    label: "Turkey"
+    adjacency: USSR
+    adjacency: BULGARIA
+    adjacency: GREECE
+    stability_base: 2
+    region: EASTERN_EUROPE
+  }
+  province {
+    id: FINLAND
+    label: "Finland"
+    adjacency: USSR
+    adjacency: SWEDEN
+    stability_base: 3
+    init_government: DEMOCRACY
+    region: EASTERN_EUROPE
+  }
+  province {
+    id: LIBYA
+    label: "Libya"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: MIDDLE_EAST
+  }
+  province {
+    id: EGYPT
+    label: "Egypt"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: MIDDLE_EAST
+  }
+  province {
+    id: ISRAEL
+    label: "Israel"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: MIDDLE_EAST
+  }
+  province {
+    id: SYRIA
+    label: "Syria"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: MIDDLE_EAST
+  }
+  province {
+    id: IRAQ
+    label: "Iraq"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: MIDDLE_EAST
+  }
+  province {
+    id: IRAN
+    label: "Iran"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: MIDDLE_EAST
+  }
+  province {
+    id: GULF_STATES
+    label: "Gulf States"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: MIDDLE_EAST
+  }
+  province {
+    id: SAUDI_ARABIA
+    label: "Saudi Arabia"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: MIDDLE_EAST
+  }
+  province {
+    id: YEMEN
+    label: "Yemen"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: MIDDLE_EAST
+  }
+  province {
+    id: JORDAN
+    label: "Jordan"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: MIDDLE_EAST
+  }
+  province {
+    id: MOROCCO
+    label: "Morocco"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: AFRICA
+  }
+  province {
+    id: IVORY_GOLD_COAST
+    label: "Ivory/Gold Coast"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: AFRICA
+  }
+  province {
+    id: NIGERIA
+    label: "Nigeria"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: AFRICA
+  }
+  province {
+    id: ALGERIA
+    label: "Algeria"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: AFRICA
+  }
+  province {
+    id: WEST_AFRICA
+    label: "West Africa"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: AFRICA
+  }
+  province {
+    id: ZAIRE
+    label: "Zaire"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: AFRICA
+  }
+  province {
+    id: ANGOLA
+    label: "Angola"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: AFRICA
+  }
+  province {
+    id: SOUTH_AFRICA
+    label: "South Africa"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: AFRICA
+  }
+  province {
+    id: MOZAMBIQUE
+    label: "Mozambique"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: AFRICA
+  }
+  province {
+    id: EAST_AFRICA
+    label: "East Africa"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: AFRICA
+  }
+  province {
+    id: ETHIOPIA
+    label: "Ethiopia"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: AFRICA
+  }
+  province {
+    id: CHINA
+    label: "China"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: NORTH_KOREA
+    label: "Best Korea"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: SOUTH_KOREA
+    label: "South Korea"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: JAPAN
+    label: "Japan"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: TAIWAN
+    label: "Taiwan"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: PHILIPPINES
+    label: "Philippines"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: VIETNAM
+    label: "Vietnam"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: LAOS
+    label: "Laos"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: CAMBODIA
+    label: "Cambodia"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: AFGHANISTAN
+    label: "Afghanistan"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: SOUTH_ASIA
+  }
+  province {
+    id: PAKISTAN
+    label: "Pakistan"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: BANGLADESH
+    label: "Bangladesh"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: INDIA
+    label: "India"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: BURMA
+    label: "Burma"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: THAILAND
+    label: "Thailand"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: MALAYSIA
+    label: "Mayalisa"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: INDONESIA
+    label: "Indonesia"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }
+  province {
+    id: AUSTRALIA
+    label: "Australia"
+    stability_base: 3000
+    init_government: DEMOCRACY
+    region: EAST_ASIA
+  }

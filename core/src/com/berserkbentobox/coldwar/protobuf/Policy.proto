@@ -1,0 +1,56 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+import "Cost.proto";
+
+// ========== Ids ==========
+
+enum PolicyId {
+	// USA Policies.
+	MARSHALL_PLAN = 1;
+
+	// USSR Policies.
+	CAMBRIDGE_SPY_RING = 100;
+}
+
+// ========== Settings ==========
+
+// The top-level settings proto included in GameSettings.
+// Immutable over the duration of a single game.
+message PolicyGameSettings {
+	optional int32 num_policy_slots = 1;
+	repeated PolicySettings usa_policy = 2;
+	repeated PolicySettings ussr_policy = 3;
+}
+
+// Settings for a single policy.
+message PolicySettings {
+	optional PolicyId id = 1;
+	optional Cost cost_to_adopt = 2;
+	optional bool init_active = 3;
+	optional bool init_available = 4;
+}
+
+// ========== State ==========
+
+// The top-level state proto included in GameState.
+// Mutated each turn based on moves.
+message PolicyGameState {
+	repeated PolicyState usa_policy = 1;
+	repeated PolicyState ussr_policy = 2;
+}
+
+// The state for a single Policy.
+message PolicyState {
+	optional PolicyId id = 1;
+	optional bool active = 2;
+	optional bool available = 3;
+}
+
+// ========== Moves ==========
+
+message EnactPolicyMove {
+	optional PolicyId policy_id = 1;
+	optional int32 slot = 2;
+}

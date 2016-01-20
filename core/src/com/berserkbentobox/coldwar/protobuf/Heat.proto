@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+message HeatGameSettings {
+	optional int32 init_heat = 1;
+	optional int32 min_heat = 2;
+	optional int32 max_heat = 3;
+}
+
+message HeatGameState {
+	optional int32 heat = 1;
+}

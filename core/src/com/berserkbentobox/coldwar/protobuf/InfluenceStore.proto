@@ -2,7 +2,16 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
-message InfluenceStore {
+message InfluenceStoreSettings {
+	optional int32 political_store_init = 1;
+	optional int32 political_income_base = 2;
+	optional int32 military_store_init = 3;
+	optional int32 military_income_base = 4;
+	optional int32 covert_store_init = 5;
+	optional int32 covert_income_base = 6;
+}
+
+message InfluenceStoreState {
 	optional int32 political = 1;
 	optional int32 military = 2;
 	optional int32 covert = 3;

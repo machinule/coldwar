@@ -1,0 +1,548 @@
+leader {
+    id: "Antonio Villaverde"
+    culture_restriction: SPANISH
+}
+leader {
+    id: "Rafael Cruz"
+    culture_restriction: SPANISH
+}
+leader {
+    id: "Alejandro Falconi"
+    culture_restriction: SPANISH
+}
+leader {
+    id: "Pedro 'Speedy' Gonzales"
+    culture_restriction: SPANISH
+}
+leader {
+    id: "Juan Cabrera"
+    culture_restriction: SPANISH
+}
+leader {
+    id: "Jacques Villeneuve"
+    culture_restriction: FRENCH
+}
+leader {
+    id: "Louis de Montaigne"
+    culture_restriction: FRENCH
+}
+leader {
+    id: "Henri Delacroix"
+    culture_restriction: FRENCH
+}
+leader {
+    id: "Adolfo Ruiz Cortines"
+    birth_year: 1889
+    start_year: 1948
+    end_year: 1960
+    elected: true
+    province_restriction: MEXICO
+}
+leader {
+    id: "Adolfo LÃ³pez Mateos"
+    birth_year: 1911
+    start_year: 1955
+    end_year: 1975
+    elected: true
+    province_restriction: MEXICO
+}
+leader {
+    id: "Luis Echeverria"
+    birth_year: 1922
+    start_year: 1970
+    end_year: 1980
+    elected: true
+    province_restriction: MEXICO
+}
+leader {
+    id: "JosÃ© LÃ³pez Portillo"
+    birth_year: 1920
+    start_year: 1970
+    end_year: 2000
+    elected: true
+    province_restriction: MEXICO
+}
+leader {
+    id: "Jacobo Ã�rbenz"
+    birth_year: 1913
+    start_year: 1948
+    end_year: 1970
+    elected: true
+    province_restriction: GUATEMALA
+}
+leader {
+    id: "Carlos Castillo Armas"
+    birth_year: 1904
+    start_year: 1948
+    end_year: 1970
+    elected: false
+    province_restriction: GUATEMALA
+}
+leader {
+    id: "Miguel YdÃ­goras Fuentes"
+    birth_year: 1895
+    start_year: 1950
+    end_year: 1970
+    elected: false
+    province_restriction: GUATEMALA
+}
+leader {
+    id: "Fernando Romeo Lucas GarcÃ­a"
+    birth_year: 1924
+    start_year: 1970
+    end_year: 2000
+    elected: false
+    province_restriction: GUATEMALA
+}
+leader {
+    id: "Luis Augusto Turcios Lima"
+    birth_year: 1941
+    start_year: 1960
+    end_year: 2000
+    elected: false
+    province_restriction: GUATEMALA
+}
+leader {
+    id: "RamÃ³n Villeda Morales"
+    birth_year: 1909
+    start_year: 1948
+    end_year: 1970
+    elected: true
+    province_restriction: HONDURAS
+}
+leader {
+    id: "Julio Lozano DÃ­az"
+    birth_year: 1885
+    start_year: 1950
+    end_year: 1970
+    province_restriction: HONDURAS
+}
+leader {
+    id: "Oswaldo LÃ³pez Arellano"
+    birth_year: 1921
+    start_year: 1960
+    end_year: 2000
+    elected: false
+    province_restriction: HONDURAS
+}
+leader {
+    id: "Roberto Suazo CÃ³rdova"
+    birth_year: 1927
+    start_year: 1970
+    end_year: 2000
+    elected: true
+    province_restriction: HONDURAS
+}
+leader {
+	# In power at start
+    id: "Anastasio Somoza Garcia"
+    birth_year: 1896
+    elected: false
+    province_restriction: NICARAGUA
+}
+leader {
+    id: "Anastasio Somoza Debayle"
+    birth_year: 1925
+    start_year: 1955
+    end_year: 2000
+    elected: false
+    province_restriction: NICARAGUA
+}
+leader {
+    id: "Luis Somoza Debayle"
+    birth_year: 1922
+    start_year: 1948
+    end_year: 1970
+    elected: false
+    province_restriction: NICARAGUA
+}
+leader {
+    id: "Daniel Ortega"
+    birth_year: 1936
+    start_year: 1965
+    end_year: 2000
+	allegiance: ANTI_USSR
+    province_restriction: NICARAGUA
+}
+leader {
+    id: "Carlos Fonseca"
+    birth_year: 1936
+    start_year: 1966
+    end_year: 2000
+    province_restriction: NICARAGUA
+}
+leader {
+    id: "Pedro JoaquÃ­n Chamorro Cardenal"
+    birth_year: 1936
+    start_year: 1955
+    end_year: 2000
+    elected: true
+    province_restriction: NICARAGUA
+}
+leader {
+    id: "Otilio Ulate Blanco"
+    birth_year: 1891
+    start_year: 1948
+    end_year: 1955
+    elected: true
+    province_restriction: COSTA_RICA
+}
+leader {
+    id: "JosÃ© Figueres Ferrer"
+    birth_year: 1906
+    start_year: 1948
+    end_year: 1965
+    province_restriction: COSTA_RICA
+}
+leader {
+    id: "Rafael Ã�ngel CalderÃ³n Guardia"
+    birth_year: 1900
+    start_year: 1950
+    end_year: 1975
+    elected: true
+    province_restriction: COSTA_RICA
+}
+leader {
+    id: "Luis Alberto Monge"
+    birth_year: 1925
+    start_year: 1975
+    end_year: 2000
+    elected: true
+    province_restriction: COSTA_RICA
+}
+leader {
+    id: "Luis Alberto Monge"
+    birth_year: 1901
+    start_year: 1975
+    end_year: 2000
+    elected: true
+    province_restriction: PANAMA
+}
+leader {
+    id: "JosÃ© Antonio RemÃ³n Cantera"
+    birth_year: 1908
+    start_year: 1948
+    end_year: 1960
+    elected: false
+    province_restriction: PANAMA
+}
+leader {
+    id: "Omar Torrijos"
+    birth_year: 1929
+    start_year: 1960
+    end_year: 2000
+    elected: false
+    province_restriction: PANAMA
+}
+leader {
+	# Leading dissidents at start
+    id: "Fidel Castro"
+    birth_year: 1926
+    start_year: 1948
+    end_year: 2000
+    elected: false
+	allegiance: ANTI_USA
+    province_restriction: CUBA
+}
+leader {
+    id: "Raul Castro"
+    birth_year: 1926
+    start_year: 1950
+    end_year: 2000
+    elected: false
+	allegiance: ANTI_USA
+    province_restriction: CUBA
+}
+leader {
+    id: "Che Guevara"
+    birth_year: 1928
+    start_year: 1959
+    end_year: 2000
+    elected: false
+	allegiance: ANTI_USA
+    province_restriction: CUBA
+}
+leader {
+    id: "Fulgencio Batista"
+    birth_year: 1901
+    start_year: 1948
+    end_year: 1970
+	allegiance: ANTI_USSR
+    province_restriction: CUBA
+}
+leader {
+    id: "Roberto Agramonte"
+    birth_year: 1904
+    start_year: 1955
+    end_year: 2000
+    elected: true
+    province_restriction: CUBA
+}
+leader {
+    id: "Carlos Hevia"
+    birth_year: 1900
+    start_year: 1948
+    end_year: 1970
+    elected: true
+    province_restriction: CUBA
+}
+leader {
+    id: "FranÃ§ois 'Papa Doc' Duvalier"
+    birth_year: 1907
+    start_year: 1948
+    end_year: 2000
+    province_restriction: HAITI
+}
+leader {
+    id: "Paul Magloire"
+    birth_year: 1907
+    start_year: 1948
+    end_year: 1970
+    elected: false
+    province_restriction: HAITI
+}
+leader {
+	# In power at start
+    id: "Rafael Trujillo"
+    birth_year: 1891
+    province_restriction: DOMINICAN_REP
+}
+leader {
+    id: "Juan Bosch"
+    birth_year: 1909
+    start_year: 1948
+    end_year: 1970
+    elected: true
+    province_restriction: DOMINICAN_REP
+}
+leader {
+    id: "JoaquÃ­n Balaguer"
+    birth_year: 1909
+    start_year: 1955
+    end_year: 2000
+    province_restriction: DOMINICAN_REP
+}
+leader {
+    id: "Eric Williams"
+    birth_year: 1911
+    start_year: 1948
+    end_year: 1980
+    province_restriction: LESS_ANTILLES
+}
+leader {
+    id: "Maurice Bishop"
+    birth_year: 1943
+    start_year: 1975
+    end_year: 2000
+    province_restriction: LESS_ANTILLES
+}
+leader {
+    id: "Laureano GÃ³mez"
+    birth_year: 1889
+    start_year: 1948
+    end_year: 1955
+    elected: true
+    province_restriction: COLOMBIA
+}
+leader {
+    id: "Gustavo Rojas Pinilla"
+    birth_year: 1900
+    start_year: 1948
+    end_year: 1970
+    province_restriction: COLOMBIA
+}
+leader {
+    id: "Carlos Lleras Restrepo"
+    birth_year: 1900
+    start_year: 1948
+    end_year: 2000
+    elected: true
+    province_restriction: COLOMBIA
+}
+leader {
+    id: "Jacobo Arenas"
+    birth_year: 1924
+    start_year: 1970
+    end_year: 2000
+    elected: false
+    province_restriction: COLOMBIA
+}
+leader {
+    id: "Manuel Prado Ugarteche"
+    birth_year: 1889
+    start_year: 1948
+    end_year: 1960
+    elected: true
+    province_restriction: PERU
+}
+leader {
+    id: "Ricardo PÃ©rez Godoy"
+    birth_year: 1905
+    start_year: 1948
+    end_year: 1965
+    elected: false
+    province_restriction: PERU
+}
+leader {
+    id: "Fernando BelaÃºnde Terry"
+    birth_year: 1912
+    start_year: 1948
+    end_year: 2000
+    elected: true
+    province_restriction: PERU
+}
+leader {
+    id: "Juan Velasco Alvarado"
+    birth_year: 1910
+    start_year: 1965
+    end_year: 2000
+    elected: false
+    province_restriction: PERU
+}
+leader {
+    id: "Carlos IbÃ¡Ã±ez del Campo"
+    birth_year: 1877
+    start_year: 1948
+    end_year: 1960
+    elected: true
+    province_restriction: CHILE
+}
+leader {
+    id: "Eduardo Frei Montalva"
+    birth_year: 1911
+    start_year: 1961
+    end_year: 2000
+    elected: true
+    province_restriction: CHILE
+}
+leader {
+    id: "Salvador Allende"
+    birth_year: 1908
+    start_year: 1960
+    end_year: 2000
+    elected: true
+	allegiance: ANTI_USA
+    province_restriction: CHILE
+}
+leader {
+    id: "Augusto Pinochet"
+    birth_year: 1915
+    start_year: 1948
+    end_year: 2000
+    elected: false
+    province_restriction: CHILE
+}
+leader {
+    id: "VÃ­ctor Paz Estenssoro"
+    birth_year: 1907
+    start_year: 1948
+    end_year: 2000
+    elected: true
+    province_restriction: BOLIVIA
+}
+leader {
+    id: "RenÃ© Barrientos"
+    birth_year: 1919
+    start_year: 1948
+    end_year: 1970
+    elected: false
+    province_restriction: BOLIVIA
+}
+leader {
+    id: "Hugo Banzer"
+    birth_year: 1926
+    start_year: 1970
+    end_year: 2000
+    province_restriction: BOLIVIA
+}
+leader {
+	# In power at start
+    id: "Juan Peron"
+    birth_year: 1895
+    elected: true
+    province_restriction: ARGENTINA
+}
+leader {
+    id: "Pedro Eugenio Aramburu"
+    birth_year: 1903
+    start_year: 1948
+    end_year: 1975
+    elected: false
+    province_restriction: ARGENTINA
+}
+leader {
+    id: "Eva PerÃ³n"
+    birth_year: 1919
+    start_year: 1948
+    end_year: 1955
+    province_restriction: ARGENTINA
+}
+leader {
+    id: "Arturo Frondizi Ercoli"
+    birth_year: 1908
+    start_year: 1955
+    end_year: 1972
+    elected: true
+    province_restriction: ARGENTINA
+}
+leader {
+    id: "RaÃºl AlfonsÃ­n"
+    birth_year: 1927
+    start_year: 1973
+    end_year: 2000
+    elected: true
+    province_restriction: ARGENTINA
+}
+leader {
+    id: "Juan Carlos OnganÃ­a"
+    birth_year: 1914
+    start_year: 1965
+    end_year: 1975
+    elected: false
+    province_restriction: ARGENTINA
+}	
+leader {
+    id: "Jorge Rafael Videla"
+    birth_year: 1925
+    start_year: 1975
+    end_year: 2000
+    elected: false
+    province_restriction: ARGENTINA
+}
+leader {
+    id: "GetÃºlio Vargas"
+    birth_year: 1882
+    start_year: 1948
+    end_year: 1960
+    province_restriction: BRAZIL
+}
+leader {
+    id: "Juscelino Kubitschek"
+    birth_year: 1902
+    start_year: 1950
+    end_year: 1975
+    elected: true
+    province_restriction: BRAZIL
+}	
+leader {
+    id: "Humberto de Alencar Castelo Branco"
+    birth_year: 1897
+    start_year: 1950
+    end_year: 1965
+    elected: false
+    province_restriction: BRAZIL
+}
+leader {
+    id: "EmÃ­lio Garrastazu MÃ©dici"
+    birth_year: 1905
+    start_year: 1965
+    end_year: 1980
+    elected: false
+}
+leader {
+    id: "Alfredo Baldomir"
+    birth_year: 1884
+    start_year: 1948
+    end_year: 1955
+    province_restriction: URUGUAY
+}

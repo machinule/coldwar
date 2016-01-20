@@ -2,7 +2,15 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
-enum Culture {
+import "Province.proto";
+
+enum LeaderAllegiance {
+	NO_ALLEGIANCE = 0;
+	ANTI_USA = 1;
+	ANTI_USSR = 2;
+}
+
+enum LeaderCulture {
 	SPANISH = 1;
 	FRENCH = 2;
 	PORTUGUESE = 3;
@@ -10,23 +18,23 @@ enum Culture {
 	GERMAN = 5;
 }
 
-message Leader {
+// ========== Settings ==========
 
-	enum Allegiance {
-		NONE = 0;
-		ANTI_USA = 1;
-		ANTI_USSR = 2;
-	}
+// The top-level settings proto included in GameSettings.
+// Immutable over the duration of a single game.
+message LeaderGameSettings {
+	repeated LeaderSettings leader = 1;
+}
 
-	optional int32 birth = 2;
-	optional string name = 3;
-	optional Allegiance allegiance = 4 [default = NONE];
-	optional int32 start = 5;
-	optional int32 end = 6;
-	optional bool isolationist = 7;
-
-	//Used for initial population
-	optional Culture culture = 10;
-	optional bool historical = 11 [default = false];
-	optional bool elected = 12;
+// Settings for a single leader.
+message LeaderSettings {
+	optional string id = 1;
+	optional int32 birth_year = 2;
+	optional LeaderAllegiance allegiance = 3;
+	optional int32 start_year = 4;
+	optional int32 end_year = 5;
+	optional LeaderCulture culture_restriction = 6;
+	optional ProvinceId province_restriction = 7;
+	optional bool elected = 8;
+	optional bool isolationist = 9;
 }

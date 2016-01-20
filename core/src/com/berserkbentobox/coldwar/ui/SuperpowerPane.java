@@ -33,7 +33,6 @@ public class SuperpowerPane extends Table {
 		techButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
-				client.getMoveBuilder().foundCIA();
 				screen.game.setScreen(new TechScreen(screen.game, client));
 			}
 		});

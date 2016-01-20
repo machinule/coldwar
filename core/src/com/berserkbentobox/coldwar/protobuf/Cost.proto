@@ -1,0 +1,10 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+message Cost {
+	optional int32 political_points = 1 [default=0];
+	optional int32 military_points = 2 [default=0];
+	optional int32 covert_points = 3 [default=0];
+	optional int32 deterrence_points = 4 [default=0];
+}

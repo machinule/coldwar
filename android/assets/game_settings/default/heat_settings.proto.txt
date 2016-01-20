@@ -1,0 +1,3 @@
+init_heat: 0
+min_heat: 0
+max_heat: 100

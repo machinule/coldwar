@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.Logger;
-import com.berserkbentobox.coldwar.ProvinceOuterClass.Province.Region;
+import com.berserkbentobox.coldwar.Province.ProvinceRegion;
 import com.berserkbentobox.coldwar.logic.Client;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 
@@ -178,17 +178,17 @@ public class ProvinceInfoCard extends Table {
 				c -> Color.BLACK,
 				skin
 		));
-		ret.add(new DynamicLabel(
-				client,
-				c -> c.getMoveBuilder().getComputedGameState().hasLeader(province.getId()) ? "LDR" :
-					 "",
-				c -> Color.BLACK,
-				skin
-		));
+//		ret.add(new DynamicLabel(
+//				client,
+//				c -> c.getMoveBuilder().getComputedGameState().hasLeader(province.getId()) ? "LDR" :
+//					 "",
+//				c -> Color.BLACK,
+//				skin
+//		));
 		return ret;
     }
     
-    protected Color getRegionColor(Region region) {
+    protected Color getRegionColor(ProvinceRegion region) {
     	Color ret;
     	switch (region) {
 	        case CENTRAL_AMERICA:
@@ -210,7 +210,7 @@ public class ProvinceInfoCard extends Table {
     	return ret;
     }
     
-    protected Color getNonAdjColor(Region region) {
+    protected Color getNonAdjColor(ProvinceRegion region) {
     	Color ret;
     	switch (region) {
 	        case CENTRAL_AMERICA:

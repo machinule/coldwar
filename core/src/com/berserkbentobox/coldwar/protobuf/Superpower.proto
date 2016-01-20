@@ -1,0 +1,128 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+import "Cost.proto";
+import "InfluenceStore.proto";
+
+// ========== Ids ==========
+
+enum UsaLeaderId {
+	EISENHOWER = 1;
+}
+
+enum UsaLeaderParty {
+	REPUBLICAN = 1;
+	DEMOCRAT = 2;
+}
+
+enum UssrLeaderId {
+	STALIN = 1;
+}
+
+// ========== Settings ==========
+
+// The top-level settings proto included in GameSettings.
+// Immutable over the duration of a single game.
+message SuperpowerGameSettings {
+	optional UsaSettings usa_settings = 1;
+	optional UssrSettings ussr_settings = 2;
+}
+
+// Settings for the USA.
+message UsaSettings {
+	repeated UsaLeaderSettings leader_settings = 1;
+	optional PresidencySettings presidency_settings = 2;
+	optional InfluenceStoreSettings influence_store_settings = 3;
+	optional int32 init_patriotism = 4;
+}
+
+// Settings for a single USA leader.
+message UsaLeaderSettings {
+	optional UsaLeaderId id = 1;
+	repeated TraitSettings traits = 2;
+	optional UsaLeaderParty party = 3;
+	optional int32 start_year = 4;
+	optional int32 end_year = 5;
+	optional int32 init_num_terms_as_president = 6;
+	optional int32 init_num_terms_as_vice_president = 7;
+	optional bool init_available = 8;
+}
+
+// Settings for the USA presidency.
+message PresidencySettings {
+	optional int32 max_terms = 1;
+	optional UsaLeaderId init_president = 2;
+	optional UsaLeaderId init_vice_president = 3;
+}
+
+// Settings for the USSR.
+message UssrSettings {
+	repeated UssrLeaderSettings leader_settings = 1;
+	optional SecretariatSettings secretariat_settings = 2;
+	optional InfluenceStoreSettings influence_store_settings = 3;
+    optional int32 init_party_unity = 4;
+}
+
+// Settings for a single USSR leader.
+message UssrLeaderSettings {
+	optional UssrLeaderId id = 1;
+	repeated TraitSettings traits = 2;
+	optional int32 start_year = 4;
+	optional int32 end_year = 5;
+	optional int32 init_party_support = 6;
+	optional bool init_available = 7;
+}
+
+// Settings for the USSR secretariat.
+message SecretariatSettings {
+	optional Cost support_cost = 1;
+	optional Cost sabotage_cost = 2;
+	optional int32 troika_decay_magnitude = 3;
+	optional int32 troika_num_decay = 4;
+	optional int32 troika_decay_chance = 5;
+	optional UssrLeaderId init_premier = 6;
+	repeated UssrLeaderId init_troika = 7;
+}
+
+message TraitSettings {
+	// Lots o' stuff
+}
+
+// ========== State ==========
+
+// The top-level state proto included in GameState.
+// Mutated each turn based on moves.
+message SuperpowerGameState {
+	optional UsaState usa_state = 1;
+	optional UssrState ussr_state = 2;
+}
+
+message UsaState {
+	optional UsaLeaderId president = 1;
+	optional UsaLeaderId vice_president = 2;
+	repeated UsaLeaderState leader = 3;
+	optional int32 patriotism = 4;
+	optional InfluenceStoreState influence_store = 5;
+}
+
+message UsaLeaderState {
+	optional UsaLeaderId id = 1;
+	optional bool available = 2;
+	optional int32 num_terms_as_president = 3;
+	optional int32 num_terms_as_vice_president = 4;
+}
+
+message UssrState {
+	optional UssrLeaderId premier = 1;
+	repeated UssrLeaderId troika = 2;
+	repeated UssrLeaderState leader = 3;
+	optional int32 party_unity = 4;
+	optional InfluenceStoreState influence_store = 5;
+}
+
+message UssrLeaderState {
+	optional UssrLeaderId id = 1;
+	optional int32 party_support = 2;
+	optional bool available = 3;
+}

@@ -2,156 +2,159 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
-import "Leader.proto";
+//import "Leader.proto";
 import "Dissidents.proto";
 
-message Province {
+enum ProvinceId {
+	UNKNOWN_PROVINCE = 00;
 
-	enum Id {
-		NONE = 00;
+	// WEST EUROPE
 
-		// WEST EUROPE
+	GREAT_BRITAIN = 01;
+	FRANCE = 02;
+	DENMARK = 03;
+	NORWAY = 11;
+	BENELUX = 04;
+	WEST_GERMANY = 05;
+	SPAIN = 06;
+	PORTUGAL = 07;
+	ITALY = 8;
+	SWEDEN = 9;
+	CANADA = 10;
 
-		GREAT_BRITAIN = 01;
-		FRANCE = 02;
-		DENMARK = 03;
-		NORWAY = 11;
-		BENELUX = 04;
-		WEST_GERMANY = 05;
-		SPAIN = 06;
-		PORTUGAL = 07;
-		ITALY = 8;
-		SWEDEN = 9;
-		CANADA = 10;
+	// EAST EUROPE
 
-		// EAST EUROPE
+	EAST_GERMANY = 20;
+	POLAND = 21;
+	CZECHOSLOVAKIA = 22;
+	HUNGARY = 23;
+	YUGOSLAVIA = 24;
+	GREECE = 25;
+	ROMANIA = 26;
+	BULGARIA = 27;
+	FINLAND = 28;
+	TURKEY = 29;
 
-		EAST_GERMANY = 20;
-		POLAND = 21;
-		CZECHOSLOVAKIA = 22;
-		HUNGARY = 23;
-		YUGOSLAVIA = 24;
-		GREECE = 25;
-		ROMANIA = 26;
-		BULGARIA = 27;
-		FINLAND = 28;
-		TURKEY = 29;
+	// CENTRAL AMERICA
 
-		// CENTRAL AMERICA
+	MEXICO = 41;
+	GUATEMALA = 42;
+	HONDURAS = 43;
+	NICARAGUA = 44;
+	COSTA_RICA = 45;
+	PANAMA = 46;
+	CUBA = 47;
+	HAITI = 48;
+	DOMINICAN_REP = 49;
+	LESS_ANTILLES = 50;
+	EL_SALVADOR = 51;
+	GUYANA = 52;
 
-		MEXICO = 41;
-		GUATEMALA = 42;
-		HONDURAS = 43;
-		NICARAGUA = 44;
-		COSTA_RICA = 45;
-		PANAMA = 46;
-		CUBA = 47;
-		HAITI = 48;
-		DOMINICAN_REP = 49;
-		LESS_ANTILLES = 50;
-		EL_SALVADOR = 51;
-		GUYANA = 52;
+	// SOUTH AMERICA
 
-		// SOUTH AMERICA
+	COLOMBIA = 61;
+	ECUADOR = 62;
+	PERU = 63;
+	CHILE = 64;
+	VENEZUELA = 65;
+	URUGUAY = 66;
+	BRAZIL = 67;
+	BOLIVIA = 68;
+	ARGENTINA = 69;
 
-		COLOMBIA = 61;
-		ECUADOR = 62;
-		PERU = 63;
-		CHILE = 64;
-		VENEZUELA = 65;
-		URUGUAY = 66;
-		BRAZIL = 67;
-		BOLIVIA = 68;
-		ARGENTINA = 69;
+	// AFRICA
 
-		// AFRICA
+	MOROCCO = 80;
+	IVORY_GOLD_COAST = 81;
+	WEST_AFRICA = 82;
+	ALGERIA = 83;
+	NIGERIA = 84;
+	ZAIRE = 85;
+	ANGOLA = 86;
+	SOUTH_AFRICA = 87;
+	MOZAMBIQUE = 88;
+	EAST_AFRICA = 89;
+	ETHIOPIA = 90;
 
-		MOROCCO = 80;
-		IVORY_GOLD_COAST = 81;
-		WEST_AFRICA = 82;
-		ALGERIA = 83;
-		NIGERIA = 84;
-		ZAIRE = 85;
-		ANGOLA = 86;
-		SOUTH_AFRICA = 87;
-		MOZAMBIQUE = 88;
-		EAST_AFRICA = 89;
-		ETHIOPIA = 90;
+	// MIDDLE EAST
 
-		// MIDDLE EAST
+	EGYPT = 100;
+	ISRAEL = 101;
+	SYRIA = 102;
+	JORDAN = 103;
+	IRAQ = 104;
+	SAUDI_ARABIA = 105;
+	YEMEN = 106;
+	IRAN = 107;
+	GULF_STATES = 108;
+	LIBYA = 109;
 
-		EGYPT = 100;
-		ISRAEL = 101;
-		SYRIA = 102;
-		JORDAN = 103;
-		IRAQ = 104;
-		SAUDI_ARABIA = 105;
-		YEMEN = 106;
-		IRAN = 107;
-		GULF_STATES = 108;
-		LIBYA = 109;
+	// SOUTH ASIA
 
-		// SOUTH ASIA
+	AFGHANISTAN = 120;
+	PAKISTAN = 121;
+	INDIA = 122;
+	BANGLADESH = 123;
+	BURMA = 124;
+	THAILAND = 125;
+	MALAYSIA = 126;
+	INDONESIA = 127;
+	AUSTRALIA = 128;
 
-		AFGHANISTAN = 120;
-		PAKISTAN = 121;
-		INDIA = 122;
-		BANGLADESH = 123;
-		BURMA = 124;
-		THAILAND = 125;
-		MALAYSIA = 126;
-		INDONESIA = 127;
-		AUSTRALIA = 128;
+	// EAST ASIA
 
-		// EAST ASIA
+	CHINA = 140;
+	LAOS = 141;
+	CAMBODIA = 142;
+	VIETNAM = 143;
+	PHILIPPINES = 144;
+	TAIWAN = 145;
+	JAPAN = 146;
+	SOUTH_KOREA = 147;
+	NORTH_KOREA = 148;
 
-		CHINA = 140;
-		LAOS = 141;
-		CAMBODIA = 142;
-		VIETNAM = 143;
-		PHILIPPINES = 144;
-		TAIWAN = 145;
-		JAPAN = 146;
-		SOUTH_KOREA = 147;
-		NORTH_KOREA = 148;
+	// SUPERPOWERS
 
-		// SUPERPOWERS
+	USA = 998;
+	USSR = 999;
+}
 
-		USA = 998;
-		USSR = 999;
-	}
+enum ProvinceRegion {
+	WESTERN_EUROPE = 1;
+	EASTERN_EUROPE = 2;
+	CENTRAL_AMERICA = 3;
+	SOUTH_AMERICA = 4;
+	AFRICA = 5;
+	MIDDLE_EAST = 6;
+	SOUTH_ASIA = 7;
+	EAST_ASIA = 8;
 
-	enum Region {
-		WESTERN_EUROPE = 1;
-		EASTERN_EUROPE = 2;
-		CENTRAL_AMERICA = 3;
-		SOUTH_AMERICA = 4;
-		AFRICA = 5;
-		MIDDLE_EAST = 6;
-		SOUTH_ASIA = 7;
-		EAST_ASIA = 8;
+	SUPERPOWERS = 9;
+}
 
-		SUPERPOWERS = 9;
-	}
+message ProvinceGameState {
+	repeated ProvinceState province_state = 1;
+}
 
-	optional Id id = 1;
+message ProvinceState {
+	optional ProvinceId id = 1;
 	optional int32 influence = 3 [default = 0];
 	optional Government gov = 5 [default = REPUBLIC];
-	optional Id occupier = 6;
-	optional Id base = 9;
-	optional Id ally = 10;
+	optional ProvinceId occupier = 6;
+	optional ProvinceId base = 9;
+	optional ProvinceId ally = 10;
 	optional bool has_leader = 11;
-	optional Leader leader = 12;
+//	optional Leader leader = 12;
 	optional bool has_dissidents = 13;
 	optional Dissidents dissidents = 14;
 	optional Conflict conflict = 15;
 }
 
-message LeaderList {
-	repeated Leader leaders = 1;
-	optional Province.Id province = 2;
-	optional Culture culture = 3;
-}
+//message LeaderList {
+//	repeated Leader leaders = 1;
+//	optional Province.Id province = 2;
+//	optional Leader.Culture culture = 3;
+//}
 
 message Conflict {
 
@@ -166,10 +169,10 @@ message Conflict {
 	optional int32 defender_progress = 6 [default = 0];
 	optional int32 attacker_progress = 7 [default = 0];
 	optional Dissidents rebels = 8;
-	repeated Province.Id attacker = 9;
+	repeated ProvinceId attacker = 9;
 	optional int32 length = 10 [default = -1];
-	optional Province.Id attacker_supporter = 11;
-	optional Province.Id defender_supporter = 12;
+	optional ProvinceId attacker_supporter = 11;
+	optional ProvinceId defender_supporter = 12;
 	optional string name = 13;
 	optional int32 base_chance = 14 [default = 200000]; // Base chance
 	optional int32 att_chance_mod = 15 [default = 000000];
