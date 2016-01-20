@@ -45,7 +45,7 @@ public abstract class Client {
 		// Just use the defaults in the proto for now.
 		GameSettings.Builder settings = GameSettings.newBuilder();
 		if(!populateLeaders(settings)) return null;
-		if(!populateTechs(settings)) return null;
+		//if(!populateTechs(settings)) return null;
 		populateProvinces(settings);
 		
 		GameState.Builder state = GameState.newBuilder()
@@ -68,8 +68,8 @@ public abstract class Client {
 								.setCovert(settings.getUssrCovStoreInit())
 								.build())
 						.setPartyUnity(settings.getUssrInitPartyUnity())
-						.build())
-				.setTechs(settings.getTechInit());
+						.build());
+				//.setTech(settings.getTechInit());
 		for (ProvinceSettings p : settings.getProvincesList()) {
 			Province.Builder builder = state.addProvincesBuilder()
 				.setId(p.getId())
@@ -949,7 +949,6 @@ public abstract class Client {
 			.setLabel("Australia")
 			.setStabilityBase(3000)
 			.setGovernmentInit(Government.DEMOCRACY);
-
 	}
 
 	public abstract Future<Boolean> endTurn();

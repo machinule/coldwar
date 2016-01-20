@@ -15,6 +15,7 @@ import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.TechOuterClass.Tech;
 import com.berserkbentobox.coldwar.TechOuterClass.TechGroup;
+import com.berserkbentobox.coldwar.TechOuterClass.TechGroupSettings;
 import com.berserkbentobox.coldwar.TechOuterClass.TechSettings;
 import com.berserkbentobox.coldwar.logic.Client;
 
@@ -42,8 +43,8 @@ public class TechScreen extends AbstractScreen {
 		techs.setDebug(Settings.isDebug());
 
 		final EnumMap<Tech.Id, TechCard> cards = new EnumMap<Tech.Id, TechCard>(Tech.Id.class);
-		for (final TechGroup g : this.client.initialGameState.getSettings().getTechsList()) {
-			for (final TechSettings t : g.getTechSettingsList())
+		for (final TechGroupSettings g : this.client.initialGameState.getSettings().getTechGroupsList()) {
+			for (final TechSettings t : g.getTechsList())
 				cards.put(t.getId(), new TechCard(this.client, t.getId(), skin));
 		}
 		

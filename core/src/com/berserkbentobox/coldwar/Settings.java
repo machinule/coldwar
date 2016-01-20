@@ -65,6 +65,8 @@ public class Settings {
 		Settings.consts.putInteger("action_coup_lock_time", 2);
 		Settings.consts.putInteger("action_coup_stab_threshold", 2);
 		
+		Settings.consts.putInteger("action_infl_autocracy_mod", -1);
+		
 		Settings.consts.putInteger("conflict_overt_fund_attacker", 2);
 		Settings.consts.putInteger("conflict_overt_fund_defender", 2);
 		Settings.consts.putInteger("conflict_covert_fund_attacker", 2);

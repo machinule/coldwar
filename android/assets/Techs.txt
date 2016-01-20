@@ -1,23 +1,16 @@
-techs {
+tech {
 	interval: 4
-	id: MILITARY
-	label: "Military"
-	
-	tech_settings {
-		id: ATOM_BOMB
-		label: "Atomic Weaponry"
-		progressions: 1
-	}
+	id: NUCLEAR
+	label: "Nuclear"
 	
 	tech_settings {
 		id: HYDROGEN_BOMB
 		label: "Hydrogen Bomb"
-		progressions: 1
-		prereqs: ATOM_BOMB
+		progressions: 2
 	}
 }
 
-techs {
+tech {
 	interval: 4
 	id: SPACE
 	label: "Space"
@@ -38,7 +31,7 @@ techs {
 	tech_settings {
 		id: ANIMAL_IN_SPACE
 		label: "First Animal in Space"
-		progressions: 2
+		progressions: 3
 		prereqs: ARTIFICIAL_SATELLITES
 	}
 	

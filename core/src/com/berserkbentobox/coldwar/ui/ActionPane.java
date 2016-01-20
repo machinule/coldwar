@@ -108,7 +108,7 @@ public class ActionPane extends FooterPane {
 				Logger.Info("\"Arms Sales\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(militaryInfluenceButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(state.getDiaMilMoveMin(), 
+				actionParamInput.setBounds(state.getDiaMilMoveMin(province.getId()), 
 						state.getDiaMilMoveMax(client.getPlayer(), province.getId()),
 						state.getDiaMilMoveIncrement());
 			}
@@ -120,7 +120,7 @@ public class ActionPane extends FooterPane {
 				Logger.Info("\"Support Party\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(covertInfluenceButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(state.getDiaCovMoveMin(), 
+				actionParamInput.setBounds(state.getDiaCovMoveMin(province.getId()), 
 						state.getDiaCovMoveMax(client.getPlayer(), province.getId()),
 						state.getDiaCovMoveIncrement());
 			}
@@ -293,19 +293,6 @@ public class ActionPane extends FooterPane {
 			Leader l = state.leaders.get(province.getId());
 			String ret = l.getName();
 			ret += " (" + (state.year - l.getBirth()) + ") ";
-			switch (l.getType()) {
-				case POLITICAL:
-					ret += "+" + Settings.getConstInt("leader_income_pol") + " POL";
-					break;
-				case MILITARY:
-					ret += "+" + Settings.getConstInt("leader_income_mil") + " MIL";
-					break;
-				case COVERT:
-					ret += "+" + Settings.getConstInt("leader_income_cov") + " COV";
-					break;
-				default:
-					break;
-			}
 			return ret;
 		}
 		else

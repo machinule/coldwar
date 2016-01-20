@@ -55,6 +55,6 @@ message TechGroupSettings {
 }
 
 message Research {
-	optional TechGroup usa = 1;
-	optional TechGroup ussr = 2;
+	repeated TechGroup usa = 1;
+	repeated TechGroup ussr = 2;
 }

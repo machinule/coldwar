@@ -27,9 +27,11 @@ import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Conflict;
 import com.berserkbentobox.coldwar.ProvinceOuterClass.Province;
+import com.berserkbentobox.coldwar.ProvinceOuterClass.Province.Builder;
 import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.TechOuterClass.Tech;
 import com.berserkbentobox.coldwar.TechOuterClass.TechGroup;
+import com.berserkbentobox.coldwar.TechOuterClass.TechGroupSettings;
 import com.berserkbentobox.coldwar.TechOuterClass.TechSettings;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 
@@ -242,13 +244,16 @@ public class ComputedGameState {
 					Province.Id id = move.getDiaDipMove().getProvinceId();
 					if(isValidDiaDipMove(player, id)) {
 						final int mag = move.getDiaDipMove().getMagnitude();
+						final int mod;
+						if(governments.get(id) == Government.AUTOCRACY) mod = -1;
+						else mod = 0;
 						final int effect_multiplier;
 						if(getAlly(move.getDiaDipMove().getProvinceId()) == otherPlayer(player)) {
 							effect_multiplier = 2;
 						} else {
 							effect_multiplier = 1;
 						}
-						polInfluenceMap.compute(id, (i, infl) -> infl == null ? (mag/effect_multiplier) * inflSign : infl + (mag/effect_multiplier) * inflSign);
+						polInfluenceMap.compute(id, (i, infl) -> infl == null ? ((mag/effect_multiplier) + mod) * inflSign : infl + ((mag/effect_multiplier) + mod) * inflSign);
 						polStoreMap.compute(player, (p, pol) -> pol == null ? -mag : pol - mag);
 						int nonAdjCost = getNonAdjacentDiaMoveCost(player, id);
 						if(nonAdjCost != 0) {
@@ -263,7 +268,10 @@ public class ComputedGameState {
 					Province.Id id = move.getDiaMilMove().getProvinceId();
 					if(isValidDiaMilMove(player, id)) {
 						final int mag = move.getDiaMilMove().getMagnitude();
-						milInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
+						final int mod;
+						if(governments.get(id) == Government.AUTOCRACY) mod = -1;
+						else mod = 0;
+						milInfluenceMap.compute(id, (i, infl) -> infl == null ? (mag + mod) * inflSign : infl + (mag + mod) * inflSign);
 						milStoreMap.compute(player, (p, mil) -> mil == null ? -mag : mil - mag);
 						int nonAdjCost = getNonAdjacentDiaMoveCost(player, id);
 						if(nonAdjCost != 0) {
@@ -277,7 +285,10 @@ public class ComputedGameState {
 					Province.Id id = move.getDiaCovMove().getProvinceId();
 					if(isValidDiaCovMove(player, id)) {
 						final int mag = move.getDiaCovMove().getMagnitude();
-						covInfluenceMap.compute(id, (i, infl) -> infl == null ? mag * inflSign : infl + mag * inflSign);
+						final int mod;
+						if(governments.get(id) == Government.AUTOCRACY) mod = -1;
+						else mod = 0;
+						covInfluenceMap.compute(id, (i, infl) -> infl == null ? (mag + mod) * inflSign : infl + (mag + mod) * inflSign);
 						covStoreMap.compute(player, (p, cov) -> cov == null ? -mag : cov - mag);
 						int nonAdjCost = getNonAdjacentDiaMoveCost(player, id);
 						if(nonAdjCost != 0) {
@@ -440,31 +451,6 @@ public class ComputedGameState {
 		leaderMap.forEach((p, l) -> {
 			if(hasLeader(p)) {
 				stabilityModifierMap.compute(p, (q, mod) -> mod == null ? 1 : mod + 1 );
-				Leader.Type type = l.getType();
-				Player player = getAlly(p);
-				if(player != null) {
-					int lead_income;
-					switch (type) {
-						case POLITICAL:
-							lead_income = Settings.getConstInt("leader_income_pol");
-							polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
-							break;
-						case MILITARY:
-							lead_income = Settings.getConstInt("leader_income_mil");
-							polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
-							break;
-						case COVERT:
-							lead_income = Settings.getConstInt("leader_income_cov");
-							polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
-							break;
-						default:
-							Logger.Err("Leader " + l.getName() + " has no type!");
-							break;				
-					}
-				}
-				if(type == Leader.Type.ISOLATIONIST) {
-					polInfluenceMap.compute(p, (i, infl) -> infl == null ? -1 * inflSign(player) : infl + -1 * inflSign(player));
-				}
 			}
 		});
 		dissidentsMap.forEach((p, dissidents) -> {
@@ -566,11 +552,63 @@ public class ComputedGameState {
 		nextStateBuilder.getUsaBuilder().setCiaFounded(ciaFoundedFlag);
 		nextStateBuilder.getUssrBuilder().setKgbFounded(kgbFoundedFlag);
 		
-		nextStateBuilder.setTechs(state.getTechs());
+		nextStateBuilder.setTech(state.getTech());
 		
-		// Random events.
 		Random r = new Random(this.state.getSeed());
 		Function<Integer, Boolean> happens = c -> r.nextInt(1000000) < c;
+		
+		// LEADER EFFECTS
+		
+		for (Province.Builder p : nextStateBuilder.getProvincesBuilderList()) {
+			if(p.hasLeader()) {
+				if(p.getLeader().getIsolationist()) {
+					int inflChange = 1;
+					if(p.getInfluence() > 0)
+						p.setInfluence(p.getInfluence()-inflChange);
+					else if(p.getInfluence() < 0)
+						p.setInfluence(p.getInfluence()+inflChange);
+				} else {
+					List<Province.Id> adj = getAdjacencies(p.getId(), 3);
+				    int index = (int)(Math.random()*adj.size());
+					switch (p.getGov()) {
+						case DEMOCRACY:
+							for (Province.Builder b : nextStateBuilder.getProvincesBuilderList()) {
+								if(adj.get(index) == b.getId()) {
+									int inflChange = 1;
+									if(p.getAlly() == Province.Id.USSR)
+										inflChange = inflChange * -1;
+									b.setInfluence((b.getInfluence()+inflChange));
+								}
+							}
+							break;
+						case AUTOCRACY:
+							// Autocratic special effect is passive; it increases cost by 1
+							break;
+						case COMMUNISM:
+							if (happens.apply(200000)) {
+								for (Province.Builder b : nextStateBuilder.getProvincesBuilderList()) {
+									if(adj.get(index) == b.getId()) {
+										int inflChange = 1;
+										if(p.getAlly() == Province.Id.USSR)
+											inflChange = inflChange * -1;
+										b.setInfluence((b.getInfluence()+inflChange));
+									}
+								}
+							}
+							break;
+						case REPUBLIC:
+							// TODO: Republic
+							// Greatly increases effect of another goverment arising
+							break;
+						default:
+							break;
+					}
+				}
+			}
+		}
+		
+		// RANDOM EVENTS
+	
 		// TODO: LeaderSpawn
 		// TODO: LeaderDeath
 		// TODO: ProvinceCoup
@@ -588,7 +626,6 @@ public class ComputedGameState {
 								.setProvinceId(p.getId())
 								.build())
 							.build());
-					
 				}
 			}
 		}
@@ -612,7 +649,6 @@ public class ComputedGameState {
 								.setMagnitude(mag)
 								.build())
 							.build());
-					
 				}
 			}
 		}
@@ -709,7 +745,6 @@ public class ComputedGameState {
 								.setProvinceId(p.getId())
 								.build())
 							.build());
-					
 				}
 			}
 		}
@@ -731,7 +766,6 @@ public class ComputedGameState {
 								.setProvinceId(p.getId())
 								.build())
 							.build());
-					
 				}
 			}
 		}
@@ -795,7 +829,6 @@ public class ComputedGameState {
 							.setProvinceId(p.getId())
 							.build())
 						.build());
-				
 			}
 		}
 		
@@ -813,7 +846,6 @@ public class ComputedGameState {
 							.setProvinceId(p.getId())
 							.build())
 						.build());
-				
 			}
 		}
 		
@@ -874,14 +906,14 @@ public class ComputedGameState {
 	}
 	
 	public boolean isValidDiaMilMove (Player player, Province.Id id){
-		return milStore.get(player) >= getDiaMilMoveMin() &&
+		return milStore.get(player) >= getDiaMilMoveMin(id) &&
 			   polStore.get(player) >= getNonAdjacentDiaMoveCost(player, id) && 
 			   getAlly(id) != otherPlayer(player) && 
 			   !isInArmedConflict(id);
 	}
 	
 	public boolean isValidDiaCovMove (Player player, Province.Id id){
-		return covStore.get(player) >= getDiaCovMoveMin() && 
+		return covStore.get(player) >= getDiaCovMoveMin(id) && 
 			   polStore.get(player) >= getNonAdjacentDiaMoveCost(player, id) && 
 			   !isInArmedConflict(id);
 	}
@@ -994,8 +1026,10 @@ public class ComputedGameState {
 	}
 	
 	public int getDiaDipMoveMin(Player player, Province.Id id) {
-		if(getDiaDipMoveIncrement(player, id) == 2) return 2;
-		return 1;
+		int ret = 1;
+		if(getDiaDipMoveIncrement(player, id) == 2) ret = 2;
+		if(governments.get(id) == Government.AUTOCRACY) ret = ret + Settings.getConstInt("action_infl_autocracy_mod");
+		return ret;
 	}
 	
 	public int getDiaDipMoveMax(Player player, Province.Id id) {
@@ -1008,7 +1042,9 @@ public class ComputedGameState {
 		return 1;
 	}
 	
-	public int getDiaMilMoveMin() {
+	public int getDiaMilMoveMin(Province.Id id) {
+		int ret = 1;
+		if(governments.get(id) == Government.AUTOCRACY) ret = ret + Settings.getConstInt("action_infl_autocracy_mod");
 		return 1;
 	}
 	
@@ -1021,7 +1057,9 @@ public class ComputedGameState {
 		return 1;
 	}
 	
-	public int getDiaCovMoveMin() {
+	public int getDiaCovMoveMin(Province.Id id) {
+		int ret = 1;
+		if(governments.get(id) == Government.AUTOCRACY) ret = ret + Settings.getConstInt("action_infl_autocracy_mod");
 		return 1;
 	}
 	
@@ -1155,6 +1193,20 @@ public class ComputedGameState {
 			return ussrAdjacencies.get(id);
 	}
 	
+	public List<Province.Id> getAdjacencies(Province.Id id, int range) {
+		List<Province.Id> ret = new ArrayList<Province.Id>();
+		if (range == 0) return null;
+		else {
+			for (Province.Id p : provinceSettings.get(id).getAdjacencyList()) {
+				ret.add(p);
+				if(range - 1 > 0) {
+					ret.addAll(getAdjacencies(id, range-1));
+				}
+			}
+			return ret;
+		}
+	} 
+	
 	public boolean hasInfluence(Player player, Province.Id id) {
 		try {
 			if((inflSign(player) * totalInfluence.get(id) > 0 ||
@@ -1249,15 +1301,27 @@ public class ComputedGameState {
 		return state.getCrises().getUssrOption1();
 	}
 	
-	public TechGroup getTechGroup(TechGroup.Id id) {
-		for (TechGroup t : state.getSettings().getTechsList())
+	public TechGroupSettings getTechGroupSettings(TechGroup.Id id) {
+		for (TechGroupSettings t : state.getSettings().getTechGroupsList())
 			if (t.getId() == id) return t;
 		return null;
 	}
 
+	public TechGroup getTechGroup(Player player, TechGroup.Id id) {
+		if(player == Player.USA) {
+			for (TechGroup t : state.getTech().getUsaList())
+				if (t.getId() == id) return t;
+		} else {
+
+			for (TechGroup t : state.getTech().getUssrList())
+				if (t.getId() == id) return t;
+		}
+		return null;
+	}
+	
 	public TechSettings getTechSettings(Tech.Id id) {
-		for (TechGroup g : state.getSettings().getTechsList()) {
-			for (TechSettings t : g.getTechSettingsList())
+		for (TechGroupSettings g : state.getSettings().getTechGroupsList()) {
+			for (TechSettings t : g.getTechsList())
 				if (t.getId() == id) return t;
 		}
 		return null;
@@ -1265,12 +1329,14 @@ public class ComputedGameState {
 	
 	public Tech getTech(Player player, Tech.Id id) {
 		if(player == Player.USA) {
-			for (Tech t : state.getTechs().getUsaList()) {
-				if (t.getId() == id) return t;
+			for (TechGroup g : state.getTech().getUsaList()) {
+				for (Tech t : g.getTechsList())
+					if (t.getId() == id) return t;
 			}
 		} else {
-			for (Tech t : state.getTechs().getUssrList()) {
-				if (t.getId() == id) return t;
+			for (TechGroup g : state.getTech().getUssrList()) {
+				for (Tech t : g.getTechsList())
+					if (t.getId() == id) return t;
 			}
 		}
 		return Tech.getDefaultInstance();
@@ -1279,7 +1345,7 @@ public class ComputedGameState {
 	public boolean isTechCompleted(Player player, Tech.Id id) {
 		Tech t = getTech(player, id);
 		TechSettings ts = getTechSettings(id);
-		if (t.getProgress() >= ts.getProgressions()) return true;
+		if (t.getProgress() >= ts.getNumProgressions()) return true;
 		return false;
 	}
 	

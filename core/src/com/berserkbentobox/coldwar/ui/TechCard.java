@@ -38,7 +38,7 @@ public class TechCard extends Table {
 		//ret.setDebug(Settings.isDebug());
 		Logger.Dbg("Looking for " + id + ": " + client.getMoveBuilder().getComputedGameState().getTechSettings(id));
 		DynamicLabel progressions = new DynamicLabel(client,
-				c -> "" + techSettings.getProgressions(),
+				c -> "" + techSettings.getNumProgressions(),
 				skin);
 		DynamicLabel progress = new DynamicLabel(client,
 				c -> "" + c.getMoveBuilder().getComputedGameState().getTech(client.getPlayer(), id).getProgress(),
