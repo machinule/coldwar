@@ -1,21 +1,21 @@
 package com.berserkbentobox.coldwar.logic;
 
-import com.berserkbentobox.coldwar.Policy.PolicyGameState;
-import com.berserkbentobox.coldwar.Policy.PolicyGameStateOrBuilder;
+import com.berserkbentobox.coldwar.Policy.PolicyMechanicState;
+import com.berserkbentobox.coldwar.Policy.PolicyMechanicStateOrBuilder;
 import com.berserkbentobox.coldwar.Policy.PolicySettingsOrBuilder;
 import com.berserkbentobox.coldwar.Policy.PolicyState;
 
 import java.util.stream.Collectors;
 
-import com.berserkbentobox.coldwar.Policy.PolicyGameSettingsOrBuilder;
+import com.berserkbentobox.coldwar.Policy.PolicyMechanicSettingsOrBuilder;
 
 public class Policy {
 
-	static Status validateSettings(PolicyGameSettingsOrBuilder settings) {
+	static Status validateSettings(PolicyMechanicSettingsOrBuilder settings) {
 		return Status.OK;
 	}
 
-	static Status validateState(PolicyGameStateOrBuilder state) {
+	static Status validateState(PolicyMechanicStateOrBuilder state) {
 		return Status.OK;
 	}
 	
@@ -28,8 +28,8 @@ public class Policy {
 		return state;
 	}
 
-	static PolicyGameState.Builder buildInitialState(PolicyGameSettingsOrBuilder settings) {
-		PolicyGameState.Builder state = PolicyGameState.newBuilder();
+	static PolicyMechanicState.Builder buildInitialState(PolicyMechanicSettingsOrBuilder settings) {
+		PolicyMechanicState.Builder state = PolicyMechanicState.newBuilder();
 		state
 			.addAllUsaPolicy(settings.getUsaPolicyList().stream().map(s -> buildInitialState(s).build()).collect(Collectors.toList()))
 			.addAllUssrPolicy(settings.getUssrPolicyList().stream().map(s -> buildInitialState(s).build()).collect(Collectors.toList()));

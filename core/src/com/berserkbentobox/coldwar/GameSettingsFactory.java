@@ -9,12 +9,12 @@ import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceGameSettings;
 import com.berserkbentobox.coldwar.Heat.HeatGameSettings;
 import com.berserkbentobox.coldwar.Leader.LeaderGameSettings;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveGameSettings;
-import com.berserkbentobox.coldwar.Policy.PolicyGameSettings;
+import com.berserkbentobox.coldwar.Policy.PolicyMechanicSettings;
 import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomGameSettings;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerGameSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyGameSettings;
 import com.berserkbentobox.coldwar.Treaty.TreatyGameSettings;
-import com.berserkbentobox.coldwar.Version.VersionGameSettings;
+import com.berserkbentobox.coldwar.Version.VersionMechanicSettings;
 import com.google.protobuf.TextFormat;
 import com.google.protobuf.TextFormat.ParseException;
 
@@ -54,7 +54,7 @@ public class GameSettingsFactory {
 		return new String(Gdx.files.internal(joinPath(this.settingsPath, fileName)).readString());
 	}
 	
-	protected void loadVersion(VersionGameSettings.Builder settings) {
+	protected void loadVersion(VersionMechanicSettings.Builder settings) {
 		settings.setVersion("0.0.1");
 	}
 	
@@ -62,7 +62,7 @@ public class GameSettingsFactory {
 		settings.setInitSeed(0);
 	}
 	
-	protected void loadPolicies(String gameName, PolicyGameSettings.Builder settings) throws ParseException {
+	protected void loadPolicies(String gameName, PolicyMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "policy_settings.proto.txt"));        
         TextFormat.merge(input, settings);
 	}

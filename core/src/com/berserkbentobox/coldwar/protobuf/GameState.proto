@@ -21,7 +21,7 @@ message GameState {
   optional ProvinceGameState province_state = 3;
   optional SuperpowerGameState superpower_state = 4;
   optional PseudorandomGameState pseudorandom_state = 5;
-  optional PolicyGameState policy_state = 6;
+  optional PolicyMechanicState policy_state = 6;
   optional TreatyGameState treaty_state = 7;
   optional TechnologyGameState technology_state = 8;
   optional int32 turn = 9;
