@@ -3,17 +3,17 @@ package com.berserkbentobox.coldwar;
 import java.io.File;
 
 import com.badlogic.gdx.Gdx;
-import com.berserkbentobox.coldwar.EventOuterClass.EventGameSettings;
+import com.berserkbentobox.coldwar.EventOuterClass.EventMechanicSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceGameSettings;
-import com.berserkbentobox.coldwar.Heat.HeatGameSettings;
+import com.berserkbentobox.coldwar.Heat.HeatMechanicSettings;
 import com.berserkbentobox.coldwar.Leader.LeaderMechanicSettings;
-import com.berserkbentobox.coldwar.MoveOuterClass.MoveGameSettings;
+import com.berserkbentobox.coldwar.MoveOuterClass.MoveMechanicSettings;
 import com.berserkbentobox.coldwar.Policy.PolicyMechanicSettings;
 import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomGameSettings;
-import com.berserkbentobox.coldwar.Superpower.SuperpowerGameSettings;
-import com.berserkbentobox.coldwar.Technology.TechnologyGameSettings;
-import com.berserkbentobox.coldwar.Treaty.TreatyGameSettings;
+import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicSettings;
+import com.berserkbentobox.coldwar.Technology.TechnologyMechanicSettings;
+import com.berserkbentobox.coldwar.Treaty.TreatyMechanicSettings;
 import com.berserkbentobox.coldwar.Version.VersionMechanicSettings;
 import com.google.protobuf.TextFormat;
 import com.google.protobuf.TextFormat.ParseException;
@@ -72,32 +72,32 @@ public class GameSettingsFactory {
 	    TextFormat.merge(input, settings);
 	}
 	
-	protected void loadTreaties(String gameName, TreatyGameSettings.Builder settings) throws ParseException {
+	protected void loadTreaties(String gameName, TreatyMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "treaty_settings.proto.txt"));        
 		TextFormat.merge(input, settings);
 	}
 	
-	protected void loadSuperpowers(String gameName, SuperpowerGameSettings.Builder settings) throws ParseException {
+	protected void loadSuperpowers(String gameName, SuperpowerMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "superpower_settings.proto.txt"));        
 	    TextFormat.merge(input, settings);
 	}
 	
-	protected void loadMoves(String gameName, MoveGameSettings.Builder settings) throws ParseException {
+	protected void loadMoves(String gameName, MoveMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "move_settings.proto.txt"));        
 	    TextFormat.merge(input, settings);
 	}
 	
-	protected void loadEvents(String gameName, EventGameSettings.Builder settings) throws ParseException {
+	protected void loadEvents(String gameName, EventMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "event_settings.proto.txt"));        
 	    TextFormat.merge(input, settings);
 	}
 	
-	protected void loadTechnologies(String gameName, TechnologyGameSettings.Builder settings) throws ParseException {
+	protected void loadTechnologies(String gameName, TechnologyMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "technology_settings.proto.txt"));        
         TextFormat.merge(input, settings);
 	}
 	
-	protected void loadHeat(String gameName, HeatGameSettings.Builder settings) throws ParseException {
+	protected void loadHeat(String gameName, HeatMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "heat_settings.proto.txt"));        
         TextFormat.merge(input, settings);
 	}

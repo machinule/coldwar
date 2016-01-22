@@ -16,7 +16,7 @@ enum TreatyId {
 
 // The top-level settings proto included in GameSettings.
 // Immutable over the duration of a single game.
-message TreatyGameSettings {
+message TreatyMechanicSettings {
 	repeated TreatySettings treaty = 1;
 }
 
@@ -35,7 +35,7 @@ message TreatySettings {
 
 // The top-level state proto included in GameState.
 // Mutated each turn based on moves.
-message TreatyGameState {
+message TreatyMechanicState {
 	repeated TreatyState treaty = 1;
 }
 

@@ -8,7 +8,7 @@ import "Id.proto";
 
 // The top-level settings proto included in GameSettings.
 // Immutable over the duration of a single game.
-message EventGameSettings {
+message EventMechanicSettings {
   // Random events.
   // Chance value is out of 1e6. (e.g. 100000 = 10%, 1000000 = 100%)
   // Probability applies to a single eligible target, per turn.

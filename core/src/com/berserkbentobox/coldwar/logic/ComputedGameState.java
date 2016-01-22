@@ -12,7 +12,7 @@ import com.berserkbentobox.coldwar.GameStateOuterClass.Crisis;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.GameStateOuterClass.TurnLogEntry;
-import com.berserkbentobox.coldwar.Heat.HeatGameState;
+import com.berserkbentobox.coldwar.Heat.HeatMechanicState;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Dissidents;
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
@@ -506,7 +506,7 @@ public class ComputedGameState {
 						.setUssrMoves(this.ussrMoves)
 						.build())
 				.setTurn(this.state.getTurn() + 1)
-				.setHeatState(HeatGameState.newBuilder()
+				.setHeatState(HeatMechanicState.newBuilder()
 						.setHeat(heatCounter)
 						.build())
 				.setProvinceState(ProvinceGameState.newBuilder()
