@@ -15,7 +15,7 @@ import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.MoveOuterClass.PoliticalPressureMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.USABerlinBlockadeAirliftMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.USSRBerlinBlockadeLiftBlockadeMove;
-import com.berserkbentobox.coldwar.Province.ProvinceId;
+import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 
 public class MoveBuilder {

@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
-import "Province.proto";
+import "Id.proto";
 
 // ========== Settings ==========
 

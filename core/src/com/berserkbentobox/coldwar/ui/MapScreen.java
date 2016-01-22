@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.berserkbentobox.coldwar.ColdWarGame;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.Settings;
-import com.berserkbentobox.coldwar.Province.ProvinceId;
+import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.Province.ProvinceRegion;
 import com.berserkbentobox.coldwar.logic.Client;
 
