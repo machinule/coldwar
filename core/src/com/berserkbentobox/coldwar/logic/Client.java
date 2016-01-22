@@ -37,17 +37,22 @@ public abstract class Client {
 	}
 	protected GameState.Builder getInitialGameState() {
 		GameSettings settings = new GameSettingsFactory("game_settings").newGameSettings();
-		
 		GameState.Builder state = GameState.newBuilder()
-			.setSettings(settings)
-			.setSuperpowerState(Superpower.buildInitialState(settings.getSuperpowerSettings()))
-			.setPseudorandomState(Pseudorandom.buildInitialState(settings.getPseudorandomSettings()))
-			.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
-			.setHeatState(Heat.buildInitialState(settings.getHeatSettings()))
-			.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
-			.setTechnologyState(Technology.buildInitialState(settings.getTechnologySettings()))
-			.setProvinceState(Province.buildInitialState(settings.getProvinceSettings()))
-			.setTurn(0);
+				.setSettings(settings)
+				.setSuperpowerState(Superpower.buildInitialState(settings.getSuperpowerSettings()))
+				.setPseudorandomState(Pseudorandom.buildInitialState(settings.getPseudorandomSettings()))
+				.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
+				.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
+				.setTechnologyState(Technology.buildInitialState(settings.getTechnologySettings()))
+				.setProvinceState(Province.buildInitialState(settings.getProvinceSettings()))
+				.setTurn(0);
+
+		Heat initHeat = new Heat(settings);
+		if (initHeat.validate().ok()) {
+			state.setHeatState(initHeat.state());
+		} else {
+			Logger.Info("Initial heat state invalid.");
+		}
 		
 		//Berlin Blockade
 		Crisis.Builder c = Crisis.newBuilder();

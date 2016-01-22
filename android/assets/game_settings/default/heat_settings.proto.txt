@@ -1,3 +1,4 @@
 init_heat: 30
 min_heat: 0
 max_heat: 100
+heat_decay: 10

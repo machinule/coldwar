@@ -6,6 +6,7 @@ message HeatMechanicSettings {
 	optional int32 init_heat = 1;
 	optional int32 min_heat = 2;
 	optional int32 max_heat = 3;
+	optional int32 heat_decay = 4;
 }
 
 message HeatMechanicState {
