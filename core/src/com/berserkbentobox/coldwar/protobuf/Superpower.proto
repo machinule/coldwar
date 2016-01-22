@@ -24,7 +24,7 @@ enum UssrLeaderId {
 
 // The top-level settings proto included in GameSettings.
 // Immutable over the duration of a single game.
-message SuperpowerGameSettings {
+message SuperpowerMechanicSettings {
 	optional UsaSettings usa_settings = 1;
 	optional UssrSettings ussr_settings = 2;
 }
@@ -93,7 +93,7 @@ message TraitSettings {
 
 // The top-level state proto included in GameState.
 // Mutated each turn based on moves.
-message SuperpowerGameState {
+message SuperpowerMechanicState {
 	optional UsaState usa_state = 1;
 	optional UssrState ussr_state = 2;
 }

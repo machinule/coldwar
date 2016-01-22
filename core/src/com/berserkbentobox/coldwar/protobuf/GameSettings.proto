@@ -22,7 +22,7 @@ message GameSettings {
 	optional PolicyMechanicSettings policy_settings = 2;
 	optional LeaderMechanicSettings leader_settings = 3;
 	optional TreatyMechanicSettings treaty_settings = 4;
-	optional SuperpowerGameSettings superpower_settings = 5;
+	optional SuperpowerMechanicSettings superpower_settings = 5;
 	optional MoveGameSettings move_settings = 6; //TODO: cleanup
 	optional EventGameSettings event_settings = 7; //TODO: cleanup
 	optional TechnologyGameSettings technology_settings = 8;

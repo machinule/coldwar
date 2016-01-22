@@ -11,7 +11,7 @@ import com.berserkbentobox.coldwar.Leader.LeaderMechanicSettings;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveGameSettings;
 import com.berserkbentobox.coldwar.Policy.PolicyMechanicSettings;
 import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomGameSettings;
-import com.berserkbentobox.coldwar.Superpower.SuperpowerGameSettings;
+import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyGameSettings;
 import com.berserkbentobox.coldwar.Treaty.TreatyMechanicSettings;
 import com.berserkbentobox.coldwar.Version.VersionMechanicSettings;
@@ -77,7 +77,7 @@ public class GameSettingsFactory {
 		TextFormat.merge(input, settings);
 	}
 	
-	protected void loadSuperpowers(String gameName, SuperpowerGameSettings.Builder settings) throws ParseException {
+	protected void loadSuperpowers(String gameName, SuperpowerMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "superpower_settings.proto.txt"));        
 	    TextFormat.merge(input, settings);
 	}
