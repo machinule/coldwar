@@ -1,20 +1,20 @@
 package com.berserkbentobox.coldwar.logic;
 
-import com.berserkbentobox.coldwar.Technology.TechnologyGameSettingsOrBuilder;
-import com.berserkbentobox.coldwar.Technology.TechnologyGameState;
-import com.berserkbentobox.coldwar.Technology.TechnologyGameStateOrBuilder;
+import com.berserkbentobox.coldwar.Technology.TechnologyMechanicSettingsOrBuilder;
+import com.berserkbentobox.coldwar.Technology.TechnologyMechanicState;
+import com.berserkbentobox.coldwar.Technology.TechnologyMechanicStateOrBuilder;
 
 public class Technology {
-	static Status validateSettings(TechnologyGameSettingsOrBuilder settings) {
+	static Status validateSettings(TechnologyMechanicSettingsOrBuilder settings) {
 		return Status.OK;
 	}
 
-	static Status validateState(TechnologyGameStateOrBuilder state) {
+	static Status validateState(TechnologyMechanicStateOrBuilder state) {
 		return Status.OK;
 	}
 	
-	static TechnologyGameState.Builder buildInitialState(TechnologyGameSettingsOrBuilder settings) {
-		TechnologyGameState.Builder state = TechnologyGameState.newBuilder();
+	static TechnologyMechanicState.Builder buildInitialState(TechnologyMechanicSettingsOrBuilder settings) {
+		TechnologyMechanicState.Builder state = TechnologyMechanicState.newBuilder();
 		state
 			.addAllUsaState(settings.getInitUsaTechnologyGroupList())
 			.addAllUssrState(settings.getInitUssrTechnologyGroupList());
