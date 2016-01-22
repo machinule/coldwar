@@ -19,7 +19,7 @@ enum ProvinceRegion {
 	SUPERPOWERS = 9;
 }
 
-message ProvinceGameState {
+message ProvinceMechanicState {
 	repeated ProvinceState province_state = 1;
 }
 

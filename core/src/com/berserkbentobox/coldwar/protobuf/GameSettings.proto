@@ -28,12 +28,12 @@ message GameSettings {
 	optional EventMechanicSettings event_settings = 7; //TODO: cleanup
 	optional TechnologyMechanicSettings technology_settings = 8;
 	optional HeatMechanicSettings heat_settings = 9;
-	optional ProvinceGameSettings province_settings = 10;
+	optional ProvinceMechanicSettings province_settings = 10;
 	optional PseudorandomGameSettings pseudorandom_settings = 11;
 	optional LeaderMechanicSettings leader_settings = 12;
 }
 
-message ProvinceGameSettings {
+message ProvinceMechanicSettings {
 	repeated ProvinceSettings province = 1;
 }
 
