@@ -1,8 +1,9 @@
-package com.berserkbentobox.coldwar.logic;
+package com.berserkbentobox.coldwar.logic.mechanics;
 
 import com.berserkbentobox.coldwar.InfluenceStore.InfluenceStoreSettingsOrBuilder;
 import com.berserkbentobox.coldwar.InfluenceStore.InfluenceStoreState;
 import com.berserkbentobox.coldwar.InfluenceStore.InfluenceStoreStateOrBuilder;
+import com.berserkbentobox.coldwar.logic.Status;
 
 
 public class InfluenceStore {

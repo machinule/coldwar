@@ -1,12 +1,13 @@
-package com.berserkbentobox.coldwar.logic;
+package com.berserkbentobox.coldwar.logic.mechanics;
 
 import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomMechanicSettingsOrBuilder;
 import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomMechanicState;
 import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomMechanicStateOrBuilder;
+import com.berserkbentobox.coldwar.logic.Status;
 
 public class Pseudorandom {
 
-	static PseudorandomMechanicState.Builder buildInitialState(PseudorandomMechanicSettingsOrBuilder settings) {
+	public static PseudorandomMechanicState.Builder buildInitialState(PseudorandomMechanicSettingsOrBuilder settings) {
 		PseudorandomMechanicState.Builder state = PseudorandomMechanicState.newBuilder();
 		state
 			.setSeed(settings.getInitSeed());

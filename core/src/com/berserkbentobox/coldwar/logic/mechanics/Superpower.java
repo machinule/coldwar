@@ -1,13 +1,13 @@
-package com.berserkbentobox.coldwar.logic;
+package com.berserkbentobox.coldwar.logic.mechanics;
 
 import java.util.stream.Collectors;
 
 import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicSettingsOrBuilder;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicState;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicStateOrBuilder;
-import com.berserkbentobox.coldwar.logic.UsaLeader;
-import com.berserkbentobox.coldwar.logic.UssrLeader;
-import com.berserkbentobox.coldwar.logic.InfluenceStore;
+import com.berserkbentobox.coldwar.logic.Status;
+import com.berserkbentobox.coldwar.logic.mechanics.UsaLeader;
+import com.berserkbentobox.coldwar.logic.mechanics.UssrLeader;
 
 public class Superpower {
 	
@@ -19,7 +19,7 @@ public class Superpower {
 		return Status.OK;
 	}
 	
-	static SuperpowerMechanicState.Builder buildInitialState(SuperpowerMechanicSettingsOrBuilder settings) {
+	public static SuperpowerMechanicState.Builder buildInitialState(SuperpowerMechanicSettingsOrBuilder settings) {
 		SuperpowerMechanicState.Builder state = SuperpowerMechanicState.newBuilder();
 		state
 			.getUsaStateBuilder()

@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic;
+package com.berserkbentobox.coldwar.logic.mechanics;
 
 import java.util.stream.Collectors;
 
@@ -7,6 +7,7 @@ import com.berserkbentobox.coldwar.Treaty.TreatyMechanicState;
 import com.berserkbentobox.coldwar.Treaty.TreatyMechanicStateOrBuilder;
 import com.berserkbentobox.coldwar.Treaty.TreatySettingsOrBuilder;
 import com.berserkbentobox.coldwar.Treaty.TreatyState;
+import com.berserkbentobox.coldwar.logic.Status;
 
 public class Treaty {
 
@@ -26,7 +27,7 @@ public class Treaty {
 		return state;
 	}
 
-	static TreatyMechanicState.Builder buildInitialState(TreatyMechanicSettingsOrBuilder settings) {
+	public static TreatyMechanicState.Builder buildInitialState(TreatyMechanicSettingsOrBuilder settings) {
 		TreatyMechanicState.Builder state = TreatyMechanicState.newBuilder();
 		state
 			.addAllTreaty(settings.getTreatyList().stream().map(s -> buildInitialState(s).build()).collect(Collectors.toList()));

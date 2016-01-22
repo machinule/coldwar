@@ -1,9 +1,10 @@
-package com.berserkbentobox.coldwar.logic;
+package com.berserkbentobox.coldwar.logic.mechanics;
 
 import com.berserkbentobox.coldwar.Policy.PolicyMechanicState;
 import com.berserkbentobox.coldwar.Policy.PolicyMechanicStateOrBuilder;
 import com.berserkbentobox.coldwar.Policy.PolicySettingsOrBuilder;
 import com.berserkbentobox.coldwar.Policy.PolicyState;
+import com.berserkbentobox.coldwar.logic.Status;
 
 import java.util.stream.Collectors;
 
@@ -28,7 +29,7 @@ public class Policy {
 		return state;
 	}
 
-	static PolicyMechanicState.Builder buildInitialState(PolicyMechanicSettingsOrBuilder settings) {
+	public static PolicyMechanicState.Builder buildInitialState(PolicyMechanicSettingsOrBuilder settings) {
 		PolicyMechanicState.Builder state = PolicyMechanicState.newBuilder();
 		state
 			.addAllUsaPolicy(settings.getUsaPolicyList().stream().map(s -> buildInitialState(s).build()).collect(Collectors.toList()))

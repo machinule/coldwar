@@ -1,8 +1,9 @@
-package com.berserkbentobox.coldwar.logic;
+package com.berserkbentobox.coldwar.logic.mechanics;
 
 import com.berserkbentobox.coldwar.Leader.LeaderMechanicSettingsOrBuilder;
 import com.berserkbentobox.coldwar.Leader.LeaderSettingsOrBuilder;
 import com.berserkbentobox.coldwar.Leader.LeaderState;
+import com.berserkbentobox.coldwar.logic.Status;
 
 public class Leader {
 

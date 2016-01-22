@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic;
+package com.berserkbentobox.coldwar.logic.mechanics;
 
 import java.util.stream.Collectors;
 
@@ -9,6 +9,7 @@ import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettingsOrBuil
 import com.berserkbentobox.coldwar.Province.ProvinceMechanicState;
 import com.berserkbentobox.coldwar.Province.ProvinceMechanicStateOrBuilder;
 import com.berserkbentobox.coldwar.Province.ProvinceState;
+import com.berserkbentobox.coldwar.logic.Status;
 
 
 public class Province {
@@ -35,7 +36,7 @@ public class Province {
 		return state;
 	}
 
-	static ProvinceMechanicState.Builder buildInitialState(ProvinceMechanicSettingsOrBuilder settings) {
+	public static ProvinceMechanicState.Builder buildInitialState(ProvinceMechanicSettingsOrBuilder settings) {
 		ProvinceMechanicState.Builder state = ProvinceMechanicState.newBuilder();
 		state
 			.addAllProvinceState(settings.getProvinceList().stream().map(s -> buildInitialState(s).build()).collect(Collectors.toList()));;

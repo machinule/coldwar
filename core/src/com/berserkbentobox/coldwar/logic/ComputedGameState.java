@@ -31,6 +31,7 @@ import com.berserkbentobox.coldwar.Province.ProvinceRegion;
 import com.berserkbentobox.coldwar.Province.ProvinceState;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.logic.mechanics.Leader;
 
 /**
  * A ComputedGameState contains public, final variables representing variables computed from a given game state and move lists.

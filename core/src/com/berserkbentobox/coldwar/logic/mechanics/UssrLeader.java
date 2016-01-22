@@ -1,7 +1,8 @@
-package com.berserkbentobox.coldwar.logic;
+package com.berserkbentobox.coldwar.logic.mechanics;
 
 import com.berserkbentobox.coldwar.Superpower.UssrLeaderState;
 import com.berserkbentobox.coldwar.Superpower.UssrLeaderStateOrBuilder;
+import com.berserkbentobox.coldwar.logic.Status;
 import com.berserkbentobox.coldwar.Superpower.UssrLeaderSettingsOrBuilder;
 
 	
