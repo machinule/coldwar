@@ -5,7 +5,6 @@ import java.util.concurrent.Future;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.GameStateOuterClass.Crisis;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.GameSettingsFactory;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.EventOuterClass.BerlinBlockadeEvent;

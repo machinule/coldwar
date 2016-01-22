@@ -1,4 +1,4 @@
-  province {
+province {
     id: USA
     label: "United States"
     adjacency: MEXICO
@@ -243,7 +243,7 @@
     adjacency: USA
     adjacency: GREAT_BRITAIN
     stability_base: 3
-    init_influence: 1
+    init_influence: 2
     init_government: DEMOCRACY
     region: WESTERN_EUROPE
     culture: ENGLISH
@@ -256,7 +256,7 @@
     adjacency: BENELUX
     adjacency: NORWAY
     stability_base: 3
-    init_influence: 2
+    init_influence: 3
     init_government: DEMOCRACY
     region: WESTERN_EUROPE
     culture: ENGLISH
@@ -474,71 +474,107 @@
   province {
     id: LIBYA
     label: "Libya"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: EGYPT
+    adjacency: ITALY
+    #adjacency: ALGERIA
+    stability_base: 2
     region: MIDDLE_EAST
   }
   province {
     id: EGYPT
     label: "Egypt"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: LIBYA
+    adjacency: ISRAEL
+    #adjacency: ETHIOPIA
+    stability_base: 2
     region: MIDDLE_EAST
   }
   province {
     id: ISRAEL
     label: "Israel"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: EGYPT
+    adjacency: SYRIA
+    adjacency: JORDAN
+    adjacency: LEBANON
+    stability_base: 3
+    init_influence: 1
+    #init_leader: "David Ben-Gurion"
+    # TODO: Arab-Israeli War
     region: MIDDLE_EAST
   }
   province {
     id: SYRIA
     label: "Syria"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: ISRAEL
+    adjacency: TURKEY
+    adjacency: IRAQ
+    adjacency: LEBANON
+    adjacency: ISRAEL
+    stability_base: 2
     region: MIDDLE_EAST
+  }
+  province {
+  	id: LEBANON
+  	label: "Lebanon"
+    adjacency: SYRIA
+    adjacency: ISRAEL
+  	init_stability: 2
+  	region: MIDDLE_EAST
   }
   province {
     id: IRAQ
     label: "Iraq"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: SYRIA
+    adjacency: SAUDI_ARABIA
+    adjacency: GULF_STATES
+    adjacency: IRAN
+    stability_base: 2
     region: MIDDLE_EAST
   }
   province {
     id: IRAN
     label: "Iran"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: USSR
+    adjacency: AFGHANISTAN
+    adjacency: PAKISTAN
+    stability_base: 2
+    init_influence: 2
     region: MIDDLE_EAST
   }
   province {
     id: GULF_STATES
     label: "Gulf States"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: IRAQ
+    adjacency: SAUDI_ARABIA
+    stability_base: 2
     region: MIDDLE_EAST
   }
   province {
     id: SAUDI_ARABIA
     label: "Saudi Arabia"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: YEMEN
+    adjacency: JORDAN
+    adjacency: GULF_STATES
+    adjacency: IRAQ
+    stability_base: 3
     region: MIDDLE_EAST
   }
   province {
     id: YEMEN
     label: "Yemen"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: SAUDI_ARABIA
+    #adjacency: SOMALIA
+    init_government: COLONY
+    init_occupier: GREAT_BRITAIN
     region: MIDDLE_EAST
   }
   province {
     id: JORDAN
     label: "Jordan"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: SAUDI_ARABIA
+    adjacency: SYRIA
+    adjacency: ISRAEL
+    stability_base: 2
     region: MIDDLE_EAST
   }
   province {
@@ -621,126 +657,190 @@
   province {
     id: CHINA
     label: "China"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: INDIA
+    adjacency: TAIWAN
+    adjacency: NORTH_KOREA
+    adjacency: VIETNAM
+    adjacency: USSR
+    stability_base: 10
     region: EAST_ASIA
+    # TODO: Everything, including civil war
   }
   province {
     id: NORTH_KOREA
     label: "Best Korea"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: SOUTH_KOREA
+    adjacency: USSR
+    stability_base: 2
+    init_government: COMMUNISM
+    init_influence: -3
     region: EAST_ASIA
   }
   province {
     id: SOUTH_KOREA
     label: "South Korea"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: NORTH_KOREA
+    adjacency: JAPAN
+    stability_base: 2
+    init_military_base: USA
+    init_influence: 2
     region: EAST_ASIA
   }
   province {
     id: JAPAN
     label: "Japan"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: TAIWAN
+    adjacency: SOUTH_KOREA
+    stability_base: 3
+    init_government: OCCUPIED
+    init_occupier: USA
     region: EAST_ASIA
   }
   province {
     id: TAIWAN
     label: "Taiwan"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: JAPAN
+    adjacency: CHINA
+    adjacency: PHILIPPINES
+    stability_base: 2
+    init_government: AUTOCRACY
+    #init_leader: "Chiang Kai-shek"
+    init_dissidents {
+      gov: REPUBLIC
+    }
     region: EAST_ASIA
   }
   province {
     id: PHILIPPINES
     label: "Philippines"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: MALAYSIA
+    adjacency: INDONESIA
+    adjacency: VIETNAM
+    adjacency: TAIWAN
+    stability_base: 2
+    init_influence: 1
+    init_dissidents {
+      gov: COMMUNISM
+    }
     region: EAST_ASIA
   }
   province {
     id: VIETNAM
     label: "Vietnam"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: LAOS
+    adjacency: CAMBODIA
+    adjacency: CHINA
+    adjacency: PHILIPPINES
+    init_government: COLONY
+    init_occupier: FRANCE
     region: EAST_ASIA
+    # TODO: So much bullshit - colonial war
   }
   province {
     id: LAOS
     label: "Laos"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: VIETNAM
+    adjacency: CAMBODIA
+    adjacency: THAILAND
+    adjacency: BURMA
+    init_government: COLONY
+    init_occupier: FRANCE
     region: EAST_ASIA
   }
   province {
     id: CAMBODIA
     label: "Cambodia"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: THAILAND
+    adjacency: VIETNAM
+    adjacency: LAOS
+    init_government: COLONY
+    init_occupier: FRANCE
     region: EAST_ASIA
   }
   province {
     id: AFGHANISTAN
     label: "Afghanistan"
-    stability_base: 3000
-    init_government: DEMOCRACY
+    adjacency: IRAN
+    adjacency: PAKISTAN
+    adjacency: USSR
+    stability_base: 2
     region: SOUTH_ASIA
   }
   province {
     id: PAKISTAN
     label: "Pakistan"
-    stability_base: 3000
-    init_government: DEMOCRACY
-    region: EAST_ASIA
+    adjacency: INDIA
+    adjacency: IRAN
+    stability_base: 2
+    region: SOUTH_ASIA
   }
   province {
     id: BANGLADESH
     label: "Bangladesh"
-    stability_base: 3000
-    init_government: DEMOCRACY
-    region: EAST_ASIA
+    adjacency: INDIA
+    adjacency: BURMA
+    stability_base: 2
+    init_government: OCCUPIED
+    init_occupier: PAKISTAN
+    region: SOUTH_ASIA
   }
   province {
     id: INDIA
     label: "India"
-    stability_base: 3000
-    init_government: DEMOCRACY
-    region: EAST_ASIA
+    adjacency: BURMA
+    adjacency: BANGLADESH
+    adjacency: PAKISTAN
+    stability_base: 3
+    region: SOUTH_ASIA
   }
   province {
     id: BURMA
     label: "Burma"
-    stability_base: 3000
-    init_government: DEMOCRACY
-    region: EAST_ASIA
+    adjacency: THAILAND
+    adjacency: LAOS
+    adjacency: BANGLADESH
+    stability_base: 1
+    region: SOUTH_ASIA
   }
   province {
     id: THAILAND
     label: "Thailand"
-    stability_base: 3000
-    init_government: DEMOCRACY
-    region: EAST_ASIA
+    adjacency: BURMA
+    adjacency: LAOS
+    adjacency: CAMBODIA
+    adjacency: MALAYSIA
+    init_government: AUTOCRACY
+    region: SOUTH_ASIA
   }
   province {
     id: MALAYSIA
     label: "Mayalisa"
-    stability_base: 3000
-    init_government: DEMOCRACY
-    region: EAST_ASIA
+    adjacency: PHILIPPINES
+    adjacency: THAILAND
+    adjacency: INDONESIA
+    init_government: COLONY
+    init_occupier: GREAT_BRITAIN
+    init_dissidents {
+      gov: COMMUNISM
+    }
+    region: SOUTH_ASIA
   }
   province {
     id: INDONESIA
     label: "Indonesia"
-    stability_base: 3000
-    init_government: DEMOCRACY
-    region: EAST_ASIA
+    adjacency: MALAYSIA
+    adjacency: AUSTRALIA
+    init_government: COLONY
+    init_occupier: BENELUX
+    # TODO: Civil war
+    region: SOUTH_ASIA
   }
   province {
     id: AUSTRALIA
     label: "Australia"
-    stability_base: 3000
+    adjacency: INDONESIA
+    stability_base: 3
+    init_influence: 3
     init_government: DEMOCRACY
-    region: EAST_ASIA
+    region: SOUTH_ASIA
   }

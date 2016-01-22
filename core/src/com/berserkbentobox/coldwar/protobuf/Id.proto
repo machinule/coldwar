@@ -85,6 +85,7 @@ enum ProvinceId {
 	IRAN = 107;
 	GULF_STATES = 108;
 	LIBYA = 109;
+	LEBANON = 110;
 
 	// SOUTH ASIA
 
