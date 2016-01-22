@@ -95,8 +95,8 @@ public abstract class Client {
 		ComputedGameState computedState = new ComputedGameState(this.state, this.getUSAMove(), this.getUSSRMove());
 		this.state = computedState.nextState;
 		Logger.Info("Next game state: " + this.state.toString());
-//		Logger.Dbg("Net party unity: " + computedState.getNetPartyUnity());
-//		Logger.Dbg("Net patriotism: " + computedState.getNetPatriotism());
+		Logger.Dbg("Net party unity: " + computedState.getNetPartyUnity());
+		Logger.Dbg("Net patriotism: " + computedState.getNetPatriotism());
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {
 			Logger.Info(msg);
 		}		

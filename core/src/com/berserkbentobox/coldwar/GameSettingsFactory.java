@@ -10,7 +10,7 @@ import com.berserkbentobox.coldwar.Heat.HeatMechanicSettings;
 import com.berserkbentobox.coldwar.Leader.LeaderMechanicSettings;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveMechanicSettings;
 import com.berserkbentobox.coldwar.Policy.PolicyMechanicSettings;
-import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomMechanicSettings;
+//import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomGameSettings;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyMechanicSettings;
 import com.berserkbentobox.coldwar.Treaty.TreatyMechanicSettings;
@@ -38,7 +38,7 @@ public class GameSettingsFactory {
 			this.loadTechnologies(gameName, settings.getTechnologySettingsBuilder());
 			this.loadHeat(gameName, settings.getHeatSettingsBuilder());
 			this.loadProvinces(gameName, settings.getProvinceSettingsBuilder());
-			this.loadPseudorandom(settings.getPseudorandomSettingsBuilder());
+			//this.loadPseudorandom(settings.getPseudorandomSettingsBuilder());
 		} catch (ParseException e) {
 			Logger.Info(e.toString());
 		}
@@ -58,9 +58,9 @@ public class GameSettingsFactory {
 		settings.setVersion("0.0.1");
 	}
 	
-	protected void loadPseudorandom(PseudorandomMechanicSettings.Builder settings) {
-		settings.setInitSeed(0);
-	}
+	//protected void loadPseudorandom(PseudorandomGameSettings.Builder settings) {
+	//	settings.setInitSeed(0);
+	//}
 	
 	protected void loadPolicies(String gameName, PolicyMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "policy_settings.proto.txt"));        
