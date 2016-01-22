@@ -1088,6 +1088,8 @@ public class ComputedGameState {
 		return this.state.getSettings().getMoveSettings().getConflictCovertFundDefender();
 	}
 	
+	// 
+	
 	// OTHER HELPER FUNCTIONS
 	
 	public boolean hasActed(ProvinceId id) {
