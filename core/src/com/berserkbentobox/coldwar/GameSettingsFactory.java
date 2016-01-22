@@ -3,7 +3,7 @@ package com.berserkbentobox.coldwar;
 import java.io.File;
 
 import com.badlogic.gdx.Gdx;
-import com.berserkbentobox.coldwar.EventOuterClass.EventGameSettings;
+import com.berserkbentobox.coldwar.EventOuterClass.EventMechanicSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceGameSettings;
 import com.berserkbentobox.coldwar.Heat.HeatGameSettings;
@@ -87,7 +87,7 @@ public class GameSettingsFactory {
 	    TextFormat.merge(input, settings);
 	}
 	
-	protected void loadEvents(String gameName, EventGameSettings.Builder settings) throws ParseException {
+	protected void loadEvents(String gameName, EventMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "event_settings.proto.txt"));        
 	    TextFormat.merge(input, settings);
 	}
