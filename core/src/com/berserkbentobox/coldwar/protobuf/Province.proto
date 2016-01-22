@@ -2,122 +2,9 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
-//import "Leader.proto";
+import "Leader.proto";
 import "Dissidents.proto";
-
-enum ProvinceId {
-	UNKNOWN_PROVINCE = 00;
-
-	// WEST EUROPE
-
-	GREAT_BRITAIN = 01;
-	FRANCE = 02;
-	DENMARK = 03;
-	NORWAY = 11;
-	BENELUX = 04;
-	WEST_GERMANY = 05;
-	SPAIN = 06;
-	PORTUGAL = 07;
-	ITALY = 8;
-	SWEDEN = 9;
-	CANADA = 10;
-
-	// EAST EUROPE
-
-	EAST_GERMANY = 20;
-	POLAND = 21;
-	CZECHOSLOVAKIA = 22;
-	HUNGARY = 23;
-	YUGOSLAVIA = 24;
-	GREECE = 25;
-	ROMANIA = 26;
-	BULGARIA = 27;
-	FINLAND = 28;
-	TURKEY = 29;
-
-	// CENTRAL AMERICA
-
-	MEXICO = 41;
-	GUATEMALA = 42;
-	HONDURAS = 43;
-	NICARAGUA = 44;
-	COSTA_RICA = 45;
-	PANAMA = 46;
-	CUBA = 47;
-	HAITI = 48;
-	DOMINICAN_REP = 49;
-	LESS_ANTILLES = 50;
-	EL_SALVADOR = 51;
-	GUYANA = 52;
-
-	// SOUTH AMERICA
-
-	COLOMBIA = 61;
-	ECUADOR = 62;
-	PERU = 63;
-	CHILE = 64;
-	VENEZUELA = 65;
-	URUGUAY = 66;
-	BRAZIL = 67;
-	BOLIVIA = 68;
-	ARGENTINA = 69;
-
-	// AFRICA
-
-	MOROCCO = 80;
-	IVORY_GOLD_COAST = 81;
-	WEST_AFRICA = 82;
-	ALGERIA = 83;
-	NIGERIA = 84;
-	ZAIRE = 85;
-	ANGOLA = 86;
-	SOUTH_AFRICA = 87;
-	MOZAMBIQUE = 88;
-	EAST_AFRICA = 89;
-	ETHIOPIA = 90;
-
-	// MIDDLE EAST
-
-	EGYPT = 100;
-	ISRAEL = 101;
-	SYRIA = 102;
-	JORDAN = 103;
-	IRAQ = 104;
-	SAUDI_ARABIA = 105;
-	YEMEN = 106;
-	IRAN = 107;
-	GULF_STATES = 108;
-	LIBYA = 109;
-
-	// SOUTH ASIA
-
-	AFGHANISTAN = 120;
-	PAKISTAN = 121;
-	INDIA = 122;
-	BANGLADESH = 123;
-	BURMA = 124;
-	THAILAND = 125;
-	MALAYSIA = 126;
-	INDONESIA = 127;
-	AUSTRALIA = 128;
-
-	// EAST ASIA
-
-	CHINA = 140;
-	LAOS = 141;
-	CAMBODIA = 142;
-	VIETNAM = 143;
-	PHILIPPINES = 144;
-	TAIWAN = 145;
-	JAPAN = 146;
-	SOUTH_KOREA = 147;
-	NORTH_KOREA = 148;
-
-	// SUPERPOWERS
-
-	USA = 998;
-	USSR = 999;
-}
+import "Id.proto";
 
 enum ProvinceRegion {
 	WESTERN_EUROPE = 1;
@@ -144,17 +31,11 @@ message ProvinceState {
 	optional ProvinceId base = 9;
 	optional ProvinceId ally = 10;
 	optional bool has_leader = 11;
-//	optional Leader leader = 12;
+	optional LeaderState leader = 12;
 	optional bool has_dissidents = 13;
 	optional Dissidents dissidents = 14;
 	optional Conflict conflict = 15;
 }
-
-//message LeaderList {
-//	repeated Leader leaders = 1;
-//	optional Province.Id province = 2;
-//	optional Leader.Culture culture = 3;
-//}
 
 message Conflict {
 

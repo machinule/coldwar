@@ -26,7 +26,7 @@ import com.berserkbentobox.coldwar.EventOuterClass.ProvinceRepublicEvent;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
 import com.berserkbentobox.coldwar.Province.Conflict;
 import com.berserkbentobox.coldwar.Province.ProvinceGameState;
-import com.berserkbentobox.coldwar.Province.ProvinceId;
+import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.Province.ProvinceRegion;
 import com.berserkbentobox.coldwar.Province.ProvinceState;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;

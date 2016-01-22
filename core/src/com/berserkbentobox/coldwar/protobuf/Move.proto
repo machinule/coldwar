@@ -3,6 +3,7 @@ syntax = "proto2";
 package com.berserkbentobox.coldwar;
 
 import "Cost.proto";
+import "Id.proto";
 import "Province.proto";
 import "Technology.proto";
 import "Policy.proto";

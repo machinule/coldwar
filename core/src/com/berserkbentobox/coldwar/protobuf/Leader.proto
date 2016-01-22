@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
-import "Province.proto";
+import "Id.proto";
 
 enum LeaderAllegiance {
 	NO_ALLEGIANCE = 0;
@@ -37,4 +37,11 @@ message LeaderSettings {
 	optional ProvinceId province_restriction = 7;
 	optional bool elected = 8;
 	optional bool isolationist = 9;
+}
+
+// ========== State ==========
+
+// The state for a single Policy.
+message LeaderState {
+	optional string id = 1;
 }
