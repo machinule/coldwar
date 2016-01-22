@@ -207,7 +207,7 @@ public class ProvinceInfoCard extends Table {
 	        	ret = new Color((float)201/255, (float)201/255, (float)0/255, 1);
 	            break;
 	        case SOUTH_ASIA:
-	        	ret = new Color((float)51/255, (float)151/255, (float)151/255, 1);
+	        	ret = new Color((float)101/255, (float)201/255, (float)201/255, 1);
 	            break;
 	        case EAST_ASIA:
 	        	ret = new Color((float)201/255, (float)101/255, (float)201/255, 1);

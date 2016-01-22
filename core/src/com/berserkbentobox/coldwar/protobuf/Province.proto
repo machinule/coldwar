@@ -40,6 +40,9 @@ message Conflict {
 
 	enum Type {
 		CIVIL_WAR = 1;
+		CONVENTIONAL_WAR = 2;
+		MILITARY_ACTION = 3;
+		COLONIAL_WAR = 4;
 	}
 
 	optional bool active = 2 [default = false];

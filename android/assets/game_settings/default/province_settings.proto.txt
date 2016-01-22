@@ -409,7 +409,6 @@ province {
     adjacency: HUNGARY
     adjacency: BULGARIA
     stability_base: 2
-    init_influence: -1
     init_government: COMMUNISM
     region: EASTERN_EUROPE
   }
@@ -459,6 +458,7 @@ province {
     adjacency: USSR
     adjacency: BULGARIA
     adjacency: GREECE
+    adjacency: SYRIA
     stability_base: 2
     region: EASTERN_EUROPE
   }
@@ -509,6 +509,15 @@ province {
     adjacency: TURKEY
     adjacency: IRAQ
     adjacency: LEBANON
+    adjacency: JORDAN
+    stability_base: 2
+    region: MIDDLE_EAST
+  }
+  province {
+    id: JORDAN
+    label: "Jordan"
+    adjacency: SAUDI_ARABIA
+    adjacency: SYRIA
     adjacency: ISRAEL
     stability_base: 2
     region: MIDDLE_EAST
@@ -518,7 +527,7 @@ province {
   	label: "Lebanon"
     adjacency: SYRIA
     adjacency: ISRAEL
-  	init_stability: 2
+  	stability_base: 2
   	region: MIDDLE_EAST
   }
   province {
@@ -566,15 +575,6 @@ province {
     #adjacency: SOMALIA
     init_government: COLONY
     init_occupier: GREAT_BRITAIN
-    region: MIDDLE_EAST
-  }
-  province {
-    id: JORDAN
-    label: "Jordan"
-    adjacency: SAUDI_ARABIA
-    adjacency: SYRIA
-    adjacency: ISRAEL
-    stability_base: 2
     region: MIDDLE_EAST
   }
   province {
@@ -832,7 +832,7 @@ province {
     adjacency: AUSTRALIA
     init_government: COLONY
     init_occupier: BENELUX
-    # TODO: Civil war
+    # TODO: Colonial war
     region: SOUTH_ASIA
   }
   province {
