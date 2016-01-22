@@ -22,7 +22,7 @@ enum LeaderCulture {
 
 // The top-level settings proto included in GameSettings.
 // Immutable over the duration of a single game.
-message LeaderGameSettings {
+message LeaderMechanicSettings {
 	repeated LeaderSettings leader = 1;
 }
 
