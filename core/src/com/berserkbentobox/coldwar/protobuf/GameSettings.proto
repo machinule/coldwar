@@ -29,7 +29,7 @@ message GameSettings {
 	optional TechnologyMechanicSettings technology_settings = 8;
 	optional HeatMechanicSettings heat_settings = 9;
 	optional ProvinceMechanicSettings province_settings = 10;
-	optional PseudorandomGameSettings pseudorandom_settings = 11;
+	optional PseudorandomMechanicSettings pseudorandom_settings = 11;
 }
 
 message ProvinceMechanicSettings {

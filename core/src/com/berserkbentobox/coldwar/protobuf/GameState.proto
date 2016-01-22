@@ -20,7 +20,7 @@ message GameState {
   optional HeatMechanicState heat_state = 2;
   optional ProvinceMechanicState province_state = 3;
   optional SuperpowerMechanicState superpower_state = 4;
-  optional PseudorandomGameState pseudorandom_state = 5;
+  optional PseudorandomMechanicState pseudorandom_state = 5;
   optional PolicyMechanicState policy_state = 6;
   optional TreatyMechanicState treaty_state = 7;
   optional TechnologyMechanicState technology_state = 8;
