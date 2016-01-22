@@ -18,7 +18,7 @@ enum PolicyId {
 
 // The top-level settings proto included in GameSettings.
 // Immutable over the duration of a single game.
-message PolicyGameSettings {
+message PolicyMechanicSettings {
 	optional int32 num_policy_slots = 1;
 	repeated PolicySettings usa_policy = 2;
 	repeated PolicySettings ussr_policy = 3;
@@ -36,7 +36,7 @@ message PolicySettings {
 
 // The top-level state proto included in GameState.
 // Mutated each turn based on moves.
-message PolicyGameState {
+message PolicyMechanicState {
 	repeated PolicyState usa_policy = 1;
 	repeated PolicyState ussr_policy = 2;
 }

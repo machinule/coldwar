@@ -19,7 +19,7 @@ import "Version.proto";
 // These are not logged each turn, but merely copied to the top level GameState.
 message GameSettings {
 	optional VersionMechanicSettings version_settings = 1;
-	optional PolicyGameSettings policy_settings = 2;
+	optional PolicyMechanicSettings policy_settings = 2;
 	optional LeaderGameSettings leader_settings = 3;
 	optional TreatyGameSettings treaty_settings = 4;
 	optional SuperpowerGameSettings superpower_settings = 5;
