@@ -30,7 +30,6 @@ message GameSettings {
 	optional HeatMechanicSettings heat_settings = 9;
 	optional ProvinceMechanicSettings province_settings = 10;
 	optional PseudorandomGameSettings pseudorandom_settings = 11;
-	optional LeaderMechanicSettings leader_settings = 12;
 }
 
 message ProvinceMechanicSettings {

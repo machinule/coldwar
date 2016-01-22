@@ -30,8 +30,7 @@ public class Province {
 			.setBase(settings.getInitMilitaryBase())
 			.setOccupier(settings.getInitOccupier())
 			.setDissidents(settings.getInitDissidents())
-			.setHasLeader(settings.hasInitHasLeader())
-			.setLeader(settings.getInitLeader())
+			//.setLeader(settings.getInitLeader())
 			.setConflict(settings.getInitConflict());
 		return state;
 	}

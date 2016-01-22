@@ -549,7 +549,7 @@ public class ComputedGameState {
 		// LEADER EFFECTS
 		
 		for (ProvinceState p : nextStateBuilder.getProvinceState().getProvinceStateList()) {
-			if(p.hasHasLeader()) {
+			if(p.hasLeader()) {
 				if(true) {
 				//if(p.getLeader().getIsolationist()) {
 				//	int inflChange = 1;
@@ -799,7 +799,7 @@ public class ComputedGameState {
 						int newInfl = 0;
 						p.setGov(c.getRebels().getGov());
 //						p.setLeader(c.getRebels().getLeader());
-						if(p.getHasLeader())
+						if(p.hasLeader())
 							newInfl ++;
 						if(isStrongGov(p.getGov()))
 							newInfl ++;

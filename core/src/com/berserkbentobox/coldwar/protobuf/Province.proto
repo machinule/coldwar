@@ -30,7 +30,6 @@ message ProvinceState {
 	optional ProvinceId occupier = 6;
 	optional ProvinceId base = 9;
 	optional ProvinceId ally = 10;
-	optional bool has_leader = 11;
 	optional LeaderState leader = 12;
 	optional bool has_dissidents = 13;
 	optional Dissidents dissidents = 14;
