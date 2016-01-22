@@ -40,15 +40,15 @@ public abstract class Client {
 		GameSettings settings = new GameSettingsFactory("game_settings").newGameSettings();
 		
 		GameState.Builder state = GameState.newBuilder()
-				.setSettings(settings)
-				.setSuperpowerState(Superpower.buildInitialState(settings.getSuperpowerSettings()))
-				.setPseudorandomState(Pseudorandom.buildInitialState(settings.getPseudorandomSettings()))
-				.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
-				.setHeatState(Heat.buildInitialState(settings.getHeatSettings()))
-				.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
-				.setTechnologyState(Technology.buildInitialState(settings.getTechnologySettings()))
-				.setProvinceState(Province.buildInitialState(settings.getProvinceSettings()))
-				.setTurn(0);
+			.setSettings(settings)
+			.setSuperpowerState(Superpower.buildInitialState(settings.getSuperpowerSettings()))
+			.setPseudorandomState(Pseudorandom.buildInitialState(settings.getPseudorandomSettings()))
+			.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
+			.setHeatState(Heat.buildInitialState(settings.getHeatSettings()))
+			.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
+			.setTechnologyState(Technology.buildInitialState(settings.getTechnologySettings()))
+			.setProvinceState(Province.buildInitialState(settings.getProvinceSettings()))
+			.setTurn(0);
 		
 		//Berlin Blockade
 		Crisis.Builder c = Crisis.newBuilder();
@@ -90,8 +90,8 @@ public abstract class Client {
 		ComputedGameState computedState = new ComputedGameState(this.state, this.getUSAMove(), this.getUSSRMove());
 		this.state = computedState.nextState;
 		Logger.Info("Next game state: " + this.state.toString());
-//		Logger.Dbg("Net party unity: " + computedState.getNetPartyUnity());
-//		Logger.Dbg("Net patriotism: " + computedState.getNetPatriotism());
+		Logger.Dbg("Net party unity: " + computedState.getNetPartyUnity());
+		Logger.Dbg("Net patriotism: " + computedState.getNetPatriotism());
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {
 			Logger.Info(msg);
 		}		
