@@ -21,7 +21,7 @@ message GameSettings {
 	optional VersionMechanicSettings version_settings = 1;
 	optional PolicyMechanicSettings policy_settings = 2;
 	optional LeaderMechanicSettings leader_settings = 3;
-	optional TreatyGameSettings treaty_settings = 4;
+	optional TreatyMechanicSettings treaty_settings = 4;
 	optional SuperpowerGameSettings superpower_settings = 5;
 	optional MoveGameSettings move_settings = 6; //TODO: cleanup
 	optional EventGameSettings event_settings = 7; //TODO: cleanup

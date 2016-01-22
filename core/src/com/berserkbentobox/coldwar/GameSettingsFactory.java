@@ -13,7 +13,7 @@ import com.berserkbentobox.coldwar.Policy.PolicyMechanicSettings;
 import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomGameSettings;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerGameSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyGameSettings;
-import com.berserkbentobox.coldwar.Treaty.TreatyGameSettings;
+import com.berserkbentobox.coldwar.Treaty.TreatyMechanicSettings;
 import com.berserkbentobox.coldwar.Version.VersionMechanicSettings;
 import com.google.protobuf.TextFormat;
 import com.google.protobuf.TextFormat.ParseException;
@@ -72,7 +72,7 @@ public class GameSettingsFactory {
 	    TextFormat.merge(input, settings);
 	}
 	
-	protected void loadTreaties(String gameName, TreatyGameSettings.Builder settings) throws ParseException {
+	protected void loadTreaties(String gameName, TreatyMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "treaty_settings.proto.txt"));        
 		TextFormat.merge(input, settings);
 	}

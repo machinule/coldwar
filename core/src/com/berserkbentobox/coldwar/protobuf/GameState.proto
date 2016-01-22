@@ -22,7 +22,7 @@ message GameState {
   optional SuperpowerGameState superpower_state = 4;
   optional PseudorandomGameState pseudorandom_state = 5;
   optional PolicyMechanicState policy_state = 6;
-  optional TreatyGameState treaty_state = 7;
+  optional TreatyMechanicState treaty_state = 7;
   optional TechnologyGameState technology_state = 8;
   optional int32 turn = 9;
   optional TurnLogEntry turn_log = 10;
