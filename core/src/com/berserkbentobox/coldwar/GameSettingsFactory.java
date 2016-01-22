@@ -5,7 +5,7 @@ import java.io.File;
 import com.badlogic.gdx.Gdx;
 import com.berserkbentobox.coldwar.EventOuterClass.EventMechanicSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceGameSettings;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceMechanicSettings;
 import com.berserkbentobox.coldwar.Heat.HeatMechanicSettings;
 import com.berserkbentobox.coldwar.Leader.LeaderMechanicSettings;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveMechanicSettings;
@@ -102,7 +102,7 @@ public class GameSettingsFactory {
         TextFormat.merge(input, settings);
 	}
 	
-	protected void loadProvinces(String gameName, ProvinceGameSettings.Builder settings) throws ParseException {
+	protected void loadProvinces(String gameName, ProvinceMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "province_settings.proto.txt"));        
         TextFormat.merge(input, settings);
 	}

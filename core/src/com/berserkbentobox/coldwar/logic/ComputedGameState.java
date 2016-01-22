@@ -25,7 +25,7 @@ import com.berserkbentobox.coldwar.EventOuterClass.ProvinceFauxPasEvent;
 import com.berserkbentobox.coldwar.EventOuterClass.ProvinceRepublicEvent;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
 import com.berserkbentobox.coldwar.Province.Conflict;
-import com.berserkbentobox.coldwar.Province.ProvinceGameState;
+import com.berserkbentobox.coldwar.Province.ProvinceMechanicState;
 import com.berserkbentobox.coldwar.Province.ProvinceId;
 import com.berserkbentobox.coldwar.Province.ProvinceRegion;
 import com.berserkbentobox.coldwar.Province.ProvinceState;
@@ -509,7 +509,7 @@ public class ComputedGameState {
 				.setHeatState(HeatMechanicState.newBuilder()
 						.setHeat(heatCounter)
 						.build())
-				.setProvinceState(ProvinceGameState.newBuilder()
+				.setProvinceState(ProvinceMechanicState.newBuilder()
 						.addAllProvinceState(this.state.getProvinceState().getProvinceStateList()));
 		
 		for (final ProvinceState.Builder province : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {

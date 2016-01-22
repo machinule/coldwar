@@ -18,7 +18,7 @@ import "Heat.proto";
 
 message GameState {
   optional HeatMechanicState heat_state = 2;
-  optional ProvinceGameState province_state = 3;
+  optional ProvinceMechanicState province_state = 3;
   optional SuperpowerMechanicState superpower_state = 4;
   optional PseudorandomGameState pseudorandom_state = 5;
   optional PolicyMechanicState policy_state = 6;

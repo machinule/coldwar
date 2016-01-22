@@ -3,20 +3,20 @@ package com.berserkbentobox.coldwar.logic;
 import java.util.stream.Collectors;
 
 import com.berserkbentobox.coldwar.Logger;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceGameSettingsOrBuilder;
+import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceMechanicSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettingsOrBuilder;
-import com.berserkbentobox.coldwar.Province.ProvinceGameState;
-import com.berserkbentobox.coldwar.Province.ProvinceGameStateOrBuilder;
+import com.berserkbentobox.coldwar.Province.ProvinceMechanicState;
+import com.berserkbentobox.coldwar.Province.ProvinceMechanicStateOrBuilder;
 import com.berserkbentobox.coldwar.Province.ProvinceState;
 
 
 public class Province {
-	static Status validateSettings(ProvinceGameSettingsOrBuilder settings) {
+	static Status validateSettings(ProvinceMechanicSettingsOrBuilder settings) {
 		return Status.OK;
 	}
 
-	static Status validateState(ProvinceGameStateOrBuilder state) {
+	static Status validateState(ProvinceMechanicStateOrBuilder state) {
 		return Status.OK;
 	}
 	
@@ -34,8 +34,8 @@ public class Province {
 		return state;
 	}
 
-	static ProvinceGameState.Builder buildInitialState(ProvinceGameSettingsOrBuilder settings) {
-		ProvinceGameState.Builder state = ProvinceGameState.newBuilder();
+	static ProvinceMechanicState.Builder buildInitialState(ProvinceMechanicSettingsOrBuilder settings) {
+		ProvinceMechanicState.Builder state = ProvinceMechanicState.newBuilder();
 		state
 			.addAllProvinceState(settings.getProvinceList().stream().map(s -> buildInitialState(s).build()).collect(Collectors.toList()));;
 		return state;
