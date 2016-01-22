@@ -10,7 +10,7 @@ import com.berserkbentobox.coldwar.Heat.HeatMechanicSettings;
 import com.berserkbentobox.coldwar.Leader.LeaderMechanicSettings;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveMechanicSettings;
 import com.berserkbentobox.coldwar.Policy.PolicyMechanicSettings;
-import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomGameSettings;
+import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomMechanicSettings;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyMechanicSettings;
 import com.berserkbentobox.coldwar.Treaty.TreatyMechanicSettings;
@@ -58,7 +58,7 @@ public class GameSettingsFactory {
 		settings.setVersion("0.0.1");
 	}
 	
-	protected void loadPseudorandom(PseudorandomGameSettings.Builder settings) {
+	protected void loadPseudorandom(PseudorandomMechanicSettings.Builder settings) {
 		settings.setInitSeed(0);
 	}
 	
