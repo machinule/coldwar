@@ -74,7 +74,7 @@ public class ComputedGameState {
 	public final Map<ProvinceId, Dissidents> dissidents;
 	public final Map<ProvinceId, Player> bases;
 	public final Map<ProvinceId, Government> governments;
-//	public final Map<ProvinceId, Leader> leaders;
+	public final Map<ProvinceId, Leader> leaders;
 	public final Map<ProvinceId, Conflict> activeConflicts;
 	public final Map<ProvinceId, Conflict> conflictZones;
 	
@@ -158,8 +158,8 @@ public class ComputedGameState {
 		EnumMap<ProvinceId, Conflict> conflictZoneMap = new EnumMap<ProvinceId, Conflict>(ProvinceId.class);
 		this.conflictZones = Collections.unmodifiableMap(conflictZoneMap);
 		
-//		EnumMap<ProvinceId, Leader> leaderMap = new EnumMap<ProvinceId, Leader>(ProvinceId.class);
-//		this.leaders = Collections.unmodifiableMap(leaderMap);
+		EnumMap<ProvinceId, Leader> leaderMap = new EnumMap<ProvinceId, Leader>(ProvinceId.class);
+		this.leaders = Collections.unmodifiableMap(leaderMap);
 
 		EnumMap<ProvinceId, Integer> stabilityBaseMap = new EnumMap<ProvinceId, Integer>(ProvinceId.class);
 		this.stabilityBase = Collections.unmodifiableMap(stabilityBaseMap);
