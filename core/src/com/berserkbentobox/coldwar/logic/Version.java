@@ -1,9 +1,9 @@
 package com.berserkbentobox.coldwar.logic;
 
-import com.berserkbentobox.coldwar.Version.VersionGameSettingsOrBuilder;
+import com.berserkbentobox.coldwar.Version.VersionMechanicSettingsOrBuilder;
 
 public class Version {	
-	static Status validateSettings(VersionGameSettingsOrBuilder settings) {
+	static Status validateSettings(VersionMechanicSettingsOrBuilder settings) {
 		return Status.OK;
 	}
 }

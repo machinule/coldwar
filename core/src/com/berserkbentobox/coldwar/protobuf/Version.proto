@@ -2,6 +2,6 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
-message VersionGameSettings {
+message VersionMechanicSettings {
 	optional string version = 1;
 }
