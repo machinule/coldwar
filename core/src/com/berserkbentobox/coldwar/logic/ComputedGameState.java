@@ -31,6 +31,7 @@ import com.berserkbentobox.coldwar.Province.ProvinceRegion;
 import com.berserkbentobox.coldwar.Province.ProvinceState;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.logic.mechanics.Heat;
 import com.berserkbentobox.coldwar.logic.mechanics.Leader;
 
 /**
@@ -96,7 +97,7 @@ public class ComputedGameState {
 		this.ussrMoves = ussrMoves;
 		
 		this.year = state.getTurn() + 1948;
-		int heatCounter = state.getHeatState().getHeat();
+		Heat heat = new Heat(state);
 		int partyUnityCounter = 0; //state.getUssr().getPartyUnity();
 		int patriotismCounter = 0; //state.getUsa().getPatriotism();
 		
@@ -302,7 +303,7 @@ public class ComputedGameState {
 						// TODO: Dissident leaders
 						dissidentsMap.put(id, d.build());
 						covStoreMap.compute(player, (p, cov) -> cov == null ? -cost : cov - cost);
-						heatCounter += this.state.getSettings().getMoveSettings().getActionDissidentsHeat();
+						heat.increase(this.state.getSettings().getMoveSettings().getActionDissidentsHeat());
 						actedMap.put(id, true);
 					}
 				}
@@ -312,7 +313,7 @@ public class ComputedGameState {
 						final int cost = getEstablishBaseMoveCost();
 						baseMap.put(id, player);
 						milStoreMap.compute(player,  (p, mil) -> mil == null ? -cost : mil - cost);
-						heatCounter += this.state.getSettings().getMoveSettings().getActionDissidentsHeat();
+						heat.increase(this.state.getSettings().getMoveSettings().getActionDissidentsHeat());
 						actedMap.put(id, true);
 					}
 				}
@@ -343,9 +344,9 @@ public class ComputedGameState {
 						polInfluenceMap.compute(id, (i, infl) -> infl == null ? finInfl : infl + finInfl);
 						polStoreMap.compute(player,  (p, pol) -> pol == null ? -cost : pol - cost);
 						if(getAlly(id) != null) {
-							heatCounter += this.state.getSettings().getMoveSettings().getActionPressureHeatExtra(); // More if enemy ally
+							heat.increase(this.state.getSettings().getMoveSettings().getActionPressureHeatExtra()); // More if enemy ally
 						}
-						heatCounter += this.state.getSettings().getMoveSettings().getActionPressureHeat();
+						heat.increase(this.state.getSettings().getMoveSettings().getActionPressureHeat());
 						actedMap.put(id, true);
 					}
 				}
@@ -357,7 +358,7 @@ public class ComputedGameState {
 						int cov_cost = getCoupMoveCost(id);
 						covStoreMap.compute(player,  (p, mil) -> mil == null ? -cov_cost : mil - cov_cost);
 						int heatPerStab = this.state.getSettings().getMoveSettings().getActionCoupHeatPerStab()*getNetStability(id);
-						heatCounter += this.state.getSettings().getMoveSettings().getActionCoupHeatFixed() + heatPerStab;
+						heat.increase(this.state.getSettings().getMoveSettings().getActionCoupHeatFixed() + heatPerStab);
 						actedMap.put(id, true);
 					}
 				}
@@ -461,8 +462,9 @@ public class ComputedGameState {
 			}
 		});
 		
-		heatCounter = Math.max(heatCounter - 10, this.state.getSettings().getHeatSettings().getMinHeat());
-		this.heat = heatCounter;
+		heat.decrease(heat.decay());
+		heat.normalize();
+		this.heat = heat.heat();
 		
 		patriotismCounter = 0; //this.state.getUsa().getPatriotism();
 		partyUnityCounter = 0; //this.state.getUssr().getPartyUnity();
@@ -507,9 +509,7 @@ public class ComputedGameState {
 						.setUssrMoves(this.ussrMoves)
 						.build())
 				.setTurn(this.state.getTurn() + 1)
-				.setHeatState(HeatMechanicState.newBuilder()
-						.setHeat(heatCounter)
-						.build())
+				.setHeatState(heat.state())
 				.setProvinceState(ProvinceMechanicState.newBuilder()
 						.addAllProvinceState(this.state.getProvinceState().getProvinceStateList()));
 		
