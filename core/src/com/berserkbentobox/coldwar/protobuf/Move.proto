@@ -20,7 +20,7 @@ import "Superpower.proto";
 // The top-level settings proto included in GameSettings.
 // Immutable over the duration of a single game.
 // TODO: this should probably be empty, and have settings included from other parts.
-message MoveGameSettings {
+message MoveMechanicSettings {
 	optional Cost dia_dip_move_cost = 1;
 	optional Cost dia_mil_move_cost = 2;
 	optional Cost dia_cov_move_cost = 3;
