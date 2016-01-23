@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -43,43 +44,9 @@ public class TechScreen extends AbstractScreen {
 
 		final HashMap<String, TechCard> cards = new HashMap<String, TechCard>();
 		for (final TechnologyGroupSettings g : this.client.initialGameState.getSettings().getTechnologySettings().getTechnologyGroupList()) {
-			for (final TechnologySettings t : g.getTechnologyList())
-				cards.put(t.getId(), new TechCard(this.client, t.getId(), skin));
-		}
-		
-		final String[][] spaceTechPosition = {
-				{"BASIC_ROCKETRY"},     			  
-				{"ARTIFICIAL_SATELLITES"},     			  
-				{"ANIMAL_IN_SPACE"},     			  
-				{"MANNED_SPACEFLIGHT"}
-			};
-		
-		final String[][] milTechPosition = {   			  
-			{"HYDROGEN_BOMB", null}
-		};
-		
-		String[][] activeTechPosition;
-		switch (activeTechGroup) {
-			case "ARMY":
-				activeTechPosition = milTechPosition;
-				break;
-			case "SPACE":
-				activeTechPosition = spaceTechPosition;
-				break;
-			default:
-				activeTechPosition = milTechPosition;
-				break;
-		}
-		
-		for (int r=0; r<activeTechPosition.length; r++) {
-			for (int c=0; c<activeTechPosition[r].length; c++) {
-				TechCard tc = cards.getOrDefault(activeTechPosition[r][c], null);
-				if (tc != null) {
-					tc.setDebug(Settings.isDebug());
-					techs.add(tc);
-				} else {
-					techs.add();
-				}
+			techs.add(new Label(g.getLabel(), skin));
+			for (final TechnologySettings t : g.getTechnologyList()) {
+				techs.add(new TechCard(this.client, t, skin));
 			}
 			techs.row();
 		}
@@ -95,26 +62,6 @@ public class TechScreen extends AbstractScreen {
 		bottomBar.setDebug(Settings.isDebug());
 		bottomBar.bottom();
 		this.stage.addActor(bottomBar);
-		final TextButton militaryButton = new TextButton("Military", skin);
-		militaryButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(final ChangeEvent event, final Actor actor) {
-				Logger.Dbg("\"Military\" tech button pressed.");
-				TechScreen.this.activeTechGroup = "ARMY";
-				TechScreen.this.stage.clear();
-				TechScreen.this.show();
-			}
-		});
-		final TextButton spaceButton = new TextButton("Space", skin);
-		spaceButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(final ChangeEvent event, final Actor actor) {
-				Logger.Dbg("\"Space\" tech button pressed.");
-				TechScreen.this.activeTechGroup = "SPACE";
-				TechScreen.this.stage.clear();
-				TechScreen.this.show();
-			}
-		});
 		final TextButton backButton = new TextButton("Back", skin);
 		backButton.addListener(new ChangeListener() {
 			@Override
@@ -137,18 +84,5 @@ public class TechScreen extends AbstractScreen {
 		this.stage.addActor(superpowerPane);
 		superpowerPane.left().top();
 		superpowerPane.show();
-		
-		// Bottom Pane
-		
-		bottomBar.add(spaceButton)
-			.size(300, 60)
-			.bottom();
-		bottomBar.add(militaryButton)
-			.size(300, 60)
-			.bottom();
-		bottomBar.add(backButton)
-			.size(300, 60)
-			.bottom();
-		bottomBar.row();
 	}
 }
