@@ -1,74 +1,74 @@
 technology_group {
-	id: NUCLEAR
+	id: "NUCLEAR"
 	label: "Military"
 	base_research_chance: 500000
 	research_effect: 10000
 	technology {
-		id: ATOM_BOMB
+		id: "ATOM_BOMB"
 		label: "Atomic Weaponry"
 		num_progressions: 3
-		unlocks: HYDROGEN_BOMB
+		unlocks: "HYDROGEN_BOMB"
 		deterrence: 40
 	}
 	technology {
-		id: HYDROGEN_BOMB
+		id: "HYDROGEN_BOMB"
 		label: "Hydrogen Bomb"
 		num_progressions: 4
-		requires: ATOM_BOMB
+		requires: "ATOM_BOMB"
 		deterrence: 20
 	}
 }
 technology_group {
-	id: SPACE
+	id: "SPACE"
 	label: "Space"
 	base_research_chance: 500000
 	research_effect: 10000
 	technology {
-		id: BASIC_ROCKETRY
+		id: "BASIC_ROCKETRY"
 		label: "Basic Rocketry"
 		num_progressions: 2
-		unlocks: ARTIFICIAL_SATELLITES
+		unlocks: "ARTIFICIAL_SATELLITES"
 		base_vp: 3
 		first_vp: 4
 	}
 	technology {
-		id: ARTIFICIAL_SATELLITES
+		id: "ARTIFICIAL_SATELLITES"
 		label: "Artificial Satellites"
 		num_progressions: 4
-		requires: BASIC_ROCKETRY
-		unlocks: ANIMAL_IN_SPACE
+		requires: "BASIC_ROCKETRY"
+		unlocks: "ANIMAL_IN_SPACE"
 		base_vp: 3
 		first_vp: 4
 	}
 	technology {
-		id: ANIMAL_IN_SPACE
+		id: "ANIMAL_IN_SPACE"
 		label: "Animal in Space"
 		num_progressions: 2
-		requires: ARTIFICIAL_SATELLITES
-		unlocks: MANNED_SPACEFLIGHT
+		requires: "ARTIFICIAL_SATELLITES"
+		unlocks: "MANNED_SPACEFLIGHT"
 		base_vp: 3
 		first_vp: 4
 	}
 	technology {
-		id: MANNED_SPACEFLIGHT
+		id: "MANNED_SPACEFLIGHT"
 		label: "Manned Spaceflight"
 		num_progressions: 5
-		requires: ANIMAL_IN_SPACE
+		requires: "ANIMAL_IN_SPACE"
 		base_vp: 3
 		first_vp: 4
 	}
 }
 init_usa_technology_group {
-	id: NUCLEAR
+	id: "NUCLEAR"
 	technology {
-		id: ATOM_BOMB
+		id: "ATOM_BOMB"
 		progress: 1
 	}
 }
 init_ussr_technology_group: {
-	id: NUCLEAR
+	id: "NUCLEAR"
 	technology {
-		id: ATOM_BOMB
+		id: "ATOM_BOMB"
 		progress: 1
 	}
 }

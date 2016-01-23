@@ -1,6 +1,7 @@
 package com.berserkbentobox.coldwar.ui;
 
 import java.util.EnumMap;
+import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -14,15 +15,13 @@ import com.berserkbentobox.coldwar.ColdWarGame;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;
-import com.berserkbentobox.coldwar.Technology.TechnologyGroupId;
 import com.berserkbentobox.coldwar.Technology.TechnologyGroupSettings;
-import com.berserkbentobox.coldwar.Technology.TechnologyId;
 import com.berserkbentobox.coldwar.logic.Client;
 
 public class TechScreen extends AbstractScreen {
 
 	private Client client;
-	private TechnologyGroupId activeTechGroup = TechnologyGroupId.ARMY;
+	private String activeTechGroup = "ARMY";
 	
 	public TechScreen(final ColdWarGame game, Client client) {
 		super(game);
@@ -42,29 +41,29 @@ public class TechScreen extends AbstractScreen {
 		techs.setFillParent(true);
 		techs.setDebug(Settings.isDebug());
 
-		final EnumMap<TechnologyId, TechCard> cards = new EnumMap<TechnologyId, TechCard>(TechnologyId.class);
+		final HashMap<String, TechCard> cards = new HashMap<String, TechCard>();
 		for (final TechnologyGroupSettings g : this.client.initialGameState.getSettings().getTechnologySettings().getTechnologyGroupList()) {
 			for (final TechnologySettings t : g.getTechnologyList())
 				cards.put(t.getId(), new TechCard(this.client, t.getId(), skin));
 		}
 		
-		final TechnologyId[][] spaceTechPosition = {
-				{TechnologyId.BASIC_ROCKETRY},     			  
-				{TechnologyId.ARTIFICIAL_SATELLITES},     			  
-				{TechnologyId.ANIMAL_IN_SPACE},     			  
-				{TechnologyId.MANNED_SPACEFLIGHT}
+		final String[][] spaceTechPosition = {
+				{"BASIC_ROCKETRY"},     			  
+				{"ARTIFICIAL_SATELLITES"},     			  
+				{"ANIMAL_IN_SPACE"},     			  
+				{"MANNED_SPACEFLIGHT"}
 			};
 		
-		final TechnologyId[][] milTechPosition = {   			  
-			{TechnologyId.HYDROGEN_BOMB, null}
+		final String[][] milTechPosition = {   			  
+			{"HYDROGEN_BOMB", null}
 		};
 		
-		TechnologyId[][] activeTechPosition;
+		String[][] activeTechPosition;
 		switch (activeTechGroup) {
-			case ARMY:
+			case "ARMY":
 				activeTechPosition = milTechPosition;
 				break;
-			case SPACE:
+			case "SPACE":
 				activeTechPosition = spaceTechPosition;
 				break;
 			default:
@@ -101,7 +100,7 @@ public class TechScreen extends AbstractScreen {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Dbg("\"Military\" tech button pressed.");
-				TechScreen.this.activeTechGroup = TechnologyGroupId.ARMY;
+				TechScreen.this.activeTechGroup = "ARMY";
 				TechScreen.this.stage.clear();
 				TechScreen.this.show();
 			}
@@ -111,7 +110,7 @@ public class TechScreen extends AbstractScreen {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Dbg("\"Space\" tech button pressed.");
-				TechScreen.this.activeTechGroup = TechnologyGroupId.SPACE;
+				TechScreen.this.activeTechGroup = "SPACE";
 				TechScreen.this.stage.clear();
 				TechScreen.this.show();
 			}

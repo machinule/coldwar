@@ -175,7 +175,7 @@ message MilitaryActionMove {
 // ===============TECHS=================
 
 message ResearchMove {
-	optional TechnologyGroupId tech_id = 1;
+	optional string tech_id = 1;
 	optional int32 magnitude = 2;
 }
 
