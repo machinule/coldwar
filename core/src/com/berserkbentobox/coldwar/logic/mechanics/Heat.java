@@ -69,7 +69,7 @@ public class Heat {
 		increase(-i);
 	}
 	
-	public void normalize() {
+	public synchronized void normalize() {
 		this.state.setHeat(Math.min(Math.max(this.state.getHeat(), this.min()), this.max()));
 	}
 }
