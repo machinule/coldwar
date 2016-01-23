@@ -32,4 +32,8 @@ random_province_default_dissidents_suppressed_chance: 50000
 
 random_us_ally_democracy_chance: 100000
 random_us_ally_communism_chance: 100000
-random_end_civil_war_chance: 250000
+
+random_colonial_war_start_chance: 100000
+random_conflict_zone_war_start_chance: 100000
+
+random_decolonization_chance: 50000
