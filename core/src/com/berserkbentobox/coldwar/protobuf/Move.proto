@@ -97,7 +97,7 @@ message Move {
 	optional ConflictOvertFundAttackerMove conflict_overt_fund_attacker_move = 110;
 	optional ConflictOvertFundDefenderMove conflict_overt_fund_defender_move = 111;
 	
-	optional ResearchMove research_move = 150;
+	optional TechnologyMechanicMoves technology_mechanic_moves = 150;
 
 	optional EnactPolicyMove enact_policy_move = 160;
 
@@ -170,13 +170,6 @@ message ConflictOvertFundDefenderMove {
 
 message MilitaryActionMove {
 	optional ProvinceId province_id = 1;
-}
-
-// ===============TECHS=================
-
-message ResearchMove {
-	optional string tech_id = 1;
-	optional int32 magnitude = 2;
 }
 
 // ============USSR LEADERS=============
