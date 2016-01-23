@@ -43,7 +43,6 @@ public abstract class Client {
 				.setPseudorandomState(Pseudorandom.buildInitialState(settings.getPseudorandomSettings()))
 				.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
 				.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
-				.setTechnologyState(Technology.buildInitialState(settings.getTechnologySettings()))
 				.setProvinceState(Province.buildInitialState(settings.getProvinceSettings()))
 				.setTurn(0);
 
@@ -53,7 +52,14 @@ public abstract class Client {
 		} else {
 			Logger.Info("Initial heat state invalid.");
 		}
-		
+
+		Technology initTechnology = new Technology(settings);
+		if (initTechnology.validate().ok()) {
+			state.setTechnologyState(initTechnology.state());
+		} else {
+			Logger.Info("Initial technology state invalid.");
+		}
+
 		//Berlin Blockade
 		Crisis.Builder c = Crisis.newBuilder();
 		c.setBerlinBlockade(true);
