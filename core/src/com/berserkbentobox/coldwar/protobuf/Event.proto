@@ -46,7 +46,10 @@ message EventMechanicSettings {
 
   optional int32 random_us_ally_democracy_chance = 312 [default = 100000];
   optional int32 random_us_ally_communism_chance = 313 [default = 100000];
-  optional int32 random_end_civil_war_chance = 314 [default = 250000];
+  optional int32 random_colonial_war_start_chance = 314 [default = 100000];
+  optional int32 random_conflict_zone_war_start_chance = 315 [default = 100000];
+  
+  optional int32 random_decolonization_chance = 316 [default = 50000];
 }
 
 message Event {

@@ -66,7 +66,8 @@ public class MapScreen extends AbstractScreen {
 				{null,null,ProvinceId.COLOMBIA,ProvinceId.VENEZUELA,null,ProvinceId.MOROCCO,ProvinceId.WEST_AFRICA,ProvinceId.GREECE,ProvinceId.LEBANON,ProvinceId.SAUDI_ARABIA,ProvinceId.GULF_STATES,ProvinceId.BURMA,ProvinceId.LAOS},
 				{null,ProvinceId.ECUADOR,ProvinceId.PERU,ProvinceId.GUYANA,null,ProvinceId.IVORY_GOLD_COAST,ProvinceId.ZAIRE,ProvinceId.LIBYA,ProvinceId.ISRAEL,ProvinceId.YEMEN,null,ProvinceId.THAILAND,ProvinceId.CAMBODIA,ProvinceId.INDONESIA},
 				{null,ProvinceId.CHILE,ProvinceId.BOLIVIA,ProvinceId.BRAZIL,null,ProvinceId.NIGERIA,ProvinceId.ANGOLA,ProvinceId.EAST_AFRICA,ProvinceId.EGYPT,null,null,null,ProvinceId.MALAYSIA,ProvinceId.AUSTRALIA},
-				{null,null,ProvinceId.ARGENTINA,ProvinceId.URUGUAY,null,null,ProvinceId.SOUTH_AFRICA,ProvinceId.MOZAMBIQUE,ProvinceId.ETHIOPIA,null,null,null,null,null},		};
+				{null,null,ProvinceId.ARGENTINA,ProvinceId.URUGUAY,null,null,ProvinceId.SOUTH_AFRICA,ProvinceId.MOZAMBIQUE,ProvinceId.ETHIOPIA,null,null,null,null,null}
+				};
 		for (int r=0; r<provincePosition.length; r++) {
 			for (int c=0; c<provincePosition[r].length; c++) {
 				ProvinceInfoCard pic = cards.getOrDefault(provincePosition[r][c], null);
