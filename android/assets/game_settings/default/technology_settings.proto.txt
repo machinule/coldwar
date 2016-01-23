@@ -4,17 +4,87 @@ technology_group {
 	base_research_chance: 500000
 	research_effect: 10000
 	technology {
-		id: "ATOM_BOMB"
-		label: "Atomic Weaponry"
-		num_progressions: 3
-		unlocks: "HYDROGEN_BOMB"
-		deterrence: 40
-	}
-	technology {
 		id: "HYDROGEN_BOMB"
 		label: "Hydrogen Bomb"
 		num_progressions: 4
-		requires: "ATOM_BOMB"
+		deterrence: 20
+	}
+	technology {
+		id: "ICBM"
+		label: "ICBM"
+		num_progressions: 6
+		deterrence: 20
+	}
+}
+technology_group {
+	id: "SUBMARINE"
+	label: "Subamaroonies"
+	base_research_chance: 500000
+	research_effect: 10000
+	technology {
+		id: "BALLISTIC_MISSILE_FLEET"
+		label: "Ballistic Missilbe Submarine Fleet"
+		num_progressions: 6
+		deterrence: 20
+	}
+	technology {
+		id: "HYPERSIZED_SUBMARINES"
+		label: "Hypersized Submarines"
+		num_progressions: 2
+		deterrence: 20
+	}
+}
+technology_group {
+	id: "NAVY"
+	label: "Boats 'n' Stuff"
+	base_research_chance: 500000
+	research_effect: 10000
+	technology {
+		id: "TRANSCONTINENTAL_NAVAL_PROJECTION"
+		label: "Transcontinental Naval Projection"
+		num_progressions: 3
+		deterrence: 20
+	}
+	technology {
+		id: "NUCLEAR_CARRIER"
+		label: "Nuclear Carriers"
+		num_progressions: 4
+		deterrence: 20
+	}
+}
+technology_group {
+	id: "AIR"
+	label: "Pew Pew"
+	base_research_chance: 500000
+	research_effect: 10000
+	technology {
+		id: "NUCLEAR_BOMBERS"
+		label: "Nuclear Bombers"
+		num_progressions: 3
+		deterrence: 20
+	}
+	technology {
+		id: "STEALTH_AIRCRAFT"
+		label: "Stealth Aircraft"
+		num_progressions: 4
+		deterrence: 20
+	}
+}
+technology_group {
+	id: "ARMY"
+	label: "Army"
+	base_research_chance: 500000
+	research_effect: 10000
+	technology {
+		id: "MECHANIZED_ADVANCE"
+		label: "Mechanized Advance"
+		num_progressions: 3
+		deterrence: 20
+	}
+	technology {
+		id: "COMBINED_ARMS"
+		label: "Combined Arms"
+		num_progressions: 4
 		deterrence: 20
 	}
 }
@@ -27,7 +97,6 @@ technology_group {
 		id: "BASIC_ROCKETRY"
 		label: "Basic Rocketry"
 		num_progressions: 2
-		unlocks: "ARTIFICIAL_SATELLITES"
 		base_vp: 3
 		first_vp: 4
 	}
@@ -35,8 +104,6 @@ technology_group {
 		id: "ARTIFICIAL_SATELLITES"
 		label: "Artificial Satellites"
 		num_progressions: 4
-		requires: "BASIC_ROCKETRY"
-		unlocks: "ANIMAL_IN_SPACE"
 		base_vp: 3
 		first_vp: 4
 	}
@@ -44,8 +111,6 @@ technology_group {
 		id: "ANIMAL_IN_SPACE"
 		label: "Animal in Space"
 		num_progressions: 2
-		requires: "ARTIFICIAL_SATELLITES"
-		unlocks: "MANNED_SPACEFLIGHT"
 		base_vp: 3
 		first_vp: 4
 	}
@@ -53,7 +118,6 @@ technology_group {
 		id: "MANNED_SPACEFLIGHT"
 		label: "Manned Spaceflight"
 		num_progressions: 5
-		requires: "ANIMAL_IN_SPACE"
 		base_vp: 3
 		first_vp: 4
 	}
