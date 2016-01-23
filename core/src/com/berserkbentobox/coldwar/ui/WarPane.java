@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
+import com.berserkbentobox.coldwar.Province.Conflict;
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.logic.Client;
@@ -46,7 +47,9 @@ public class WarPane extends FooterPane {
 		Label versus = new Label("versus", skin);
 		versus.setColor(Color.BLACK);
 		DynamicLabel defenderInfo = new DynamicLabel(client, 
-				c -> province.getLabel(),
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == Conflict.Type.COLONIAL_WAR ?
+					 c.getMoveBuilder().getComputedGameState().provinceSettings.get(c.getMoveBuilder().getComputedGameState().occupiers.get(province.getId())).getLabel() :
+						province.getLabel(),
 				c -> c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.DEMOCRACY ? Color.BLUE :
 					 c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.COMMUNISM ? Color.RED :
 					 Color.BLACK, skin); 
@@ -55,7 +58,7 @@ public class WarPane extends FooterPane {
 		attackers.setColor(Color.BLACK);
 		DynamicLabel attackerInfo = new DynamicLabel(client, 
 				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.DEMOCRACY ? "Pro-Democracy Fighters" :
-					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.COMMUNISM ? "Communist Guerillas" :
+					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.COMMUNISM ? "Communist Forces" :
 					 "Unaligned Rebels",
 				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.DEMOCRACY ? Color.BLUE :
 					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.COMMUNISM ? Color.RED :

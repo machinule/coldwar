@@ -13,7 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
 import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.Province.Conflict;
 import com.berserkbentobox.coldwar.Province.ProvinceRegion;
+import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.logic.Client;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 
@@ -165,7 +167,15 @@ public class ProvinceInfoCard extends Table {
 		// TODO: Unique proto for each government to include string label?
 		ret.add(new DynamicLabel(
 				client,
-				c -> c.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId()) ? "CIVIL WAR" : "",
+				c -> c.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId()) &&
+					c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == Conflict.Type.CIVIL_WAR ? "CIVIL WAR" :
+				c.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId()) &&
+					c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == Conflict.Type.COLONIAL_WAR ? "COLONIAL WAR" :
+				c.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId()) &&
+					c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == Conflict.Type.MILITARY_ACTION ? "MILITARY ACTION" :
+				c.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId()) &&
+					c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == Conflict.Type.CONVENTIONAL_WAR ? "ACTIVE CONFLICT" :
+					"",
 				c -> Color.ORANGE,
 				skin
 		));
@@ -174,8 +184,16 @@ public class ProvinceInfoCard extends Table {
 				c -> c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.DEMOCRACY ? "DEM" :
 					 c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.AUTOCRACY ? "AUT" :
 					 c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.COMMUNISM ? "COM" :
+					 c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.COLONY ? "COLONY" :
+					 c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.OCCUPIED ? "OCCUPIED" :
 					 "",
-				c -> Color.BLACK,
+				c -> c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.DEMOCRACY ? Color.BLUE :
+					 c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.COMMUNISM ? Color.RED :
+					 c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.OCCUPIED &&
+					 	c.getMoveBuilder().getComputedGameState().occupiers.get(province.getId()) == ProvinceId.USA ? Color.BLUE :
+					 c.getMoveBuilder().getComputedGameState().governments.get(province.getId()) == Government.OCCUPIED &&
+					 	c.getMoveBuilder().getComputedGameState().occupiers.get(province.getId()) == ProvinceId.USSR ? Color.RED :
+					 Color.BLACK,
 				skin
 		));
 //		ret.add(new DynamicLabel(

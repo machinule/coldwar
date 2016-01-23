@@ -234,6 +234,8 @@ province {
     adjacency: VENEZUELA
     adjacency: BRAZIL
     adjacency: LESS_ANTILLES
+    init_government: COLONY
+    init_occupier: GREAT_BRITAIN
     region: SOUTH_AMERICA
     culture: SPANISH
   }
@@ -313,7 +315,7 @@ province {
     adjacency: WEST_GERMANY
     adjacency: GREAT_BRITAIN
     stability_base: 3
-    init_government: AUTOCRACY
+    init_government: DEMOCRACY
     region: WESTERN_EUROPE
     culture: FRENCH
   }
@@ -662,9 +664,20 @@ province {
     adjacency: NORTH_KOREA
     adjacency: VIETNAM
     adjacency: USSR
-    stability_base: 10
+    stability_base: 3
     region: EAST_ASIA
-    # TODO: Everything, including civil war
+    init_government: AUTOCRACY
+    init_conflict {
+      active: true
+      type: CIVIL_WAR
+      goal: 4
+      rebels {
+        gov: COMMUNISM
+      }
+      attacker_progress: 2
+      length: 1
+      name: "Chinese Civil War"
+    }
   }
   province {
     id: NORTH_KOREA
@@ -734,7 +747,19 @@ province {
     init_government: COLONY
     init_occupier: FRANCE
     region: EAST_ASIA
-    # TODO: So much bullshit - colonial war
+    init_conflict {
+      active: true
+      type: COLONIAL_WAR
+      goal: 3
+      attacker_progress: 1
+      rebels {
+        gov: COMMUNISM
+        #leader: "Ho Chi Minh"
+      }
+      defender: FRANCE
+      length: 1
+      name: "Indochina War"
+    }
   }
   province {
     id: LAOS
@@ -820,8 +845,16 @@ province {
     adjacency: INDONESIA
     init_government: COLONY
     init_occupier: GREAT_BRITAIN
-    init_dissidents {
-      gov: COMMUNISM
+    init_conflict {
+      active: true
+      type: COLONIAL_WAR
+      goal: 2
+      rebels {
+        gov: COMMUNISM
+      }
+      defender: GREAT_BRITAIN
+      length: -1
+      name: "Malayan Emergency"
     }
     region: SOUTH_ASIA
   }
@@ -832,7 +865,19 @@ province {
     adjacency: AUSTRALIA
     init_government: COLONY
     init_occupier: BENELUX
-    # TODO: Colonial war
+    init_conflict {
+      active: true
+      type: COLONIAL_WAR
+      goal: 4
+      attacker_progress: 3
+      defender_progress: 1
+      rebels {
+        gov: REPUBLIC
+      }
+      defender: BENELUX
+      length: 2
+      name: "Indonesian National Revolution"
+    }
     region: SOUTH_ASIA
   }
   province {

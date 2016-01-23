@@ -66,5 +66,5 @@ conflict_overt_fund_attacker: 2
 conflict_overt_fund_defender: 2
 conflict_covert_fund_attacker: 2
 conflict_covert_fund_defender: 2
-		
+
 vp_region_modifier: 5

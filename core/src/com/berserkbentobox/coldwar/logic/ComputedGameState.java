@@ -76,6 +76,7 @@ public class ComputedGameState {
 	public final Map<ProvinceId, Dissidents> dissidents;
 	public final Map<ProvinceId, Player> bases;
 	public final Map<ProvinceId, Government> governments;
+	public final Map<ProvinceId, ProvinceId> occupiers;
 	public final Map<ProvinceId, Leader> leaders;
 	public final Map<ProvinceId, Conflict> activeConflicts;
 	public final Map<ProvinceId, Conflict> conflictZones;
@@ -155,6 +156,8 @@ public class ComputedGameState {
 		this.bases = Collections.unmodifiableMap(baseMap);
 		EnumMap<ProvinceId, Government> governmentMap = new EnumMap<ProvinceId, Government>(ProvinceId.class);
 		this.governments = Collections.unmodifiableMap(governmentMap);
+		EnumMap<ProvinceId, ProvinceId> occupierMap = new EnumMap<ProvinceId, ProvinceId>(ProvinceId.class);
+		this.occupiers = Collections.unmodifiableMap(occupierMap);
 		EnumMap<ProvinceId, Conflict> activeConflictMap = new EnumMap<ProvinceId, Conflict>(ProvinceId.class);
 		this.activeConflicts = Collections.unmodifiableMap(activeConflictMap);
 		EnumMap<ProvinceId, Conflict> conflictZoneMap = new EnumMap<ProvinceId, Conflict>(ProvinceId.class);
@@ -191,6 +194,7 @@ public class ComputedGameState {
 			baseInfluenceMap.put(p.getId(), p.getInfluence());
 			baseMap.put(p.getId(), toPlayer(p.getBase()));
 			governmentMap.put(p.getId(), p.getGov());
+			occupierMap.put(p.getId(), p.getOccupier());
 			actedMap.put(p.getId(), false);
 			//leaderMap.put(p.getId(), p.getLeader());
 			dissidentsMap.put(p.getId(), p.getDissidents());
@@ -452,7 +456,12 @@ public class ComputedGameState {
 						c = activeConflictMap.get(p).toBuilder();
 					else
 						c = Conflict.newBuilder();
-					c.setType(Conflict.Type.CIVIL_WAR);
+					if(governments.get(p) != Government.COLONY)
+						c.setType(Conflict.Type.CIVIL_WAR);
+					else {
+						c.setType(Conflict.Type.COLONIAL_WAR);
+						c.setDefender(occupiers.get(p));
+					}
 					c.setActive(true);
 					c.setRebels(dissidents);
 					c.setName(provinceSettings.get(p).getLabel() + " Civil War");
@@ -516,6 +525,7 @@ public class ComputedGameState {
 		for (final ProvinceState.Builder province : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
 			allianceMap.put(province.getId(), getAlly(province.getId()));
 			province.setGov(governmentMap.get(province.getId()));
+			province.setOccupier(occupierMap.get(province.getId()));
 			province.setInfluence(totalInfluenceMap.get(province.getId()));
 			province.setConflict(activeConflictMap.get(province.getId()));
 			Player baseOwner = baseMap.get(province.getId());
@@ -765,10 +775,10 @@ public class ComputedGameState {
 		
 		// ACTION CONSEQUENCES
 		
-		// ProvinceCivilWar		
+		// Conflict Resolution		
 		for (ProvinceState.Builder p : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
 			if (isInArmedConflict(p.getId())) {
-				Logger.Vrb("Civil war in " + p.getId());
+				Logger.Vrb("Conflict in " + p.getId());
 				Logger.Vrb(p.getConflict().toString());
 				p.setInfluence(0);
 				coupMap.put(p.getId(), 0);
@@ -790,16 +800,54 @@ public class ComputedGameState {
 					if (defender)
 						c.setDefenderProgress(c.getDefenderProgress()+1);
 					if(c.getDefenderProgress() >= c.getGoal()) {
-						p.setDissidents(Dissidents.getDefaultInstance());
-						if(c.getDefenderSupporter() == ProvinceId.USSR)
-							p.setInfluence(-getNetStability(p.getId()));
-						if(c.getDefenderSupporter() == ProvinceId.USA)
-							p.setInfluence(getNetStability(p.getId()));
+						// Defenders win
+						// TODO: Conventional Wars
+						if(c.getType() == Conflict.Type.CIVIL_WAR || c.getType() == Conflict.Type.COLONIAL_WAR)
+							p.setDissidents(Dissidents.getDefaultInstance());
+						if(c.getType() == Conflict.Type.CIVIL_WAR) {
+							if(c.getDefenderSupporter() == ProvinceId.USSR);
+								p.setInfluence(-getNetStability(p.getId()));
+							if(c.getDefenderSupporter() == ProvinceId.USA)
+								p.setInfluence(getNetStability(p.getId()));
+						}
+						else if (c.getType() == Conflict.Type.COLONIAL_WAR) {
+							for (ProvinceState.Builder o : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
+								if(c.getDefender() == o.getId()) {
+									if(c.getDefenderSupporter() == ProvinceId.USSR)
+										o.setInfluence(o.getInfluence()-1);
+									if(c.getDefenderSupporter() == ProvinceId.USA)
+										o.setInfluence(o.getInfluence()+1);
+									if(c.getAttackerSupporter() == ProvinceId.USSR)
+										o.setInfluence(o.getInfluence()+1);
+									if(c.getAttackerSupporter() == ProvinceId.USA)
+										o.setInfluence(o.getInfluence()-1);
+								}
+							}
+						}
 						c = Conflict.getDefaultInstance().toBuilder();
 					} else if(c.getAttackerProgress() >= c.getGoal()) {
+						// Attackers win
+						// TODO: Conventional Wars
 						int newInfl = 0;
-						p.setGov(c.getRebels().getGov());
-//						p.setLeader(c.getRebels().getLeader());
+						if(c.getType() == Conflict.Type.CIVIL_WAR || c.getType() == Conflict.Type.COLONIAL_WAR) {
+							p.setGov(c.getRebels().getGov());
+//							p.setLeader(c.getRebels().getLeader());
+							// TODO: Colonizer calls in superpower; refuse to lose influence?
+							if(c.getType() == Conflict.Type.COLONIAL_WAR) {
+								for (ProvinceState.Builder o : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
+									if(c.getDefender() == o.getId()) {
+										if(c.getDefenderSupporter() == ProvinceId.USSR)
+											o.setInfluence(o.getInfluence()-1);
+										if(c.getDefenderSupporter() == ProvinceId.USA)
+											o.setInfluence(o.getInfluence()+1);
+										if(c.getAttackerSupporter() == ProvinceId.USSR)
+											o.setInfluence(o.getInfluence()+2);
+										if(c.getAttackerSupporter() == ProvinceId.USA)
+											o.setInfluence(o.getInfluence()-2);
+									}
+								}
+							}
+						}
 						if(p.hasLeader())
 							newInfl ++;
 						if(isStrongGov(p.getGov()))
