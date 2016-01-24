@@ -112,33 +112,33 @@ technology_group {
 	base_research_chance: 500000
 	research_effect: 10000
 	technology {
-		id: "NUCLEAR_BOMBERS"
-		label: "Nuclear Bombers"
-		num_progressions: 3
+		id: "JET_BOMBERS"
+		label: "Jet Bombers"
+		num_progressions: 2
+		deterrence: 20
+	}
+	technology {
+		id: "AEROSPACE_DEFENSE_COMMAND"
+		label: "Aerospace Defense Command"
+		num_progressions: 4
+		deterrence: 20
+	}
+	technology {
+		id: "AIRBORNE_EARLY_WARNING_AND_CONTROL"
+		label: "Airborne Early Warning and Control"
+		num_progressions: 4
 		deterrence: 20
 	}
 	technology {
 		id: "STEALTH_AIRCRAFT"
 		label: "Stealth Aircraft"
-		num_progressions: 4
-		deterrence: 20
-	}
-}
-technology_group {
-	id: "ARMY"
-	label: "Army"
-	base_research_chance: 500000
-	research_effect: 10000
-	technology {
-		id: "MECHANIZED_ADVANCE"
-		label: "Mechanized Advance"
-		num_progressions: 3
+		num_progressions: 6
 		deterrence: 20
 	}
 	technology {
-		id: "COMBINED_ARMS"
-		label: "Combined Arms"
-		num_progressions: 4
+		id: "ADVANCED_TACTICAL_FIGHTER"
+		label: "Stealth Aircraft"
+		num_progressions: 8
 		deterrence: 20
 	}
 }
