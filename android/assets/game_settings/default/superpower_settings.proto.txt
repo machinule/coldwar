@@ -1,12 +1,111 @@
 usa_settings {
+
+# Democrats
+
   leader_settings {
-    id: EISENHOWER
+  	name: "Harry S. Truman"
+  	party: DEMOCRAT
+  	init_num_terms_as_president: 2
+  	start_year: 1945
+  	end_year: 1953
+  }
+  leader_settings {
+  	name: "Alben W. Barkley"
+  	party: DEMOCRAT
+  	init_num_terms_as_vice_president: 1
+  	start_year: 1945
+  	end_year: 1957
+  }
+  leader_settings {
+  	name: "Estes Kefauver"
+  	party: DEMOCRAT
+  	start_year: 1945
+  	end_year: 1961
+  }
+  leader_settings {
+  	name: "Adlai Stevenson"
+  	party: DEMOCRAT
+  	start_year: 1945
+  	end_year: 1961
+  }
+  leader_settings {
+  	name: "Hubert Humphrey"
+  	party: DEMOCRAT
+  	start_year: 1945
+  	end_year: 1973
+  }
+  leader_settings {
+  	name: "Lyndon B. Johnson"
+  	party: DEMOCRAT
+  	vice_year: 1957
+  	start_year: 1961
+  	end_year: 1971
+  }
+  leader_settings {
+  	name: "John F. Kennedy"
+  	party: DEMOCRAT
+  	start_year: 1957
+  	end_year: 1971
+  } 
+  
+ # Republican
+  
+  leader_settings {
+    name: "Dwight D. Eisenhower"
     party: REPUBLICAN
     start_year: 1945
     end_year: 1969
   }
+  leader_settings {
+    name: "Earl Warren"
+    party: REPUBLICAN
+    start_year: 1945
+    end_year: 1953
+  }
+  leader_settings {
+    name: "Thomas Dewey"
+    party: REPUBLICAN
+    start_year: 1945
+    end_year: 1953
+  }
+  leader_settings {
+    name: "Richard Nixon"
+    party: REPUBLICAN
+    vice_year: 1945
+    start_year: 1957
+    end_year: 1977
+  }
+  leader_settings {
+    name: "Harold Stassen"
+    party: REPUBLICAN
+    start_year: 1945
+    end_year: 1957
+  }
+  leader_settings {
+    name: "Henry Cabot Lodge Jr."
+    party: REPUBLICAN
+    start_year: 1957
+    end_year: 1961
+  }
+  leader_settings {
+    name: "Nelson Rockefeller"
+    party: REPUBLICAN
+    start_year: 1957
+    end_year: 1977
+  }
+  leader_settings {
+    name: "Barry Goldwater"
+    party: REPUBLICAN
+    start_year: 1957
+    end_year: 1965
+  }  
+  
+  # Other Settings
+  
   presidency_settings {
   	max_terms: 2
+  	init_president: "Harry S. Truman"
+  	init_vice_president: "Alben W. Barkley"
   }
   influence_store_settings {  	
 	political_store_init: 4
@@ -20,7 +119,7 @@ usa_settings {
 }
 ussr_settings {
   leader_settings {
-  	id: STALIN
+  	name: "Joseph Stalin"
   	start_year: 1922
   	end_year: 1960
   	init_party_support: 4
@@ -35,6 +134,7 @@ ussr_settings {
   	troika_decay_magnitude: 2
   	troika_num_decay: 2
   	troika_decay_chance: 500000
+	init_premier: "Joseph Stalin"
   }
   influence_store_settings {  	
 	political_store_init: 4

@@ -1,3 +1,5 @@
+# Active at start
+
 init_active {
   location: GREECE
   goal: 3
@@ -70,3 +72,20 @@ init_active {
   length: -1
   name: "Arab-Israeli War"
 }
+
+# Dormant at start
+
+init_dormant {
+  location: INDIA
+  type: CONVENTIONAL_WAR
+  attacker: PAKISTAN
+  name: "Indo-Pakistani War"
+}
+init_dormant {
+  location: SOUTH_KOREA
+  type: CONVENTIONAL_WAR
+  attacker: NORTH_KOREA
+  name: "Korean War"
+}
+
+# Possible at start

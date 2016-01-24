@@ -7,17 +7,9 @@ import "InfluenceStore.proto";
 
 // ========== Ids ==========
 
-enum UsaLeaderId {
-	EISENHOWER = 1;
-}
-
 enum UsaLeaderParty {
 	REPUBLICAN = 1;
 	DEMOCRAT = 2;
-}
-
-enum UssrLeaderId {
-	STALIN = 1;
 }
 
 // ========== Settings ==========
@@ -39,9 +31,10 @@ message UsaSettings {
 
 // Settings for a single USA leader.
 message UsaLeaderSettings {
-	optional UsaLeaderId id = 1;
+	optional string name = 1;
 	repeated TraitSettings traits = 2;
 	optional UsaLeaderParty party = 3;
+	optional int32 vice_year = 10;
 	optional int32 start_year = 4;
 	optional int32 end_year = 5;
 	optional int32 init_num_terms_as_president = 6;
@@ -52,8 +45,8 @@ message UsaLeaderSettings {
 // Settings for the USA presidency.
 message PresidencySettings {
 	optional int32 max_terms = 1;
-	optional UsaLeaderId init_president = 2;
-	optional UsaLeaderId init_vice_president = 3;
+	optional string init_president = 2;
+	optional string init_vice_president = 3;
 }
 
 // Settings for the USSR.
@@ -66,7 +59,7 @@ message UssrSettings {
 
 // Settings for a single USSR leader.
 message UssrLeaderSettings {
-	optional UssrLeaderId id = 1;
+	optional string name = 1;
 	repeated TraitSettings traits = 2;
 	optional int32 start_year = 4;
 	optional int32 end_year = 5;
@@ -81,8 +74,8 @@ message SecretariatSettings {
 	optional int32 troika_decay_magnitude = 3;
 	optional int32 troika_num_decay = 4;
 	optional int32 troika_decay_chance = 5;
-	optional UssrLeaderId init_premier = 6;
-	repeated UssrLeaderId init_troika = 7;
+	optional string init_premier = 6;
+	repeated string init_troika = 7;
 }
 
 message TraitSettings {
@@ -99,30 +92,30 @@ message SuperpowerMechanicState {
 }
 
 message UsaState {
-	optional UsaLeaderId president = 1;
-	optional UsaLeaderId vice_president = 2;
+	optional string president = 1;
+	optional string vice_president = 2;
 	repeated UsaLeaderState leader = 3;
 	optional int32 patriotism = 4;
 	optional InfluenceStoreState influence_store = 5;
 }
 
 message UsaLeaderState {
-	optional UsaLeaderId id = 1;
+	optional string name = 1;
 	optional bool available = 2;
 	optional int32 num_terms_as_president = 3;
 	optional int32 num_terms_as_vice_president = 4;
 }
 
 message UssrState {
-	optional UssrLeaderId premier = 1;
-	repeated UssrLeaderId troika = 2;
+	optional string premier = 1;
+	repeated string troika = 2;
 	repeated UssrLeaderState leader = 3;
 	optional int32 party_unity = 4;
 	optional InfluenceStoreState influence_store = 5;
 }
 
 message UssrLeaderState {
-	optional UssrLeaderId id = 1;
+	optional string name = 1;
 	optional int32 party_support = 2;
 	optional bool available = 3;
 }

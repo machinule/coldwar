@@ -175,19 +175,19 @@ message MilitaryActionMove {
 // ============USSR LEADERS=============
 
 message SupportLeaderMove {
-	optional UssrLeaderId leader_id = 1;
+	optional string leader_id = 1;
 	optional int32 magnitude = 2;
 }
 
 message SabotageLeaderMove {
-	optional UssrLeaderId leader_id = 1;
+	optional string leader_id = 1;
 	optional int32 magnitude = 2;
 }
 
 // =============USA LEADERS=============
 
 message PrimaryMove {
-	optional UsaLeaderId leader_id = 1;
+	optional string leader_id = 1;
 }
 
 // ========== SPECIAL ACTIONS ==========
