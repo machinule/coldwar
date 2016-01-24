@@ -32,12 +32,20 @@ public abstract class Client {
 	protected Player player;
 	public GameState initialGameState;
 	protected Boolean isWaitingOnPlayer = false;
+	protected MechanicSettings settings;
 		
 	public Boolean isWaitingOnPlayer() {
 		return this.isWaitingOnPlayer;
 	}
+	
+	public MechanicSettings getSettings() {
+		return this.settings;
+	}
+	
 	protected GameState.Builder getInitialGameState() {
 		GameSettings settings = new GameSettingsFactory("game_settings").newGameSettings();
+		this.settings = new MechanicSettings(settings);
+		
 		GameState.Builder state = GameState.newBuilder()
 				.setSettings(settings)
 				.setSuperpowerState(Superpower.buildInitialState(settings.getSuperpowerSettings()))
@@ -54,11 +62,10 @@ public abstract class Client {
 			Logger.Info("Initial heat state invalid.");
 		}
 
-		TechnologyMechanic.Settings initTechnology = new TechnologyMechanic.Settings(settings);
-		if (initTechnology.validate().ok()) {
-			state.setTechnologyState(initTechnology.initialState());
+		if (!this.settings.getTechnology().validate().ok()) {
+			Logger.Err("Initial settings invalid.");			
 		} else {
-			Logger.Info("Initial technology state invalid.");
+			state.setTechnologyState(this.settings.getTechnology().initialState());
 		}
 
 		//Berlin Blockade
@@ -98,7 +105,7 @@ public abstract class Client {
 //	
 	public void nextTurn() {
 		Logger.Info("Proceeding to the next turn.");
-		ComputedGameState computedState = new ComputedGameState(this.state, this.getUSAMove(), this.getUSSRMove());
+		ComputedGameState computedState = new ComputedGameState(this.state, this.getUSAMove(), this.getUSSRMove(), this.settings);
 		this.state = computedState.nextState;
 		Logger.Info("Next game state: " + this.state.toString());
 		Logger.Dbg("Net party unity: " + computedState.getNetPartyUnity());

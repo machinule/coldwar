@@ -96,15 +96,17 @@ public class ComputedGameState {
 	
 	public TechnologyMechanic technology;
 	
-	public ComputedGameState(final GameState state, final MoveList usaMoves, final MoveList ussrMoves) {
+	public final MechanicSettings settings;
+	
+	public ComputedGameState(final GameState state, final MoveList usaMoves, final MoveList ussrMoves, final MechanicSettings settings) {
 		this.state = state;
 		this.usaMoves = usaMoves;
 		this.ussrMoves = ussrMoves;
+		this.settings = settings;
 
 		Random r = new Random(this.state.getPseudorandomState().getSeed());
 		
-		// TODO: save settings, this is a bit wasteful to regenerate each time.
-		this.technology = new TechnologyMechanic(new TechnologyMechanic.Settings(state.getSettings()), state);
+		this.technology = new TechnologyMechanic(settings.getTechnology(), state);
 		for (Move move : usaMoves.getMovesList()) {
 			if (move.hasTechnologyMechanicMoves()) {
 				this.technology.makeMoves(Player.USA, move.getTechnologyMechanicMoves());							
