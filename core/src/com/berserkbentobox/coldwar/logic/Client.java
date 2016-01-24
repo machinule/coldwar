@@ -16,6 +16,7 @@ import com.berserkbentobox.coldwar.logic.mechanics.Province;
 import com.berserkbentobox.coldwar.logic.mechanics.Pseudorandom;
 import com.berserkbentobox.coldwar.logic.mechanics.Superpower;
 import com.berserkbentobox.coldwar.logic.mechanics.Technology;
+import com.berserkbentobox.coldwar.logic.mechanics.TechnologyMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.Treaty;
 
 /**
@@ -53,9 +54,9 @@ public abstract class Client {
 			Logger.Info("Initial heat state invalid.");
 		}
 
-		Technology initTechnology = new Technology(settings);
+		TechnologyMechanic.Settings initTechnology = new TechnologyMechanic.Settings(settings);
 		if (initTechnology.validate().ok()) {
-			state.setTechnologyState(initTechnology.state());
+			state.setTechnologyState(initTechnology.initialState());
 		} else {
 			Logger.Info("Initial technology state invalid.");
 		}
