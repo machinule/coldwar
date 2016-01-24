@@ -92,7 +92,6 @@ public class TechnologyGroup {
 	}
 
 	public void maybeMakeProgress(Random random) {
-		this.makeProgress();
 		if (random.nextInt(1000000) < this.getProgressChance()) {
 			this.makeProgress();
 		}
