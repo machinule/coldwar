@@ -24,6 +24,7 @@ enum LeaderCulture {
 // Immutable over the duration of a single game.
 message LeaderMechanicSettings {
 	repeated LeaderSettings leader = 1;
+	repeated LeaderSettings init_leader = 2;
 }
 
 // Settings for a single leader.
@@ -37,11 +38,20 @@ message LeaderSettings {
 	optional ProvinceId province_restriction = 7;
 	optional bool elected = 8;
 	optional bool isolationist = 9;
+	optional bool init = 10;
 }
 
 // ========== State ==========
 
+// The top-level state proto included in GameState.
+// Mutated each turn based on moves.
+message LeaderMechanicState {
+	repeated LeaderState leader = 1;
+}
+
 // The state for a single Policy.
 message LeaderState {
 	optional string id = 1;
+	optional ProvinceId province = 2;
+	optional bool dead = 3 [default = false];
 }

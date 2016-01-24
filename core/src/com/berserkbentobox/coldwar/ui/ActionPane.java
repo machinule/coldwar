@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import com.berserkbentobox.coldwar.Province.ProvinceSettings;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
+import com.berserkbentobox.coldwar.Leader.LeaderSettings;
+import com.berserkbentobox.coldwar.Leader.LeaderState;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.logic.Client;
 import com.berserkbentobox.coldwar.logic.ComputedGameState;
@@ -287,26 +289,14 @@ public class ActionPane extends FooterPane {
 	
 	protected String getFormattedLeader(final ProvinceSettings province) {
 		ComputedGameState state = client.getMoveBuilder().getComputedGameState();
-//		if (state.hasLeader(province.getId())) {
-//			Leader l = state.leaders.get(province.getId());
-//			String ret = l.getName();
-//			ret += " (" + (state.year - l.getBirth()) + ") ";
-//			switch (l.getType()) {
-//				case POLITICAL:
-//					ret += "+" + Settings.getConstInt("leader_income_pol") + " POL";
-//					break;
-//				case MILITARY:
-//					ret += "+" + Settings.getConstInt("leader_income_mil") + " MIL";
-//					break;
-//				case COVERT:
-//					ret += "+" + Settings.getConstInt("leader_income_cov") + " COV";
-//					break;
-//				default:
-//					break;
-//			}
-//			return ret;
-//		}
-//		else
+		if (state.hasLeader(province.getId())) {
+			LeaderState l = state.leaders.get(province.getId());
+			LeaderSettings s = client.getMoveBuilder().getComputedGameState().getLeaderSettings(l.getId());
+			String ret = s.getId();
+			ret += " (" + (state.year - s.getBirthYear()) + ") ";
+			return ret;
+		}
+		else
 			return "None";
 	}
 }

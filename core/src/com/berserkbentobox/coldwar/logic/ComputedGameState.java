@@ -28,6 +28,8 @@ import com.berserkbentobox.coldwar.Conflict.ConflictState;
 import com.berserkbentobox.coldwar.Conflict.ConflictType;
 import com.berserkbentobox.coldwar.Province.ProvinceMechanicState;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
+import com.berserkbentobox.coldwar.Leader.LeaderSettings;
+import com.berserkbentobox.coldwar.Leader.LeaderState;
 import com.berserkbentobox.coldwar.Province.ProvinceRegion;
 import com.berserkbentobox.coldwar.Province.ProvinceState;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
@@ -80,7 +82,8 @@ public class ComputedGameState {
 	public final Map<ProvinceId, Player> bases;
 	public final Map<ProvinceId, Government> governments;
 	public final Map<ProvinceId, ProvinceId> occupiers;
-	public final Map<ProvinceId, Leader> leaders;
+	
+	public final Map<ProvinceId, LeaderState> leaders;
 	
 	public final Map<ProvinceId, ConflictState> activeConflicts;
 	public final Map<ProvinceId, ConflictState> dormantConflicts;
@@ -190,9 +193,9 @@ public class ComputedGameState {
 		EnumMap<ProvinceId, ConflictState> possibleConflictMap = new EnumMap<ProvinceId, ConflictState>(ProvinceId.class);
 		this.possibleConflicts = Collections.unmodifiableMap(possibleConflictMap);
 		
-		EnumMap<ProvinceId, Leader> leaderMap = new EnumMap<ProvinceId, Leader>(ProvinceId.class);
+		EnumMap<ProvinceId, LeaderState> leaderMap = new EnumMap<ProvinceId, LeaderState>(ProvinceId.class);
 		this.leaders = Collections.unmodifiableMap(leaderMap);
-
+		
 		EnumMap<ProvinceId, Integer> stabilityBaseMap = new EnumMap<ProvinceId, Integer>(ProvinceId.class);
 		this.stabilityBase = Collections.unmodifiableMap(stabilityBaseMap);
 		EnumMap<ProvinceId, Integer> stabilityModifierMap = new EnumMap<ProvinceId, Integer>(ProvinceId.class);
@@ -217,6 +220,10 @@ public class ComputedGameState {
 			regionTotalMap.put(p.getRegion(), regionTotalMap.getOrDefault(p.getRegion(), 0) + 1);
 		});
 		
+		this.state.getLeadersState().getLeaderList().forEach(l -> {
+			leaderMap.put(l.getProvince(), l);
+		});
+		
 		this.state.getConflictState().getActiveList().forEach(c -> {
 			activeConflictMap.put(c.getLocation(), c);
 		});
@@ -233,7 +240,6 @@ public class ComputedGameState {
 			governmentMap.put(p.getId(), p.getGov());
 			occupierMap.put(p.getId(), p.getOccupier());
 			actedMap.put(p.getId(), false);
-			//leaderMap.put(p.getId(), p.getLeader());
 			dissidentsMap.put(p.getId(), p.getDissidents());
 		});
 		
@@ -451,36 +457,36 @@ public class ComputedGameState {
 				stabilityModifierMap.compute(p, (q, mod) -> mod == null ? 1 : mod + 1 );
 			}
 		});
-//		leaderMap.forEach((p, l) -> {
-//			if(hasLeader(p)) {
-//				stabilityModifierMap.compute(p, (q, mod) -> mod == null ? 1 : mod + 1 );
-//				Leader.Type type = l.getType();
-//				Player player = getAlly(p);
-//				if(player != null) {
-//					int lead_income;
-//					switch (type) {
-//						case POLITICAL:
-//							lead_income = Settings.getConstInt("leader_income_pol");
-//							polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
-//							break;
-//						case MILITARY:
-//							lead_income = Settings.getConstInt("leader_income_mil");
-//							polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
-//							break;
-//						case COVERT:
-//							lead_income = Settings.getConstInt("leader_income_cov");
-//							polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
-//							break;
-//						default:
-//							Logger.Err("Leader " + l.getName() + " has no type!");
-//							break;				
-//					}
-//				}
-//				if(type == Leader.Type.ISOLATIONIST) {
-//					polInfluenceMap.compute(p, (i, infl) -> infl == null ? -1 * inflSign(player) : infl + -1 * inflSign(player));
+		leaderMap.forEach((p, l) -> {
+		if(hasLeader(p)) {
+			stabilityModifierMap.compute(p, (q, mod) -> mod == null ? 1 : mod + 1 );
+//			Leader.Type type = l.getType();
+//			Player player = getAlly(p);
+//			if(player != null) {
+//				int lead_income;
+//				switch (type) {
+//					case POLITICAL:
+//						lead_income = Settings.getConstInt("leader_income_pol");
+//						polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
+//						break;
+//					case MILITARY:
+//						lead_income = Settings.getConstInt("leader_income_mil");
+//						polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
+//						break;
+//					case COVERT:
+//						lead_income = Settings.getConstInt("leader_income_cov");
+//						polIncomeModifierMap.compute(player, (q, mod) -> mod == null ? lead_income : mod + lead_income);
+//						break;
+//					default:
+//						Logger.Err("Leader " + l.getName() + " has no type!");
+//						break;				
 //				}
 //			}
-//		});
+//			if(type == Leader.Type.ISOLATIONIST) {
+//				polInfluenceMap.compute(p, (i, infl) -> infl == null ? -1 * inflSign(player) : infl + -1 * inflSign(player));
+//			}
+		}
+	});
 		dissidentsMap.forEach((p, dissidents) -> {
 			if(hasDissidents(p)) {
 				stabilityModifierMap.compute(p, (q, mod) -> mod == null ? -1 : mod - 1 );
@@ -598,7 +604,7 @@ public class ComputedGameState {
 		// LEADER EFFECTS
 		
 		for (ProvinceState p : nextStateBuilder.getProvinceState().getProvinceStateList()) {
-			if(p.hasLeader()) {
+			if(hasLeader(p.getId())) {
 				if(true) {
 				//if(p.getLeader().getIsolationist()) {
 				//	int inflChange = 1;
@@ -822,13 +828,11 @@ public class ComputedGameState {
 				{
 					if (isInArmedConflict(c.getLocation())) {
 						Logger.Vrb("Conflict in " + c.getLocation());
-						Logger.Vrb(c.toString());
 						p.setInfluence(0);
 						coupMap.put(c.getLocation(), 0);
 						p.setBase(ProvinceId.UNKNOWN_PROVINCE);
 						p.setDissidents(Dissidents.getDefaultInstance());
 						stabilityModifierMap.put(c.getLocation(), 0);
-						Logger.Vrb("" + c);
 						if(c.getLength() != -1) {
 							c.setLength(c.getLength()+1);
 							int chance = c.getBaseChance();
@@ -890,7 +894,7 @@ public class ComputedGameState {
 										}
 									}
 								}
-								if(p.hasLeader())
+								if(hasLeader(p.getId()))
 									newInfl ++;
 								if(isStrongGov(p.getGov()))
 									newInfl ++;
@@ -1234,11 +1238,11 @@ public class ComputedGameState {
 		return false;
 	}
 	
-//	public boolean hasLeader(final ProvinceId id) {
-//		if( leaders.get(id) != Leader.getDefaultInstance() && leaders.get(id) != null )
-//			return true;
-//		return false;
-//	}
+	public boolean hasLeader(final ProvinceId id) {
+		if( leaders.get(id) != LeaderState.getDefaultInstance() && leaders.get(id) != null )
+			return true;
+		return false;
+	}
 	
 	public Government getDissidentsGov(final ProvinceId id) {
 		return dissidents.get(id).getGov();
@@ -1254,6 +1258,16 @@ public class ComputedGameState {
 		} else {
 			return Government.DEMOCRACY;
 		} 
+	}
+	
+	public LeaderSettings getLeaderSettings(String id) {
+		for(LeaderSettings l : state.getSettings().getLeaderSettings().getLeaderList()) {
+			if(l.getId() == id) return l;
+		}
+		for(LeaderSettings l : state.getSettings().getLeaderSettings().getInitLeaderList()) {
+			if(l.getId() == id) return l;
+		}
+		return null;
 	}
 	
 	protected boolean hasAdjacencyInfluence(Player player, ProvinceId id) {

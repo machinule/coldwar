@@ -41,7 +41,7 @@ message ConflictMechanicState {
 
 // The state for a single Conflict.
 message ConflictState {
-	optional string name = 1;
+	optional string name = 1 [default = "War"];
 	optional ProvinceId location = 15;
 	optional ConflictType type = 2;
 	optional int32 goal = 3 [default = 1];

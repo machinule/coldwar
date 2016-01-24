@@ -12,6 +12,7 @@ import com.berserkbentobox.coldwar.EventOuterClass.Event;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
 import com.berserkbentobox.coldwar.logic.mechanics.Conflict;
 import com.berserkbentobox.coldwar.logic.mechanics.Heat;
+import com.berserkbentobox.coldwar.logic.mechanics.Leader;
 import com.berserkbentobox.coldwar.logic.mechanics.Policy;
 import com.berserkbentobox.coldwar.logic.mechanics.Province;
 import com.berserkbentobox.coldwar.logic.mechanics.Pseudorandom;
@@ -55,6 +56,7 @@ public abstract class Client {
 				.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
 				.setProvinceState(Province.buildInitialState(settings.getProvinceSettings()))
 				.setConflictState(Conflict.buildInitialState(settings.getConflictSettings()))
+				.setLeadersState(Leader.buildInitialState(settings.getLeaderSettings()))
 				.setTurn(0);
 
 		Heat initHeat = new Heat(settings);
@@ -85,26 +87,14 @@ public abstract class Client {
 			.build());
 		
 		this.initialGameState = state.build();
-		Logger.Dbg("Initial game state: " + this.initialGameState);
+		//Logger.Dbg("Initial game state: " + this.initialGameState);
 		return state;
 	}
 	
 	public Player getPlayer() {
 		return this.player;
 	}
-	
-//	protected Leader getLeader(GameSettings.Builder settings, String name) {
-//		for(LeaderList leadList : settings.getCandidatesList()) {
-//			for(Leader l : leadList.getLeadersList()) {
-//				if (l.getName().equals(name)) {
-//					Logger.Dbg("Setting leader " + l.getName());
-//					return l;
-//				}
-//			}
-//		}
-//		return null;
-//	}
-//	
+
 	public void nextTurn() {
 		Logger.Info("Proceeding to the next turn.");
 		ComputedGameState computedState = new ComputedGameState(this.state, this.getUSAMove(), this.getUSSRMove(), this.settings);

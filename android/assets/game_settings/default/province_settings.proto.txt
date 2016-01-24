@@ -65,7 +65,7 @@ province {
     adjacency: COSTA_RICA
     init_influence: 1
     init_government: AUTOCRACY
-    init_leader: "Anastasio Somoza Garcia"
+    #init_leader: "Anastasio Somoza Garcia"
     region: CENTRAL_AMERICA
     culture: SPANISH
   }
@@ -120,7 +120,7 @@ province {
     adjacency: HAITI
     adjacency: LESS_ANTILLES
     init_government: AUTOCRACY
-    init_leader: "Rafael Trujillo"
+    #init_leader: "Rafael Trujillo"
     region: CENTRAL_AMERICA
     culture: SPANISH
   }
@@ -193,7 +193,7 @@ province {
     adjacency: BRAZIL
     adjacency: CHILE
     stability_base: 2
-    init_leader: "Juan Peron"
+    #init_leader: "Juan Peron"
     region: SOUTH_AMERICA
     culture: SPANISH
   }
@@ -361,6 +361,21 @@ province {
     culture: GERMAN
   }
   province {
+    id: AUSTRIA
+    label: "Austria"
+    stability_base: 3
+    culture: GERMAN
+  }
+  province {
+    id: ALBANIA
+    label: "Albania"
+    adjacency: YUGOSLAVIA
+    adjacency: GREECE
+    stability_base: 2
+    init_government: COMMUNISM
+    region: EASTERN_EUROPE
+  }
+  province {
     id: EAST_GERMANY
     label: "East Germany"
     adjacency: WEST_GERMANY
@@ -428,7 +443,8 @@ province {
     id: YUGOSLAVIA
     label: "Yugoslavia"
     adjacency: ITALY
-    adjacency: GREECE
+    adjacency: ALBANIA
+    adjacency: HUNGARY
     stability_base: 2
     init_government: COMMUNISM
     region: EASTERN_EUROPE
@@ -436,7 +452,7 @@ province {
   province {
     id: GREECE
     label: "Greece"
-    adjacency: YUGOSLAVIA
+    adjacency: ALBANIA
     adjacency: TURKEY
     stability_base: 2
     init_government: DEMOCRACY
@@ -458,7 +474,7 @@ province {
     adjacency: USSR
     adjacency: SWEDEN
     stability_base: 3
-    init_government: DEMOCRACY
+    init_government: AUTOCRACY
     region: EASTERN_EUROPE
   }
   province {

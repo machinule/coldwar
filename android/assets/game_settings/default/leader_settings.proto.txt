@@ -1,3 +1,100 @@
+###### STARTING LEADERS ######
+
+init_leader {
+	init: true
+    id: "Anastasio Somoza Garcia"
+    birth_year: 1896
+    elected: false
+    province_restriction: NICARAGUA
+}
+init_leader {
+	init: true
+    id: "Rafael Trujillo"
+    birth_year: 1891
+    province_restriction: DOMINICAN_REP
+}
+init_leader {
+	init: true
+    id: "Juan Peron"
+    birth_year: 1895
+    elected: true
+    province_restriction: ARGENTINA
+}
+init_leader {
+	init: true
+    id: "David Ben-Gurion"
+    birth_year: 1886
+    province_restriction: ISRAEL
+}
+init_leader {
+	init: true
+    id: "Chiang Kai-Shek"
+    birth_year: 1887
+    elected: false
+    province_restriction: CHINA
+}
+init_leader {
+	init: true
+    id: "Chiang Kai-Shek"
+    birth_year: 1887
+    elected: false
+    province_restriction: CHINA
+}
+init_leader {
+	init: true
+    id: "Chiang Kai-Shek"
+    birth_year: 1887
+    elected: false
+    province_restriction: CHINA
+}
+init_leader {
+	init: true
+    id: "António de Oliveira Salazar"
+    birth_year: 1889
+    elected: false
+    province_restriction: PORTUGAL
+}
+init_leader {
+	init: true
+    id: "Francisco Franco"
+    birth_year: 1892
+    elected: false
+    province_restriction: SPAIN
+}
+init_leader {
+	init: true
+    id: "Josip Broz Tito"
+    birth_year: 1892
+    elected: false
+    isolationist: true
+    province_restriction: YUGOSLAVIA
+}
+init_leader {
+	init: true
+    id: "Urho Kekkonen"
+    birth_year: 1900
+    elected: true
+    isolationist: true
+    province_restriction: FINLAND
+}
+init_leader {
+	init: true
+    id: "Haile Selassie"
+    birth_year: 1892
+    isolationist: true
+    province_restriction: ETHIOPIA
+}
+init_leader {
+	init: true
+    id: "Enver Hoxha"
+    birth_year: 1908
+    isolationist: true
+    elected: false
+    province_restriction: ALBANIA
+}
+
+###### TEMPORARY CULTURE LEADERS ######
+
 leader {
     id: "Antonio Villaverde"
     culture_restriction: SPANISH
@@ -30,6 +127,9 @@ leader {
     id: "Henri Delacroix"
     culture_restriction: FRENCH
 }
+
+###### LEADERS BY PROVINCE ######
+
 leader {
     id: "Adolfo Ruiz Cortines"
     birth_year: 1889
@@ -132,13 +232,6 @@ leader {
     end_year: 2000
     elected: true
     province_restriction: HONDURAS
-}
-leader {
-	# In power at start
-    id: "Anastasio Somoza Garcia"
-    birth_year: 1896
-    elected: false
-    province_restriction: NICARAGUA
 }
 leader {
     id: "Anastasio Somoza Debayle"
@@ -302,12 +395,6 @@ leader {
     province_restriction: HAITI
 }
 leader {
-	# In power at start
-    id: "Rafael Trujillo"
-    birth_year: 1891
-    province_restriction: DOMINICAN_REP
-}
-leader {
     id: "Juan Bosch"
     birth_year: 1909
     start_year: 1948
@@ -454,13 +541,6 @@ leader {
     start_year: 1970
     end_year: 2000
     province_restriction: BOLIVIA
-}
-leader {
-	# In power at start
-    id: "Juan Peron"
-    birth_year: 1895
-    elected: true
-    province_restriction: ARGENTINA
 }
 leader {
     id: "Pedro Eugenio Aramburu"

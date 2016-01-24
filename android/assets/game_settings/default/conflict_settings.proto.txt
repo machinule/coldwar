@@ -58,3 +58,15 @@ init_active {
   length: 2
   name: "Indonesian National Revolution"
 }
+init_active {
+  location: ISRAEL
+  type: CONVENTIONAL_WAR
+  goal: 3
+  attacker_progress: 0
+  defender_progress: 2
+  attacker: EGYPT
+  attacker: SYRIA
+  attacker: JORDAN
+  length: -1
+  name: "Arab-Israeli War"
+}

@@ -30,7 +30,6 @@ message ProvinceSettings {
 	optional int32 stability_base = 4 [default = 1];
 	optional int32 init_influence = 5 [default = 0];
 	optional Government init_government = 6 [default = REPUBLIC];
-	optional string init_leader = 7;
 	optional ProvinceId init_occupier = 8;
 	optional Dissidents init_dissidents = 9;
 	optional ProvinceId init_military_base = 10;
@@ -51,7 +50,6 @@ message ProvinceState {
 	optional ProvinceId occupier = 6;
 	optional ProvinceId base = 9;
 	optional ProvinceId ally = 10;
-	optional LeaderState leader = 12;
 	optional bool has_dissidents = 13;
 	optional Dissidents dissidents = 14;
 }

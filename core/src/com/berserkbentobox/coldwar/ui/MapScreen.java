@@ -59,13 +59,14 @@ public class MapScreen extends AbstractScreen {
 			}
 		}
 		final ProvinceId[][] provincePosition = {
-				{ProvinceId.CANADA,null,null,null,ProvinceId.GREAT_BRITAIN,ProvinceId.BENELUX,ProvinceId.DENMARK,ProvinceId.EAST_GERMANY,ProvinceId.POLAND,null,null,null,ProvinceId.NORTH_KOREA,null},
+				{ProvinceId.CANADA,null,null,null,ProvinceId.GREAT_BRITAIN,null,ProvinceId.NORWAY,ProvinceId.SWEDEN,ProvinceId.FINLAND,null,null,null,ProvinceId.NORTH_KOREA,null},
+				{null,null,null,null,null,ProvinceId.BENELUX,ProvinceId.DENMARK,ProvinceId.EAST_GERMANY,ProvinceId.POLAND,null,null,null,ProvinceId.NORTH_KOREA,null},
 				{ProvinceId.MEXICO,ProvinceId.CUBA,ProvinceId.HAITI,null,null,ProvinceId.FRANCE,ProvinceId.WEST_GERMANY,ProvinceId.CZECHOSLOVAKIA,ProvinceId.HUNGARY,null,ProvinceId.AFGHANISTAN,null,ProvinceId.SOUTH_KOREA,ProvinceId.JAPAN},
-				{ProvinceId.GUATEMALA,ProvinceId.HONDURAS,ProvinceId.NICARAGUA,ProvinceId.DOMINICAN_REP,ProvinceId.PORTUGAL,ProvinceId.SPAIN,ProvinceId.ITALY,ProvinceId.YUGOSLAVIA,ProvinceId.ROMANIA,ProvinceId.IRAN,ProvinceId.PAKISTAN,ProvinceId.BANGLADESH,ProvinceId.CHINA,ProvinceId.TAIWAN},
-				{ProvinceId.EL_SALVADOR,ProvinceId.COSTA_RICA,ProvinceId.PANAMA,ProvinceId.LESS_ANTILLES,null,null,ProvinceId.ALGERIA,ProvinceId.BULGARIA,ProvinceId.TURKEY,ProvinceId.SYRIA,ProvinceId.IRAQ,ProvinceId.INDIA,ProvinceId.VIETNAM,ProvinceId.PHILIPPINES},
-				{null,null,ProvinceId.COLOMBIA,ProvinceId.VENEZUELA,null,ProvinceId.MOROCCO,ProvinceId.WEST_AFRICA,ProvinceId.GREECE,ProvinceId.LEBANON,ProvinceId.SAUDI_ARABIA,ProvinceId.GULF_STATES,ProvinceId.BURMA,ProvinceId.LAOS},
-				{null,ProvinceId.ECUADOR,ProvinceId.PERU,ProvinceId.GUYANA,null,ProvinceId.IVORY_GOLD_COAST,ProvinceId.ZAIRE,ProvinceId.LIBYA,ProvinceId.ISRAEL,ProvinceId.YEMEN,null,ProvinceId.THAILAND,ProvinceId.CAMBODIA,ProvinceId.INDONESIA},
-				{null,ProvinceId.CHILE,ProvinceId.BOLIVIA,ProvinceId.BRAZIL,null,ProvinceId.NIGERIA,ProvinceId.ANGOLA,ProvinceId.EAST_AFRICA,ProvinceId.EGYPT,null,null,null,ProvinceId.MALAYSIA,ProvinceId.AUSTRALIA},
+				{ProvinceId.GUATEMALA,ProvinceId.HONDURAS,ProvinceId.NICARAGUA,ProvinceId.DOMINICAN_REP,ProvinceId.PORTUGAL,ProvinceId.SPAIN,ProvinceId.ITALY,ProvinceId.AUSTRIA,ProvinceId.YUGOSLAVIA,ProvinceId.ROMANIA,ProvinceId.IRAN,ProvinceId.PAKISTAN,ProvinceId.BANGLADESH,ProvinceId.CHINA,ProvinceId.TAIWAN},
+				{ProvinceId.EL_SALVADOR,ProvinceId.COSTA_RICA,ProvinceId.PANAMA,ProvinceId.LESS_ANTILLES,null,null,ProvinceId.ALGERIA,ProvinceId.ALBANIA,ProvinceId.BULGARIA,ProvinceId.TURKEY,ProvinceId.IRAQ,ProvinceId.INDIA,ProvinceId.VIETNAM,ProvinceId.PHILIPPINES},
+				{null,null,ProvinceId.COLOMBIA,ProvinceId.VENEZUELA,null,ProvinceId.MOROCCO,ProvinceId.WEST_AFRICA,ProvinceId.GREECE,ProvinceId.LEBANON,ProvinceId.SYRIA,ProvinceId.GULF_STATES,null,ProvinceId.BURMA,ProvinceId.LAOS},
+				{null,ProvinceId.ECUADOR,ProvinceId.PERU,ProvinceId.GUYANA,null,ProvinceId.IVORY_GOLD_COAST,ProvinceId.ZAIRE,ProvinceId.LIBYA,ProvinceId.ISRAEL,ProvinceId.SAUDI_ARABIA,null,null,ProvinceId.THAILAND,ProvinceId.CAMBODIA,ProvinceId.INDONESIA},
+				{null,ProvinceId.CHILE,ProvinceId.BOLIVIA,ProvinceId.BRAZIL,null,ProvinceId.NIGERIA,ProvinceId.ANGOLA,ProvinceId.EAST_AFRICA,ProvinceId.EGYPT,ProvinceId.YEMEN,null,null,ProvinceId.MALAYSIA,ProvinceId.AUSTRALIA},
 				{null,null,ProvinceId.ARGENTINA,ProvinceId.URUGUAY,null,null,ProvinceId.SOUTH_AFRICA,ProvinceId.MOZAMBIQUE,ProvinceId.ETHIOPIA,null,null,null,null,null}
 				};
 		for (int r=0; r<provincePosition.length; r++) {

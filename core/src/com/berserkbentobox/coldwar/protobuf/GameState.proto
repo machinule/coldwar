@@ -27,6 +27,7 @@ message GameState {
   optional TreatyMechanicState treaty_state = 7;
   optional TechnologyMechanicState technology_state = 8;
   optional ConflictMechanicState conflict_state = 9;
+  optional LeaderMechanicState leaders_state = 12;
   optional TurnLogEntry turn_log = 10;
   optional GameSettings settings = 11;
   optional Crisis crises = 16;

@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
-//import "Leader.proto";
+import "Leader.proto";
 
 enum Government {
 	REPUBLIC = 0;
@@ -15,6 +15,6 @@ enum Government {
 
 message Dissidents {
 	optional Government gov = 1 [default = REPUBLIC];
-	//optional Leader leader = 2;
+	optional LeaderState leader = 2;
 	optional string LeaderInit = 3;
 }

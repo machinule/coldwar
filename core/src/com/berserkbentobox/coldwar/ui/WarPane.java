@@ -33,7 +33,7 @@ public class WarPane extends FooterPane {
 		Table warHeader = new Table();
 		
 		DynamicLabel progressTitle = new DynamicLabel(client,
-				c -> "War!",
+				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getName(),
 				c -> Color.ORANGE, 
 				skin);
 		DynamicLabel year = new DynamicLabel(client,
@@ -58,9 +58,16 @@ public class WarPane extends FooterPane {
 		Label attackers = new Label("Attackers", skin);
 		attackers.setColor(Color.BLACK);
 		DynamicLabel attackerInfo = new DynamicLabel(client, 
-				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.DEMOCRACY ? "Pro-Democracy Fighters" :
-					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.COMMUNISM ? "Communist Forces" :
-					 "Unaligned Rebels",
+				c -> (c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == ConflictType.COLONIAL_WAR ||
+						c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == ConflictType.CIVIL_WAR) &&
+						c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.DEMOCRACY ? "Pro-Democracy Fighters" :
+					 (c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == ConflictType.COLONIAL_WAR ||
+						c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == ConflictType.CIVIL_WAR) &&
+						c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.COMMUNISM ? "Communist Forces" :
+					(c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == ConflictType.MILITARY_ACTION ||
+						c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == ConflictType.CONVENTIONAL_WAR) ?
+						c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getAttackerList().toString() :
+					"Unaligned Rebels",
 				c -> c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.DEMOCRACY ? Color.BLUE :
 					 c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getRebels().getGov() == Government.COMMUNISM ? Color.RED :
 					 Color.BLACK, skin); 
