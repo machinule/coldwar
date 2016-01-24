@@ -45,7 +45,6 @@ public class TechScreen extends AbstractScreen {
 		techs.setFillParent(true);
 		techs.setDebug(Settings.isDebug());
 
-		final HashMap<String, TechCard> cards = new HashMap<String, TechCard>();
 		for (final TechnologyGroup.Settings g : this.client.getSettings().getTechnology().getTechnologyGroupSettings()) {
 			techs.add(new Label(g.getSettings().getLabel(), skin));
 			final TextButton researchButton = new TextButton("Research", skin);

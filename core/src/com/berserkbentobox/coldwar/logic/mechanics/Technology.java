@@ -1,13 +1,8 @@
 package com.berserkbentobox.coldwar.logic.mechanics;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.berserkbentobox.coldwar.Technology.TechnologyGroupState;
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyState;
 import com.berserkbentobox.coldwar.logic.Status;
-import com.berserkbentobox.coldwar.logic.mechanics.TechnologyGroup.Settings;
 
 public class Technology {
 	public static class Settings {
