@@ -98,10 +98,13 @@ public abstract class Client {
 	public void nextTurn() {
 		Logger.Info("Proceeding to the next turn.");
 		ComputedGameState computedState = new ComputedGameState(this.state, this.getUSAMove(), this.getUSSRMove(), this.settings);
-		this.state = computedState.nextState;
-		Logger.Info("Next game state: " + this.state.toString());
-		Logger.Dbg("Net party unity: " + computedState.getNetPartyUnity());
-		Logger.Dbg("Net patriotism: " + computedState.getNetPatriotism());
+		// Hack while a bunch of stuff is still in ComputedGameState:
+		GameStateManager manager = new GameStateManager(this.settings, this.state);
+		GameState managedGameState = manager.computeNextGameState(manager.computeDeterministicMechanics(this.getUSAMove(), this.getUSSRMove()));
+		GameState.Builder nextGameState = computedState.nextState.toBuilder();
+		nextGameState.setTechnologyState(managedGameState.getTechnologyState());
+		
+		this.state = nextGameState.build();
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {
 			Logger.Info(msg);
 		}		

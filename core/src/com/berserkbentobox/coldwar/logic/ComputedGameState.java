@@ -99,9 +99,7 @@ public class ComputedGameState {
 	public final Map<ProvinceId, Boolean> acted;
 	
 	public final GameState nextState;
-	
-	public TechnologyMechanic technology;
-	
+		
 	public final MechanicSettings settings;
 	
 	public ComputedGameState(final GameState state, final MoveList usaMoves, final MoveList ussrMoves, final MechanicSettings settings) {
@@ -111,18 +109,6 @@ public class ComputedGameState {
 		this.settings = settings;
 
 		Random r = new Random(this.state.getPseudorandomState().getSeed());
-		
-		this.technology = new TechnologyMechanic(settings.getTechnology(), state);
-		for (Move move : usaMoves.getMovesList()) {
-			if (move.hasTechnologyMechanicMoves()) {
-				this.technology.makeMoves(Player.USA, move.getTechnologyMechanicMoves());							
-			}
-		}
-		for (Move move : ussrMoves.getMovesList()) {
-			if (move.hasTechnologyMechanicMoves()) {
-				this.technology.makeMoves(Player.USSR, move.getTechnologyMechanicMoves());							
-			}
-		}
 			
 		this.year = state.getTurn() + 1948;
 		Heat heat = new Heat(state);
@@ -556,7 +542,6 @@ public class ComputedGameState {
 						.setUsaMoves(this.usaMoves)
 						.setUssrMoves(this.ussrMoves)
 						.build())
-				.setTechnologyState(this.technology.buildState())
 				.setTurn(this.state.getTurn() + 1)
 				.setHeatState(heat.state())
 				.setProvinceState(ProvinceMechanicState.newBuilder()
@@ -599,8 +584,6 @@ public class ComputedGameState {
 		// Random events.
 		Function<Integer, Boolean> happens = c -> r.nextInt(1000000) < c;
 
-		this.technology.maybeMakeProgress(Player.USSR, r);
-		this.technology.maybeMakeProgress(Player.USSR, r);
 		// LEADER EFFECTS
 		
 		for (ProvinceState p : nextStateBuilder.getProvinceState().getProvinceStateList()) {
