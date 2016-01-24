@@ -119,7 +119,7 @@ public class TechnologyGroup {
 	}
 	
 	public boolean hasAnyInProgressTechnologies() {
-		return this.getFirstInProgressTechnology() == null;
+		return this.getFirstInProgressTechnology() != null;
 	}
 	
 	public void makeProgress() {
