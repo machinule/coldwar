@@ -12,6 +12,7 @@ message TechnologyMechanicSettings {
 	repeated TechnologyGroupSettings technology_group = 1;
 	repeated TechnologyGroupState init_usa_technology_group = 2;
 	repeated TechnologyGroupState init_ussr_technology_group = 3;
+	
 }
 
 // Settings for a single technology group.
@@ -23,6 +24,7 @@ message TechnologyGroupSettings {
     optional int32 research_effect = 5; //Increase to probability when player spents points on research
     optional Cost unit_research_cost = 6;
     // Mag = 1 >> +10% research for that tech group if research effect = 100000
+   	optional int32 max_research_focus_per_turn = 7 [default = 1];
 }
 
 // Settings for a single technology.

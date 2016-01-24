@@ -53,6 +53,7 @@ message Conflict {
 	optional int32 attacker_progress = 7 [default = 0];
 	optional Dissidents rebels = 8;
 	repeated ProvinceId attacker = 9;
+	optional ProvinceId defender = 17;
 	optional int32 length = 10 [default = -1];
 	optional ProvinceId attacker_supporter = 11;
 	optional ProvinceId defender_supporter = 12;
