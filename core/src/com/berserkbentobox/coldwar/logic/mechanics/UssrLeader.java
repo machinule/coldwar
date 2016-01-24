@@ -10,7 +10,7 @@ public class UssrLeader {
 	static UssrLeaderState.Builder buildInitialState(UssrLeaderSettingsOrBuilder settings) {
 		UssrLeaderState.Builder state = UssrLeaderState.newBuilder();
 		state
-			.setId(settings.getId())
+			.setName(settings.getName())
 			.setAvailable(settings.getInitAvailable())
 			.setPartySupport(settings.getInitPartySupport());
 		return state;

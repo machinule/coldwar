@@ -10,7 +10,7 @@ public class UsaLeader {
 	static UsaLeaderState.Builder buildInitialState(UsaLeaderSettingsOrBuilder settings) {
 		UsaLeaderState.Builder state = UsaLeaderState.newBuilder();
 		state
-			.setId(settings.getId())
+			.setName(settings.getName())
 			.setAvailable(settings.getInitAvailable())
 			.setNumTermsAsPresident(settings.getInitNumTermsAsPresident())
 			.setNumTermsAsVicePresident(settings.getInitNumTermsAsVicePresident());
