@@ -33,6 +33,7 @@ import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 import com.berserkbentobox.coldwar.logic.mechanics.Heat;
 import com.berserkbentobox.coldwar.logic.mechanics.Leader;
+import com.berserkbentobox.coldwar.logic.mechanics.TechnologyMechanic;
 
 /**
  * A ComputedGameState contains public, final variables representing variables computed from a given game state and move lists.
@@ -40,6 +41,7 @@ import com.berserkbentobox.coldwar.logic.mechanics.Leader;
 public class ComputedGameState {
 
 	public final GameState state;
+	
 	public final MoveList usaMoves;
 	public final MoveList ussrMoves;
 	public final int year;
@@ -92,11 +94,30 @@ public class ComputedGameState {
 	
 	public final GameState nextState;
 	
+	public TechnologyMechanic technology;
+	
 	public ComputedGameState(final GameState state, final MoveList usaMoves, final MoveList ussrMoves) {
 		this.state = state;
 		this.usaMoves = usaMoves;
 		this.ussrMoves = ussrMoves;
+
+		Random r = new Random(this.state.getPseudorandomState().getSeed());
 		
+		// TODO: save settings, this is a bit wasteful to regenerate each time.
+		this.technology = new TechnologyMechanic(new TechnologyMechanic.Settings(state.getSettings()), state);
+		for (Move move : usaMoves.getMovesList()) {
+			if (move.hasTechnologyMechanicMoves()) {
+				this.technology.makeMoves(Player.USA, move.getTechnologyMechanicMoves());							
+			}
+		}
+		this.technology.maybeMakeProgress(Player.USSR, r);
+		for (Move move : ussrMoves.getMovesList()) {
+			if (move.hasTechnologyMechanicMoves()) {
+				this.technology.makeMoves(Player.USSR, move.getTechnologyMechanicMoves());							
+			}
+		}
+		this.technology.maybeMakeProgress(Player.USSR, r);
+			
 		this.year = state.getTurn() + 1948;
 		Heat heat = new Heat(state);
 		int partyUnityCounter = state.getSuperpowerState().getUssrState().getPartyUnity();
@@ -554,7 +575,6 @@ public class ComputedGameState {
 //		nextStateBuilder.setTechs(state.getTechs());
 		
 		// Random events.
-		Random r = new Random(this.state.getPseudorandomState().getSeed());
 		Function<Integer, Boolean> happens = c -> r.nextInt(1000000) < c;
 		
 		// LEADER EFFECTS

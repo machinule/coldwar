@@ -114,8 +114,8 @@ public class TechnologyMechanic {
 	}	
 	
 	public void makeMoves(Player player, TechnologyMechanicMoves moves) {
-		for (ResearchMove move : moves.getResearchMoveList()) {
-			makeResearchMove(player, move);
+		if (moves.hasResearchMove()) {
+			makeResearchMove(player, moves.getResearchMove());
 		}
 	}	
 

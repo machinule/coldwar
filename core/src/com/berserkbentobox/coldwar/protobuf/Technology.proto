@@ -64,7 +64,7 @@ message TechnologyState {
 // The top-level moves proto included in Moves.
 
 message TechnologyMechanicMoves {
-	repeated ResearchMove research_move = 1;
+	optional ResearchMove research_move = 1;
 }
 
 message ResearchMove {
