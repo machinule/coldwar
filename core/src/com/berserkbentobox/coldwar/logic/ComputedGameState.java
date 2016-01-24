@@ -110,13 +110,11 @@ public class ComputedGameState {
 				this.technology.makeMoves(Player.USA, move.getTechnologyMechanicMoves());							
 			}
 		}
-		this.technology.maybeMakeProgress(Player.USSR, r);
 		for (Move move : ussrMoves.getMovesList()) {
 			if (move.hasTechnologyMechanicMoves()) {
 				this.technology.makeMoves(Player.USSR, move.getTechnologyMechanicMoves());							
 			}
 		}
-		this.technology.maybeMakeProgress(Player.USSR, r);
 			
 		this.year = state.getTurn() + 1948;
 		Heat heat = new Heat(state);
@@ -538,6 +536,7 @@ public class ComputedGameState {
 						.setUsaMoves(this.usaMoves)
 						.setUssrMoves(this.ussrMoves)
 						.build())
+				.setTechnologyState(this.technology.buildState())
 				.setTurn(this.state.getTurn() + 1)
 				.setHeatState(heat.state())
 				.setProvinceState(ProvinceMechanicState.newBuilder()
@@ -576,7 +575,9 @@ public class ComputedGameState {
 		
 		// Random events.
 		Function<Integer, Boolean> happens = c -> r.nextInt(1000000) < c;
-		
+
+		this.technology.maybeMakeProgress(Player.USSR, r);
+		this.technology.maybeMakeProgress(Player.USSR, r);
 		// LEADER EFFECTS
 		
 		for (ProvinceState p : nextStateBuilder.getProvinceState().getProvinceStateList()) {
