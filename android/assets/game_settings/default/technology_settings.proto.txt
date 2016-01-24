@@ -6,13 +6,31 @@ technology_group {
 	technology {
 		id: "HYDROGEN_BOMB"
 		label: "Hydrogen Bomb"
-		num_progressions: 4
+		num_progressions: 2
 		deterrence: 20
 	}
 	technology {
 		id: "ICBM"
-		label: "ICBM"
+		label: "Intercontinental Ballistic Missile"
+		num_progressions: 4
+		deterrence: 20
+	}
+	technology {
+		id: "CIRCULAR_ERROR_PROBABLE"
+		label: "Circular Error Probable"
 		num_progressions: 6
+		deterrence: 20
+	}
+	technology {
+		id: "MIRV"
+		label: "Multiple Independently Targetable Reentry Vehicle"
+		num_progressions: 6
+		deterrence: 20
+	}
+	technology {
+		id: "NEUTRON_BOMB"
+		label: "Neutron Bomb"
+		num_progressions: 8
 		deterrence: 20
 	}
 }
@@ -22,15 +40,33 @@ technology_group {
 	base_research_chance: 500000
 	research_effect: 10000
 	technology {
-		id: "BALLISTIC_MISSILE_FLEET"
-		label: "Ballistic Missilbe Submarine Fleet"
+		id: "NUCLEAR_PROPULSION"
+		label: "Nuclear Propulsion"
+		num_progressions: 2
+		deterrence: 20
+	}
+	technology {
+		id: "BALLISTIC_MISSILE_SUBMARINE"
+		label: "Ballistic Missile Submarine"
+		num_progressions: 4
+		deterrence: 20
+	}
+	technology {
+		id: "FULL_SECOND_STRIKE"
+		label: "Full Second-Strike Capability"
 		num_progressions: 6
 		deterrence: 20
 	}
 	technology {
-		id: "HYPERSIZED_SUBMARINES"
-		label: "Hypersized Submarines"
-		num_progressions: 2
+		id: "HYPERSIZED_HULLS"
+		label: "Hypersized Hulls"
+		num_progressions: 6
+		deterrence: 20
+	}
+	technology {
+		id: "STEALTH_SUBMARINE"
+		label: "Stealth Submarines"
+		num_progressions: 8
 		deterrence: 20
 	}
 }
@@ -42,13 +78,31 @@ technology_group {
 	technology {
 		id: "TRANSCONTINENTAL_NAVAL_PROJECTION"
 		label: "Transcontinental Naval Projection"
-		num_progressions: 3
+		num_progressions: 2
+		deterrence: 20
+	}
+	technology {
+		id: "MISSILE_BASED_NAVAL_WARFARE"
+		label: "Missile-Based Warfare"
+		num_progressions: 2
 		deterrence: 20
 	}
 	technology {
 		id: "NUCLEAR_CARRIER"
 		label: "Nuclear Carriers"
-		num_progressions: 4
+		num_progressions: 6
+		deterrence: 20
+	}
+	technology {
+		id: "CIWS"
+		label: "Close-In Weapons System"
+		num_progressions: 6
+		deterrence: 20
+	}
+	technology {
+		id: "ADVANCED_NAVAL_COMBAT_SYSTEM"
+		label: "Advanced Naval Combat System"
+		num_progressions: 8
 		deterrence: 20
 	}
 }
