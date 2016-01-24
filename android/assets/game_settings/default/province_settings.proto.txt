@@ -441,18 +441,6 @@ province {
     stability_base: 2
     init_government: DEMOCRACY
     region: EASTERN_EUROPE
-    init_conflict {
-      active: true
-      goal: 3
-      defender_progress: 2
-      rebels {
-        gov: COMMUNISM
-      }
-      length: 1
-      defender_supporter: USA
-      name: "Greek Civil War"
-      def_chance_mod: 100000
-    }
   }
   province {
     id: TURKEY
@@ -667,17 +655,6 @@ province {
     stability_base: 3
     region: EAST_ASIA
     init_government: AUTOCRACY
-    init_conflict {
-      active: true
-      type: CIVIL_WAR
-      goal: 4
-      rebels {
-        gov: COMMUNISM
-      }
-      attacker_progress: 2
-      length: 1
-      name: "Chinese Civil War"
-    }
   }
   province {
     id: NORTH_KOREA
@@ -747,19 +724,6 @@ province {
     init_government: COLONY
     init_occupier: FRANCE
     region: EAST_ASIA
-    init_conflict {
-      active: true
-      type: COLONIAL_WAR
-      goal: 3
-      attacker_progress: 1
-      rebels {
-        gov: COMMUNISM
-        #leader: "Ho Chi Minh"
-      }
-      defender: FRANCE
-      length: 1
-      name: "Indochina War"
-    }
   }
   province {
     id: LAOS
@@ -845,17 +809,6 @@ province {
     adjacency: INDONESIA
     init_government: COLONY
     init_occupier: GREAT_BRITAIN
-    init_conflict {
-      active: true
-      type: COLONIAL_WAR
-      goal: 2
-      rebels {
-        gov: COMMUNISM
-      }
-      defender: GREAT_BRITAIN
-      length: -1
-      name: "Malayan Emergency"
-    }
     region: SOUTH_ASIA
   }
   province {
@@ -865,19 +818,6 @@ province {
     adjacency: AUSTRALIA
     init_government: COLONY
     init_occupier: BENELUX
-    init_conflict {
-      active: true
-      type: COLONIAL_WAR
-      goal: 4
-      attacker_progress: 3
-      defender_progress: 1
-      rebels {
-        gov: REPUBLIC
-      }
-      defender: BENELUX
-      length: 2
-      name: "Indonesian National Revolution"
-    }
     region: SOUTH_ASIA
   }
   province {

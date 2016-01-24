@@ -11,9 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
+import com.berserkbentobox.coldwar.Province.ProvinceSettings;
 import com.berserkbentobox.coldwar.Logger;
-import com.berserkbentobox.coldwar.Province.Conflict;
+import com.berserkbentobox.coldwar.Conflict.ConflictState;
+import com.berserkbentobox.coldwar.Conflict.ConflictType;
 import com.berserkbentobox.coldwar.Province.ProvinceRegion;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.logic.Client;
@@ -168,13 +169,13 @@ public class ProvinceInfoCard extends Table {
 		ret.add(new DynamicLabel(
 				client,
 				c -> c.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId()) &&
-					c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == Conflict.Type.CIVIL_WAR ? "CIVIL WAR" :
+					c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == ConflictType.CIVIL_WAR ? "CIVIL WAR" :
 				c.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId()) &&
-					c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == Conflict.Type.COLONIAL_WAR ? "COLONIAL WAR" :
+					c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == ConflictType.COLONIAL_WAR ? "COLONIAL WAR" :
 				c.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId()) &&
-					c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == Conflict.Type.MILITARY_ACTION ? "MILITARY ACTION" :
+					c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == ConflictType.MILITARY_ACTION ? "MILITARY ACTION" :
 				c.getMoveBuilder().getComputedGameState().isInArmedConflict(province.getId()) &&
-					c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == Conflict.Type.CONVENTIONAL_WAR ? "ACTIVE CONFLICT" :
+					c.getMoveBuilder().getComputedGameState().activeConflicts.get(province.getId()).getType() == ConflictType.CONVENTIONAL_WAR ? "ACTIVE CONFLICT" :
 					"",
 				c -> Color.ORANGE,
 				skin

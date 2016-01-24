@@ -10,6 +10,7 @@ import "Leader.proto";
 import "Dissidents.proto";
 import "Technology.proto";
 import "Policy.proto";
+import "Conflict.proto";
 import "Superpower.proto";
 import "Treaty.proto";
 import "EndState.proto";
@@ -17,6 +18,7 @@ import "Pseudorandom.proto";
 import "Heat.proto";
 
 message GameState {
+  optional int32 turn = 1;
   optional HeatMechanicState heat_state = 2;
   optional ProvinceMechanicState province_state = 3;
   optional SuperpowerMechanicState superpower_state = 4;
@@ -24,11 +26,9 @@ message GameState {
   optional PolicyMechanicState policy_state = 6;
   optional TreatyMechanicState treaty_state = 7;
   optional TechnologyMechanicState technology_state = 8;
-  optional int32 turn = 9;
+  optional ConflictMechanicState conflict_state = 9;
   optional TurnLogEntry turn_log = 10;
   optional GameSettings settings = 11;
-  repeated Dissidents initDissidents = 13;
-  repeated Conflict initConflicts = 14;
   optional Crisis crises = 16;
   optional EndState end_state = 21;
 }

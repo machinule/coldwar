@@ -9,6 +9,7 @@ import "Leader.proto";
 import "Dissidents.proto";
 import "Technology.proto";
 import "Policy.proto";
+import "Conflict.proto";
 import "Superpower.proto";
 import "Treaty.proto";
 import "Pseudorandom.proto";
@@ -30,26 +31,5 @@ message GameSettings {
 	optional HeatMechanicSettings heat_settings = 9;
 	optional ProvinceMechanicSettings province_settings = 10;
 	optional PseudorandomMechanicSettings pseudorandom_settings = 11;
-}
-
-message ProvinceMechanicSettings {
-	repeated ProvinceSettings province = 1;
-}
-
-message ProvinceSettings {
-	optional ProvinceId id = 1;
-	optional string label = 2;
-	repeated ProvinceId adjacency = 3;
-	optional int32 stability_base = 4 [default = 1];
-	optional int32 init_influence = 5 [default = 0];
-	optional Government init_government = 6 [default = REPUBLIC];
-	optional string init_leader = 7;
-	optional ProvinceId init_occupier = 8;
-	optional Dissidents init_dissidents = 9;
-	optional ProvinceId init_military_base = 10;
-	optional ProvinceId init_ally = 11;
-	optional ProvinceRegion region = 12;
-	optional LeaderCulture culture = 13;
-	optional Conflict init_conflict = 14;
-	optional bool coastal = 15 [default = false];
+	optional ConflictMechanicSettings conflict_settings = 12;
 }

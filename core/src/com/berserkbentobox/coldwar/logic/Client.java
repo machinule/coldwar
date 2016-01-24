@@ -10,6 +10,7 @@ import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.EventOuterClass.BerlinBlockadeEvent;
 import com.berserkbentobox.coldwar.EventOuterClass.Event;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
+import com.berserkbentobox.coldwar.logic.mechanics.Conflict;
 import com.berserkbentobox.coldwar.logic.mechanics.Heat;
 import com.berserkbentobox.coldwar.logic.mechanics.Policy;
 import com.berserkbentobox.coldwar.logic.mechanics.Province;
@@ -45,6 +46,7 @@ public abstract class Client {
 				.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
 				.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
 				.setProvinceState(Province.buildInitialState(settings.getProvinceSettings()))
+				.setConflictState(Conflict.buildInitialState(settings.getConflictSettings()))
 				.setTurn(0);
 
 		Heat initHeat = new Heat(settings);

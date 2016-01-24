@@ -3,9 +3,9 @@ package com.berserkbentobox.coldwar.logic.mechanics;
 import java.util.stream.Collectors;
 
 import com.berserkbentobox.coldwar.Logger;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceMechanicSettingsOrBuilder;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettings;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceSettingsOrBuilder;
+import com.berserkbentobox.coldwar.Province.ProvinceMechanicSettingsOrBuilder;
+import com.berserkbentobox.coldwar.Province.ProvinceSettings;
+import com.berserkbentobox.coldwar.Province.ProvinceSettingsOrBuilder;
 import com.berserkbentobox.coldwar.Province.ProvinceMechanicState;
 import com.berserkbentobox.coldwar.Province.ProvinceMechanicStateOrBuilder;
 import com.berserkbentobox.coldwar.Province.ProvinceState;
@@ -30,9 +30,8 @@ public class Province {
 			.setAlly(settings.getInitAlly())
 			.setBase(settings.getInitMilitaryBase())
 			.setOccupier(settings.getInitOccupier())
-			.setDissidents(settings.getInitDissidents())
-			//.setLeader(settings.getInitLeader())
-			.setConflict(settings.getInitConflict());
+			.setDissidents(settings.getInitDissidents());
+			//.setLeader(settings.getInitLeader());
 		return state;
 	}
 

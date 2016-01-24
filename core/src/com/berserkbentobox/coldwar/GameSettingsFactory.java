@@ -3,9 +3,10 @@ package com.berserkbentobox.coldwar;
 import java.io.File;
 
 import com.badlogic.gdx.Gdx;
+import com.berserkbentobox.coldwar.Conflict.ConflictMechanicSettings;
 import com.berserkbentobox.coldwar.EventOuterClass.EventMechanicSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.ProvinceMechanicSettings;
+import com.berserkbentobox.coldwar.Province.ProvinceMechanicSettings;
 import com.berserkbentobox.coldwar.Heat.HeatMechanicSettings;
 import com.berserkbentobox.coldwar.Leader.LeaderMechanicSettings;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveMechanicSettings;
@@ -38,6 +39,7 @@ public class GameSettingsFactory {
 			this.loadTechnologies(gameName, settings.getTechnologySettingsBuilder());
 			this.loadHeat(gameName, settings.getHeatSettingsBuilder());
 			this.loadProvinces(gameName, settings.getProvinceSettingsBuilder());
+			this.loadConflicts(gameName, settings.getConflictSettingsBuilder());
 			//this.loadPseudorandom(settings.getPseudorandomSettingsBuilder());
 		} catch (ParseException e) {
 			Logger.Info(e.toString());
@@ -104,6 +106,11 @@ public class GameSettingsFactory {
 	
 	protected void loadProvinces(String gameName, ProvinceMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "province_settings.proto.txt"));        
+        TextFormat.merge(input, settings);
+	}
+	
+	protected void loadConflicts(String gameName, ConflictMechanicSettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "conflict_settings.proto.txt"));        
         TextFormat.merge(input, settings);
 	}
 	
