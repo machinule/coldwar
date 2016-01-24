@@ -48,7 +48,7 @@ public class TechnologyMechanicTest {
 		groupB.getUnitResearchCostBuilder().setMilitaryPoints(2);
 		groupB.addTechnologyBuilder()
 			.setId("TECH_B_1")
-			.setNumProgressions(2)
+			.setNumProgressions(100000)
 			.setDeterrence(3)
 			.setFirstVp(2)
 			.setBaseVp(1);
@@ -246,5 +246,18 @@ public class TechnologyMechanicTest {
 		
 		mechanic.maybeMakeProgress(Player.USA, new Random());
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getTechnology("TECH_A_1").getState().getProgress(), 1);
+	}
+
+	@Test
+	public void testMaybeMakeProgressDistribution() {
+		TechnologyMechanic mechanic = getMechanic();
+		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getTechnology("TECH_B_1").getState().getProgress(), 0);
+		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getTechnology("TECH_B_1").getSettings().getSettings().getNumProgressions(), 100000);
+		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getProgressChance(), 500000);
+		
+		for (int i = 0; i < 100000; i++) {
+			mechanic.maybeMakeProgress(Player.USA, new Random());
+		}
+		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getTechnology("TECH_B_1").getState().getProgress() / 100000.0, .5, .01);
 	}
 }
