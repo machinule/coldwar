@@ -20,12 +20,23 @@ public class Technology {
 			this.settings = settings;
 		}
 		
+		public TechnologyGroup.Settings getParent() {
+			return this.parent;
+		}
+		
 		public Status validate() {
 			return Status.OK;
 		}
 		
 		public TechnologySettings getSettings() {
 			return this.settings;
+		}
+		
+		public TechnologyState initialState() {
+			TechnologyState.Builder state = TechnologyState.newBuilder();
+			state.setId(this.settings.getId());
+			state.setProgress(0);
+			return state.build();
 		}
 	}
 	

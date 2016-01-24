@@ -176,17 +176,3 @@ technology_group {
 		first_vp: 4
 	}
 }
-init_usa_technology_group {
-	id: "NUCLEAR"
-	technology {
-		id: "ATOM_BOMB"
-		progress: 1
-	}
-}
-init_ussr_technology_group: {
-	id: "NUCLEAR"
-	technology {
-		id: "ATOM_BOMB"
-		progress: 1
-	}
-}

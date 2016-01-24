@@ -48,6 +48,15 @@ public class TechnologyGroup {
 		public Technology.Settings getTechnologySettings(String technologyId) {
 			return this.technologySettings.get(technologyId);
 		}
+		
+		public TechnologyGroupState initialState() {
+			TechnologyGroupState.Builder state = TechnologyGroupState.newBuilder();
+			state.setId(this.settings.getId());
+			for (Technology.Settings ts : this.getTechnologySettings()) {
+				state.addTechnology(ts.initialState());
+			}
+			return state.build();
+		}
 	}
 	
 	private Settings settings;

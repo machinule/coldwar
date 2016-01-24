@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;
 import com.berserkbentobox.coldwar.logic.Client;
+import com.berserkbentobox.coldwar.logic.mechanics.Technology;
 
 public class TechCard extends Table {
 	
@@ -17,10 +18,10 @@ public class TechCard extends Table {
 	protected Button infoBox;
 	
 	protected String id;
-	protected TechnologySettings settings;
+	protected Technology.Settings settings;
 	
 	public TechCard(final Client client,
-					final TechnologySettings t,
+					final Technology.Settings t,
 					final Skin skin) {
 		super();
 		this.client = client;
@@ -35,13 +36,13 @@ public class TechCard extends Table {
 		Button ret = new Button(this.skin);
 		ret.setDebug(Settings.isDebug());
 		DynamicLabel progressions = new DynamicLabel(client,
-				c -> "" + this.settings.getNumProgressions(),
+				c -> "" + this.settings.getSettings().getNumProgressions(),
 				skin);
 		DynamicLabel progress = new DynamicLabel(client,
-				c -> "" + 0,
+				c -> "" + this.client.getMoveBuilder().getComputedGameState().technology.getTechnologyGroup(this.client.getPlayer(), this.settings.getParent().getSettings().getId()).getTechnology(this.settings.getSettings().getId()).getState().getProgress(),
 				skin);
 		DynamicLabel name = new DynamicLabel(client,
-				c -> "" + this.settings.getLabel(),
+				c -> "" + this.settings.getSettings().getLabel(),
 				skin);
 		
 		name.setAlignment(1); //Center in cell

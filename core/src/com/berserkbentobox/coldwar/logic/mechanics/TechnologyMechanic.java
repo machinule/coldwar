@@ -50,9 +50,12 @@ public class TechnologyMechanic {
 		
 		public TechnologyMechanicState initialState() {
 			TechnologyMechanicState.Builder state = TechnologyMechanicState.newBuilder();
-			state
-				.addAllUsaState(this.settings.getInitUsaTechnologyGroupList())
-				.addAllUssrState(this.settings.getInitUssrTechnologyGroupList());
+			for (TechnologyGroup.Settings tgs : this.getTechnologyGroupSettings()) {
+				TechnologyGroupState init = tgs.initialState();
+				state.addUsaState(init);
+				state.addUssrState(init);
+			}
+
 			return state.build();
 		}
 	}

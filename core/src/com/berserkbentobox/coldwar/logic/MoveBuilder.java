@@ -172,4 +172,13 @@ public class MoveBuilder {
 		return this.computedState.stabilityModifier.getOrDefault(provinceId, 0);
 	}
 
+	public void addResearchMove(String id) {
+		Move.Builder move = Move.newBuilder();
+		move.getTechnologyMechanicMovesBuilder().getResearchMoveBuilder()
+			.setTechnologyGroupId(id)
+			.setMagnitude(1);
+		this.moves.addMoves(move.build());
+		this.computeState();
+	}
+
 }
