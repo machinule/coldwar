@@ -24,19 +24,21 @@ public class MoveBuilder {
 	private final MoveList.Builder moves;
 	private final GameState state;
 	private final Player player;
-
-	public MoveBuilder(Player player, GameState state) {
+	private final MechanicSettings settings;
+	
+	public MoveBuilder(Player player, GameState state, MechanicSettings settings) {
 		this.player = player;
 		this.state = state;
 		this.moves = MoveList.newBuilder();
+		this.settings = settings;
 		this.computeState();
 	}
 	
 	private void computeState() {
 		if (this.player == Player.USA) {
-			this.computedState = new ComputedGameState(this.state, this.moves.build(), MoveList.getDefaultInstance());
+			this.computedState = new ComputedGameState(this.state, this.moves.build(), MoveList.getDefaultInstance(), this.settings);
 		} else {
-			this.computedState = new ComputedGameState(this.state, MoveList.getDefaultInstance(), this.moves.build());
+			this.computedState = new ComputedGameState(this.state, MoveList.getDefaultInstance(), this.moves.build(), this.settings);
 		}
 	}
 
@@ -170,6 +172,15 @@ public class MoveBuilder {
 
 	public int getStabilityModifier(ProvinceId provinceId) {
 		return this.computedState.stabilityModifier.getOrDefault(provinceId, 0);
+	}
+
+	public void addResearchMove(String id) {
+		Move.Builder move = Move.newBuilder();
+		move.getTechnologyMechanicMovesBuilder().getResearchMoveBuilder()
+			.setTechnologyGroupId(id)
+			.setMagnitude(1);
+		this.moves.addMoves(move.build());
+		this.computeState();
 	}
 
 }

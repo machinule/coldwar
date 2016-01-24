@@ -15,7 +15,7 @@ public class HotseatClient extends Client {
 		super();
 		this.player = Player.USA;
 		this.state = this.getInitialGameState().build();
-		this.currentMoveBuilder = new MoveBuilder(this.player, this.state);
+		this.currentMoveBuilder = new MoveBuilder(this.player, this.state, this.settings);
 	}
 	
 	@Override
@@ -33,12 +33,12 @@ public class HotseatClient extends Client {
 		if (this.player == Player.USA) {
 			this.usa = this.currentMoveBuilder.getMoveList();
 			this.player = Player.USSR;
-			this.currentMoveBuilder = new MoveBuilder(this.player, this.state);
+			this.currentMoveBuilder = new MoveBuilder(this.player, this.state, this.settings);
 		} else {
 			this.ussr = this.currentMoveBuilder.getMoveList();
 			this.player = Player.USA;
 			this.nextTurn();
-			this.currentMoveBuilder = new MoveBuilder(this.player, this.state);
+			this.currentMoveBuilder = new MoveBuilder(this.player, this.state, this.settings);
 			this.usa = null;
 			this.ussr = null;
 		}

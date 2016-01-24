@@ -4,9 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.Vector;
 
-import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
 import com.berserkbentobox.coldwar.Technology.ResearchMove;
@@ -50,9 +48,12 @@ public class TechnologyMechanic {
 		
 		public TechnologyMechanicState initialState() {
 			TechnologyMechanicState.Builder state = TechnologyMechanicState.newBuilder();
-			state
-				.addAllUsaState(this.settings.getInitUsaTechnologyGroupList())
-				.addAllUssrState(this.settings.getInitUssrTechnologyGroupList());
+			for (TechnologyGroup.Settings tgs : this.getTechnologyGroupSettings()) {
+				TechnologyGroupState init = tgs.initialState();
+				state.addUsaState(init);
+				state.addUssrState(init);
+			}
+
 			return state.build();
 		}
 	}

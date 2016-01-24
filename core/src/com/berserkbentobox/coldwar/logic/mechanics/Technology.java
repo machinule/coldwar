@@ -1,13 +1,8 @@
 package com.berserkbentobox.coldwar.logic.mechanics;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.berserkbentobox.coldwar.Technology.TechnologyGroupState;
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyState;
 import com.berserkbentobox.coldwar.logic.Status;
-import com.berserkbentobox.coldwar.logic.mechanics.TechnologyGroup.Settings;
 
 public class Technology {
 	public static class Settings {
@@ -20,12 +15,23 @@ public class Technology {
 			this.settings = settings;
 		}
 		
+		public TechnologyGroup.Settings getParent() {
+			return this.parent;
+		}
+		
 		public Status validate() {
 			return Status.OK;
 		}
 		
 		public TechnologySettings getSettings() {
 			return this.settings;
+		}
+		
+		public TechnologyState initialState() {
+			TechnologyState.Builder state = TechnologyState.newBuilder();
+			state.setId(this.settings.getId());
+			state.setProgress(0);
+			return state.build();
 		}
 	}
 	

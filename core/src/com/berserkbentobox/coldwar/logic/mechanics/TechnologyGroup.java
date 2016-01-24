@@ -5,16 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import com.berserkbentobox.coldwar.CostOuterClass.Cost;
 import com.berserkbentobox.coldwar.Technology.ResearchMove;
 import com.berserkbentobox.coldwar.Technology.TechnologyGroupSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyGroupState;
-import com.berserkbentobox.coldwar.Technology.TechnologyMechanicState;
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyState;
 import com.berserkbentobox.coldwar.logic.Status;
-import com.berserkbentobox.coldwar.logic.Client.Player;
-import com.berserkbentobox.coldwar.logic.mechanics.Technology.Settings;
 
 public class TechnologyGroup {
 	public static class Settings {
@@ -47,6 +43,15 @@ public class TechnologyGroup {
 		
 		public Technology.Settings getTechnologySettings(String technologyId) {
 			return this.technologySettings.get(technologyId);
+		}
+		
+		public TechnologyGroupState initialState() {
+			TechnologyGroupState.Builder state = TechnologyGroupState.newBuilder();
+			state.setId(this.settings.getId());
+			for (Technology.Settings ts : this.getTechnologySettings()) {
+				state.addTechnology(ts.initialState());
+			}
+			return state.build();
 		}
 	}
 	

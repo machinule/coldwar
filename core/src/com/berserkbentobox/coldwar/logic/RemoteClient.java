@@ -26,7 +26,7 @@ public class RemoteClient extends Client {
 		this.isHost = false;
 		this.player = Player.USSR;
 		this.state = this.getInitialGameState().build();
-		this.currentMoveBuilder = new MoveBuilder(this.player, this.state);
+		this.currentMoveBuilder = new MoveBuilder(this.player, this.state, this.settings);
 		Logger.Info("Starting game with initial game state:\n" + this.state.toString());
 	}
 
@@ -37,7 +37,7 @@ public class RemoteClient extends Client {
 		this.isHost = true;
 		this.player = Player.USA;
 		this.state = this.getInitialGameState().build();
-		this.currentMoveBuilder = new MoveBuilder(this.player, this.state);
+		this.currentMoveBuilder = new MoveBuilder(this.player, this.state, this.settings);
 		Logger.Info("Starting game with initial game state:\n" + this.state.toString());
 	}
 	
@@ -98,7 +98,7 @@ public class RemoteClient extends Client {
 				}
 				RemoteClient.this.nextTurn();
 				RemoteClient.this.isWaitingOnPlayer = false;
-				RemoteClient.this.currentMoveBuilder = new MoveBuilder(RemoteClient.this.player, RemoteClient.this.state);
+				RemoteClient.this.currentMoveBuilder = new MoveBuilder(RemoteClient.this.player, RemoteClient.this.state, RemoteClient.this.settings);
 				return true;
 			}
 		});

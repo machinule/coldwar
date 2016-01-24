@@ -99,27 +99,27 @@ public class ComputedGameState {
 	
 	public TechnologyMechanic technology;
 	
-	public ComputedGameState(final GameState state, final MoveList usaMoves, final MoveList ussrMoves) {
+	public final MechanicSettings settings;
+	
+	public ComputedGameState(final GameState state, final MoveList usaMoves, final MoveList ussrMoves, final MechanicSettings settings) {
 		this.state = state;
 		this.usaMoves = usaMoves;
 		this.ussrMoves = ussrMoves;
+		this.settings = settings;
 
 		Random r = new Random(this.state.getPseudorandomState().getSeed());
 		
-		// TODO: save settings, this is a bit wasteful to regenerate each time.
-		this.technology = new TechnologyMechanic(new TechnologyMechanic.Settings(state.getSettings()), state);
+		this.technology = new TechnologyMechanic(settings.getTechnology(), state);
 		for (Move move : usaMoves.getMovesList()) {
 			if (move.hasTechnologyMechanicMoves()) {
 				this.technology.makeMoves(Player.USA, move.getTechnologyMechanicMoves());							
 			}
 		}
-		this.technology.maybeMakeProgress(Player.USSR, r);
 		for (Move move : ussrMoves.getMovesList()) {
 			if (move.hasTechnologyMechanicMoves()) {
 				this.technology.makeMoves(Player.USSR, move.getTechnologyMechanicMoves());							
 			}
 		}
-		this.technology.maybeMakeProgress(Player.USSR, r);
 			
 		this.year = state.getTurn() + 1948;
 		Heat heat = new Heat(state);
@@ -550,6 +550,7 @@ public class ComputedGameState {
 						.setUsaMoves(this.usaMoves)
 						.setUssrMoves(this.ussrMoves)
 						.build())
+				.setTechnologyState(this.technology.buildState())
 				.setTurn(this.state.getTurn() + 1)
 				.setHeatState(heat.state())
 				.setProvinceState(ProvinceMechanicState.newBuilder()
@@ -591,7 +592,9 @@ public class ComputedGameState {
 		
 		// Random events.
 		Function<Integer, Boolean> happens = c -> r.nextInt(1000000) < c;
-		
+
+		this.technology.maybeMakeProgress(Player.USSR, r);
+		this.technology.maybeMakeProgress(Player.USSR, r);
 		// LEADER EFFECTS
 		
 		for (ProvinceState p : nextStateBuilder.getProvinceState().getProvinceStateList()) {

@@ -18,6 +18,9 @@ import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyGroupSettings;
 import com.berserkbentobox.coldwar.logic.Client;
+import com.berserkbentobox.coldwar.logic.mechanics.Technology;
+import com.berserkbentobox.coldwar.logic.mechanics.TechnologyGroup;
+import com.berserkbentobox.coldwar.logic.mechanics.TechnologyMechanic;
 
 public class TechScreen extends AbstractScreen {
 
@@ -42,10 +45,18 @@ public class TechScreen extends AbstractScreen {
 		techs.setFillParent(true);
 		techs.setDebug(Settings.isDebug());
 
-		final HashMap<String, TechCard> cards = new HashMap<String, TechCard>();
-		for (final TechnologyGroupSettings g : this.client.initialGameState.getSettings().getTechnologySettings().getTechnologyGroupList()) {
-			techs.add(new Label(g.getLabel(), skin));
-			for (final TechnologySettings t : g.getTechnologyList()) {
+		for (final TechnologyGroup.Settings g : this.client.getSettings().getTechnology().getTechnologyGroupSettings()) {
+			techs.add(new Label(g.getSettings().getLabel(), skin));
+			final TextButton researchButton = new TextButton("Research", skin);
+			researchButton.addListener(new ChangeListener() {
+				@Override
+				public void changed(final ChangeEvent event, final Actor actor) {
+					TechScreen.this.client.getMoveBuilder().addResearchMove(g.getSettings().getId());
+				}
+			});
+			techs.add(researchButton);
+
+			for (final Technology.Settings t : g.getTechnologySettings()) {
 				techs.add(new TechCard(this.client, t, skin));
 			}
 			techs.row();
