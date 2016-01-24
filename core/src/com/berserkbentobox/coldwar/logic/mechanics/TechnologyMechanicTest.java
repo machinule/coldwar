@@ -260,4 +260,15 @@ public class TechnologyMechanicTest {
 		}
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getTechnology("TECH_B_1").getState().getProgress() / 100000.0, .5, .01);
 	}
+	
+	@Test
+	public void testStatePropagation() {
+		TechnologyMechanic initMechanic = getMechanic();
+		initMechanic.getTechnologyGroup(Player.USA, "GROUP_A").makeProgress();
+		initMechanic.makeResearchMove(Player.USA, ResearchMove.newBuilder().setTechnologyGroupId("GROUP_A").setMagnitude(1).build());
+		GameState state = GameState.newBuilder().setTechnologyState(initMechanic.buildState()).build();
+		TechnologyMechanic mechanic = new TechnologyMechanic(initMechanic.getSettings(), state);
+		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getTechnology("TECH_A_1").getState().getProgress(), 1);
+		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getResearch(), 0);  // Research is not propagated.
+	}
 }
