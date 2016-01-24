@@ -137,7 +137,7 @@ technology_group {
 	}
 	technology {
 		id: "ADVANCED_TACTICAL_FIGHTER"
-		label: "Stealth Aircraft"
+		label: "Advanced Tactical Fighter"
 		num_progressions: 8
 		deterrence: 20
 	}
