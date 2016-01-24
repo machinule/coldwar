@@ -25,19 +25,28 @@ public class MoveBuilder {
 	private final GameState state;
 	private final Player player;
 	private final MechanicSettings settings;
+	private GameStateManager stateManager;
+	private Mechanics mechanics;
 	
 	public MoveBuilder(Player player, GameState state, MechanicSettings settings) {
 		this.player = player;
 		this.state = state;
 		this.moves = MoveList.newBuilder();
 		this.settings = settings;
+		this.stateManager = new GameStateManager(settings, state);
 		this.computeState();
+	}
+
+	public Mechanics getMechanics() {
+		return mechanics;
 	}
 	
 	private void computeState() {
 		if (this.player == Player.USA) {
+			this.mechanics = this.stateManager.computeDeterministicMechanics(this.moves.build(), MoveList.getDefaultInstance());
 			this.computedState = new ComputedGameState(this.state, this.moves.build(), MoveList.getDefaultInstance(), this.settings);
 		} else {
+			this.mechanics = this.stateManager.computeDeterministicMechanics(MoveList.getDefaultInstance(), this.moves.build());
 			this.computedState = new ComputedGameState(this.state, MoveList.getDefaultInstance(), this.moves.build(), this.settings);
 		}
 	}

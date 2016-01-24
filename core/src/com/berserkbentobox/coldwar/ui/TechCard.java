@@ -39,7 +39,7 @@ public class TechCard extends Table {
 				c -> "" + this.settings.getSettings().getNumProgressions(),
 				skin);
 		DynamicLabel progress = new DynamicLabel(client,
-				c -> "" + this.client.getMoveBuilder().getComputedGameState().technology.getTechnologyGroup(this.client.getPlayer(), this.settings.getParent().getSettings().getId()).getTechnology(this.settings.getSettings().getId()).getState().getProgress(),
+				c -> "" + this.client.getMoveBuilder().getMechanics().getTechnology().getTechnologyGroup(this.client.getPlayer(), this.settings.getParent().getSettings().getId()).getTechnology(this.settings.getSettings().getId()).getState().getProgress(),
 				skin);
 		DynamicLabel name = new DynamicLabel(client,
 				c -> "" + this.settings.getSettings().getLabel(),
