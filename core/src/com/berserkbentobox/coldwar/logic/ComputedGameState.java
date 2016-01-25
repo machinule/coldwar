@@ -34,7 +34,7 @@ import com.berserkbentobox.coldwar.Province.ProvinceRegion;
 import com.berserkbentobox.coldwar.Province.ProvinceState;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.logic.Client.Player;
-import com.berserkbentobox.coldwar.logic.mechanics.Heat;
+import com.berserkbentobox.coldwar.logic.mechanics.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.Leader;
 import com.berserkbentobox.coldwar.logic.mechanics.TechnologyMechanic;
 
@@ -102,7 +102,7 @@ public class ComputedGameState {
 		
 	public final MechanicSettings settings;
 	
-	public ComputedGameState(final GameState state, final MoveList usaMoves, final MoveList ussrMoves, final MechanicSettings settings) {
+	public ComputedGameState(final GameState state, final MoveList usaMoves, final MoveList ussrMoves, final MechanicSettings settings, Mechanics mechanics) {
 		this.state = state;
 		this.usaMoves = usaMoves;
 		this.ussrMoves = ussrMoves;
@@ -111,7 +111,7 @@ public class ComputedGameState {
 		Random r = new Random(this.state.getPseudorandomState().getSeed());
 			
 		this.year = state.getTurn() + 1948;
-		Heat heat = new Heat(state);
+		HeatMechanic heat = mechanics.getHeat();
 		int partyUnityCounter = state.getSuperpowerState().getUssrState().getPartyUnity();
 		int patriotismCounter = state.getSuperpowerState().getUsaState().getPatriotism();
 		
@@ -496,9 +496,7 @@ public class ComputedGameState {
 			}
 		});
 		
-		heat.decrease(heat.decay());
-		heat.normalize();
-		this.heat = heat.heat();
+		this.heat = heat.getHeat();
 		
 		patriotismCounter = this.state.getSuperpowerState().getUsaState().getPatriotism();
 		partyUnityCounter = this.state.getSuperpowerState().getUssrState().getPartyUnity();
@@ -543,7 +541,6 @@ public class ComputedGameState {
 						.setUssrMoves(this.ussrMoves)
 						.build())
 				.setTurn(this.state.getTurn() + 1)
-				.setHeatState(heat.state())
 				.setProvinceState(ProvinceMechanicState.newBuilder()
 						.addAllProvinceState(this.state.getProvinceState().getProvinceStateList()))
 				.setConflictState(ConflictMechanicState.newBuilder()

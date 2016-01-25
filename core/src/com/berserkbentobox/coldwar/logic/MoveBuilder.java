@@ -44,10 +44,10 @@ public class MoveBuilder {
 	private void computeState() {
 		if (this.player == Player.USA) {
 			this.mechanics = this.stateManager.computeDeterministicMechanics(this.moves.build(), MoveList.getDefaultInstance());
-			this.computedState = new ComputedGameState(this.state, this.moves.build(), MoveList.getDefaultInstance(), this.settings);
+			this.computedState = new ComputedGameState(this.state, this.moves.build(), MoveList.getDefaultInstance(), this.settings, this.mechanics);
 		} else {
 			this.mechanics = this.stateManager.computeDeterministicMechanics(MoveList.getDefaultInstance(), this.moves.build());
-			this.computedState = new ComputedGameState(this.state, MoveList.getDefaultInstance(), this.moves.build(), this.settings);
+			this.computedState = new ComputedGameState(this.state, MoveList.getDefaultInstance(), this.moves.build(), this.settings, this.mechanics);
 		}
 	}
 
