@@ -15,10 +15,7 @@ import com.berserkbentobox.coldwar.logic.mechanics.Heat;
 import com.berserkbentobox.coldwar.logic.mechanics.Leader;
 import com.berserkbentobox.coldwar.logic.mechanics.Policy;
 import com.berserkbentobox.coldwar.logic.mechanics.Province;
-import com.berserkbentobox.coldwar.logic.mechanics.Pseudorandom;
 import com.berserkbentobox.coldwar.logic.mechanics.Superpower;
-import com.berserkbentobox.coldwar.logic.mechanics.Technology;
-import com.berserkbentobox.coldwar.logic.mechanics.TechnologyMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.Treaty;
 
 /**
@@ -51,7 +48,6 @@ public abstract class Client {
 		GameState.Builder state = GameState.newBuilder()
 				.setSettings(settings)
 				.setSuperpowerState(Superpower.buildInitialState(settings.getSuperpowerSettings()))
-				.setPseudorandomState(Pseudorandom.buildInitialState(settings.getPseudorandomSettings()))
 				.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
 				.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
 				.setProvinceState(Province.buildInitialState(settings.getProvinceSettings()))
@@ -70,6 +66,12 @@ public abstract class Client {
 			Logger.Err("Initial settings invalid.");			
 		} else {
 			state.setTechnologyState(this.settings.getTechnology().initialState());
+		}
+
+		if (!this.settings.getPseudorandom().validate().ok()) {
+			Logger.Err("Initial settings invalid.");			
+		} else {
+			state.setPseudorandomState(this.settings.getPseudorandom().initialState());
 		}
 
 		//Berlin Blockade
@@ -103,6 +105,7 @@ public abstract class Client {
 		GameState managedGameState = manager.computeNextGameState(manager.computeDeterministicMechanics(this.getUSAMove(), this.getUSSRMove()));
 		GameState.Builder nextGameState = computedState.nextState.toBuilder();
 		nextGameState.setTechnologyState(managedGameState.getTechnologyState());
+		nextGameState.setPseudorandomState(managedGameState.getPseudorandomState());
 		
 		this.state = nextGameState.build();
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {

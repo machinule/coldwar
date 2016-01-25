@@ -38,15 +38,17 @@ public class GameStateManager {
 		return mechanics;
 	}
 	
-	public GameState computeNextGameState(Mechanics mechanics) {
-		Random random = new Random(this.initialState.getPseudorandomState().getSeed());
-		
+	public GameState computeNextGameState(Mechanics mechanics) {		
 		// Technology
-		mechanics.getTechnology().maybeMakeProgress(Player.USSR, random);
-		mechanics.getTechnology().maybeMakeProgress(Player.USSR, random);
+		mechanics.getTechnology().maybeMakeProgress(Player.USSR, mechanics.getPseudorandom());
+		mechanics.getTechnology().maybeMakeProgress(Player.USSR, mechanics.getPseudorandom());
+
+		// Pseudorandom
+		mechanics.getPseudorandom().reseed();
 		
 		GameState.Builder state = GameState.newBuilder();
 		state.setTechnologyState(mechanics.getTechnology().buildState());
+		state.setPseudorandomState(mechanics.getPseudorandom().buildState());
 		return state.build();
 	}
 }

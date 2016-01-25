@@ -237,6 +237,15 @@ public class TechnologyMechanicTest {
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getProgressChance(), 600000);
 	}
 	
+	public PseudorandomMechanic getPseudorandom() {
+		GameSettings.Builder settings = GameSettings.newBuilder();
+		settings.getPseudorandomSettingsBuilder().setInitSeed(0);
+		PseudorandomMechanic.Settings s = new PseudorandomMechanic.Settings(settings.build());
+		GameState.Builder state = GameState.newBuilder();
+		state.setPseudorandomState(s.initialState());
+		return new PseudorandomMechanic(s, state);
+	}
+	
 	@Test
 	public void testMaybeMakeProgress() {
 		TechnologyMechanic mechanic = getMechanic();
@@ -244,7 +253,7 @@ public class TechnologyMechanicTest {
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getProgressChance(), 500000);
 		mechanic.makeResearchMove(Player.USA, ResearchMove.newBuilder().setTechnologyGroupId("GROUP_A").setMagnitude(5).build());
 		
-		mechanic.maybeMakeProgress(Player.USA, new Random());
+		mechanic.maybeMakeProgress(Player.USA, getPseudorandom());
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getTechnology("TECH_A_1").getState().getProgress(), 1);
 	}
 
@@ -255,8 +264,9 @@ public class TechnologyMechanicTest {
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getTechnology("TECH_B_1").getSettings().getSettings().getNumProgressions(), 100000);
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getProgressChance(), 500000);
 		
+		PseudorandomMechanic random = getPseudorandom();
 		for (int i = 0; i < 100000; i++) {
-			mechanic.maybeMakeProgress(Player.USA, new Random());
+			mechanic.maybeMakeProgress(Player.USA, random);
 		}
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getTechnology("TECH_B_1").getState().getProgress() / 100000.0, .5, .01);
 	}

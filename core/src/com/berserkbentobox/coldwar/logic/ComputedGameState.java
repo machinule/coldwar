@@ -924,8 +924,6 @@ public class ComputedGameState {
 		
 		// CRISES
 		
-		nextStateBuilder.getPseudorandomStateBuilder().setSeed(r.nextLong());
-		
 		this.patriotism = patriotismCounter;
 		this.partyUnity = partyUnityCounter;
 

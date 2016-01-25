@@ -108,9 +108,9 @@ public class TechnologyMechanic {
 
 	// Logic
 	
-	public void maybeMakeProgress(Player player, Random random) {
+	public void maybeMakeProgress(Player player, PseudorandomMechanic pseudorandomMechanic) {
 		for (TechnologyGroup group : this.getTechnologyGroups(player)) {
-			group.maybeMakeProgress(random);
+			group.maybeMakeProgress(pseudorandomMechanic);
 		}
 	}	
 	

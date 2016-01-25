@@ -91,8 +91,8 @@ public class TechnologyGroup {
 		return this.technologies.get(technologyId);
 	}
 
-	public void maybeMakeProgress(Random random) {
-		if (random.nextInt(1000000) < this.getProgressChance()) {
+	public void maybeMakeProgress(PseudorandomMechanic pseudorandomMechanic) {
+		if (pseudorandomMechanic.happens(this.getProgressChance())) {
 			this.makeProgress();
 		}
 	}	
