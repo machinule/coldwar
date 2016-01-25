@@ -37,7 +37,8 @@ public class GameStateManager {
 		}
 		
 		// Heat
-		mechanics.getHeat().decay();		
+		mechanics.getHeat().decay();	
+		mechanics.getHeat().normalize();	
 		
 		return mechanics;
 	}
@@ -49,9 +50,6 @@ public class GameStateManager {
 
 		// Pseudorandom
 		mechanics.getPseudorandom().reseed();
-	
-		// Heat
-		mechanics.getHeat().normalize();
 		
 		GameState.Builder state = GameState.newBuilder();
 		state.setTechnologyState(mechanics.getTechnology().buildState());
