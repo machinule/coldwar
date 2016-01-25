@@ -92,6 +92,13 @@ init_leader {
     elected: false
     province_restriction: ALBANIA
 }
+init_leader {
+	init: true
+    id: "Kim Il-Sung"
+    birth_year: 1912
+    elected: false
+    province_restriction: NORTH_KOREA
+} 
 
 ###### TEMPORARY CULTURE LEADERS ######
 
