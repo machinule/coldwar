@@ -1,11 +1,13 @@
 package com.berserkbentobox.coldwar.logic;
 
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
+import com.berserkbentobox.coldwar.logic.mechanics.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.SuperpowerMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.TechnologyMechanic;
 
 public class Mechanics {
+	private HeatMechanic heat;
 	private TechnologyMechanic technology;
 	private SuperpowerMechanic superpower;
 	private PseudorandomMechanic pseudorandom;
@@ -14,7 +16,8 @@ public class Mechanics {
 		this.technology = new TechnologyMechanic(settings.getTechnology(), state);
 		this.pseudorandom = new PseudorandomMechanic(settings.getPseudorandom(), state);
 		this.superpower = new SuperpowerMechanic(settings.getSuperpower(), state);
-		}
+		this.heat = new HeatMechanic(settings.getHeat(), state);
+	}
 	
 	public TechnologyMechanic getTechnology() {
 		return this.technology;
@@ -26,5 +29,9 @@ public class Mechanics {
 	
 	public SuperpowerMechanic getSuperpower() {
 		return this.superpower;
+	
+	}
+	public HeatMechanic getHeat() {
+		return this.heat;
 	}
 }

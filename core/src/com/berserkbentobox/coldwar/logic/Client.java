@@ -11,7 +11,6 @@ import com.berserkbentobox.coldwar.EventOuterClass.BerlinBlockadeEvent;
 import com.berserkbentobox.coldwar.EventOuterClass.Event;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
 import com.berserkbentobox.coldwar.logic.mechanics.Conflict;
-import com.berserkbentobox.coldwar.logic.mechanics.Heat;
 import com.berserkbentobox.coldwar.logic.mechanics.Leader;
 import com.berserkbentobox.coldwar.logic.mechanics.Policy;
 import com.berserkbentobox.coldwar.logic.mechanics.Province;
@@ -55,11 +54,10 @@ public abstract class Client {
 				.setLeadersState(Leader.buildInitialState(settings.getLeaderSettings()))
 				.setTurn(0);
 
-		Heat initHeat = new Heat(settings);
-		if (initHeat.validate().ok()) {
-			state.setHeatState(initHeat.state());
+		if (!this.settings.getHeat().validate().ok()) {
+			Logger.Err("Initial settings invalid.");			
 		} else {
-			Logger.Info("Initial heat state invalid.");
+			state.setHeatState(this.settings.getHeat().initialState());
 		}
 
 		if (!this.settings.getTechnology().validate().ok()) {
@@ -99,11 +97,13 @@ public abstract class Client {
 
 	public void nextTurn() {
 		Logger.Info("Proceeding to the next turn.");
-		ComputedGameState computedState = new ComputedGameState(this.state, this.getUSAMove(), this.getUSSRMove(), this.settings);
-		// Hack while a bunch of stuff is still in ComputedGameState:
 		GameStateManager manager = new GameStateManager(this.settings, this.state);
-		GameState managedGameState = manager.computeNextGameState(manager.computeDeterministicMechanics(this.getUSAMove(), this.getUSSRMove()));
+		Mechanics mechanics = manager.computeDeterministicMechanics(this.getUSAMove(), this.getUSSRMove());
+		ComputedGameState computedState = new ComputedGameState(this.state, this.getUSAMove(), this.getUSSRMove(), this.settings, mechanics);
+		// Hack while a bunch of stuff is still in ComputedGameState:
+		GameState managedGameState = manager.computeNextGameState(mechanics);
 		GameState.Builder nextGameState = computedState.nextState.toBuilder();
+		nextGameState.setHeatState(managedGameState.getHeatState());
 		nextGameState.setTechnologyState(managedGameState.getTechnologyState());
 		nextGameState.setPseudorandomState(managedGameState.getPseudorandomState());
 		

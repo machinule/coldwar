@@ -35,6 +35,11 @@ public class GameStateManager {
 				mechanics.getTechnology().makeMoves(Player.USSR, move.getTechnologyMechanicMoves());							
 			}
 		}
+		
+		// Heat
+		mechanics.getHeat().decay();	
+		mechanics.getHeat().normalize();	
+		
 		return mechanics;
 	}
 	
@@ -52,6 +57,7 @@ public class GameStateManager {
 		GameState.Builder state = GameState.newBuilder();
 		state.setTechnologyState(mechanics.getTechnology().buildState());
 		state.setPseudorandomState(mechanics.getPseudorandom().buildState());
+		state.setHeatState(mechanics.getHeat().buildState());
 		return state.build();
 	}
 }

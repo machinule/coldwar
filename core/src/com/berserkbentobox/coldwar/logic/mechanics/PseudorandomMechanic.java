@@ -19,6 +19,7 @@ public class PseudorandomMechanic {
 			this.gameSettings = gameSettings;
 			this.settings = gameSettings.getPseudorandomSettings();
 		}
+		
 		public Status validate() {
 			return Status.OK;
 		}
