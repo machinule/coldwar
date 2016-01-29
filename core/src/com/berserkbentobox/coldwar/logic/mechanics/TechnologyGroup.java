@@ -3,7 +3,6 @@ package com.berserkbentobox.coldwar.logic.mechanics;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import com.berserkbentobox.coldwar.Technology.ResearchMove;
 import com.berserkbentobox.coldwar.Technology.TechnologyGroupSettings;

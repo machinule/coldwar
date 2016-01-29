@@ -10,11 +10,11 @@ import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.EventOuterClass.BerlinBlockadeEvent;
 import com.berserkbentobox.coldwar.EventOuterClass.Event;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
+import com.berserkbentobox.coldwar.Superpower;
 import com.berserkbentobox.coldwar.logic.mechanics.Conflict;
 import com.berserkbentobox.coldwar.logic.mechanics.Leader;
 import com.berserkbentobox.coldwar.logic.mechanics.Policy;
 import com.berserkbentobox.coldwar.logic.mechanics.Province;
-import com.berserkbentobox.coldwar.logic.mechanics.Superpower;
 import com.berserkbentobox.coldwar.logic.mechanics.Treaty;
 
 /**
@@ -46,7 +46,6 @@ public abstract class Client {
 		
 		GameState.Builder state = GameState.newBuilder()
 				.setSettings(settings)
-				.setSuperpowerState(Superpower.buildInitialState(settings.getSuperpowerSettings()))
 				.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
 				.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
 				.setProvinceState(Province.buildInitialState(settings.getProvinceSettings()))
@@ -70,6 +69,12 @@ public abstract class Client {
 			Logger.Err("Initial settings invalid.");			
 		} else {
 			state.setPseudorandomState(this.settings.getPseudorandom().initialState());
+		}
+
+		if (!this.settings.getSuperpower().validate().ok()) {
+			Logger.Err("Initial settings invalid.");			
+		} else {
+			state.setSuperpowerState(this.settings.getSuperpower().initialState());
 		}
 
 		//Berlin Blockade

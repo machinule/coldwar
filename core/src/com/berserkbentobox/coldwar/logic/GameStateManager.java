@@ -49,7 +49,7 @@ public class GameStateManager {
 		mechanics.getTechnology().maybeMakeProgress(Player.USSR, mechanics.getPseudorandom());
 
 		// Supwerpower leaders
-		//mechanics.getSuperpower().holdElections(mechanics.getPseudorandom());
+		mechanics.getSuperpower().USAholdElections(mechanics.getPseudorandom());
 		
 		// Pseudorandom
 		mechanics.getPseudorandom().reseed();
