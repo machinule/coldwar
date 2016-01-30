@@ -16,6 +16,7 @@ import "Treaty.proto";
 import "EndState.proto";
 import "Pseudorandom.proto";
 import "Heat.proto";
+import "Deterrence.proto";
 
 message GameState {
   optional int32 turn = 1;
@@ -32,6 +33,7 @@ message GameState {
   optional GameSettings settings = 11;
   optional Crisis crises = 16;
   optional EndState end_state = 21;
+  optional DeterrenceMechanicState deterrence_state = 22;
 }
 
 message TurnLogEntry {

@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+message DeterrenceMechanicSettings {
+	optional int32 init_deterrence = 1;
+}
+
+message DeterrenceMechanicState {
+	optional int32 deterrence = 1;
+}

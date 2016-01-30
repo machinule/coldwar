@@ -2,6 +2,7 @@ package com.berserkbentobox.coldwar.logic.mechanics;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.berserkbentobox.coldwar.Technology.ResearchMove;
@@ -21,7 +22,7 @@ public class TechnologyGroup {
 		public Settings(TechnologyMechanic.Settings parent, TechnologyGroupSettings settings) {
 			this.parent = parent;
 			this.settings = settings;
-			this.technologySettings = new HashMap<String, Technology.Settings>();
+			this.technologySettings = new LinkedHashMap<String, Technology.Settings>();
 			for (TechnologySettings t : this.settings.getTechnologyList()) {
 				Technology.Settings ts = new Technology.Settings(this, t);
 				this.technologySettings.put(ts.getSettings().getId(), ts);
@@ -66,7 +67,7 @@ public class TechnologyGroup {
 		this.parent = parent;
 		this.settings = settings;
 		this.state = state;
-		this.technologies = new HashMap<String, Technology>();
+		this.technologies = new LinkedHashMap<String, Technology>();
 		for (TechnologyState.Builder ts : this.state.getTechnologyBuilderList()) {
 			Technology t = new Technology(this, parent.getSettings().getTechnologyGroupSettings(state.getId()).getTechnologySettings(ts.getId()), ts);
 			this.technologies.put(t.getState().getId(), t);

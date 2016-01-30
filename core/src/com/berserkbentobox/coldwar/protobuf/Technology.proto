@@ -59,7 +59,7 @@ message TechnologyState {
 	optional int32 progress = 2 [default = 0];
 }
 
-// ========== State ==========
+// ========== Moves ==========
 
 // The top-level moves proto included in Moves.
 

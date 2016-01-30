@@ -1,38 +1,30 @@
 treaty {
-	id: PARTIAL_TEST_BAN
+	id: "PARTIAL_TEST_BAN"
 	heat_reduction: 40
-	unlocks: NUCLEAR_NON_PROLIFERATION
 	signing_chance: 500000
 	init_signed: false
 }
 treaty {
-	id: NUCLEAR_NON_PROLIFERATION
+	id: "NUCLEAR_NON_PROLIFERATION"
 	heat_reduction: 50
-	requires: PARTIAL_TEST_BAN
-	unlocks: SALT_I
 	signing_chance: 500000
 	init_signed: false
 }
 treaty {
-	id: SALT_I
+	id: "SALT_I"
 	heat_reduction: 50
-	requires: NUCLEAR_NON_PROLIFERATION
-	unlocks: THRESHOLD_TEST_BAN
 	signing_chance: 500000
 	init_signed: false
 }
 treaty {
-	id: THRESHOLD_TEST_BAN
+	id: "THRESHOLD_TEST_BAN"
 	heat_reduction: 45
-	requires: SALT_I
-	unlocks: STRATEGIC_ARMS_LIMITATION
 	signing_chance: 500000
 	init_signed: false
 }
 treaty {
-	id: STRATEGIC_ARMS_LIMITATION
+	id: "STRATEGIC_ARMS_LIMITATION"
 	heat_reduction: 40
-	requires: THRESHOLD_TEST_BAN
 	signing_chance: 500000
 	init_signed: false
 }
