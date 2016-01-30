@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic.mechanics.superpower;
+package com.berserkbentobox.coldwar.logic.mechanics.Superpower;
 
 import com.berserkbentobox.coldwar.InfluenceStore.InfluenceStoreSettingsOrBuilder;
 import com.berserkbentobox.coldwar.InfluenceStore.InfluenceStoreState;

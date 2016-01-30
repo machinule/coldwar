@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;
 import com.berserkbentobox.coldwar.logic.Client;
-import com.berserkbentobox.coldwar.logic.mechanics.Technology;
+import com.berserkbentobox.coldwar.logic.mechanics.technology.Technology;
 
 public class TechCard extends Table {
 	

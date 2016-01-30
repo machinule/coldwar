@@ -2,16 +2,6 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
-// ========== Ids ==========
-
-enum TreatyId {
-	PARTIAL_TEST_BAN = 1;
-	NUCLEAR_NON_PROLIFERATION = 2;
-	SALT_I = 3;
-	THRESHOLD_TEST_BAN = 4;
-	STRATEGIC_ARMS_LIMITATION = 5;
-}
-
 // ========== Settings ==========
 
 // The top-level settings proto included in GameSettings.
@@ -22,13 +12,11 @@ message TreatyMechanicSettings {
 
 // Settings for a single treaty.
 message TreatySettings {
-	optional TreatyId id = 1;
+	optional string id = 1;
 	optional int32 deterrence_reduction = 2;
 	optional int32 heat_reduction = 3;
-	repeated TreatyId requires = 4;
-	repeated TreatyId unlocks = 5;
-	optional int32 signing_chance = 6;
-	optional bool init_signed = 7;
+	optional int32 signing_chance = 4;
+	optional bool init_signed = 5;
 }
 
 // ========== State ==========
@@ -41,6 +29,17 @@ message TreatyMechanicState {
 
 // The state for a single Treaty.
 message TreatyState {
-	optional TreatyId id = 1;
+	optional string id = 1;
 	optional bool signed = 2;
+}
+
+// ========== Moves ==========
+
+// The top-level moves proto included in Moves.
+
+message TreatyMechanicMoves {
+	optional DeescalateMove deescalate_move = 1;
+}
+
+message DeescalateMove {
 }

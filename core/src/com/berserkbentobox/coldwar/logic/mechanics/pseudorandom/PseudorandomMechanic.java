@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic.mechanics;
+package com.berserkbentobox.coldwar.logic.mechanics.pseudorandom;
 
 import java.util.Random;
 

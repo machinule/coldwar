@@ -47,7 +47,6 @@ public abstract class Client {
 		GameState.Builder state = GameState.newBuilder()
 				.setSettings(settings)
 				.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
-				.setTreatyState(Treaty.buildInitialState(settings.getTreatySettings()))
 				.setProvinceState(Province.buildInitialState(settings.getProvinceSettings()))
 				.setConflictState(Conflict.buildInitialState(settings.getConflictSettings()))
 				.setLeadersState(Leader.buildInitialState(settings.getLeaderSettings()))
@@ -77,6 +76,12 @@ public abstract class Client {
 			state.setSuperpowerState(this.settings.getSuperpower().initialState());
 		}
 
+		if (!this.settings.getTreaty().validate().ok()) {
+			Logger.Err("Initial settings invalid.");			
+		} else {
+			state.setTreatyState(this.settings.getTreaty().initialState());
+		}
+		
 		//Berlin Blockade
 		Crisis.Builder c = Crisis.newBuilder();
 		c.setBerlinBlockade(true);
@@ -111,6 +116,9 @@ public abstract class Client {
 		nextGameState.setHeatState(managedGameState.getHeatState());
 		nextGameState.setTechnologyState(managedGameState.getTechnologyState());
 		nextGameState.setPseudorandomState(managedGameState.getPseudorandomState());
+		nextGameState.setSuperpowerState(managedGameState.getSuperpowerState());
+		nextGameState.setDeterrenceState(managedGameState.getDeterrenceState());
+		nextGameState.setTreatyState(managedGameState.getTreatyState());
 		
 		this.state = nextGameState.build();
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {

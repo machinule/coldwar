@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic.mechanics.superpower;
+package com.berserkbentobox.coldwar.logic.mechanics.Superpower;
 
 import static org.junit.Assert.*;
 

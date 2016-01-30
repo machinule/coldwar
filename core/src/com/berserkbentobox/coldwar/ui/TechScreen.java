@@ -18,9 +18,9 @@ import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyGroupSettings;
 import com.berserkbentobox.coldwar.logic.Client;
-import com.berserkbentobox.coldwar.logic.mechanics.Technology;
-import com.berserkbentobox.coldwar.logic.mechanics.TechnologyGroup;
-import com.berserkbentobox.coldwar.logic.mechanics.TechnologyMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.technology.Technology;
+import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyGroup;
+import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyMechanic;
 
 public class TechScreen extends AbstractScreen {
 

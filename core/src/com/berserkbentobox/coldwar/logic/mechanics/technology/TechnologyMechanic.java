@@ -1,7 +1,8 @@
-package com.berserkbentobox.coldwar.logic.mechanics;
+package com.berserkbentobox.coldwar.logic.mechanics.technology;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
@@ -13,6 +14,7 @@ import com.berserkbentobox.coldwar.Technology.TechnologyMechanicMoves;
 import com.berserkbentobox.coldwar.Technology.TechnologyMechanicSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyMechanicState;
 import com.berserkbentobox.coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.Status;
 
 public class TechnologyMechanic {
@@ -26,7 +28,7 @@ public class TechnologyMechanic {
 		public Settings(GameSettingsOrBuilder gameSettings) {
 			this.gameSettings = gameSettings;
 			this.settings = gameSettings.getTechnologySettings();
-			this.technologyGroupSettings = new HashMap<String, TechnologyGroup.Settings>();
+			this.technologyGroupSettings = new LinkedHashMap<String, TechnologyGroup.Settings>();
 			for (TechnologyGroupSettings tg : this.settings.getTechnologyGroupList()) {
 				TechnologyGroup.Settings tgs = new TechnologyGroup.Settings(this, tg);
 				this.technologyGroupSettings.put(tgs.getSettings().getId(), tgs);
@@ -65,12 +67,12 @@ public class TechnologyMechanic {
 	public TechnologyMechanic(Settings settings, GameStateOrBuilder state) {
 		this.settings = settings;
 		this.state = state.getTechnologyState().toBuilder();
-		this.usaTechnologyGroups = new HashMap<String, TechnologyGroup>();
+		this.usaTechnologyGroups = new LinkedHashMap<String, TechnologyGroup>();
 		for (TechnologyGroupState.Builder tgs : this.state.getUsaStateBuilderList()) {
 			TechnologyGroup tg = new TechnologyGroup(this, this.getSettings().getTechnologyGroupSettings(tgs.getId()), tgs);
 			this.usaTechnologyGroups.put(tg.getState().getId(), tg);
 		}
-		this.ussrTechnologyGroups = new HashMap<String, TechnologyGroup>();
+		this.ussrTechnologyGroups = new LinkedHashMap<String, TechnologyGroup>();
 		for (TechnologyGroupState.Builder tgs : this.state.getUssrStateBuilderList()) {
 			TechnologyGroup tg = new TechnologyGroup(this, this.getSettings().getTechnologyGroupSettings(tgs.getId()), tgs);
 			this.ussrTechnologyGroups.put(tg.getState().getId(), tg);

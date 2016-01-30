@@ -8,6 +8,7 @@ import "Province.proto";
 import "Technology.proto";
 import "Policy.proto";
 import "Superpower.proto";
+import "Treaty.proto";
 //import "google/protobuf/descriptor.proto";
 
 //extend google.protobuf.MessageOptions {
@@ -98,6 +99,7 @@ message Move {
 	optional ConflictOvertFundDefenderMove conflict_overt_fund_defender_move = 111;
 	
 	optional TechnologyMechanicMoves technology_mechanic_moves = 150;
+	optional TreatyMechanicMoves treaty_mechanic_moves = 151;
 
 	optional EnactPolicyMove enact_policy_move = 160;
 
@@ -188,11 +190,6 @@ message SabotageLeaderMove {
 
 message PrimaryMove {
 	optional string leader_id = 1;
-}
-
-// ========== SPECIAL ACTIONS ==========
-
-message DeescalationMove {
 }
 
 // =========== CRISES ==================
