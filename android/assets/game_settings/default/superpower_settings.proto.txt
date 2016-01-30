@@ -121,14 +121,6 @@ usa_settings {
   	init_president: "Harry S. Truman"
   	init_vice_president: "Alben W. Barkley"
   }
-  influence_store_settings {  	
-	political_store_init: 4
-	political_income_base: 4
-	military_store_init: 3
-	military_income_base: 3
-	covert_store_init: 2
-	covert_income_base: 2
-  }
   init_patriotism: 50
 }
 ussr_settings {
@@ -208,14 +200,6 @@ ussr_settings {
   	troika_num_decay: 2
   	troika_decay_chance: 500000
 	init_premier: "Joseph Stalin"
-  }
-  influence_store_settings {  	
-	political_store_init: 4
-	political_income_base: 4
-	military_store_init: 3
-	military_income_base: 3
-	covert_store_init: 2
-	covert_income_base: 2
   }
   init_party_unity: 50
 }

@@ -8,6 +8,7 @@ import com.berserkbentobox.coldwar.EventOuterClass.EventMechanicSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.Province.ProvinceMechanicSettings;
 import com.berserkbentobox.coldwar.Heat.HeatMechanicSettings;
+import com.berserkbentobox.coldwar.Influence.InfluenceMechanicSettings;
 import com.berserkbentobox.coldwar.Leader.LeaderMechanicSettings;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveMechanicSettings;
 import com.berserkbentobox.coldwar.Policy.PolicyMechanicSettings;
@@ -40,6 +41,7 @@ public class GameSettingsFactory {
 			this.loadHeat(gameName, settings.getHeatSettingsBuilder());
 			this.loadProvinces(gameName, settings.getProvinceSettingsBuilder());
 			this.loadConflicts(gameName, settings.getConflictSettingsBuilder());
+			this.loadInfluence(gameName, settings.getInfluenceSettingsBuilder());
 			//this.loadPseudorandom(settings.getPseudorandomSettingsBuilder());
 		} catch (ParseException e) {
 			Logger.Info(e.toString());
@@ -111,6 +113,11 @@ public class GameSettingsFactory {
 	
 	protected void loadConflicts(String gameName, ConflictMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "conflict_settings.proto.txt"));        
+        TextFormat.merge(input, settings);
+	}
+
+	protected void loadInfluence(String gameName, InfluenceMechanicSettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "influence_settings.proto.txt"));        
         TextFormat.merge(input, settings);
 	}
 	

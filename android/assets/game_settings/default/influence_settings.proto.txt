@@ -1,0 +1,16 @@
+usa_settings {  	
+	political_store_init: 4
+	political_income_base: 4
+	military_store_init: 3
+	military_income_base: 3
+	covert_store_init: 2
+	covert_income_base: 2
+}
+ussr_settings {  	
+	political_store_init: 4
+	political_income_base: 4
+	military_store_init: 3
+	military_income_base: 3
+	covert_store_init: 2
+	covert_income_base: 2
+}
