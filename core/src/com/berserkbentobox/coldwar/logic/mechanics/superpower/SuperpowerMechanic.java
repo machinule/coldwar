@@ -13,6 +13,7 @@ import com.berserkbentobox.coldwar.Superpower.UsaSettings;
 import com.berserkbentobox.coldwar.Superpower.UsaState;
 import com.berserkbentobox.coldwar.Technology.TechnologyGroupState;
 import com.berserkbentobox.coldwar.logic.Status;
+import com.berserkbentobox.coldwar.logic.Client.Player;
 import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyGroup;
 
@@ -39,7 +40,7 @@ public class SuperpowerMechanic {
 		
 		public SuperpowerMechanicState initialState() {
 			SuperpowerMechanicState.Builder state = SuperpowerMechanicState.newBuilder();
-			usaSettings = new Usa.Settings(settings.getUsaSettings());
+			usaSettings = new Usa.Settings(this, settings.getUsaSettings());
 			UsaState usaState = usaSettings.initialState();
 			//UsaState usaState = Usa.Settings.initialState(settings.getUsaSettings());
 			settings.getUsaSettings();
@@ -50,22 +51,13 @@ public class SuperpowerMechanic {
 	
 	private Settings settings;
 	private SuperpowerMechanicState.Builder state;
-	private Map<String, UsaLeader> usaLeaders;
-	private Map<String, UssrLeader> ussrLeaders;
+	private Usa usa;
+	//private Ussr ussr;
 	
 	public SuperpowerMechanic(Settings settings, GameStateOrBuilder state) {
 		this.settings = settings;
 		this.state = settings.initialState().toBuilder();
-		this.usaLeaders = new LinkedHashMap<String, UsaLeader>();
-		//for (UsaLeaderState.Builder ls : this.state.getUsaStateBuilder().getLeaderBuilderList()) {
-		//	UsaLeader l = new UsaLeader(this, this.getSettings().;
-		//	this.usaTechnologyGroups.put(tg.getState().getId(), tg);
-		//}
-		//this.ussrTechnologyGroups = new LinkedHashMap<String, TechnologyGroup>();
-		//for (TechnologyGroupState.Builder tgs : this.state.getUssrStateBuilderList()) {
-		//	TechnologyGroup tg = new TechnologyGroup(this, this.getSettings().getTechnologyGroupSettings(tgs.getId()), tgs);
-		//	this.ussrTechnologyGroups.put(tg.getState().getId(), tg);
-		//}
+		this.usa = new Usa(this, this.getSettings().getUsaSettings(), this.state.getUsaStateBuilder());
 	}
 	
 	public Status validate() {
@@ -80,7 +72,9 @@ public class SuperpowerMechanic {
 		return this.state.build();
 	}
 	
-	public void USAholdElections(PseudorandomMechanic pseudorandomMechanic) {
-		
+	// Getters
+	
+	public Usa getUsa() {
+		return this.usa;
 	}
 }

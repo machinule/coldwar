@@ -59,7 +59,7 @@ public class GameStateManager {
 		mechanics.getTechnology().maybeMakeProgress(Player.USSR, mechanics.getPseudorandom());
 
 		// Supwerpower leaders
-		mechanics.getSuperpower().USAholdElections(mechanics.getPseudorandom());
+//		mechanics.getSuperpower().USAholdElections(mechanics.getPseudorandom());
 		
 		// Treaty
 		mechanics.getTreaty().maybeSignTreaty(mechanics.getPseudorandom(), mechanics.getHeat(), mechanics.getDeterrence());
