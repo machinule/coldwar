@@ -1,10 +1,10 @@
 package com.berserkbentobox.coldwar.logic;
 
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
-import com.berserkbentobox.coldwar.logic.mechanics.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.Superpower.SuperpowerMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.treaty.TreatyMechanic;
 

@@ -13,8 +13,8 @@ import com.berserkbentobox.coldwar.Technology.TechnologyGroupSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyMechanicMoves;
 import com.berserkbentobox.coldwar.Technology.TechnologyMechanicState;
 import com.berserkbentobox.coldwar.logic.Client.Player;
-import com.berserkbentobox.coldwar.logic.mechanics.PseudorandomMechanic;
-import com.berserkbentobox.coldwar.logic.mechanics.PseudorandomMechanic.Settings;
+import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic.Settings;
 
 public class TechnologyMechanicTest {
 	

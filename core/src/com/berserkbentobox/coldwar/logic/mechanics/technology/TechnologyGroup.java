@@ -11,7 +11,7 @@ import com.berserkbentobox.coldwar.Technology.TechnologyGroupState;
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyState;
 import com.berserkbentobox.coldwar.logic.Status;
-import com.berserkbentobox.coldwar.logic.mechanics.PseudorandomMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 
 public class TechnologyGroup {
 	public static class Settings {

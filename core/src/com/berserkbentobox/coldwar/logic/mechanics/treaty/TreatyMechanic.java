@@ -15,9 +15,9 @@ import com.berserkbentobox.coldwar.Treaty.TreatySettings;
 import com.berserkbentobox.coldwar.Treaty.TreatyState;
 import com.berserkbentobox.coldwar.logic.Status;
 import com.berserkbentobox.coldwar.logic.Client.Player;
-import com.berserkbentobox.coldwar.logic.mechanics.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.Technology;
 
 public class TreatyMechanic {
