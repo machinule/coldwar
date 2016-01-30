@@ -15,19 +15,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.berserkbentobox.coldwar.ColdWarGame;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.Settings;
-import com.berserkbentobox.coldwar.Technology.TechnologySettings;
-import com.berserkbentobox.coldwar.Technology.TechnologyGroupSettings;
 import com.berserkbentobox.coldwar.logic.Client;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.Technology;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyGroup;
-import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.treaty.Treaty;
 
-public class TechScreen extends AbstractScreen {
+public class TreatyScreen extends AbstractScreen {
 
 	private Client client;
-	private String activeTechGroup = "ARMY";
 	
-	public TechScreen(final ColdWarGame game, Client client) {
+	public TreatyScreen(final ColdWarGame game, Client client) {
 		super(game);
 		this.client = client;
 	}
@@ -41,27 +38,15 @@ public class TechScreen extends AbstractScreen {
 		//final Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
 		final Skin skin = new Skin(Gdx.files.internal("uiskin.json"), atlas); // When creating JAR
 		
-		final Table techs = new Table(skin);
-		techs.setFillParent(true);
-		techs.setDebug(Settings.isDebug());
+		final Table treatyTable = new Table(skin);
+		treatyTable.setFillParent(true);
+		treatyTable.setDebug(Settings.isDebug());
 
-		for (final TechnologyGroup.Settings g : this.client.getSettings().getTechnology().getTechnologyGroupSettings()) {
-			techs.add(new Label(g.getSettings().getLabel(), skin));
-			final TextButton researchButton = new TextButton("Research", skin);
-			researchButton.addListener(new ChangeListener() {
-				@Override
-				public void changed(final ChangeEvent event, final Actor actor) {
-					TechScreen.this.client.getMoveBuilder().addResearchMove(g.getSettings().getId());
-				}
-			});
-			techs.add(researchButton);
-
-			for (final Technology.Settings t : g.getTechnologySettings()) {
-				techs.add(new TechCard(this.client, t, skin));
-			}
-			techs.row();
+		for (final Treaty.Settings t : this.client.getSettings().getTreaty().getTreatySettings()) {
+			treatyTable.add(new TreatyCard(this.client, t, skin));
+			treatyTable.row();
 		}
-		this.stage.addActor(techs);
+		this.stage.addActor(treatyTable);
 		
 		final HeaderPane headerPane = new HeaderPane(this.client, skin);
 		headerPane.setDebug(Settings.isDebug());
@@ -78,7 +63,7 @@ public class TechScreen extends AbstractScreen {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Dbg("\"Back\" button pressed.");
-				TechScreen.this.game.setScreen(new MapScreen(TechScreen.this.game, client));
+				TreatyScreen.this.game.setScreen(new MapScreen(TreatyScreen.this.game, client));
 			}
 		});
 		bottomBar.add(backButton);

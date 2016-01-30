@@ -36,11 +36,20 @@ public class SuperpowerPane extends Table {
 				screen.game.setScreen(new TechScreen(screen.game, client));
 			}
 		});
+		final TextButton treatyButton = new TextButton("Treaties", skin);
+		treatyButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				screen.game.setScreen(new TreatyScreen(screen.game, client));
+			}
+		});
 
 		this.clearChildren();
 		this.add(playerLabel);
 		this.row();
 		this.add(techButton);
+		this.row();
+		this.add(treatyButton);
 		this.row();
 	}
 }
