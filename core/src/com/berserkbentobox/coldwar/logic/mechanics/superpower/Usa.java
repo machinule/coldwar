@@ -42,8 +42,7 @@ public class Usa {
 			state
 				.setPresident(settings.getPresidencySettings().getInitPresident())
 				.setVicePresident(settings.getPresidencySettings().getInitVicePresident())
-				.setPatriotism(settings.getInitPatriotism())
-				.setInfluenceStore(InfluenceStore.buildInitialState(settings.getInfluenceStoreSettings()));;
+				.setPatriotism(settings.getInitPatriotism());
 				for (UsaLeader.Settings ls : this.getLeaderSettings()) {
 					state.addLeader(ls.initialState());
 				}

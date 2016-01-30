@@ -3,7 +3,6 @@ syntax = "proto2";
 package com.berserkbentobox.coldwar;
 
 import "Cost.proto";
-import "InfluenceStore.proto";
 
 // ========== Ids ==========
 
@@ -25,7 +24,6 @@ message SuperpowerMechanicSettings {
 message UsaSettings {
 	repeated UsaLeaderSettings leader_settings = 1;
 	optional PresidencySettings presidency_settings = 2;
-	optional InfluenceStoreSettings influence_store_settings = 3;
 	optional int32 init_patriotism = 4;
 }
 
@@ -54,7 +52,6 @@ message PresidencySettings {
 message UssrSettings {
 	repeated UssrLeaderSettings leader_settings = 1;
  	optional SecretariatSettings secretariat_settings = 2;
-	optional InfluenceStoreSettings influence_store_settings = 3;
     optional int32 init_party_unity = 4;
 }
 
@@ -98,7 +95,6 @@ message UsaState {
 	optional string vice_president = 2;
 	repeated UsaLeaderState leader = 3;
 	optional int32 patriotism = 4;
-	optional InfluenceStoreState influence_store = 5;
 }
 
 message UsaLeaderState {
@@ -113,7 +109,6 @@ message UssrState {
 	repeated string troika = 2;
 	repeated UssrLeaderState leader = 3;
 	optional int32 party_unity = 4;
-	optional InfluenceStoreState influence_store = 5;
 }
 
 message UssrLeaderState {

@@ -236,21 +236,21 @@ public class ComputedGameState {
 			ussrAdjacencyMap.put(p.getId(), hasAdjacencyInfluence(Player.USSR, p.getId()));
 		});
 		
-		polStoreMap.put(Player.USA, state.getSuperpowerState().getUsaState().getInfluenceStore().getPolitical());
-		milStoreMap.put(Player.USA, state.getSuperpowerState().getUsaState().getInfluenceStore().getMilitary());
-		covStoreMap.put(Player.USA, state.getSuperpowerState().getUsaState().getInfluenceStore().getCovert());
-		
-		polStoreMap.put(Player.USSR, state.getSuperpowerState().getUssrState().getInfluenceStore().getPolitical());
-		milStoreMap.put(Player.USSR, state.getSuperpowerState().getUssrState().getInfluenceStore().getMilitary());
-		covStoreMap.put(Player.USSR, state.getSuperpowerState().getUssrState().getInfluenceStore().getCovert());
-		
-		basePolIncomeMap.put(Player.USA, state.getSettings().getSuperpowerSettings().getUsaSettings().getInfluenceStoreSettings().getPoliticalIncomeBase());
-		baseMilIncomeMap.put(Player.USA, state.getSettings().getSuperpowerSettings().getUsaSettings().getInfluenceStoreSettings().getMilitaryIncomeBase());
-		baseCovIncomeMap.put(Player.USA, state.getSettings().getSuperpowerSettings().getUsaSettings().getInfluenceStoreSettings().getCovertIncomeBase());
-
-		basePolIncomeMap.put(Player.USSR, state.getSettings().getSuperpowerSettings().getUssrSettings().getInfluenceStoreSettings().getPoliticalIncomeBase());
-		baseMilIncomeMap.put(Player.USSR, state.getSettings().getSuperpowerSettings().getUssrSettings().getInfluenceStoreSettings().getMilitaryIncomeBase());
-		baseCovIncomeMap.put(Player.USSR, state.getSettings().getSuperpowerSettings().getUssrSettings().getInfluenceStoreSettings().getCovertIncomeBase());
+//		polStoreMap.put(Player.USA, state.getSuperpowerState().getUsaState().getInfluenceStore().getPolitical());
+//		milStoreMap.put(Player.USA, state.getSuperpowerState().getUsaState().getInfluenceStore().getMilitary());
+//		covStoreMap.put(Player.USA, state.getSuperpowerState().getUsaState().getInfluenceStore().getCovert());
+//		
+//		polStoreMap.put(Player.USSR, state.getSuperpowerState().getUssrState().getInfluenceStore().getPolitical());
+//		milStoreMap.put(Player.USSR, state.getSuperpowerState().getUssrState().getInfluenceStore().getMilitary());
+//		covStoreMap.put(Player.USSR, state.getSuperpowerState().getUssrState().getInfluenceStore().getCovert());
+//		
+//		basePolIncomeMap.put(Player.USA, state.getSettings().getSuperpowerSettings().getUsaSettings().getInfluenceStoreSettings().getPoliticalIncomeBase());
+//		baseMilIncomeMap.put(Player.USA, state.getSettings().getSuperpowerSettings().getUsaSettings().getInfluenceStoreSettings().getMilitaryIncomeBase());
+//		baseCovIncomeMap.put(Player.USA, state.getSettings().getSuperpowerSettings().getUsaSettings().getInfluenceStoreSettings().getCovertIncomeBase());
+//
+//		basePolIncomeMap.put(Player.USSR, state.getSettings().getSuperpowerSettings().getUssrSettings().getInfluenceStoreSettings().getPoliticalIncomeBase());
+//		baseMilIncomeMap.put(Player.USSR, state.getSettings().getSuperpowerSettings().getUssrSettings().getInfluenceStoreSettings().getMilitaryIncomeBase());
+//		baseCovIncomeMap.put(Player.USSR, state.getSettings().getSuperpowerSettings().getUssrSettings().getInfluenceStoreSettings().getCovertIncomeBase());
 
 		for (Player player : new Player[]{Player.USA, Player.USSR}) {
 			MoveList moves;
@@ -564,14 +564,14 @@ public class ComputedGameState {
 			}
 		}
 		
-		nextStateBuilder.getSuperpowerStateBuilder().getUsaStateBuilder().getInfluenceStoreBuilder()
-		    .setPolitical(polStoreMap.get(Player.USA) + basePolIncomeMap.get(Player.USA) + polIncomeModifierMap.getOrDefault(Player.USA, 0))
-		    .setMilitary(milStoreMap.get(Player.USA) + baseMilIncomeMap.get(Player.USA) + milIncomeModifierMap.getOrDefault(Player.USA, 0))
-		    .setCovert(covStoreMap.get(Player.USA) + baseCovIncomeMap.get(Player.USA) + covIncomeModifierMap.getOrDefault(Player.USA, 0));
-		nextStateBuilder.getSuperpowerStateBuilder().getUssrStateBuilder().getInfluenceStoreBuilder()
-			.setPolitical(polStoreMap.get(Player.USSR) + basePolIncomeMap.get(Player.USSR) + polIncomeModifierMap.getOrDefault(Player.USSR, 0))
-			.setMilitary(milStoreMap.get(Player.USSR) + baseMilIncomeMap.get(Player.USSR) + milIncomeModifierMap.getOrDefault(Player.USSR, 0))
-			.setCovert(covStoreMap.get(Player.USSR) + baseCovIncomeMap.get(Player.USSR) + covIncomeModifierMap.getOrDefault(Player.USSR, 0));
+//		nextStateBuilder.getSuperpowerStateBuilder().getUsaStateBuilder().getInfluenceStoreBuilder()
+//		    .setPolitical(polStoreMap.get(Player.USA) + basePolIncomeMap.get(Player.USA) + polIncomeModifierMap.getOrDefault(Player.USA, 0))
+//		    .setMilitary(milStoreMap.get(Player.USA) + baseMilIncomeMap.get(Player.USA) + milIncomeModifierMap.getOrDefault(Player.USA, 0))
+//		    .setCovert(covStoreMap.get(Player.USA) + baseCovIncomeMap.get(Player.USA) + covIncomeModifierMap.getOrDefault(Player.USA, 0));
+//		nextStateBuilder.getSuperpowerStateBuilder().getUssrStateBuilder().getInfluenceStoreBuilder()
+//			.setPolitical(polStoreMap.get(Player.USSR) + basePolIncomeMap.get(Player.USSR) + polIncomeModifierMap.getOrDefault(Player.USSR, 0))
+//			.setMilitary(milStoreMap.get(Player.USSR) + baseMilIncomeMap.get(Player.USSR) + milIncomeModifierMap.getOrDefault(Player.USSR, 0))
+//			.setCovert(covStoreMap.get(Player.USSR) + baseCovIncomeMap.get(Player.USSR) + covIncomeModifierMap.getOrDefault(Player.USSR, 0));
 
 		nextStateBuilder.getSuperpowerStateBuilder().getUsaStateBuilder().setPatriotism(patriotismCounter);
 		nextStateBuilder.getSuperpowerStateBuilder().getUssrStateBuilder().setPartyUnity(partyUnityCounter);

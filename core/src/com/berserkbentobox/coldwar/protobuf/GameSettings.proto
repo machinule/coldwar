@@ -17,6 +17,7 @@ import "Move.proto";
 import "Event.proto";
 import "Version.proto";
 import "Deterrence.proto";
+import "Influence.proto";
 
 // GameSettings contains constants over the course of the game.
 // These are not logged each turn, but merely copied to the top level GameState.
@@ -34,4 +35,5 @@ message GameSettings {
 	optional PseudorandomMechanicSettings pseudorandom_settings = 11;
 	optional ConflictMechanicSettings conflict_settings = 12;
 	optional DeterrenceMechanicSettings deterrence_settings = 13;
+	optional InfluenceMechanicSettings influence_settings = 14;
 }

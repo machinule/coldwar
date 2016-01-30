@@ -119,6 +119,7 @@ public abstract class Client {
 		nextGameState.setSuperpowerState(managedGameState.getSuperpowerState());
 		nextGameState.setDeterrenceState(managedGameState.getDeterrenceState());
 		nextGameState.setTreatyState(managedGameState.getTreatyState());
+		nextGameState.setInfluenceState(managedGameState.getInfluenceState());
 		
 		this.state = nextGameState.build();
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {

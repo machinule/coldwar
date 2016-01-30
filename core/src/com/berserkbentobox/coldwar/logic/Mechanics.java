@@ -3,6 +3,7 @@ package com.berserkbentobox.coldwar.logic;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
 import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.influence.InfluenceMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.superpower.SuperpowerMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyMechanic;
@@ -15,6 +16,7 @@ public class Mechanics {
 	private PseudorandomMechanic pseudorandom;
 	private TreatyMechanic treaty;
 	private DeterrenceMechanic deterrence;
+	private InfluenceMechanic influence;
 	
 	public Mechanics(MechanicSettings settings, GameState state) {
 		this.technology = new TechnologyMechanic(settings.getTechnology(), state);
@@ -23,6 +25,7 @@ public class Mechanics {
 		this.heat = new HeatMechanic(settings.getHeat(), state);
 		this.treaty = new TreatyMechanic(settings.getTreaty(), state);
 		this.deterrence = new DeterrenceMechanic(settings.getDeterrence(), state);
+		this.influence = new InfluenceMechanic(settings.getInfluence(), state);
 	}
 	
 	public TechnologyMechanic getTechnology() {
@@ -34,8 +37,7 @@ public class Mechanics {
 	}
 	
 	public SuperpowerMechanic getSuperpower() {
-		return this.superpower;
-	
+		return this.superpower;	
 	}
 	
 	public HeatMechanic getHeat() {
@@ -50,6 +52,10 @@ public class Mechanics {
 		return this.treaty;
 	}
 
+	public InfluenceMechanic getInfluence() {
+		return this.influence;
+	}
+
 	public GameState buildState() {
 		GameState.Builder state = GameState.newBuilder();
 		state.setTechnologyState(this.getTechnology().buildState());
@@ -58,6 +64,7 @@ public class Mechanics {
 		state.setSuperpowerState(this.getSuperpower().buildState());
 		state.setDeterrenceState(this.getDeterrence().buildState());
 		state.setTreatyState(this.getTreaty().buildState());
+		state.setInfluenceState(this.getInfluence().buildState());
 		return state.build();
 	}
 }
