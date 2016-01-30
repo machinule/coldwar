@@ -6,6 +6,7 @@ usa_settings {
   	name: "Harry S. Truman"
   	party: DEMOCRAT
   	init_num_terms_as_president: 2
+  	birth_year: 1884
   	start_year: 1945
   	end_year: 1953
   }
@@ -13,18 +14,21 @@ usa_settings {
   	name: "Alben W. Barkley"
   	party: DEMOCRAT
   	init_num_terms_as_vice_president: 1
+  	birth_year: 1877
   	start_year: 1945
   	end_year: 1957
   }
   leader_settings {
   	name: "Estes Kefauver"
   	party: DEMOCRAT
+  	birth_year: 1903
   	start_year: 1945
   	end_year: 1961
   }
   leader_settings {
   	name: "Adlai Stevenson"
   	party: DEMOCRAT
+  	birth_year: 1900
   	start_year: 1945
   	end_year: 1961
   }
@@ -37,6 +41,7 @@ usa_settings {
   leader_settings {
   	name: "Lyndon B. Johnson"
   	party: DEMOCRAT
+  	birth_year: 1908
   	vice_year: 1957
   	start_year: 1961
   	end_year: 1971
@@ -44,6 +49,7 @@ usa_settings {
   leader_settings {
   	name: "John F. Kennedy"
   	party: DEMOCRAT
+  	birth_year: 1917
   	start_year: 1957
   	end_year: 1971
   } 
@@ -53,24 +59,28 @@ usa_settings {
   leader_settings {
     name: "Dwight D. Eisenhower"
     party: REPUBLICAN
+    birth_year: 1890
     start_year: 1945
     end_year: 1969
   }
   leader_settings {
     name: "Earl Warren"
     party: REPUBLICAN
+    birth_year: 1891
     start_year: 1945
     end_year: 1953
   }
   leader_settings {
     name: "Thomas Dewey"
     party: REPUBLICAN
+    birth_year: 1902
     start_year: 1945
     end_year: 1953
   }
   leader_settings {
     name: "Richard Nixon"
     party: REPUBLICAN
+    birth_year: 1913
     vice_year: 1945
     start_year: 1957
     end_year: 1977
@@ -78,24 +88,28 @@ usa_settings {
   leader_settings {
     name: "Harold Stassen"
     party: REPUBLICAN
+    birth_year: 1907
     start_year: 1945
     end_year: 1957
   }
   leader_settings {
     name: "Henry Cabot Lodge Jr."
     party: REPUBLICAN
+    birth_year: 1902
     start_year: 1957
     end_year: 1961
   }
   leader_settings {
     name: "Nelson Rockefeller"
     party: REPUBLICAN
+    birth_year: 1908
     start_year: 1957
     end_year: 1977
   }
   leader_settings {
     name: "Barry Goldwater"
     party: REPUBLICAN
+    birth_year: 1908
     start_year: 1957
     end_year: 1965
   }  
@@ -118,12 +132,71 @@ usa_settings {
   init_patriotism: 50
 }
 ussr_settings {
+
+  # Leaders
+
   leader_settings {
   	name: "Joseph Stalin"
+  	birth_year: 1878
   	start_year: 1922
-  	end_year: 1960
   	init_party_support: 4
   }
+  leader_settings {
+  	name: "Georgy Malenkov"
+  	birth_year: 1902
+  	start_year: 1948
+  }
+  leader_settings {
+  	name: "Lavrentiy Beria"
+  	birth_year: 1899
+  	start_year: 1948
+  }
+  leader_settings {
+  	name: "Georgy Zhukov"
+  	birth_year: 1896
+  	start_year: 1948
+  }
+  leader_settings {
+  	name: "Vyacheslav Molotov"
+  	birth_year: 1890
+  	start_year: 1948
+  }
+  leader_settings {
+  	name: "Nikolai Bulganin"
+  	birth_year: 1895
+  	start_year: 1948
+  }
+  leader_settings {
+  	name: "Nikita Khrushchev"
+  	birth_year: 1894
+  	start_year: 1948
+  }
+  leader_settings {
+  	name: "Anastas Mikoyan"
+  	birth_year: 1895
+  	start_year: 1948
+  }
+  leader_settings {
+  	name: "Mikhail Suslov"
+  	birth_year: 1902
+  	start_year: 1955
+  }
+  leader_settings {
+  	name: "Nikolai Podgorny"
+  	birth_year: 1902
+  	start_year: 1957
+  }
+  leader_settings {
+  	name: "Alexei Kosygin"
+  	birth_year: 1904
+  	start_year: 1960
+  }
+  leader_settings {
+  	name: "Andrei Kirilenko"
+  	birth_year: 1906
+  	start_year: 1963
+  }
+  
   secretariat_settings {
   	support_cost {
   	  political_points: 2
