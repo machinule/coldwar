@@ -3,8 +3,8 @@ package com.berserkbentobox.coldwar.logic.mechanics.treaty;
 import com.berserkbentobox.coldwar.Treaty.TreatySettings;
 import com.berserkbentobox.coldwar.Treaty.TreatyState;
 import com.berserkbentobox.coldwar.logic.Status;
-import com.berserkbentobox.coldwar.logic.mechanics.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
 
 public class Treaty {
 	public static class Settings {

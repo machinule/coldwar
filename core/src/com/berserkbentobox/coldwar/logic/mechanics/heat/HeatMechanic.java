@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic.mechanics;
+package com.berserkbentobox.coldwar.logic.mechanics.heat;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
