@@ -31,13 +31,18 @@ public class UsaLeader {
 			return state.build();
 		}
 	}
+	
 	private Settings settings;
+	private Usa parent;
 	private UsaLeaderState.Builder state;
 	
-	public UsaLeader(Settings settings, UsaLeaderState.Builder state) {
+	public UsaLeader(Usa parent, Settings settings, UsaLeaderState.Builder state) {
 		this.settings = settings;
 		this.state = state;
+		this.parent = parent;
 	}
+	
+	// Getters
 	
 	public UsaLeaderState.Builder getState() {
 		return this.state;
