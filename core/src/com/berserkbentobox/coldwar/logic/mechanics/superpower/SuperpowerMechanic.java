@@ -1,18 +1,18 @@
-package com.berserkbentobox.coldwar.logic.mechanics.Superpower;
+package com.berserkbentobox.coldwar.logic.mechanics.superpower;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicSettings;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicState;
+import com.berserkbentobox.coldwar.Superpower.UsaLeaderState;
 import com.berserkbentobox.coldwar.Superpower.UsaSettings;
 import com.berserkbentobox.coldwar.Superpower.UsaState;
 import com.berserkbentobox.coldwar.Technology.TechnologyGroupState;
-import com.berserkbentobox.coldwar.Technology.TechnologyMechanicState;
 import com.berserkbentobox.coldwar.logic.Status;
-import com.berserkbentobox.coldwar.logic.Client.Player;
 import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyGroup;
 
@@ -33,6 +33,10 @@ public class SuperpowerMechanic {
 			return Status.OK;
 		}
 		
+		public Usa.Settings getUsaSettings() {
+			return this.usaSettings;
+		}
+		
 		public SuperpowerMechanicState initialState() {
 			SuperpowerMechanicState.Builder state = SuperpowerMechanicState.newBuilder();
 			usaSettings = new Usa.Settings(settings.getUsaSettings());
@@ -46,13 +50,22 @@ public class SuperpowerMechanic {
 	
 	private Settings settings;
 	private SuperpowerMechanicState.Builder state;
-	//private Map<String, UsaLeader> usaLeaders;
-	//private Map<String, UssrLeader> ussrLeaders;
+	private Map<String, UsaLeader> usaLeaders;
+	private Map<String, UssrLeader> ussrLeaders;
 	
 	public SuperpowerMechanic(Settings settings, GameStateOrBuilder state) {
 		this.settings = settings;
 		this.state = settings.initialState().toBuilder();
-		
+		this.usaLeaders = new LinkedHashMap<String, UsaLeader>();
+		//for (UsaLeaderState.Builder ls : this.state.getUsaStateBuilder().getLeaderBuilderList()) {
+		//	UsaLeader l = new UsaLeader(this, this.getSettings().;
+		//	this.usaTechnologyGroups.put(tg.getState().getId(), tg);
+		//}
+		//this.ussrTechnologyGroups = new LinkedHashMap<String, TechnologyGroup>();
+		//for (TechnologyGroupState.Builder tgs : this.state.getUssrStateBuilderList()) {
+		//	TechnologyGroup tg = new TechnologyGroup(this, this.getSettings().getTechnologyGroupSettings(tgs.getId()), tgs);
+		//	this.ussrTechnologyGroups.put(tg.getState().getId(), tg);
+		//}
 	}
 	
 	public Status validate() {
