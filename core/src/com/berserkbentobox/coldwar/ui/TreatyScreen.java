@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.berserkbentobox.coldwar.ColdWarGame;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.Settings;
@@ -46,6 +46,16 @@ public class TreatyScreen extends AbstractScreen {
 			treatyTable.add(new TreatyCard(this.client, t, skin));
 			treatyTable.row();
 		}
+		treatyTable.row();
+		final TextButton deescalateButton = new TextButton("Deescalate", skin);
+		deescalateButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				TreatyScreen.this.client.getMoveBuilder().addDeescalateMove();
+			}
+		});
+		treatyTable.add(deescalateButton);
+		treatyTable.row();
 		this.stage.addActor(treatyTable);
 		
 		final HeaderPane headerPane = new HeaderPane(this.client, skin);
