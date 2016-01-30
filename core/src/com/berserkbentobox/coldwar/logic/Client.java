@@ -116,6 +116,9 @@ public abstract class Client {
 		nextGameState.setHeatState(managedGameState.getHeatState());
 		nextGameState.setTechnologyState(managedGameState.getTechnologyState());
 		nextGameState.setPseudorandomState(managedGameState.getPseudorandomState());
+		nextGameState.setSuperpowerState(managedGameState.getSuperpowerState());
+		nextGameState.setDeterrenceState(managedGameState.getDeterrenceState());
+		nextGameState.setTreatyState(managedGameState.getTreatyState());
 		
 		this.state = nextGameState.build();
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {
