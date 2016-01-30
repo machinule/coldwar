@@ -4,7 +4,7 @@ import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
 import com.berserkbentobox.coldwar.logic.mechanics.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.TechnologyMechanic;
-import com.berserkbentobox.coldwar.logic.mechanics.Superpower.SuperpowerMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.superpower.SuperpowerMechanic;
 
 public class Mechanics {
 	private HeatMechanic heat;

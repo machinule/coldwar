@@ -4,7 +4,7 @@ import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.logic.mechanics.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.TechnologyMechanic;
-import com.berserkbentobox.coldwar.logic.mechanics.Superpower.SuperpowerMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.superpower.SuperpowerMechanic;
 
 // MechanicSettings is a container for various MechanicSettings abstractions over the raw settings proto.
 public class MechanicSettings {

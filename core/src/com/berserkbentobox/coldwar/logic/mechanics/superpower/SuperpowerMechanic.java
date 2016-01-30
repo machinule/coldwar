@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic.mechanics.Superpower;
+package com.berserkbentobox.coldwar.logic.mechanics.superpower;
 
 import java.util.Collection;
 import java.util.Map;
