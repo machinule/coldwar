@@ -24,17 +24,27 @@ public class GameStateManager {
 	public Mechanics computeDeterministicMechanics(MoveList usaMoves, MoveList ussrMoves) {
 		Mechanics mechanics = new Mechanics(this.settings, this.initialState);
 		
-		// Technology
 		for (Move move : usaMoves.getMovesList()) {
+			// Technology
 			if (move.hasTechnologyMechanicMoves()) {
 				mechanics.getTechnology().makeMoves(Player.USA, move.getTechnologyMechanicMoves());							
 			}
+			// Treaty
+			if (move.hasTreatyMechanicMoves()) {
+				mechanics.getTreaty().makeMoves(Player.USA, move.getTreatyMechanicMoves());							
+			}
 		}
+		
 		for (Move move : ussrMoves.getMovesList()) {
+			// Technology
 			if (move.hasTechnologyMechanicMoves()) {
 				mechanics.getTechnology().makeMoves(Player.USSR, move.getTechnologyMechanicMoves());							
 			}
-		}
+			// Treaty
+			if (move.hasTreatyMechanicMoves()) {
+				mechanics.getTreaty().makeMoves(Player.USSR, move.getTreatyMechanicMoves());							
+			}
+		}		
 		
 		// Heat
 		mechanics.getHeat().decay();	
@@ -51,13 +61,12 @@ public class GameStateManager {
 		// Supwerpower leaders
 		mechanics.getSuperpower().USAholdElections(mechanics.getPseudorandom());
 		
+		// Treaty
+		mechanics.getTreaty().maybeSignTreaty(mechanics.getPseudorandom(), mechanics.getHeat(), mechanics.getDeterrence());
+		
 		// Pseudorandom
 		mechanics.getPseudorandom().reseed();
-		
-		GameState.Builder state = GameState.newBuilder();
-		state.setTechnologyState(mechanics.getTechnology().buildState());
-		state.setPseudorandomState(mechanics.getPseudorandom().buildState());
-		state.setHeatState(mechanics.getHeat().buildState());
-		return state.build();
+
+		return mechanics.buildState();
 	}
 }

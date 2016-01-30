@@ -5,6 +5,8 @@ import com.berserkbentobox.coldwar.logic.mechanics.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.TechnologyMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.Superpower.SuperpowerMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.treaty.TreatyMechanic;
 
 // MechanicSettings is a container for various MechanicSettings abstractions over the raw settings proto.
 public class MechanicSettings {
@@ -13,12 +15,16 @@ public class MechanicSettings {
 	private TechnologyMechanic.Settings technology;
 	private PseudorandomMechanic.Settings pseudorandom;
 	private SuperpowerMechanic.Settings superpower;
+	private TreatyMechanic.Settings treaty;
+	private DeterrenceMechanic.Settings deterrence;
 	
 	public MechanicSettings(GameSettings settings) {
 		this.technology = new TechnologyMechanic.Settings(settings);
 		this.pseudorandom = new PseudorandomMechanic.Settings(settings);
 		this.superpower = new SuperpowerMechanic.Settings(settings);
 		this.heat = new HeatMechanic.Settings(settings);
+		this.deterrence = new DeterrenceMechanic.Settings(settings);
+		this.treaty = new TreatyMechanic.Settings(settings);
 	}
 	
 	public TechnologyMechanic.Settings getTechnology() {
@@ -35,5 +41,13 @@ public class MechanicSettings {
 
 	public HeatMechanic.Settings getHeat() {
 		return this.heat;
+	}
+
+	public TreatyMechanic.Settings getTreaty() {
+		return this.treaty;
+	}
+	
+	public DeterrenceMechanic.Settings getDeterrence() {
+		return this.deterrence;
 	}
 }
