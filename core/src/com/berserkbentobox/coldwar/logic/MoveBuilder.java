@@ -192,4 +192,11 @@ public class MoveBuilder {
 		this.computeState();
 	}
 
+	public void addDeescalateMove() {
+		// TODO Auto-generated method stub
+		Move.Builder move = Move.newBuilder();
+		move.getTreatyMechanicMovesBuilder().getDeescalateMoveBuilder();
+		this.moves.addMoves(move.build());
+	}
+
 }
