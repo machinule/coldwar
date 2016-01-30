@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic.mechanics;
+package com.berserkbentobox.coldwar.logic.mechanics.technology;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,6 +14,7 @@ import com.berserkbentobox.coldwar.Technology.TechnologyMechanicMoves;
 import com.berserkbentobox.coldwar.Technology.TechnologyMechanicSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyMechanicState;
 import com.berserkbentobox.coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.logic.mechanics.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.Status;
 
 public class TechnologyMechanic {

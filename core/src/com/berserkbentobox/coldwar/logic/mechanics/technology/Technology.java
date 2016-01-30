@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic.mechanics;
+package com.berserkbentobox.coldwar.logic.mechanics.technology;
 
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyState;

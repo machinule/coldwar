@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic.mechanics;
+package com.berserkbentobox.coldwar.logic.mechanics.technology;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,6 +11,7 @@ import com.berserkbentobox.coldwar.Technology.TechnologyGroupState;
 import com.berserkbentobox.coldwar.Technology.TechnologySettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyState;
 import com.berserkbentobox.coldwar.logic.Status;
+import com.berserkbentobox.coldwar.logic.mechanics.PseudorandomMechanic;
 
 public class TechnologyGroup {
 	public static class Settings {

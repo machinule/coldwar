@@ -14,7 +14,7 @@ import com.berserkbentobox.coldwar.Technology.TechnologyMechanicState;
 import com.berserkbentobox.coldwar.logic.Status;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 import com.berserkbentobox.coldwar.logic.mechanics.PseudorandomMechanic;
-import com.berserkbentobox.coldwar.logic.mechanics.TechnologyGroup;
+import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyGroup;
 
 public class SuperpowerMechanic {
 
