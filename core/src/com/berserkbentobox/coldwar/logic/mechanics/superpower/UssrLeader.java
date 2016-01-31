@@ -1,27 +1,52 @@
 package com.berserkbentobox.coldwar.logic.mechanics.superpower;
 
 import com.berserkbentobox.coldwar.Superpower.UssrLeaderState;
-import com.berserkbentobox.coldwar.Superpower.UssrLeaderStateOrBuilder;
 import com.berserkbentobox.coldwar.logic.Status;
-import com.berserkbentobox.coldwar.Superpower.UssrLeaderSettingsOrBuilder;
+import com.berserkbentobox.coldwar.Superpower.UssrLeaderSettings;
 
-	
 public class UssrLeader {
-	static UssrLeaderState.Builder buildInitialState(UssrLeaderSettingsOrBuilder settings) {
-		UssrLeaderState.Builder state = UssrLeaderState.newBuilder();
-		state
-			.setName(settings.getName())
-			.setAvailable(settings.getInitAvailable())
-			.setPartySupport(settings.getInitPartySupport());
-		return state;
+	public static class Settings {
+		
+		private UssrLeaderSettings settings;
+		
+		public Settings(UssrLeaderSettings settings) {
+			this.settings = settings;
+		}
+		
+		public Status validate() {
+			return Status.OK;
+		}
+		
+		public UssrLeaderSettings getSettings() {
+			return this.settings;
+		}
+		
+		public UssrLeaderState initialState() {
+			UssrLeaderState.Builder state = UssrLeaderState.newBuilder();
+			state
+				.setName(this.settings.getName())
+				.setPartySupport(this.settings.getInitPartySupport());
+			return state.build();
+		}
 	}
 	
-	static Status validateSettings(UssrLeaderSettingsOrBuilder settings) {
-		return Status.OK;
+	private Settings settings;
+	private Ussr parent;
+	private UssrLeaderState.Builder state;
+	
+	public UssrLeader(Ussr parent, Settings settings, UssrLeaderState.Builder state) {
+		this.settings = settings;
+		this.state = state;
+		this.parent = parent;
 	}
 	
-	static Status validateState(UssrLeaderStateOrBuilder state) {
-		return Status.OK;
+	// Getters
+	
+	public UssrLeaderState.Builder getState() {
+		return this.state;
+	}
+
+	public Settings getSettings() {
+		return this.settings;
 	}
 }
-

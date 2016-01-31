@@ -1,19 +1,17 @@
 package com.berserkbentobox.coldwar.logic.mechanics.superpower;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.berserkbentobox.coldwar.Superpower.UsaSettings;
-import com.berserkbentobox.coldwar.Superpower.UsaSettingsOrBuilder;
 import com.berserkbentobox.coldwar.Superpower.UsaState;
-import com.berserkbentobox.coldwar.Technology.TechnologyState;
 import com.berserkbentobox.coldwar.Superpower.UsaLeaderSettings;
 import com.berserkbentobox.coldwar.Superpower.UsaLeaderState;
 import com.berserkbentobox.coldwar.logic.Status;
-import com.berserkbentobox.coldwar.logic.mechanics.technology.Technology;
-import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 
 public class Usa {
 	public static class Settings {
@@ -57,16 +55,6 @@ public class Usa {
 				for (UsaLeader.Settings ls : this.getLeaderSettings()) {
 					state.addLeader(ls.initialState());
 				}
-/*
-			state
-				.getUssrStateBuilder()
-					.setPremier(settings.getUssrSettings().getSecretariatSettings().getInitPremier())
-					.addAllTroika(settings.getUssrSettings().getSecretariatSettings().getInitTroikaList())
-					.addAllLeader(settings.getUssrSettings().getLeaderSettingsList().stream().map(s -> UssrLeader.buildInitialState(s).build()).collect(Collectors.toList()))
-					.setPartyUnity(settings.getUssrSettings().getInitPartyUnity())
-					.setInfluenceStore(InfluenceStore.buildInitialState(settings.getUssrSettings().getInfluenceStoreSettings()));
-			
-*/
 			return state.build();
 		}
 	}
@@ -75,6 +63,7 @@ public class Usa {
 	private SuperpowerMechanic parent;
 	private UsaState.Builder state;
 	private Map<String, UsaLeader> leaders;
+	private ArrayList<UsaLeader> candidates;
 	
 	public Usa(SuperpowerMechanic parent, Settings settings, UsaState.Builder state) {
 		this.settings = settings;
@@ -85,6 +74,10 @@ public class Usa {
 			UsaLeader l = new UsaLeader(this, parent.getSettings().getUsaSettings().getLeaderSettings(ls.getName()), ls);
 			this.leaders.put(l.getState().getName(), l);
 		}
+		//sdfsd
+		this.state.setPresident(settings.getSettings().getPresidencySettings().getInitPresident());
+		this.state.setVicePresident(settings.getSettings().getPresidencySettings().getInitVicePresident());
+		candidates = new ArrayList<UsaLeader>();
 	}
 	
 	// Getters
@@ -101,7 +94,60 @@ public class Usa {
 		return this.leaders.values();
 	}
 	
+	public Collection<UsaLeader> getPresidentialEligible(int year) {
+		Collection<UsaLeader> ret = new ArrayList<UsaLeader>();
+		for (UsaLeader l : this.leaders.values()) {
+			UsaLeaderSettings settings = l.getSettings().getSettings();
+			UsaLeaderState.Builder state = l.getState();
+			if (settings.getStartYear() < year &&
+				settings.getEndYear() > year &&
+				state.getNumTermsAsPresident() < 2) {
+				ret.add(l);
+			}
+		}
+		return ret;
+	}
+
+	public Collection<UsaLeader> getVicePresidentialEligible(int year) {
+		Collection<UsaLeader> ret = new ArrayList<UsaLeader>();
+		for (UsaLeader l : this.leaders.values()) {
+			UsaLeaderSettings settings = l.getSettings().getSettings();
+			UsaLeaderState.Builder state = l.getState();
+			if (settings.getStartYear() - settings.getViceYears() < year &&
+				settings.getEndYear() > year &&
+				state.getNumTermsAsPresident() < this.settings.getSettings().getPresidencySettings().getMaxTerms()) {
+				ret.add(l);
+			}
+		}
+		return ret;
+	}
+	
 	public UsaLeader getLeader(String name) {
 		return this.leaders.get(name);
+	}	
+	
+	// Logic
+	
+	public void clearCandidates() {
+		candidates.clear();
+	}
+	
+	public void setCandidate(String name) {
+		candidates.add(leaders.get(name));
+	}
+	
+	public UsaLeader electPresident(int year, ArrayList<UsaLeader> finalCandidates, PseudorandomMechanic pseudorandomMechanic) {
+		UsaLeader ret;
+		int base = 500000;
+		int vp_effect = 50000; // TODO: Settings value
+		int cand_0_vp = finalCandidates.get(0).getState().getNumTermsAsVicePresident() * vp_effect;
+		int cand_1_vp = -(finalCandidates.get(1).getState().getNumTermsAsVicePresident() * vp_effect);
+		if (pseudorandomMechanic.happens(base + cand_0_vp + cand_1_vp)) {
+			ret = finalCandidates.get(0);
+		} else {
+			ret = finalCandidates.get(1);
+		}
+		this.clearCandidates();
+		return ret;
 	}
 }

@@ -2,13 +2,18 @@ package com.berserkbentobox.coldwar.logic.mechanics.superpower;
 
 import static org.junit.Assert.*;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import org.junit.Test;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
-import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicState;
+import com.berserkbentobox.coldwar.Superpower.PresidencySettings;
 import com.berserkbentobox.coldwar.Superpower.UsaLeaderParty;
 import com.berserkbentobox.coldwar.Superpower.UsaSettings;
+import com.berserkbentobox.coldwar.Superpower.UssrSettings;
+import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 
 public class SuperpowerMechanicTest {
 	
@@ -18,17 +23,86 @@ public class SuperpowerMechanicTest {
 		UsaSettings.Builder usa = settings.getSuperpowerSettingsBuilder()
 			.getUsaSettingsBuilder();
 		usa.addLeaderSettingsBuilder()
-			.setName("LEADER_US_1")
+			.setName("LEADER_US_R_1")
 			.setParty(UsaLeaderParty.REPUBLICAN)
+			.setBirthYear(1920)
 			.setStartYear(1945)
-			.setInitNumTermsAsPresident(0)
-			.setInitNumTermsAsVicePresident(1);;
+			.setEndYear(1960)
+			.setInitNumTermsAsVicePresident(1);
 		usa.addLeaderSettingsBuilder()
-			.setName("LEADER_US_2")
-			.setParty(UsaLeaderParty.DEMOCRAT)
+			.setName("LEADER_US_R_2")
+			.setParty(UsaLeaderParty.REPUBLICAN)
+			.setBirthYear(1920)
 			.setStartYear(1945)
-			.setInitNumTermsAsPresident(1)
-			.setInitNumTermsAsVicePresident(0);
+			.setEndYear(1960);
+		usa.addLeaderSettingsBuilder()
+			.setName("LEADER_US_R_3")
+			.setParty(UsaLeaderParty.REPUBLICAN)
+			.setBirthYear(1920)
+			.setStartYear(1945)
+			.setEndYear(1960);
+		usa.addLeaderSettingsBuilder()
+			.setName("LEADER_US_R_4")
+			.setParty(UsaLeaderParty.REPUBLICAN)
+			.setBirthYear(1920)
+			.setViceYears(15)
+			.setStartYear(1960)
+			.setEndYear(1980);
+		usa.addLeaderSettingsBuilder()
+			.setName("LEADER_US_R_5")
+			.setParty(UsaLeaderParty.REPUBLICAN)
+			.setBirthYear(1920)
+			.setStartYear(1960)
+			.setEndYear(1980);
+		
+		usa.addLeaderSettingsBuilder()
+			.setName("LEADER_US_D_1")
+			.setParty(UsaLeaderParty.DEMOCRAT)
+			.setBirthYear(1905)
+			.setStartYear(1945)
+			.setEndYear(1960)
+			.setInitNumTermsAsPresident(1);
+		usa.addLeaderSettingsBuilder()
+			.setName("LEADER_US_D_2")
+			.setParty(UsaLeaderParty.DEMOCRAT)
+			.setBirthYear(1905)
+			.setStartYear(1945)
+			.setEndYear(1960);
+		usa.addLeaderSettingsBuilder()
+			.setName("LEADER_US_D_3")
+			.setParty(UsaLeaderParty.DEMOCRAT)
+			.setBirthYear(1905)
+			.setStartYear(1945)
+			.setEndYear(1960);
+		usa.addLeaderSettingsBuilder()
+			.setName("LEADER_US_D_4")
+			.setParty(UsaLeaderParty.DEMOCRAT)
+			.setBirthYear(1920)
+			.setViceYears(15)
+			.setStartYear(1960)
+			.setEndYear(1980);
+		usa.addLeaderSettingsBuilder()
+			.setName("LEADER_US_D_5")
+			.setParty(UsaLeaderParty.DEMOCRAT)
+			.setBirthYear(1920)
+			.setStartYear(1960)
+			.setEndYear(1980);
+		
+		PresidencySettings.Builder presidency = usa.getPresidencySettingsBuilder()
+			.setInitPresident("LEADER_US_D_1")
+			.setInitVicePresident("LEADER_US_R_1");
+		
+		UssrSettings.Builder ussr = settings.getSuperpowerSettingsBuilder()
+			.getUssrSettingsBuilder();
+		ussr.addLeaderSettingsBuilder()
+			.setName("LEADER_USSR_1")
+			.setInitPartySupport(4)
+			.setBirthYear(1900)
+			.setStartYear(1945);
+		ussr.addLeaderSettingsBuilder()
+			.setName("LEADER_USSR_2")
+			.setBirthYear(1905)
+			.setStartYear(1945);
 		
 		return new SuperpowerMechanic.Settings(settings);
 	}
@@ -41,66 +115,70 @@ public class SuperpowerMechanicTest {
 	}
 	
 	@Test
-	public void testInititialState() {
-		SuperpowerMechanic.Settings settings = getSettings();
-		SuperpowerMechanicState state = settings.initialState();
-		assertEquals(state.getUsaState().getLeaderCount(), 2);
-		assertEquals(state.getUsaState().getLeader(0).getName(), "LEADER_US_1");
-		assertEquals(state.getUsaState().getLeader(0).getNumTermsAsPresident(), 0);
-		assertEquals(state.getUsaState().getLeader(0).getNumTermsAsVicePresident(), 1);
-		assertEquals(state.getUsaState().getLeader(1).getName(), "LEADER_US_2");
-		assertEquals(state.getUsaState().getLeader(1).getNumTermsAsPresident(), 1);
-		assertEquals(state.getUsaState().getLeader(1).getNumTermsAsVicePresident(), 0);
+	public void testInitialSuperpowerMechanic() {
+		SuperpowerMechanic mechanic = getMechanic();
+
+		assertEquals(mechanic.getUsa().getState().getPresident(), "LEADER_US_D_1");
+		assertEquals(mechanic.getUsa().getState().getVicePresident(), "LEADER_US_R_1");
+		
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_1").getState().getName(), "LEADER_US_R_1");
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_1").getState().getNumTermsAsPresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_1").getState().getNumTermsAsVicePresident(), 1);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_2").getState().getName(), "LEADER_US_R_2");
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_2").getState().getNumTermsAsPresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_2").getState().getNumTermsAsVicePresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_3").getState().getName(), "LEADER_US_R_3");
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_3").getState().getNumTermsAsPresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_3").getState().getNumTermsAsVicePresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_4").getState().getName(), "LEADER_US_R_4");
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_4").getState().getNumTermsAsPresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_4").getState().getNumTermsAsVicePresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_5").getState().getName(), "LEADER_US_R_5");
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_5").getState().getNumTermsAsPresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_R_5").getState().getNumTermsAsVicePresident(), 0);
+		
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_1").getState().getName(), "LEADER_US_D_1");
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_1").getState().getNumTermsAsPresident(), 1);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_1").getState().getNumTermsAsVicePresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_2").getState().getName(), "LEADER_US_D_2");
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_2").getState().getNumTermsAsPresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_2").getState().getNumTermsAsVicePresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_3").getState().getName(), "LEADER_US_D_3");
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_3").getState().getNumTermsAsPresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_3").getState().getNumTermsAsVicePresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_4").getState().getName(), "LEADER_US_D_4");
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_4").getState().getNumTermsAsPresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_4").getState().getNumTermsAsVicePresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_5").getState().getName(), "LEADER_US_D_5");
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_5").getState().getNumTermsAsPresident(), 0);
+		assertEquals(mechanic.getUsa().getLeader("LEADER_US_D_5").getState().getNumTermsAsVicePresident(), 0);
+		
+		assertEquals(mechanic.getUssr().getLeader("LEADER_USSR_1").getState().getName(), "LEADER_USSR_1");
+		assertEquals(mechanic.getUssr().getLeader("LEADER_USSR_1").getState().getPartySupport(), 4);
+		assertEquals(mechanic.getUssr().getLeader("LEADER_USSR_2").getState().getName(), "LEADER_USSR_2");
+	}
+
+	@Test
+	public void testEligiblePresidents() {
+		SuperpowerMechanic mechanic = getMechanic();
+		Collection<UsaLeader> eligible = mechanic.getUsa().getPresidentialEligible(1946);
+		assertEquals(6, eligible.size());
 	}
 	
 	@Test
-	public void testInitialTechnologyMechanic() {
+	public void testEligibleVicePresidents() {
 		SuperpowerMechanic mechanic = getMechanic();
-		assertEquals(mechanic.getUsa().getLeader("LEADER_US_1").getState().getName(), "LEADER_US_1");
-		/*
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getState().getId(), "GROUP_A");
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getResearch(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getResearchProgressChance(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getProgressChance(), 500000);
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getFirstInProgressTechnology().getState().getId(), "TECH_A_1");
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getTechnology("TECH_A_1").getState().getId(), "TECH_A_1");
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getTechnology("TECH_A_1").getState().getProgress(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getTechnology("TECH_A_2").getState().getId(), "TECH_A_2");
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getTechnology("TECH_A_2").getState().getProgress(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getState().getId(), "GROUP_B");
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getResearch(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getResearchProgressChance(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getProgressChance(), 500000);
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getTechnology("TECH_B_1").getState().getId(), "TECH_B_1");
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getTechnology("TECH_B_1").getState().getProgress(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getTechnology("TECH_B_2").getState().getId(), "TECH_B_2");
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getTechnology("TECH_B_2").getState().getProgress(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_A").getState().getId(), "GROUP_A");
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_A").getResearch(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_A").getResearchProgressChance(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_A").getProgressChance(), 500000);
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_A").getTechnology("TECH_A_1").getState().getId(), "TECH_A_1");
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_A").getTechnology("TECH_A_1").getState().getProgress(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_A").getTechnology("TECH_A_2").getState().getId(), "TECH_A_2");
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_A").getTechnology("TECH_A_2").getState().getProgress(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_B").getState().getId(), "GROUP_B");
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_B").getResearch(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_B").getResearchProgressChance(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_B").getProgressChance(), 500000);
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_B").getTechnology("TECH_B_1").getState().getId(), "TECH_B_1");
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_B").getTechnology("TECH_B_1").getState().getProgress(), 0);
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_B").getTechnology("TECH_B_2").getState().getId(), "TECH_B_2");
-		assertEquals(mechanic.getTechnologyGroup(Player.USSR, "GROUP_B").getTechnology("TECH_B_2").getState().getProgress(), 0);
-	*/
+		Collection<UsaLeader> eligible = mechanic.getUsa().getVicePresidentialEligible(1946);
+		assertEquals(8, eligible.size());
+	}
+	
+	@Test
+	public void testElection() {
+		SuperpowerMechanic mechanic = getMechanic();
+		mechanic.getUsa().setCandidate("LEADER_US_D_2");
+		mechanic.getUsa().setCandidate("LEADER_US_D_3");
 	}
 /*
-	@Test
-	public void testGetFirstInProgressTechnology() {
-		TechnologyMechanic mechanic = getMechanic();
-		mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getTechnology("TECH_A_1").getState().setProgress(2);
-		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getFirstInProgressTechnology().getState().getId(), "TECH_A_2");
-	}
-
 	@Test
 	public void testIsInProgress() {
 		TechnologyMechanic mechanic = getMechanic();

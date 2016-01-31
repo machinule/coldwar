@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import com.berserkbentobox.coldwar.logic.Client;
+import com.berserkbentobox.coldwar.logic.Client.Player;
 import com.berserkbentobox.coldwar.logic.MoveBuilder;
 
 public class SuperpowerPane extends Table {
@@ -43,6 +44,16 @@ public class SuperpowerPane extends Table {
 				screen.game.setScreen(new TreatyScreen(screen.game, client));
 			}
 		});
+		final TextButton leaderButton = new TextButton("Leadership", skin);
+		leaderButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				//if(client.getPlayer() == Player.USA)
+					screen.game.setScreen(new UsaLeaderScreen(screen.game, client));
+				//else
+					//screen.game.setScreen(new UssrLeaderScreen(screen.game, client));
+			}
+		});
 
 		this.clearChildren();
 		this.add(playerLabel);
@@ -50,6 +61,8 @@ public class SuperpowerPane extends Table {
 		this.add(techButton);
 		this.row();
 		this.add(treatyButton);
+		this.row();
+		this.add(leaderButton);
 		this.row();
 	}
 }

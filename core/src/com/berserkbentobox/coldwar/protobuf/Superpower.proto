@@ -32,13 +32,12 @@ message UsaLeaderSettings {
 	optional string name = 1;
 	repeated TraitSettings traits = 2;
 	optional UsaLeaderParty party = 3;
-	optional int32 vice_year = 10;
 	optional int32 birth_year = 11;
 	optional int32 start_year = 4;
+	optional int32 vice_years = 10 [default = 0];
 	optional int32 end_year = 5;
-	optional int32 init_num_terms_as_president = 6;
-	optional int32 init_num_terms_as_vice_president = 7;
-	optional bool init_available = 8;
+	optional int32 init_num_terms_as_president = 6 [default = 0];
+	optional int32 init_num_terms_as_vice_president = 7 [default = 0];
 }
 
 // Settings for the USA presidency.
@@ -62,8 +61,7 @@ message UssrLeaderSettings {
 	optional int32 birth_year = 3;
 	optional int32 start_year = 4;
 	optional int32 end_year = 5;
-	optional int32 init_party_support = 6;
-	optional bool init_available = 7;
+	optional int32 init_party_support = 6 [default = 0];
 }
 
 // Settings for the USSR secretariat.

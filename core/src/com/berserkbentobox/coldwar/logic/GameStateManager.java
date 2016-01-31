@@ -1,7 +1,5 @@
 package com.berserkbentobox.coldwar.logic;
 
-import java.util.Random;
-
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;

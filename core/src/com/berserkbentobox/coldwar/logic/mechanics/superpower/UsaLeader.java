@@ -25,7 +25,6 @@ public class UsaLeader {
 			UsaLeaderState.Builder state = UsaLeaderState.newBuilder();
 			state
 				.setName(this.settings.getName())
-				.setAvailable(this.settings.getInitAvailable())
 				.setNumTermsAsPresident(this.settings.getInitNumTermsAsPresident())
 				.setNumTermsAsVicePresident(this.settings.getInitNumTermsAsVicePresident());
 			return state.build();

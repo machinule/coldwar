@@ -30,7 +30,7 @@ public class TreatyCard extends Table {
 		this.settings = t;
 		
 		infoBox = createLayout();
-		this.add(infoBox).size(200, 50);
+		this.add(infoBox).size(300, 50);
 	}
 	
 	protected Button createLayout() {

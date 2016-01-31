@@ -29,7 +29,7 @@ public class TechCard extends Table {
 		this.settings = t;
 		
 		infoBox = createLayout();
-		this.add(infoBox).size(200, 50);
+		this.add(infoBox).size(275, 50);
 	}
 	
 	protected Button createLayout() {

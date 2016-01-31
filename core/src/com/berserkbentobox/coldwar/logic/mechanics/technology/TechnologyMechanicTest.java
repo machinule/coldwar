@@ -42,11 +42,11 @@ public class TechnologyMechanicTest {
 			.setBaseVp(2);
 
 		TechnologyGroupSettings.Builder groupB = settings.getTechnologySettingsBuilder()
-				.addTechnologyGroupBuilder()
-					.setId("GROUP_B")
-					.setBaseResearchChance(500000)
-					.setMaxResearchFocusPerTurn(1)
-					.setResearchEffect(100000);
+			.addTechnologyGroupBuilder()
+				.setId("GROUP_B")
+				.setBaseResearchChance(500000)
+				.setMaxResearchFocusPerTurn(1)
+				.setResearchEffect(100000);
 		groupB.getUnitResearchCostBuilder().setMilitaryPoints(2);
 		groupB.addTechnologyBuilder()
 			.setId("TECH_B_1")

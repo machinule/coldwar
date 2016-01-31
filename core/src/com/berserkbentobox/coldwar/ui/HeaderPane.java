@@ -36,7 +36,7 @@ public class HeaderPane extends Table {
 		turnWaitDialog.text("Waiting for other player");
 				
 				
-		final TextButton endTurnButton = new TextButton("end Turn", this.skin);
+		final DynamicButton endTurnButton = new DynamicButton(this.client, c -> true, "end Turn", this.skin);
 		endTurnButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
