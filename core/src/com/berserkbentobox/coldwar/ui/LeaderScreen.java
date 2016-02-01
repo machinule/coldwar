@@ -12,13 +12,14 @@ import com.berserkbentobox.coldwar.ColdWarGame;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.logic.Client;
+import com.berserkbentobox.coldwar.logic.Client.Player;
 import com.berserkbentobox.coldwar.logic.mechanics.treaty.Treaty;
 
-public class UsaLeaderScreen extends AbstractScreen {
+public class LeaderScreen extends AbstractScreen {
 
 	private Client client;
 	
-	public UsaLeaderScreen(final ColdWarGame game, Client client) {
+	public LeaderScreen(final ColdWarGame game, Client client) {
 		super(game);
 		this.client = client;
 	}
@@ -32,9 +33,9 @@ public class UsaLeaderScreen extends AbstractScreen {
 		//final Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
 		final Skin skin = new Skin(Gdx.files.internal("uiskin.json"), atlas); // When creating JAR
 		
-		final Table wrapper = new Table(skin);
-		wrapper.setFillParent(true);
-		wrapper.setDebug(Settings.isDebug());
+		final Table usaWrapper = new Table(skin);
+		usaWrapper.setFillParent(true);
+		usaWrapper.setDebug(Settings.isDebug());
 		
 		final Table leaderTable = new Table(skin);
 		leaderTable.setDebug(Settings.isDebug());
@@ -63,8 +64,8 @@ public class UsaLeaderScreen extends AbstractScreen {
 		Table electionTime = new Table();
 		electionTime.setDebug(Settings.isDebug());
 		
-		DynamicLabel election_time = new DynamicLabel(this.client, c -> "Time until next election: " + Integer.toString((c.getMoveBuilder().getYear() + 3) % 4), skin);
-		electionTime.add(election_time);
+		DynamicLabel timeUntilElection = new DynamicLabel(this.client, c -> "Time until next election: " + Integer.toString((c.getMoveBuilder().getYear() + 3) % 4), skin);
+		electionTime.add(timeUntilElection);
 		electionTime.row();
 		
 		Table electionTable = new Table();
@@ -74,17 +75,28 @@ public class UsaLeaderScreen extends AbstractScreen {
 		electionTable.add(election_label)
 			.center();
 		electionTable.row();
-		ElectionTable candidateTable = new ElectionTable(this.client, skin);
+		CandidateTable candidateTable = new CandidateTable(this.client, skin);
 		electionTable.add(candidateTable);
 		
 		BinaryTable binaryElectionTable = new BinaryTable(this.client, c -> (c.getMoveBuilder().getYear() + 1) % 4 != 0, electionTime, electionTable, skin);
 		
-		wrapper.add(leaderTable);
-		wrapper.row();
-		wrapper.add(binaryElectionTable);
-		wrapper.row();
+		usaWrapper.add(leaderTable);
+		usaWrapper.row();
+		usaWrapper.add(binaryElectionTable);
+		//usaWrapper.add(candidateTable);
+		usaWrapper.row();
 		
-		this.stage.addActor(wrapper);
+		final Table ussrWrapper = new Table(skin);
+		ussrWrapper.setFillParent(true);
+		ussrWrapper.setDebug(Settings.isDebug());
+		
+		final BinaryTable screenWrapper = new BinaryTable(client, c -> c.getPlayer() == Player.USSR, ussrWrapper, usaWrapper, skin);
+		screenWrapper.setFillParent(true);
+		//screenWrapper.setDebug(Settings.isDebug());
+		screenWrapper.bottom().left();
+		
+		this.stage.addActor(screenWrapper);
+		//this.stage.addActor(usaWrapper);
 		
 		final HeaderPane headerPane = new HeaderPane(this.client, skin);
 		headerPane.setDebug(Settings.isDebug());
@@ -101,7 +113,7 @@ public class UsaLeaderScreen extends AbstractScreen {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Dbg("\"Back\" button pressed.");
-				UsaLeaderScreen.this.game.setScreen(new MapScreen(UsaLeaderScreen.this.game, client));
+				LeaderScreen.this.game.setScreen(new MapScreen(LeaderScreen.this.game, client));
 			}
 		});
 		bottomBar.add(backButton);

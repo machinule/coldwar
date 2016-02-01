@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
 import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomMechanicSettings;
@@ -55,19 +56,25 @@ public class PseudorandomMechanic {
 		return random.nextInt(1000000) < chance;
 	}
 	
-	public int roll(ArrayList<Integer> chances) {
+	public int roll(List<Integer> chances) {
+		Logger.Dbg("Rolling on " + chances.size() + " choices");
 		int total = 0;
 		List<Integer> weightedChances = new ArrayList<Integer>();
+		weightedChances.add(0);
 		for (int c : chances) {
-			total = total + c;
 			weightedChances.add(total+c);
+			total = total + c;
 		}
 		int result = random.nextInt(total);
-		for (int i = 0; i < weightedChances.size(); i++) {
-			if (result > weightedChances.get(i))
-				return i;
+		Logger.Dbg("Roll result: " + result);
+		for (int i = 1; i<weightedChances.size()-1; i++) {
+			if (result >= weightedChances.get(i-1) && result < weightedChances.get(i)) {
+				Logger.Dbg("Returning " + (i-1));
+				return i-1;
+			}
 		}
-		return -1;
+		Logger.Dbg("Returning " + (weightedChances.size()-2));
+		return weightedChances.get(weightedChances.size()-2);
 	}
 	
 	public void reseed() {

@@ -48,10 +48,7 @@ public class SuperpowerPane extends Table {
 		leaderButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
-				//if(client.getPlayer() == Player.USA)
-					screen.game.setScreen(new UsaLeaderScreen(screen.game, client));
-				//else
-					//screen.game.setScreen(new UssrLeaderScreen(screen.game, client));
+				screen.game.setScreen(new LeaderScreen(screen.game, client));
 			}
 		});
 

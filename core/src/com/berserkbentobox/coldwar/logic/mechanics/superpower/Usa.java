@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.berserkbentobox.coldwar.Superpower.UsaSettings;
 import com.berserkbentobox.coldwar.Superpower.UsaState;
+import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.Superpower.UsaLeaderParty;
 import com.berserkbentobox.coldwar.Superpower.UsaLeaderSettings;
 import com.berserkbentobox.coldwar.Superpower.UsaLeaderState;
@@ -106,6 +107,33 @@ public class Usa {
 				state.getNumTermsAsPresident() < 2) {
 				ret.add(l.getSettings().getSettings().getName());
 			}
+		}
+		return ret;
+	}
+	
+	public List<String> getPresidentialEligible(int year, UsaLeaderParty party) {
+		List<String> eligible = getPresidentialEligible(year);
+		List<String> ret = new ArrayList<String>();
+		for (String l : eligible) {
+			if (leaders.get(l).getSettings().getSettings().getParty() == party)
+					ret.add(l);
+		}
+		return ret;
+	}
+	
+	public List<String> getPresidentialEligible(int year, UsaLeaderParty party, int num, PseudorandomMechanic pseudorandom) {
+		List<String> eligible = getPresidentialEligible(year, party);
+		List<Integer> chances = new ArrayList<Integer>();
+		List<String> ret = new ArrayList<String>();
+		for (String l : eligible) {
+			chances.add(1);
+		}
+		int result;
+		for (int j = 0; j < num; j++) {
+			result = pseudorandom.roll(chances);
+			ret.add(eligible.get(result));
+			chances.remove(result);
+			eligible.remove(result);
 		}
 		return ret;
 	}

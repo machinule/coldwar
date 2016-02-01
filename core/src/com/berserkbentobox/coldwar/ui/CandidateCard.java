@@ -39,5 +39,8 @@ public class CandidateCard extends LeaderCard {
 			}
 		});
 	}
-
+	
+	public void changeLeader(Settings t) {
+		this.settings = t;
+	}
 }

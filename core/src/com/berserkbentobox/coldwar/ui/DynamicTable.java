@@ -2,6 +2,7 @@ package com.berserkbentobox.coldwar.ui;
 
 import java.util.function.Function;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
@@ -22,6 +23,7 @@ public class DynamicTable extends Table {
 	@Override
 	public void act(final float delta) {
 		this.update();
+		super.act(delta);
 	}
 
 	void update() {

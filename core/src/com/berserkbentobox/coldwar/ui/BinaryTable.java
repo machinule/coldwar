@@ -25,22 +25,27 @@ public class BinaryTable extends Table {
 		this.switchFn = switchFn;
 		this.table1 = table1;
 		this.table2 = table2;
+		this.add(table1);
 		this.update();
 	}
 	
 	@Override
 	public void act(final float delta) {
 		this.update();
+		super.act(delta);
 	}
 
 	void update() {
 		boolean swtch = this.switchFn.apply(this.client);
-		if(swtch != prevSwtch) 
-			this.clear();
-			if(swtch)
+		if(swtch != prevSwtch)
+			if(swtch) {
+				this.removeActor(table2);
 				this.add(table1);
-			else
+			}
+			else {
+				this.removeActor(table1);
 				this.add(table2);
+			}
 		prevSwtch = swtch;
 	}
 	
