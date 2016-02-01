@@ -51,11 +51,11 @@ public class LeaderScreen extends AbstractScreen {
 			.center()
 			.expand();
 		leaderTable.row();
-		LeaderCard president_name = new LeaderCard(this.client, this.client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(this.client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getState().getPresident()).getSettings(), skin);
+		LeaderCard president_name = new LeaderCard(this.client, c -> c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getState().getPresident()).getSettings(), skin);
 		leaderTable.add(president_name)
 			.minSize(200, 0)
 			.center();
-		LeaderCard vice_president_name = new LeaderCard(this.client, this.client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(this.client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getState().getVicePresident()).getSettings(), skin);
+		LeaderCard vice_president_name = new LeaderCard(this.client, c -> c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getState().getVicePresident()).getSettings(), skin);
 		leaderTable.add(vice_president_name)
 			.minSize(200, 0)
 			.center();
@@ -83,7 +83,6 @@ public class LeaderScreen extends AbstractScreen {
 		usaWrapper.add(leaderTable);
 		usaWrapper.row();
 		usaWrapper.add(binaryElectionTable);
-		//usaWrapper.add(candidateTable);
 		usaWrapper.row();
 		
 		final Table ussrWrapper = new Table(skin);

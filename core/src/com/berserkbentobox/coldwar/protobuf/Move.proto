@@ -103,6 +103,10 @@ message Move {
 
 	optional EnactPolicyMove enact_policy_move = 160;
 
+	// Leaders
+	
+	optional SuperpowerMechanicMoves superpower_mechanic_moves = 200;
+
 	//Crises
 
 	optional USSRBerlinBlockadeLiftBlockadeMove ussr_berlin_blockade_lift_blockade_move = 2001;
@@ -184,12 +188,6 @@ message SupportLeaderMove {
 message SabotageLeaderMove {
 	optional string leader_id = 1;
 	optional int32 magnitude = 2;
-}
-
-// =============USA LEADERS=============
-
-message PrimaryMove {
-	optional string leader_id = 1;
 }
 
 // =========== CRISES ==================

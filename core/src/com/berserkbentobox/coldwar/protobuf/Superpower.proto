@@ -98,8 +98,8 @@ message UsaState {
 message UsaLeaderState {
 	optional string name = 1;
 	optional bool available = 2;
-	optional int32 num_terms_as_president = 3;
-	optional int32 num_terms_as_vice_president = 4;
+	optional int32 num_terms_as_president = 3 [default = 0];
+	optional int32 num_terms_as_vice_president = 4 [default = 0];
 }
 
 message UssrState {
@@ -113,4 +113,16 @@ message UssrLeaderState {
 	optional string name = 1;
 	optional int32 party_support = 2;
 	optional bool available = 3;
+}
+
+// ========== Moves ==========
+
+// The top-level moves proto included in Moves.
+
+message SuperpowerMechanicMoves {
+	optional NominateMove nominate_move = 1;
+}
+
+message NominateMove {
+	optional string leader_id = 1;
 }

@@ -182,6 +182,18 @@ public class MoveBuilder {
 	public int getStabilityModifier(ProvinceId provinceId) {
 		return this.computedState.stabilityModifier.getOrDefault(provinceId, 0);
 	}
+	
+	// Elections
+	
+	public void addNominateMove(String name) {
+		Move.Builder move = Move.newBuilder();
+		move.getSuperpowerMechanicMovesBuilder().getNominateMoveBuilder()
+			.setLeaderId(name);
+		this.moves.addMoves(move.build());
+		this.computeState();
+	}
+	
+	// Technology
 
 	public void addResearchMove(String id) {
 		Move.Builder move = Move.newBuilder();
@@ -191,6 +203,8 @@ public class MoveBuilder {
 		this.moves.addMoves(move.build());
 		this.computeState();
 	}
+	
+	// Treaty
 
 	public void addDeescalateMove() {
 		// TODO Auto-generated method stub

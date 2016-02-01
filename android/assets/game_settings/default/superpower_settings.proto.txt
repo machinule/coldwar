@@ -79,6 +79,13 @@ usa_settings {
     end_year: 1953
   }
   leader_settings {
+    name: "Christian Herter"
+    party: REPUBLICAN
+    birth_year: 1895
+    start_year: 1953
+    end_year: 1957
+  }
+  leader_settings {
     name: "Richard Nixon"
     party: REPUBLICAN
     birth_year: 1913

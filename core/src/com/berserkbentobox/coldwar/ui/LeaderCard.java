@@ -1,5 +1,7 @@
 package com.berserkbentobox.coldwar.ui;
 
+import java.util.function.Function;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,16 +16,15 @@ public class LeaderCard extends Table {
 	protected Skin skin;
 	protected Button infoBox;
 	
-	protected String id;
-	protected UsaLeader.Settings settings;
+	protected Function<Client, UsaLeader.Settings> settingsFn;
 	
 	public LeaderCard(final Client client,
-					  final UsaLeader.Settings t,
+					  final Function<Client, UsaLeader.Settings> settingsFn,
 					  final Skin skin) {
 		super();
 		this.client = client;
 		this.skin = skin;
-		this.settings = t;
+		this.settingsFn = settingsFn;
 		
 		infoBox = createLayout();
 		this.add(infoBox).size(300, 50);
@@ -33,10 +34,10 @@ public class LeaderCard extends Table {
 		Button ret = new Button(this.skin);
 		ret.setDebug(Settings.isDebug());
 		DynamicLabel name = new DynamicLabel(client,
-				c -> this.settings.getSettings().getName(),
+				c -> settingsFn.apply(c).getSettings().getName(),
 				skin);
 		DynamicLabel age = new DynamicLabel(client,
-				c -> (c.getMoveBuilder().getYear() - this.settings.getSettings().getBirthYear()) + "",
+				c -> this.client.getMoveBuilder().getYear() - settingsFn.apply(c).getSettings().getBirthYear() + "",
 				skin);
 		
 		name.setAlignment(1); //Center in cell

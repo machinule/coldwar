@@ -31,6 +31,10 @@ public class GameStateManager {
 			if (move.hasTreatyMechanicMoves()) {
 				mechanics.getTreaty().makeMoves(Player.USA, move.getTreatyMechanicMoves());							
 			}
+			// Superpower
+			if (move.hasSuperpowerMechanicMoves()) {
+				mechanics.getSuperpower().makeMoves(Player.USA, move.getSuperpowerMechanicMoves());							
+			}
 		}
 		
 		for (Move move : ussrMoves.getMovesList()) {
@@ -41,6 +45,10 @@ public class GameStateManager {
 			// Treaty
 			if (move.hasTreatyMechanicMoves()) {
 				mechanics.getTreaty().makeMoves(Player.USSR, move.getTreatyMechanicMoves());							
+			}
+			// Superpower
+			if (move.hasSuperpowerMechanicMoves()) {
+				mechanics.getSuperpower().makeMoves(Player.USA, move.getSuperpowerMechanicMoves());							
 			}
 		}		
 		
@@ -54,11 +62,13 @@ public class GameStateManager {
 	public GameState computeNextGameState(Mechanics mechanics) {		
 		// Technology
 		mechanics.getTechnology().maybeMakeProgress(Player.USSR, mechanics.getPseudorandom());
-		mechanics.getTechnology().maybeMakeProgress(Player.USSR, mechanics.getPseudorandom());
-
-		// Supwerpower leaders
-//		mechanics.getSuperpower().USAholdElections(mechanics.getPseudorandom());
+		mechanics.getTechnology().maybeMakeProgress(Player.USA, mechanics.getPseudorandom());
 		
+		// Superpower leaders
+		if((initialState.getTurn() + 1) % 4 == 0) {
+			int year = initialState.getTurn() + 1948;
+			mechanics.getSuperpower().getUsa().elections(year, mechanics.getPseudorandom());
+		}
 		// Treaty
 		mechanics.getTreaty().maybeSignTreaty(mechanics.getPseudorandom(), mechanics.getHeat(), mechanics.getDeterrence());
 		

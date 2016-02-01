@@ -21,6 +21,7 @@ public class CandidateTable extends Table {
 	protected Function<Client, Integer> yearFn;
 	protected List<CandidateCard> repCards;
 	protected List<CandidateCard> demCards;
+	protected int year;
 	
 	public CandidateTable(final Client client, final Skin skin) {
 		super(skin);
@@ -37,16 +38,16 @@ public class CandidateTable extends Table {
 		
 		Collection<String> repCandidates = repCandidateFn.apply(this.client);
 		for (String l : repCandidates) {
-			CandidateCard c = new CandidateCard(this.client, client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(l).getSettings(), this.getSkin());
-			repCards.add(c);
-			republicans.add(c);
+			CandidateCard card = new CandidateCard(this.client, c -> c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(l).getSettings(), this.getSkin());
+			repCards.add(card);
+			republicans.add(card);
 			republicans.row();
 		}
 		Collection<String> demCandidates = demCandidateFn.apply(this.client);
 		for (String l : demCandidates) {
-			CandidateCard c = new CandidateCard(this.client, client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(l).getSettings(), this.getSkin());
-			demCards.add(c);
-			democrats.add(c);
+			CandidateCard card = new CandidateCard(this.client, c -> c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(l).getSettings(), this.getSkin());
+			demCards.add(card);
+			democrats.add(card);
 			democrats.row();
 		}
 		
@@ -54,14 +55,48 @@ public class CandidateTable extends Table {
 		this.add(republicans);
 	}
 	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		this.update();
+	}
+	
+	public void update() {
+		int currentYear = yearFn.apply(client);
+		if (currentYear != this.year) {
+			refreshCandidates();
+			this.year = currentYear;
+		}
+	}
+	
 	public void refreshCandidates() {
 		Collection<String> repCandidates = repCandidateFn.apply(this.client);
 		Collection<String> demCandidates = demCandidateFn.apply(this.client);
+		for (CandidateCard c : demCards) {
+			c.setVisible(false);
+			c.setLayoutEnabled(false);
+		}
+		for (CandidateCard c : repCards) {
+			c.setVisible(false);
+			c.setLayoutEnabled(false);
+		}
 		int index = 0;
-		for (String l : demCandidates)
-			demCards.get(index).changeLeader(client.getMoveBuilder().getMechanics().getSuperpower().getSettings().getUsaSettings().getLeaderSettings(l));
+		for (String l : demCandidates) {
+			demCards.get(index).changeLeader(c -> c.getMoveBuilder().getMechanics().getSuperpower().getSettings().getUsaSettings().getLeaderSettings(l));
+			demCards.get(index).setVisible(true);
+			demCards.get(index).setLayoutEnabled(true);
+			demCards.get(index).nameFn = c -> l;
+			CandidateCard.deselect();
+			index++;
+		}
 		index = 0;
-		for (String l : repCandidates)
-			repCards.get(index).changeLeader(client.getMoveBuilder().getMechanics().getSuperpower().getSettings().getUsaSettings().getLeaderSettings(l));
+		for (String l : repCandidates) {
+			repCards.get(index).changeLeader(c -> c.getMoveBuilder().getMechanics().getSuperpower().getSettings().getUsaSettings().getLeaderSettings(l));
+			repCards.get(index).setVisible(true);
+			repCards.get(index).setLayoutEnabled(true);
+			repCards.get(index).nameFn = c -> l;
+			CandidateCard.deselect();
+			index++;
+		}
 	}
 }

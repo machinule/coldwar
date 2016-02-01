@@ -10,12 +10,10 @@ import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.EventOuterClass.BerlinBlockadeEvent;
 import com.berserkbentobox.coldwar.EventOuterClass.Event;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
-import com.berserkbentobox.coldwar.Superpower;
 import com.berserkbentobox.coldwar.logic.mechanics.Conflict;
 import com.berserkbentobox.coldwar.logic.mechanics.Leader;
 import com.berserkbentobox.coldwar.logic.mechanics.Policy;
 import com.berserkbentobox.coldwar.logic.mechanics.Province;
-import com.berserkbentobox.coldwar.logic.mechanics.Treaty;
 
 /**
  * Client manages the game state, making moves and taking turns.
@@ -124,7 +122,9 @@ public abstract class Client {
 		this.state = nextGameState.build();
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {
 			Logger.Info(msg);
-		}		
+		}
+		
+		Logger.Dbg("Current president: " + this.state.getSuperpowerState().getUsaState().getPresident());
 	}
 
 	public abstract Future<Boolean> endTurn();

@@ -1,12 +1,16 @@
 package com.berserkbentobox.coldwar.logic.mechanics.superpower;
 
+import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
+import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicMoves;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicSettings;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicState;
 import com.berserkbentobox.coldwar.Superpower.UsaState;
 import com.berserkbentobox.coldwar.Superpower.UssrState;
+import com.berserkbentobox.coldwar.Treaty.TreatyMechanicMoves;
 import com.berserkbentobox.coldwar.logic.Status;
+import com.berserkbentobox.coldwar.logic.Client.Player;
 
 public class SuperpowerMechanic {
 
@@ -52,7 +56,7 @@ public class SuperpowerMechanic {
 	
 	public SuperpowerMechanic(Settings settings, GameStateOrBuilder state) {
 		this.settings = settings;
-		this.state = settings.initialState().toBuilder();
+		this.state = state.getSuperpowerState().toBuilder();
 		this.usa = new Usa(this, this.getSettings().getUsaSettings(), this.state.getUsaStateBuilder());
 		this.ussr = new Ussr(this, this.getSettings().getUssrSettings(), this.state.getUssrStateBuilder());
 	}
@@ -78,4 +82,12 @@ public class SuperpowerMechanic {
 	public Ussr getUssr() {
 		return this.ussr;
 	}
+	
+	// Logic
+	
+	public void makeMoves(Player player, SuperpowerMechanicMoves moves) {
+		if (moves.hasNominateMove()) {
+			getUsa().setCandidate(moves.getNominateMove().getLeaderId());
+		}
+	}	
 }

@@ -66,8 +66,6 @@ public class Usa {
 	private SuperpowerMechanic parent;
 	private UsaState.Builder state;
 	private Map<String, UsaLeader> leaders;
-	private String rep_candidate;
-	private String dem_candidate;
 	
 	public Usa(SuperpowerMechanic parent, Settings settings, UsaState.Builder state) {
 		this.settings = settings;
@@ -78,9 +76,6 @@ public class Usa {
 			UsaLeader l = new UsaLeader(this, parent.getSettings().getUsaSettings().getLeaderSettings(ls.getName()), ls);
 			this.leaders.put(l.getState().getName(), l);
 		}
-		//sdfsd
-		this.state.setPresident(settings.getSettings().getPresidencySettings().getInitPresident());
-		this.state.setVicePresident(settings.getSettings().getPresidencySettings().getInitVicePresident());
 	}
 	
 	// Getters
@@ -114,9 +109,14 @@ public class Usa {
 	public List<String> getPresidentialEligible(int year, UsaLeaderParty party) {
 		List<String> eligible = getPresidentialEligible(year);
 		List<String> ret = new ArrayList<String>();
-		for (String l : eligible) {
-			if (leaders.get(l).getSettings().getSettings().getParty() == party)
-					ret.add(l);
+		if(leaders.get(this.state.getPresident()).getState().getNumTermsAsPresident() == 1 &&
+		   leaders.get(this.state.getPresident()).getSettings().getSettings().getParty() == party) {
+			ret.add(this.state.getPresident());
+		} else {
+			for (String l : eligible) {
+				if (leaders.get(l).getSettings().getSettings().getParty() == party)
+						ret.add(l);
+			}
 		}
 		return ret;
 	}
@@ -125,15 +125,19 @@ public class Usa {
 		List<String> eligible = getPresidentialEligible(year, party);
 		List<Integer> chances = new ArrayList<Integer>();
 		List<String> ret = new ArrayList<String>();
-		for (String l : eligible) {
-			chances.add(1);
-		}
-		int result;
-		for (int j = 0; j < num; j++) {
-			result = pseudorandom.roll(chances);
-			ret.add(eligible.get(result));
-			chances.remove(result);
-			eligible.remove(result);
+		if (eligible.size() != 1) {
+			for (String l : eligible) {
+				chances.add(1);
+			}
+			int result;
+			for (int j = 0; j < num; j++) {
+				result = pseudorandom.roll(chances);
+				ret.add(eligible.get(result));
+				chances.remove(result);
+				eligible.remove(result);
+			}
+		} else {
+			ret.add(eligible.get(0));
 		}
 		return ret;
 	}
@@ -145,7 +149,8 @@ public class Usa {
 			UsaLeaderState.Builder state = l.getState();
 			if (settings.getStartYear() - settings.getViceYears() < year &&
 				settings.getEndYear() > year &&
-				state.getNumTermsAsPresident() < this.settings.getSettings().getPresidencySettings().getMaxTerms() &&
+				state.getNumTermsAsPresident() == 0 &&
+				state.getNumTermsAsVicePresident() == 0 &&
 				settings.getParty() == party) {
 				ret.add(l.getSettings().getSettings().getName());
 			}
@@ -159,22 +164,27 @@ public class Usa {
 	
 	// Logic
 	
+	private String rep_candidate;
+	private String dem_candidate;
+	
 	public void clearCandidates() {
-		rep_candidate = null;
-		dem_candidate = null;
+		rep_candidate = "";
+		dem_candidate = "";
 	}
 	
 	public void setCandidate(String name) {
+		Logger.Dbg("Setting candidate: " + name);
 		if(leaders.get(name).getSettings().getSettings().getParty() == UsaLeaderParty.REPUBLICAN)
 			rep_candidate = name;
 		else
 			dem_candidate = name;
 	}
 	
-	public void electPresident(int year, PseudorandomMechanic pseudorandomMechanic) {
+	public void elections(int year, PseudorandomMechanic pseudorandomMechanic) {
 		String ret;
 		int base = 500000;
 		int vp_effect = 50000; // TODO: Settings value
+		Logger.Dbg((year + 1) + " Election: " + rep_candidate + " vs " + dem_candidate);
 		int cand_0_vp = leaders.get(rep_candidate).getState().getNumTermsAsVicePresident() * vp_effect;
 		int cand_1_vp = -(leaders.get(dem_candidate).getState().getNumTermsAsVicePresident() * vp_effect);
 		if (pseudorandomMechanic.happens(base + cand_0_vp + cand_1_vp)) {
@@ -183,16 +193,24 @@ public class Usa {
 			ret = dem_candidate;
 		}
 		this.clearCandidates();
+		Logger.Dbg("Winner: " + ret);
+		boolean incumbent = getState().getPresident() == ret;
 		getState().setPresident(ret);
+		leaders.get(ret).getState().setNumTermsAsPresident(leaders.get(ret).getState().getNumTermsAsPresident()+1);
+		chooseVicePresident(year, pseudorandomMechanic, incumbent);
 	}
 	
-	public void chooseVicePresident(int year, UsaLeaderParty party, PseudorandomMechanic pseudorandomMechanic) {
-		List<String> candidates = getVicePresidentialEligible(year, party);
-		ArrayList<Integer> candidateChances = new ArrayList<Integer>();
-		for (String l : candidates) {
-			candidateChances.add(1);
+	public void chooseVicePresident(int year, PseudorandomMechanic pseudorandomMechanic, boolean incumbent) {
+		if(!incumbent) {
+			List<String> candidates = getVicePresidentialEligible(year, leaders.get(this.getState().getPresident()).getSettings().getSettings().getParty());
+			ArrayList<Integer> candidateChances = new ArrayList<Integer>();
+			for (String l : candidates) {
+				candidateChances.add(1);
+			}
+			String choice = candidates.get(pseudorandomMechanic.roll(candidateChances));
+			Logger.Dbg("Chosen vice president: " + choice);
+			getState().setVicePresident(choice);
 		}
-		String choice = candidates.get(pseudorandomMechanic.roll(candidateChances));
-		getState().setVicePresident(choice);
+			leaders.get(getState().getVicePresident()).getState().setNumTermsAsVicePresident(leaders.get(getState().getVicePresident()).getState().getNumTermsAsVicePresident()+1);
 	}
 }
