@@ -32,7 +32,7 @@ public class MainMenuScreen extends AbstractScreen {
 		table.setDebug(Settings.isDebug());
 		this.stage.addActor(table);
 
-		table.add("A Love Story Between Two Superpowers").spaceBottom(50);
+		table.add(this.game.getFlavor().get("INTERFACE", "TITLE")).spaceBottom(50);
 		table.row();
 		
 		final TextButton hotseatGameButton = new TextButton("Start a Hotseat Game", skin);

@@ -1,0 +1,5 @@
+:PARTIAL_TEST_BAN:Partial Test Ban Treaty
+:NUCLEAR_NON_PROLIFERATION:Treaty on the Non-Proliferation of Nuclear Weapons
+:SALT_I:Strategic Arms Limitation Agreement
+:THRESHOLD_TEST_BAN:Treaty on the Limitation of Underground Nuclear Weapon Tests
+:STRATEGIC_ARMS_LIMITATION:Strategic Arms Limitation Treaty

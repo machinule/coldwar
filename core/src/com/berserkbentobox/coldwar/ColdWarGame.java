@@ -14,6 +14,12 @@ import com.berserkbentobox.coldwar.ui.SplashScreen;
  */
 public class ColdWarGame extends Game {
 	
+	private Flavor flavor;
+	
+	public Flavor getFlavor() {
+		return this.flavor;
+	}
+	
 	/**
 	 * Called when the application is created. Immediately enters the splash
 	 * screen.
@@ -35,6 +41,8 @@ public class ColdWarGame extends Game {
 		Gdx.app.getGraphics().setWindowedMode(
 				Settings.prefs.getInteger("splash_height"),
 				Settings.prefs.getInteger("splash_width"));
+		this.flavor = new Flavor("en_us");
+		flavor.loadFlavor("INTERFACE", "flavor", "interface.txt");
 		this.setScreen(new SplashScreen(this));
 	}
 
