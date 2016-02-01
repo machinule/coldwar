@@ -1,5 +1,7 @@
 package com.berserkbentobox.coldwar.logic.mechanics.pseudorandom;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
@@ -51,6 +53,21 @@ public class PseudorandomMechanic {
 	
 	public boolean happens(int chance) {
 		return random.nextInt(1000000) < chance;
+	}
+	
+	public int roll(ArrayList<Integer> chances) {
+		int total = 0;
+		List<Integer> weightedChances = new ArrayList<Integer>();
+		for (int c : chances) {
+			total = total + c;
+			weightedChances.add(total+c);
+		}
+		int result = random.nextInt(total);
+		for (int i = 0; i < weightedChances.size(); i++) {
+			if (result > weightedChances.get(i))
+				return i;
+		}
+		return -1;
 	}
 	
 	public void reseed() {

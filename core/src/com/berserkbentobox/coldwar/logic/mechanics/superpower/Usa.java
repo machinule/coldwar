@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.berserkbentobox.coldwar.Superpower.UsaSettings;
 import com.berserkbentobox.coldwar.Superpower.UsaState;
+import com.berserkbentobox.coldwar.Superpower.UsaLeaderParty;
 import com.berserkbentobox.coldwar.Superpower.UsaLeaderSettings;
 import com.berserkbentobox.coldwar.Superpower.UsaLeaderState;
 import com.berserkbentobox.coldwar.logic.Status;
@@ -63,7 +65,8 @@ public class Usa {
 	private SuperpowerMechanic parent;
 	private UsaState.Builder state;
 	private Map<String, UsaLeader> leaders;
-	private ArrayList<UsaLeader> candidates;
+	private String rep_candidate;
+	private String dem_candidate;
 	
 	public Usa(SuperpowerMechanic parent, Settings settings, UsaState.Builder state) {
 		this.settings = settings;
@@ -77,7 +80,6 @@ public class Usa {
 		//sdfsd
 		this.state.setPresident(settings.getSettings().getPresidencySettings().getInitPresident());
 		this.state.setVicePresident(settings.getSettings().getPresidencySettings().getInitVicePresident());
-		candidates = new ArrayList<UsaLeader>();
 	}
 	
 	// Getters
@@ -94,29 +96,30 @@ public class Usa {
 		return this.leaders.values();
 	}
 	
-	public Collection<UsaLeader> getPresidentialEligible(int year) {
-		Collection<UsaLeader> ret = new ArrayList<UsaLeader>();
+	public List<String> getPresidentialEligible(int year) {
+		List<String> ret = new ArrayList<String>();
 		for (UsaLeader l : this.leaders.values()) {
 			UsaLeaderSettings settings = l.getSettings().getSettings();
 			UsaLeaderState.Builder state = l.getState();
 			if (settings.getStartYear() < year &&
 				settings.getEndYear() > year &&
 				state.getNumTermsAsPresident() < 2) {
-				ret.add(l);
+				ret.add(l.getSettings().getSettings().getName());
 			}
 		}
 		return ret;
 	}
 
-	public Collection<UsaLeader> getVicePresidentialEligible(int year) {
-		Collection<UsaLeader> ret = new ArrayList<UsaLeader>();
+	public List<String> getVicePresidentialEligible(int year, UsaLeaderParty party) {
+		List<String> ret = new ArrayList<String>();
 		for (UsaLeader l : this.leaders.values()) {
 			UsaLeaderSettings settings = l.getSettings().getSettings();
 			UsaLeaderState.Builder state = l.getState();
 			if (settings.getStartYear() - settings.getViceYears() < year &&
 				settings.getEndYear() > year &&
-				state.getNumTermsAsPresident() < this.settings.getSettings().getPresidencySettings().getMaxTerms()) {
-				ret.add(l);
+				state.getNumTermsAsPresident() < this.settings.getSettings().getPresidencySettings().getMaxTerms() &&
+				settings.getParty() == party) {
+				ret.add(l.getSettings().getSettings().getName());
 			}
 		}
 		return ret;
@@ -129,25 +132,39 @@ public class Usa {
 	// Logic
 	
 	public void clearCandidates() {
-		candidates.clear();
+		rep_candidate = null;
+		dem_candidate = null;
 	}
 	
 	public void setCandidate(String name) {
-		candidates.add(leaders.get(name));
+		if(leaders.get(name).getSettings().getSettings().getParty() == UsaLeaderParty.REPUBLICAN)
+			rep_candidate = name;
+		else
+			dem_candidate = name;
 	}
 	
-	public UsaLeader electPresident(int year, ArrayList<UsaLeader> finalCandidates, PseudorandomMechanic pseudorandomMechanic) {
-		UsaLeader ret;
+	public void electPresident(int year, PseudorandomMechanic pseudorandomMechanic) {
+		String ret;
 		int base = 500000;
 		int vp_effect = 50000; // TODO: Settings value
-		int cand_0_vp = finalCandidates.get(0).getState().getNumTermsAsVicePresident() * vp_effect;
-		int cand_1_vp = -(finalCandidates.get(1).getState().getNumTermsAsVicePresident() * vp_effect);
+		int cand_0_vp = leaders.get(rep_candidate).getState().getNumTermsAsVicePresident() * vp_effect;
+		int cand_1_vp = -(leaders.get(dem_candidate).getState().getNumTermsAsVicePresident() * vp_effect);
 		if (pseudorandomMechanic.happens(base + cand_0_vp + cand_1_vp)) {
-			ret = finalCandidates.get(0);
+			ret = rep_candidate;
 		} else {
-			ret = finalCandidates.get(1);
+			ret = dem_candidate;
 		}
 		this.clearCandidates();
-		return ret;
+		getState().setPresident(ret);
+	}
+	
+	public void chooseVicePresident(int year, UsaLeaderParty party, PseudorandomMechanic pseudorandomMechanic) {
+		List<String> candidates = getVicePresidentialEligible(year, party);
+		ArrayList<Integer> candidateChances = new ArrayList<Integer>();
+		for (String l : candidates) {
+			candidateChances.add(1);
+		}
+		String choice = candidates.get(pseudorandomMechanic.roll(candidateChances));
+		getState().setVicePresident(choice);
 	}
 }

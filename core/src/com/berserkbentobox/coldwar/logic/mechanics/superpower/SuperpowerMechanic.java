@@ -1,7 +1,5 @@
 package com.berserkbentobox.coldwar.logic.mechanics.superpower;
 
-import java.util.Collection;
-
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
 import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicSettings;
@@ -9,7 +7,6 @@ import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicState;
 import com.berserkbentobox.coldwar.Superpower.UsaState;
 import com.berserkbentobox.coldwar.Superpower.UssrState;
 import com.berserkbentobox.coldwar.logic.Status;
-import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 
 public class SuperpowerMechanic {
 

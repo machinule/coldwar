@@ -7,14 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.berserkbentobox.coldwar.Superpower.UsaLeaderParty;
 import com.berserkbentobox.coldwar.logic.Client;
-import com.berserkbentobox.coldwar.logic.mechanics.superpower.UsaLeader;
 
 public class ElectionTable extends Table {
 	
 	protected Client client;
 	protected Table democrats;
 	protected Table republicans;
-	protected Function<Client, Collection<UsaLeader>> candidateFn;
+	protected Function<Client, Collection<String>> candidateFn;
 	protected Function<Client, Integer> yearFn;
 	
 	public ElectionTable(final Client client, final Skin skin) {
@@ -36,10 +35,10 @@ public class ElectionTable extends Table {
 	void update() {
 		democrats.clear();
 		republicans.clear();
-		Collection<UsaLeader> candidates = candidateFn.apply(this.client);
-		for (UsaLeader l : candidates) {
-			CandidateCard c = new CandidateCard(this.client, l.getSettings(), this.getSkin());
-			if(l.getSettings().getSettings().getParty() == UsaLeaderParty.REPUBLICAN) {
+		Collection<String> candidates = candidateFn.apply(this.client);
+		for (String l : candidates) {
+			CandidateCard c = new CandidateCard(this.client, client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(l).getSettings(), this.getSkin());
+			if(client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(l).getSettings().getSettings().getParty() == UsaLeaderParty.REPUBLICAN) {
 				republicans.add(c);
 				republicans.row();
 			} else {

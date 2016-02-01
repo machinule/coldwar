@@ -161,15 +161,17 @@ public class SuperpowerMechanicTest {
 	@Test
 	public void testEligiblePresidents() {
 		SuperpowerMechanic mechanic = getMechanic();
-		Collection<UsaLeader> eligible = mechanic.getUsa().getPresidentialEligible(1946);
+		Collection<String> eligible = mechanic.getUsa().getPresidentialEligible(1946);
 		assertEquals(6, eligible.size());
 	}
 	
 	@Test
 	public void testEligibleVicePresidents() {
 		SuperpowerMechanic mechanic = getMechanic();
-		Collection<UsaLeader> eligible = mechanic.getUsa().getVicePresidentialEligible(1946);
-		assertEquals(8, eligible.size());
+		Collection<String> eligibleRep = mechanic.getUsa().getVicePresidentialEligible(1946, UsaLeaderParty.REPUBLICAN);
+		assertEquals(8, eligibleRep.size());
+		Collection<String> eligibleDem = mechanic.getUsa().getVicePresidentialEligible(1946, UsaLeaderParty.REPUBLICAN);
+		assertEquals(8, eligibleDem.size());
 	}
 	
 	@Test
