@@ -1,8 +1,5 @@
 package com.berserkbentobox.coldwar.ui;
 
-import java.util.EnumMap;
-import java.util.HashMap;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -45,35 +42,46 @@ public class UsaLeaderScreen extends AbstractScreen {
 		Label president_label = new Label("President:", skin);
 		leaderTable.add(president_label)
 			.minSize(200, 0)
-			.center();
+			.center()
+			.expand();
 		Label vice_president_label = new Label("Vice President:", skin);
 		leaderTable.add(vice_president_label)
 			.minSize(200, 0)
-			.center();
+			.center()
+			.expand();
 		leaderTable.row();
-		DynamicLabel president_name = new DynamicLabel(client, c -> this.client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getState().getPresident(), skin);
+		LeaderCard president_name = new LeaderCard(this.client, this.client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(this.client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getState().getPresident()).getSettings(), skin);
 		leaderTable.add(president_name)
 			.minSize(200, 0)
 			.center();
-		DynamicLabel vice_president_name = new DynamicLabel(client, c -> this.client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getState().getVicePresident(), skin);
+		LeaderCard vice_president_name = new LeaderCard(this.client, this.client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(this.client.getMoveBuilder().getMechanics().getSuperpower().getUsa().getState().getVicePresident()).getSettings(), skin);
 		leaderTable.add(vice_president_name)
 			.minSize(200, 0)
 			.center();
 		leaderTable.row();
+
+		Table electionTime = new Table();
+		electionTime.setDebug(Settings.isDebug());
 		
-		//((this.client.getMoveBuilder().getYear() + 1) % 4 == 0)
-		//final DynamicTable electionTable = new DynamicTable(client, c -> true , skin);
-		final Table electionTable = new Table();
+		DynamicLabel election_time = new DynamicLabel(this.client, c -> "Time until next election: " + Integer.toString((c.getMoveBuilder().getYear() + 3) % 4), skin);
+		electionTime.add(election_time);
+		electionTime.row();
+		
+		Table electionTable = new Table();
 		electionTable.setDebug(Settings.isDebug());
 		
-		Label election_label = new Label("Elections! Do your goddamn democratic fucking duty, scum.", skin);
+		DynamicLabel election_label = new DynamicLabel(this.client, c -> "Elections! Do your goddamn democratic fucking duty, scum.", skin);
 		electionTable.add(election_label)
 			.center();
 		electionTable.row();
+		ElectionTable candidateTable = new ElectionTable(this.client, skin);
+		electionTable.add(candidateTable);
+		
+		BinaryTable binaryElectionTable = new BinaryTable(this.client, c -> (c.getMoveBuilder().getYear() + 1) % 4 != 0, electionTime, electionTable, skin);
 		
 		wrapper.add(leaderTable);
 		wrapper.row();
-		wrapper.add(electionTable);
+		wrapper.add(binaryElectionTable);
 		wrapper.row();
 		
 		this.stage.addActor(wrapper);
