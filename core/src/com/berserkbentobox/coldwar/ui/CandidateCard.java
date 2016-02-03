@@ -10,7 +10,7 @@ import com.berserkbentobox.coldwar.Superpower.UsaLeaderParty;
 import com.berserkbentobox.coldwar.logic.Client;
 import com.berserkbentobox.coldwar.logic.mechanics.superpower.UsaLeader;
 
-public class CandidateCard extends LeaderCard {
+public class CandidateCard extends UsaLeaderCard {
 
 	protected static Color color;
 	protected static CandidateCard rep_currentSelected;

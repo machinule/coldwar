@@ -33,33 +33,35 @@ public class LeaderScreen extends AbstractScreen {
 		//final Skin skin = new Skin(Gdx.files.internal("textures/uiskin.json"), atlas);
 		final Skin skin = new Skin(Gdx.files.internal("uiskin.json"), atlas); // When creating JAR
 		
+		// Usa
+		
 		final Table usaWrapper = new Table(skin);
 		usaWrapper.setFillParent(true);
 		usaWrapper.setDebug(Settings.isDebug());
 		
-		final Table leaderTable = new Table(skin);
-		leaderTable.setDebug(Settings.isDebug());
+		final Table usaLeaderTable = new Table(skin);
+		usaLeaderTable.setDebug(Settings.isDebug());
 
 		Label president_label = new Label("President:", skin);
-		leaderTable.add(president_label)
+		usaLeaderTable.add(president_label)
 			.minSize(200, 0)
 			.center()
 			.expand();
 		Label vice_president_label = new Label("Vice President:", skin);
-		leaderTable.add(vice_president_label)
+		usaLeaderTable.add(vice_president_label)
 			.minSize(200, 0)
 			.center()
 			.expand();
-		leaderTable.row();
-		LeaderCard president_name = new LeaderCard(this.client, c -> c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getState().getPresident()).getSettings(), skin);
-		leaderTable.add(president_name)
+		usaLeaderTable.row();
+		UsaLeaderCard president_name = new UsaLeaderCard(this.client, c -> c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getState().getPresident()).getSettings(), skin);
+		usaLeaderTable.add(president_name)
 			.minSize(200, 0)
 			.center();
-		LeaderCard vice_president_name = new LeaderCard(this.client, c -> c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getState().getVicePresident()).getSettings(), skin);
-		leaderTable.add(vice_president_name)
+		UsaLeaderCard vice_president_name = new UsaLeaderCard(this.client, c -> c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getState().getVicePresident()).getSettings(), skin);
+		usaLeaderTable.add(vice_president_name)
 			.minSize(200, 0)
 			.center();
-		leaderTable.row();
+		usaLeaderTable.row();
 
 		Table electionTime = new Table();
 		electionTime.setDebug(Settings.isDebug());
@@ -80,12 +82,28 @@ public class LeaderScreen extends AbstractScreen {
 		
 		BinaryTable binaryElectionTable = new BinaryTable(this.client, c -> (c.getMoveBuilder().getYear() + 1) % 4 != 0, electionTime, electionTable, skin);
 		
-		usaWrapper.add(leaderTable);
+		usaWrapper.add(usaLeaderTable);
 		usaWrapper.row();
 		usaWrapper.add(binaryElectionTable);
 		usaWrapper.row();
 		
-		final Table ussrWrapper = new Table(skin);
+		// Ussr
+		
+		Table ussrLeaderTable = new Table(skin);
+		ussrLeaderTable.setDebug(Settings.isDebug());
+		
+		Label hosLabel = new Label("Head of State: ", skin);
+		UssrLeaderCard hosCard = new UssrLeaderCard(this.client, c -> c.getMoveBuilder().getMechanics().getSuperpower().getUssr().getLeader(c.getMoveBuilder().getMechanics().getSuperpower().getUssr().getState().getHos()).getSettings(), skin);
+		ussrLeaderTable.add(hosLabel);
+		ussrLeaderTable.row();
+		ussrLeaderTable.add(hosCard)
+			.minSize(200, 0)
+			.center();
+		
+		TroikaTable troikaTable = new TroikaTable(client, skin);
+		troikaTable.setDebug(Settings.isDebug());
+		
+		final BinaryTable ussrWrapper = new BinaryTable(this.client, c -> c.getMoveBuilder().getMechanics().getSuperpower().getUssr().hasTroika(), troikaTable, ussrLeaderTable, skin);
 		ussrWrapper.setFillParent(true);
 		ussrWrapper.setDebug(Settings.isDebug());
 		

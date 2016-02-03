@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.logic.Client;
 import com.berserkbentobox.coldwar.logic.mechanics.superpower.UsaLeader;
-public class LeaderCard extends Table {
+public class UsaLeaderCard extends Table {
 	
 	protected Client client;
 	protected Skin skin;
@@ -18,7 +18,7 @@ public class LeaderCard extends Table {
 	
 	protected Function<Client, UsaLeader.Settings> settingsFn;
 	
-	public LeaderCard(final Client client,
+	public UsaLeaderCard(final Client client,
 					  final Function<Client, UsaLeader.Settings> settingsFn,
 					  final Skin skin) {
 		super();

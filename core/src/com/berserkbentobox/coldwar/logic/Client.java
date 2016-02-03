@@ -123,8 +123,6 @@ public abstract class Client {
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {
 			Logger.Info(msg);
 		}
-		
-		Logger.Dbg("Current president: " + this.state.getSuperpowerState().getUsaState().getPresident());
 	}
 
 	public abstract Future<Boolean> endTurn();
