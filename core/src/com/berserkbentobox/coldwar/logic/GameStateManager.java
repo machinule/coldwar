@@ -67,7 +67,7 @@ public class GameStateManager {
 		// Superpower
 		
 		int year = initialState.getTurn() + 1948;
-		if((year + 1) % 4 == 0) {
+		if(mechanics.getSuperpower().getUsa().isElectionYear(year)) {
 			mechanics.getSuperpower().getUsa().elections(year, mechanics.getPseudorandom());
 		}
 		mechanics.getSuperpower().getUsa().maybeKillVicePresident(year, mechanics.getPseudorandom());

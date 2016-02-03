@@ -80,12 +80,13 @@ public class PseudorandomMechanic {
 	// Leader-specific
 	// TODO: Move to more appropriate location?
 	public boolean dies(int age) {
-		int start = 50;
-		int escalate = 65;
+		int start = 45;
+		int escalate = 60;
 		if(age < escalate && age > start) {
 			return this.happens(10000);
 		} else if(age >= escalate) {
-			int exp = ((age - escalate) / 5) + 1;
+			int exp = ((age - escalate) / 5) + 2;
+			Logger.Dbg(exp + " at age " + age);
 			return this.happens(10000*exp);
 		} else {
 			return false;

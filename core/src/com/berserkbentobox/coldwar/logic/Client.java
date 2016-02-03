@@ -103,6 +103,13 @@ public abstract class Client {
 		return this.player;
 	}
 	
+	public boolean isReady() {
+		if(getMoveBuilder().getMechanics().getSuperpower().isReady(this.getMoveBuilder().getYear(), this.getPlayer())) {
+			return true;
+		}
+		return false;
+	}
+	
 	public void nextTurn() {
 		Logger.Info("Proceeding to the next turn.");
 		GameStateManager manager = new GameStateManager(this.settings, this.state);

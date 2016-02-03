@@ -164,12 +164,26 @@ public class Usa {
 	
 	// Logic
 	
-	private String rep_candidate;
-	private String dem_candidate;
+	private String rep_candidate = "";
+	private String dem_candidate = "";
 	
 	public void clearCandidates() {
 		rep_candidate = "";
 		dem_candidate = "";
+	}
+	
+	public boolean isReady(int year) {
+		if(isElectionYear(year)) {
+			if(rep_candidate != "" && dem_candidate != "")
+				return true;
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public boolean isElectionYear(int year) {
+		return (year + 1) % 4 == 0;
 	}
 	
 	public void setCandidate(String name) {

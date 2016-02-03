@@ -206,9 +206,8 @@ public class Ussr {
 			if(pseudorandom.dies(year - leaders.get(l).getSettings().getSettings().getBirthYear())) {
 				Logger.Dbg(l + " has died.");
 				leaders.get(l).getState().setAvailable(false);
-				if(l == this.getState().getHos()) {
-					Logger.Dbg("Soviet head of state " + l + " has died.");
-					leaders.get(this.getState().getHos()).getState().setAvailable(false);
+				if(this.getState().getHos().equals(l)) {
+					Logger.Dbg("The Soviet head of state has died.");
 					this.generateTroika(year, pseudorandom);
 				}
 			}
