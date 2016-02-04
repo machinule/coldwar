@@ -66,7 +66,7 @@ public class LeaderScreen extends AbstractScreen {
 		Table electionTime = new Table();
 		electionTime.setDebug(Settings.isDebug());
 		
-		DynamicLabel timeUntilElection = new DynamicLabel(this.client, c -> "Time until next election: " + Integer.toString((c.getMoveBuilder().getYear() + 3) % 4), skin);
+		DynamicLabel timeUntilElection = new DynamicLabel(this.client, c -> "Time until next election: " + Integer.toString(3 - ((c.getMoveBuilder().getYear()) % 4)), skin);
 		electionTime.add(timeUntilElection);
 		electionTime.row();
 		
