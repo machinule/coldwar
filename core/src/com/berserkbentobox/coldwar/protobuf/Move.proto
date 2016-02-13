@@ -190,6 +190,17 @@ message SabotageLeaderMove {
 	optional int32 magnitude = 2;
 }
 
+// ============== TRAITS ===============
+
+message LeaderDiplomatMove {
+}
+
+message LeaderLiarMove {
+}
+
+message LeaderRuthlessMove {
+}
+
 // =========== CRISES ==================
 
 message USSRBerlinBlockadeLiftBlockadeMove {

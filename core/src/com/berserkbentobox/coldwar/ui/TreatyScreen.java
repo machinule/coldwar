@@ -4,8 +4,10 @@ import java.util.EnumMap;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -46,15 +48,6 @@ public class TreatyScreen extends AbstractScreen {
 			treatyTable.add(new TreatyCard(this.client, t, skin));
 			treatyTable.row();
 		}
-		treatyTable.row();
-		final TextButton deescalateButton = new TextButton("Deescalate", skin);
-		deescalateButton.addListener(new ChangeListener() {
-			@Override
-			public void changed(final ChangeEvent event, final Actor actor) {
-				TreatyScreen.this.client.getMoveBuilder().addDeescalateMove();
-			}
-		});
-		treatyTable.add(deescalateButton);
 		treatyTable.row();
 		this.stage.addActor(treatyTable);
 		

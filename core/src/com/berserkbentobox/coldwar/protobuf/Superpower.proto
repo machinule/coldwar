@@ -11,6 +11,15 @@ enum UsaLeaderParty {
 	DEMOCRAT = 2;
 }
 
+enum TraitId {
+	RUTHLESS = 1;
+	DIPLOMAT = 2;
+	LIAR = 3;
+	CONSTRUCTOR = 4;
+	REFORMER = 5;
+	REACTIONARY = 6;
+}
+
 // ========== Settings ==========
 
 // The top-level settings proto included in GameSettings.
@@ -77,6 +86,8 @@ message SecretariatSettings {
 
 message TraitSettings {
 	// Lots o' stuff
+	repeated TraitId positive = 1;
+	repeated TraitId negative = 2;
 }
 
 // ========== State ==========

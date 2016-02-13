@@ -1,3 +1,4 @@
+deescalate_amount: 5
 treaty {
 	id: "PARTIAL_TEST_BAN"
 	heat_reduction: 40

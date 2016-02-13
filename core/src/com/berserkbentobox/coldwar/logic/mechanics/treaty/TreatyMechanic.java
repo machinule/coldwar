@@ -42,6 +42,10 @@ public class TreatyMechanic {
 			return Status.OK;
 		}
 		
+		public TreatyMechanicSettings getSettings() {
+			return this.settings;
+		}
+		
 		public Collection<Treaty.Settings> getTreatySettings() {
 			return this.treatySettings.values();
 		}
@@ -105,19 +109,25 @@ public class TreatyMechanic {
 		}
 	}	
 
-	boolean usaWillingToSign = false;
-	boolean ussrWillingToSign = false;
+	boolean usaDeescalate = false;
+	boolean ussrDeescalate = false;
 	
 	public void makeDeescalateMove(Player player, DeescalateMove move) {
 		if (player == Player.USA) {
-			usaWillingToSign = true;
+			usaDeescalate = true;
 		} else {
-			ussrWillingToSign = true;
+			ussrDeescalate = true;
 		}
 	}
 
 	public void maybeSignTreaty(PseudorandomMechanic random, HeatMechanic heat, DeterrenceMechanic deterrence) {
-		if (!(this.usaWillingToSign && this.ussrWillingToSign)) {
+		if (this.usaDeescalate) {
+			heat.decrease(this.getSettings().getSettings().getDeescalateAmount());
+		}
+		if (this.ussrDeescalate) {
+			heat.decrease(this.getSettings().getSettings().getDeescalateAmount());
+		}
+		if (!(this.usaDeescalate && this.ussrDeescalate)) {
 			return;
 		}
 		Treaty toSign = this.getFirstUnsignedTreaty();

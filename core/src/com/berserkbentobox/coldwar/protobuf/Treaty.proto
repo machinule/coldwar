@@ -8,6 +8,7 @@ package com.berserkbentobox.coldwar;
 // Immutable over the duration of a single game.
 message TreatyMechanicSettings {
 	repeated TreatySettings treaty = 1;
+	optional int32 deescalate_amount = 2;
 }
 
 // Settings for a single treaty.

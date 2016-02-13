@@ -3,14 +3,16 @@ package com.berserkbentobox.coldwar.ui;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.logic.Client;
 import com.berserkbentobox.coldwar.logic.MoveBuilder;
@@ -33,14 +35,32 @@ public class HeaderPane extends Table {
 		DynamicLabel yearLabel = new DynamicLabel(this.client, c -> Integer.toString(c.getMoveBuilder().getYear()), this.skin);
 		
 		Dialog turnWaitDialog = new Dialog("Next Turn", this.skin);
-		turnWaitDialog.text("Waiting for other player");
-				
-				
+		turnWaitDialog.text("Waiting for other player");		
+
+		CheckBox deescalateBox = new CheckBox("Deescalate", skin);
+		/*
+		treatyTable.add(checkBox);
+		final TextButton deescalateButton = new TextButton("Deescalate", skin);
+		deescalateButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(final ChangeEvent event, final Actor actor) {
+				TreatyScreen.this.client.getMoveBuilder().addDeescalateMove();
+			}
+		});
+		treatyTable.add(deescalateButton);
+		treatyTable.row();
+		*/
+		
 		final DynamicButton endTurnButton = new DynamicButton(this.client, c -> true, "end Turn", this.skin);
 		endTurnButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
 				Logger.Info("\"End Turn\" button pressed.");
+				if(deescalateBox.isChecked()) {
+					Logger.Info("De-escalation detected");
+					client.getMoveBuilder().addDeescalateMove();
+					deescalateBox.setChecked(false);
+				}
 				Future<Boolean> turnComplete = HeaderPane.this.client.endTurn();
 				Logger.Info("Started to end turn.");
 				if (client.isWaitingOnPlayer()) {
@@ -82,9 +102,11 @@ public class HeaderPane extends Table {
 			? Integer.toString(c.getMoveBuilder().getComputedGameState().getNetPartyUnity())
 			: Integer.toString(c.getMoveBuilder().getComputedGameState().getNetPatriotism()),
 			this.skin));
+		
 		topBar.add(yearLabel);
 		topBar.add(playerLabel);
 		topBar.add(endTurnButton);
+		topBar.add(deescalateBox);
 		topBar.row();
 		
 		Table botBar = new Table();
