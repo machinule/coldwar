@@ -144,37 +144,37 @@ ussr_settings {
   leader_settings {
   	name: "Georgy Malenkov"
   	birth_year: 1902
-  	start_year: 1948
+  	start_year: 1945
   }
   leader_settings {
   	name: "Lavrentiy Beria"
   	birth_year: 1899
-  	start_year: 1948
+  	start_year: 1945
   }
   leader_settings {
   	name: "Georgy Zhukov"
   	birth_year: 1896
-  	start_year: 1948
+  	start_year: 1945
   }
   leader_settings {
   	name: "Vyacheslav Molotov"
   	birth_year: 1890
-  	start_year: 1948
+  	start_year: 1945
   }
   leader_settings {
   	name: "Nikolai Bulganin"
   	birth_year: 1895
-  	start_year: 1948
+  	start_year: 1945
   }
   leader_settings {
   	name: "Nikita Khrushchev"
   	birth_year: 1894
-  	start_year: 1948
+  	start_year: 1945
   }
   leader_settings {
   	name: "Anastas Mikoyan"
   	birth_year: 1895
-  	start_year: 1948
+  	start_year: 1945
   }
   leader_settings {
   	name: "Mikhail Suslov"
@@ -207,7 +207,7 @@ ussr_settings {
   	troika_decay_magnitude: 2
   	troika_num_decay: 2
   	troika_decay_chance: 500000
-	init_premier: "Joseph Stalin"
+	init_hos: "Joseph Stalin"
   }
   init_party_unity: 50
 }

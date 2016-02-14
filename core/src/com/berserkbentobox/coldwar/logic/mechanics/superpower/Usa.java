@@ -164,12 +164,26 @@ public class Usa {
 	
 	// Logic
 	
-	private String rep_candidate;
-	private String dem_candidate;
+	private String rep_candidate = "";
+	private String dem_candidate = "";
 	
 	public void clearCandidates() {
 		rep_candidate = "";
 		dem_candidate = "";
+	}
+	
+	public boolean isReady(int year) {
+		if(isElectionYear(year)) {
+			if(rep_candidate != "" && dem_candidate != "")
+				return true;
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public boolean isElectionYear(int year) {
+		return (year + 1) % 4 == 0;
 	}
 	
 	public void setCandidate(String name) {
@@ -212,5 +226,21 @@ public class Usa {
 			getState().setVicePresident(choice);
 		}
 			leaders.get(getState().getVicePresident()).getState().setNumTermsAsVicePresident(leaders.get(getState().getVicePresident()).getState().getNumTermsAsVicePresident()+1);
+	}
+	
+	public void maybeKillPresident(int year, PseudorandomMechanic pseudorandomMechanic) {
+		if(pseudorandomMechanic.dies(year - leaders.get(this.getState().getPresident()).getSettings().getSettings().getBirthYear())) {
+			Logger.Dbg("President " + this.getState().getPresident() + " has died in office.");
+			this.getState().setPresident(this.getState().getVicePresident());
+			leaders.get(this.getState().getPresident()).getState().setNumTermsAsPresident(leaders.get(this.getState().getPresident()).getState().getNumTermsAsPresident()+1);
+			chooseVicePresident(year, pseudorandomMechanic, false);
+		}
+	}
+	
+	public void maybeKillVicePresident(int year, PseudorandomMechanic pseudorandomMechanic) {
+		if(pseudorandomMechanic.dies(year - leaders.get(this.getState().getVicePresident()).getSettings().getSettings().getBirthYear())) {
+			Logger.Dbg("Vice President " + this.getState().getVicePresident() + " has died in office.");
+			chooseVicePresident(year, pseudorandomMechanic, false);
+		}
 	}
 }

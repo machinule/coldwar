@@ -45,6 +45,7 @@ public class DynamicButton extends TextButton {
 	
 	@Override
 	public void act(final float delta) {
+		super.act(delta);
 		this.update();
 	}
 

@@ -85,6 +85,16 @@ public class SuperpowerMechanic {
 	
 	// Logic
 	
+	public boolean isReady(int year, Player player) {
+		if(player == Player.USA) {
+			if (this.getUsa().isReady(year))
+				return true;
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	public void makeMoves(Player player, SuperpowerMechanicMoves moves) {
 		if (moves.hasNominateMove()) {
 			getUsa().setCandidate(moves.getNominateMove().getLeaderId());

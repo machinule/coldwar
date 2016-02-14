@@ -35,7 +35,6 @@ public class CandidateTable extends Table {
 		repCards = new ArrayList<CandidateCard>();
 		demCards = new ArrayList<CandidateCard>();
 		
-		
 		Collection<String> repCandidates = repCandidateFn.apply(this.client);
 		for (String l : repCandidates) {
 			CandidateCard card = new CandidateCard(this.client, c -> c.getMoveBuilder().getMechanics().getSuperpower().getUsa().getLeader(l).getSettings(), this.getSkin());

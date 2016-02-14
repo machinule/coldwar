@@ -57,7 +57,7 @@ public class CrisisMechanic {
 	}
 
 	public boolean isActiveCrisis() {
-		if(this.getState().hasJoint() || this.getState().hasUsa() || this.getState().hasUssr())
+		if(this.getState().getCrisesCount() > 0)
 			return true;
 		return false;
 	}

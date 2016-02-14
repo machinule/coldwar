@@ -51,7 +51,8 @@ public class HeaderPane extends Table {
 		treatyTable.row();
 		*/
 		
-		final DynamicButton endTurnButton = new DynamicButton(this.client, c -> true, "end Turn", this.skin);
+		final DynamicButton endTurnButton = new DynamicButton(this.client, c -> c.isReady(), "end Turn", this.skin);
+
 		endTurnButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {

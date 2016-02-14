@@ -77,6 +77,22 @@ public class PseudorandomMechanic {
 		return weightedChances.get(weightedChances.size()-2);
 	}
 	
+	// Leader-specific
+	// TODO: Move to more appropriate location?
+	public boolean dies(int age) {
+		int start = 45;
+		int escalate = 60;
+		if(age < escalate && age > start) {
+			return this.happens(10000);
+		} else if(age >= escalate) {
+			int exp = ((age - escalate) / 5) + 2;
+			Logger.Dbg(exp + " at age " + age);
+			return this.happens(10000*exp);
+		} else {
+			return false;
+		}
+	}
+	
 	public void reseed() {
 		this.state.setSeed(this.random.nextLong());
 	}

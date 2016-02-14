@@ -3,8 +3,8 @@ syntax = "proto2";
 package com.berserkbentobox.coldwar;
 
 enum Type {
-	USA = 1;
-	USSR = 2;
+	USA_ONLY = 1;
+	USSR_ONLY = 2;
 	JOINT = 3;
 }
 

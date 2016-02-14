@@ -3,7 +3,7 @@ syntax = "proto2";
 package com.berserkbentobox.coldwar;
 
 message PseudorandomMechanicSettings {
-	optional int64 init_seed = 1;
+	optional int64 init_seed = 5;
 }
 
 message PseudorandomMechanicState {
