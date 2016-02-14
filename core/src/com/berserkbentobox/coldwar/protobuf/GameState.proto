@@ -18,6 +18,7 @@ import "Pseudorandom.proto";
 import "Heat.proto";
 import "Deterrence.proto";
 import "Influence.proto";
+import "Crisis.proto";
 
 message GameState {
   optional int32 turn = 1;
@@ -30,9 +31,9 @@ message GameState {
   optional TechnologyMechanicState technology_state = 8;
   optional ConflictMechanicState conflict_state = 9;
   optional LeaderMechanicState leaders_state = 12;
+  optional CrisisMechanicState crisis_state = 13;
   optional TurnLogEntry turn_log = 10;
   optional GameSettings settings = 11;
-  optional Crisis crises = 16;
   optional EndState end_state = 21;
   optional DeterrenceMechanicState deterrence_state = 22;
   optional InfluenceMechanicState influence_state = 23;
@@ -43,24 +44,4 @@ message TurnLogEntry {
   optional MoveList usa_moves = 2;
   optional MoveList ussr_moves = 3;
   repeated Event events = 4;
-}
-
-message Crisis {
-	optional bool berlin_blockade = 1;
-
-	optional string ussr_option_1 = 94 [default = ""];
-	optional string ussr_option_2 = 95 [default = ""];
-	optional string ussr_option_3 = 96 [default = ""];
-	optional string usa_option_1 = 97 [default = ""];
-	optional string usa_option_2 = 98 [default = ""];
-	optional string usa_option_3 = 99 [default = ""];
-
-	optional bool ussr_acted_1 = 100 [default = false];
-	optional bool ussr_acted_2 = 101 [default = false];
-	optional bool ussr_acted_3 = 102 [default = false];
-	optional bool usa_acted_1 = 103 [default = false];
-	optional bool usa_acted_2 = 104 [default = false];
-	optional bool usa_acted_3 = 105 [default = false];
-
-	optional string info = 106 [default = ""];
 }

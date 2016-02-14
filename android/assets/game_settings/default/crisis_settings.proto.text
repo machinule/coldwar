@@ -1,0 +1,5 @@
+init_crisis {
+	name: "Berlin Blockade"
+	usa_option: "Begin the Berlin Airlift"
+	ussr_option: "End the blockade"
+}

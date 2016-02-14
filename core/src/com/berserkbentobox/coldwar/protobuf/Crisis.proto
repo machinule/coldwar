@@ -1,0 +1,36 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+enum Type {
+	USA = 1;
+	USSR = 2;
+	JOINT = 3;
+}
+
+// ========== Settings ==========
+
+message CrisisMechanicSettings {
+	repeated CrisisSettings crises = 1;
+	optional CrisisSettings init_crisis = 2;
+}
+
+message CrisisSettings {
+	optional string name = 1;
+	optional Type type = 2;
+
+	repeated string ussr_options = 94;
+	repeated string usa_options = 95;
+
+	optional string info = 106 [default = ""];
+}
+
+// ========== State ==========
+
+message CrisisMechanicState {
+	repeated CrisisState crises = 1;
+}
+
+message CrisisState {
+	optional string name = 1;
+}

@@ -3,7 +3,6 @@ package com.berserkbentobox.coldwar.logic;
 import java.util.concurrent.Future;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
-import com.berserkbentobox.coldwar.GameStateOuterClass.Crisis;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
 import com.berserkbentobox.coldwar.GameSettingsFactory;
 import com.berserkbentobox.coldwar.Logger;
@@ -79,20 +78,6 @@ public abstract class Client {
 		} else {
 			state.setTreatyState(this.settings.getTreaty().initialState());
 		}
-		
-		//Berlin Blockade
-		Crisis.Builder c = Crisis.newBuilder();
-		c.setBerlinBlockade(true);
-		c.setInfo("Blockade of Berlin");
-		c.setUsaOption1("Begin the Berlin Airlift");
-		c.setUssrOption1("End the Blockade");
-		state.setCrises(c.build());
-		
-		state.getTurnLogBuilder()
-		.addEvents(Event.newBuilder()
-			.setBerlinBlockadeEvent(BerlinBlockadeEvent.newBuilder()
-				.build())
-			.build());
 		
 		this.initialGameState = state.build();
 		//Logger.Dbg("Initial game state: " + this.initialGameState);

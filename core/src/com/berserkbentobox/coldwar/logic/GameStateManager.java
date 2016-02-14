@@ -74,6 +74,8 @@ public class GameStateManager {
 		
 		// Pseudorandom
 		mechanics.getPseudorandom().reseed();
+		
+		//Crisis
 
 		return mechanics.buildState();
 	}

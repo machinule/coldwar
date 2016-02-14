@@ -112,6 +112,7 @@ public class HeaderPane extends Table {
 		Table botBar = new Table();
 		botBar.setDebug(true);
 		
+		/*
 		DynamicButton berlinBlockadeButton = new DynamicButton(this.client,
 				c -> true,
 				c -> c.getMoveBuilder().getComputedGameState().isBerlinBlockadeActive(),
@@ -133,11 +134,11 @@ public class HeaderPane extends Table {
 			}
 		});
 		
-		
 		botBar.add(new DynamicLabel(this.client, c -> c.getMoveBuilder().getComputedGameState().getCrisisInfo(), this.skin))
 			.center()
 			.padRight(5);
 		botBar.add(berlinBlockadeButton);
+		*/
 		
 		this.add(topBar)
 			.center();
