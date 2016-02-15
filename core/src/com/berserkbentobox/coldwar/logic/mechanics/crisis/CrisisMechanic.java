@@ -1,10 +1,25 @@
 package com.berserkbentobox.coldwar.logic.mechanics.crisis;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.berserkbentobox.coldwar.Crisis;
+import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.Crisis.CrisisMechanicMoves;
 import com.berserkbentobox.coldwar.Crisis.CrisisMechanicSettings;
 import com.berserkbentobox.coldwar.Crisis.CrisisMechanicState;
+import com.berserkbentobox.coldwar.Crisis.CrisisSettings;
+import com.berserkbentobox.coldwar.Crisis.CrisisState;
+import com.berserkbentobox.coldwar.Crisis.Effect;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
+import com.berserkbentobox.coldwar.logic.Client.Player;
 import com.berserkbentobox.coldwar.logic.Status;
+import com.berserkbentobox.coldwar.logic.mechanics.influence.InfluenceMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 
 public class CrisisMechanic {
 	public static class Settings {
@@ -12,9 +27,16 @@ public class CrisisMechanic {
 		private GameSettingsOrBuilder gameSettings;
 		private CrisisMechanicSettings settings;
 		
+		private Map<String, CrisisSettings> crisisSettings;
+		
 		public Settings(GameSettingsOrBuilder gameSettings) {
 			this.gameSettings = gameSettings;
 			this.settings = gameSettings.getCrisisSettings();
+			this.crisisSettings = new HashMap<String, CrisisSettings>();
+			for (CrisisSettings c : this.settings.getCrisesList()) {
+				this.crisisSettings.put(c.getName(), c);
+			}
+			Logger.Dbg(this.settings.toString());
 		}
 		
 		public Status validate() {
@@ -27,13 +49,24 @@ public class CrisisMechanic {
 		
 		public CrisisMechanicState initialState() {
 			CrisisMechanicState.Builder state = CrisisMechanicState.newBuilder();
-			//state.setCrisis(this.settings.getInitCrisis());
+			state.addCrises(settings.getInitCrisis());
 			return state.build();
+		}
+		
+		public CrisisSettings getCrisisSetting(String name) {
+			Logger.Dbg(crisisSettings.toString());
+			return crisisSettings.get(name);
+		}
+		
+		public Collection<CrisisSettings> getCrisisSettings() {
+			return crisisSettings.values();
 		}
 	}
 	
 	private Settings settings;
 	private CrisisMechanicState.Builder state;
+	private String usa_choice;
+	private String ussr_choice;
 	
 	public CrisisMechanic(Settings settings, GameStateOrBuilder state) {
 		this.settings = settings;
@@ -61,110 +94,63 @@ public class CrisisMechanic {
 			return true;
 		return false;
 	}
+
+	public void makeMoves(Player player, CrisisMechanicMoves moves) {
+		if(isActiveCrisis()) {
+			if(moves.hasChoice() && player == Player.USA)
+				this.usa_choice = moves.getChoice().getName();
+			if(moves.hasChoice() && player == Player.USSR)
+				this.ussr_choice = moves.getChoice().getName();
+		}
+	}
 	
-}
-
-
-/*
-
-// Crises
-if (move.hasUsaBerlinBlockadeAirliftMove()) {
-	int cost = 3; // TODO: Real value; starting MIL point cost
-	milStoreMap.compute(player,  (p, mil) -> mil == null ? -cost : mil - cost);
-	crisis.setUsaActed1(true);
-}
-if (move.hasUssrBerlinBlockadeLiftBlockadeMove()) {
-	int cost = 100; // TODO: Real value
-	milStoreMap.compute(player,  (p, mil) -> mil == null ? -cost : mil - cost);
-	crisis.setUssrActed1(true);
-}
-
-
-
-
-
-
-
-		//Berlin Blockade
-		Crisis.Builder c = Crisis.newBuilder();
-		c.setBerlinBlockade(true);
-		c.setInfo("Blockade of Berlin");
-		c.setUsaOption1("Begin the Berlin Airlift");
-		c.setUssrOption1("End the Blockade");
-		state.setCrises(c.build());
-		
-		state.getTurnLogBuilder()
-		.addEvents(Event.newBuilder()
-			.setBerlinBlockadeEvent(BerlinBlockadeEvent.newBuilder()
-				.build())
-			.build());
-
-
-
-
-
-
-
-
-
-
-
-
-// CRISIS HANDLING
-
-if(crisis.getBerlinBlockade()) {
-	Logger.Dbg("Resolving Berlin Blockade");
-	boolean airlift = crisis.getUsaActed1();
-	boolean blockade = !crisis.getUssrActed1();
-	if(airlift) {
-		if(blockade) { // Airlift while blockade maintained
-			patriotismCounter += 5; // TODO: Settings value
-		} else { // Airlift while blockade lifted
-			totalInfluenceMap.compute(ProvinceId.EAST_GERMANY, (i, infl) -> infl == null ? -1 : infl - 1);
-		}
-	} else {
-		if(blockade) { // Blockade with no airlift
-			patriotismCounter -= 5;
-			// Berlin flag unset
-		} else { // No blockade and no airlift
-			totalInfluenceMap.compute(ProvinceId.EAST_GERMANY, (i, infl) -> infl == null ? -1 : infl - 1);
+	public void resolveCrisis(InfluenceMechanic influence) {
+		for(CrisisState c : this.state.getCrisesList()) {
+			for(Effect e : this.getSettings().getCrisisSetting(c.getName()).getEffectsList()) {
+				// Conduct effect for every crisis
+			}
 		}
 	}
-	Logger.Dbg("Berlin airlift enacted: " + airlift);
-	Logger.Dbg("Berlin blockade maintained: " + blockade);
-}
-
-
-
-
-
-// Crises
-
-public boolean isBerlinBlockadeActive() {
-	if(state.getCrises().getBerlinBlockade()) {
-		return true;
+	
+	public String chooseCrisisByType(int year, Crisis.Type type, PseudorandomMechanic pseudorandom) {
+		Collection<CrisisSettings> crises = this.getSettings().getCrisisSettings();
+		List<Integer> chances = new ArrayList<Integer>();
+		List<String> names = new ArrayList<String>();
+		int total = 0;
+		for(CrisisSettings c : crises) {
+			if(c.getStartYear() <= year && c.getEndYear() >= year && c.getType() == type) {
+				int weighted_chance = c.getChanceMultiplier() * this.getSettings().getSettings().getBaseChance();
+				chances.add(weighted_chance);
+				total += weighted_chance;
+				names.add(c.getName());
+			}
+		}
+		names.add("");
+		int null_chance = this.getSettings().getSettings().getTotalChance() - total;
+		if(null_chance < 0)
+			Logger.Err("Total crisis chances add up over limit: " + null_chance + " > " + this.getSettings().getSettings().getTotalChance());
+		else
+			chances.add(null_chance);
+		int result = pseudorandom.roll(chances);
+		return names.get(result);
 	}
-	return false;
+	
+	public boolean setCrisis(String name) {
+		if(name != "") {
+			this.getState().addCrises(CrisisState.newBuilder().setName(name));
+			return true;
+		}
+		return false;
+	}
+	
+	public void generateCrisis(int year, PseudorandomMechanic pseudorandom) {
+		this.getState().clearCrises();
+		String crisis = chooseCrisisByType(year, Crisis.Type.JOINT, pseudorandom);
+		if(!setCrisis(crisis)) {
+			String usa_crisis = chooseCrisisByType(year, Crisis.Type.USA_ONLY, pseudorandom);
+			setCrisis(usa_crisis);
+			String ussr_crisis = chooseCrisisByType(year, Crisis.Type.USSR_ONLY, pseudorandom);
+			setCrisis(ussr_crisis);
+		}
+	}
 }
-
-
-
-
-
-
-
-public String getCrisisInfo() {
-return state.getCrises().getInfo();
-}
-
-public String getCrisisUsaOption1() {
-return state.getCrises().getUsaOption1();
-}
-
-public String getCrisisUssrOption1() {
-return state.getCrises().getUssrOption1();
-}
-
-
-
-*/

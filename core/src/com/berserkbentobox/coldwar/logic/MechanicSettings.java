@@ -1,6 +1,7 @@
 package com.berserkbentobox.coldwar.logic;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
+import com.berserkbentobox.coldwar.logic.mechanics.crisis.CrisisMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.influence.InfluenceMechanic;
@@ -19,6 +20,7 @@ public class MechanicSettings {
 	private TreatyMechanic.Settings treaty;
 	private DeterrenceMechanic.Settings deterrence;
 	private InfluenceMechanic.Settings influence;
+	private CrisisMechanic.Settings crisis;
 	
 	public MechanicSettings(GameSettings settings) {
 		this.technology = new TechnologyMechanic.Settings(settings);
@@ -28,6 +30,7 @@ public class MechanicSettings {
 		this.deterrence = new DeterrenceMechanic.Settings(settings);
 		this.treaty = new TreatyMechanic.Settings(settings);
 		this.influence = new InfluenceMechanic.Settings(settings);
+		this.crisis = new CrisisMechanic.Settings(settings);
 	}
 	
 	public TechnologyMechanic.Settings getTechnology() {
@@ -56,5 +59,9 @@ public class MechanicSettings {
 
 	public InfluenceMechanic.Settings getInfluence() {
 		return this.influence;
+	}
+	
+	public CrisisMechanic.Settings getCrisis() {
+		return this.crisis;
 	}
 }

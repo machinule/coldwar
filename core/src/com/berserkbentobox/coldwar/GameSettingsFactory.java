@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.badlogic.gdx.Gdx;
 import com.berserkbentobox.coldwar.Conflict.ConflictMechanicSettings;
+import com.berserkbentobox.coldwar.Crisis.CrisisMechanicSettings;
 import com.berserkbentobox.coldwar.EventOuterClass.EventMechanicSettings;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.Province.ProvinceMechanicSettings;
@@ -42,6 +43,7 @@ public class GameSettingsFactory {
 			this.loadProvinces(gameName, settings.getProvinceSettingsBuilder());
 			this.loadConflicts(gameName, settings.getConflictSettingsBuilder());
 			this.loadInfluence(gameName, settings.getInfluenceSettingsBuilder());
+			this.loadCrises(gameName, settings.getCrisisSettingsBuilder());
 			//this.loadPseudorandom(settings.getPseudorandomSettingsBuilder());
 		} catch (ParseException e) {
 			Logger.Info(e.toString());
@@ -118,6 +120,11 @@ public class GameSettingsFactory {
 
 	protected void loadInfluence(String gameName, InfluenceMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "influence_settings.proto.txt"));        
+        TextFormat.merge(input, settings);
+	}
+	
+	protected void loadCrises(String gameName, CrisisMechanicSettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "crisis_settings.proto.txt"));        
         TextFormat.merge(input, settings);
 	}
 	

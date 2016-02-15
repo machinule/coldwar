@@ -34,6 +34,10 @@ public class GameStateManager {
 			// Superpower
 			if (move.hasSuperpowerMechanicMoves()) {
 				mechanics.getSuperpower().makeMoves(Player.USA, move.getSuperpowerMechanicMoves());							
+			}			
+			// Crisis
+			if (move.hasCrisisMechanicMoves()) {
+				mechanics.getCrisis().makeMoves(Player.USSR, move.getCrisisMechanicMoves());							
 			}
 		}
 		
@@ -49,6 +53,10 @@ public class GameStateManager {
 			// Superpower
 			if (move.hasSuperpowerMechanicMoves()) {
 				mechanics.getSuperpower().makeMoves(Player.USA, move.getSuperpowerMechanicMoves());							
+			}			
+			// Crisis
+			if (move.hasCrisisMechanicMoves()) {
+				mechanics.getCrisis().makeMoves(Player.USA, move.getCrisisMechanicMoves());							
 			}
 		}		
 		
@@ -78,11 +86,14 @@ public class GameStateManager {
 		
 		// Treaty
 		mechanics.getTreaty().maybeSignTreaty(mechanics.getPseudorandom(), mechanics.getHeat(), mechanics.getDeterrence());
+
+		//Crisis		
+		mechanics.getCrisis().resolveCrisis(mechanics.getInfluence());
+		mechanics.getCrisis().generateCrisis(year, mechanics.getPseudorandom());
 		
 		// Pseudorandom
 		mechanics.getPseudorandom().reseed();
 		
-		//Crisis
 
 		return mechanics.buildState();
 	}

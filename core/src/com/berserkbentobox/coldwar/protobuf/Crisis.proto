@@ -2,6 +2,8 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
+import "Id.proto";
+
 enum Type {
 	USA_ONLY = 1;
 	USSR_ONLY = 2;
@@ -12,25 +14,79 @@ enum Type {
 
 message CrisisMechanicSettings {
 	repeated CrisisSettings crises = 1;
-	optional CrisisSettings init_crisis = 2;
+	optional CrisisState init_crisis = 2;
+	
+	optional int32 total_chance = 3;
+	optional int32 base_chance = 4;
 }
 
 message CrisisSettings {
 	optional string name = 1;
 	optional Type type = 2;
 
-	repeated string ussr_options = 94;
-	repeated string usa_options = 95;
+	repeated Option ussr_options = 3;
+	repeated Option usa_options = 4;
 
-	optional string info = 106 [default = ""];
+	optional string usa_info = 5 [default = ""];
+	optional string ussr_info = 13 [default = ""];
+	
+	optional int32 start_year = 6;
+	optional int32 end_year = 7;
+	optional int32 chance_multiplier = 8;
+	repeated string needs_flags = 9;
+	repeated string without_flags = 14;
+	
+	repeated Effect effects = 10;
+	
+	optional bool repeatable = 11 [default = true];
+}
+
+message Option {
+	optional string name = 1;
+	
+	optional int32 pol_cost = 2;
+	optional int32 mil_cost = 3;
+	optional int32 cov_cost = 4;
+	
+	optional string title = 5;
+	optional string info = 6 [default = ""];
+}
+
+message Effect {
+	repeated string usa_choices = 1;
+	repeated string ussr_choices = 8;
+	repeated ProvinceId targets = 2;
+	
+	optional int32 patriotism_mod = 3;
+	optional int32 party_unity_mod = 4;
+	
+	optional int32 influence_mod = 5;
+	
+	optional string set_flag = 6;
+	optional string unset_flag = 7;
 }
 
 // ========== State ==========
 
 message CrisisMechanicState {
 	repeated CrisisState crises = 1;
+	
+	repeated string flags = 2;
+	repeated string past_crises = 3;
 }
 
 message CrisisState {
+	optional string name = 1;
+}
+
+// ========== Moves ==========
+
+// The top-level moves proto included in Moves.
+
+message CrisisMechanicMoves {
+	optional Choice choice = 1;
+}
+
+message Choice {
 	optional string name = 1;
 }

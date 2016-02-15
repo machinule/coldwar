@@ -79,8 +79,14 @@ public abstract class Client {
 			state.setTreatyState(this.settings.getTreaty().initialState());
 		}
 		
+		if (!this.settings.getCrisis().validate().ok()) {
+			Logger.Err("Initial settings invalid.");			
+		} else {
+			state.setCrisisState(this.settings.getCrisis().initialState());
+		}
+		
 		this.initialGameState = state.build();
-		//Logger.Dbg("Initial game state: " + this.initialGameState);
+		//Logger.Vrb("Initial game state: " + this.initialGameState);
 		return state;
 	}
 	
@@ -110,6 +116,7 @@ public abstract class Client {
 		nextGameState.setDeterrenceState(managedGameState.getDeterrenceState());
 		nextGameState.setTreatyState(managedGameState.getTreatyState());
 		nextGameState.setInfluenceState(managedGameState.getInfluenceState());
+		nextGameState.setCrisisState(managedGameState.getCrisisState());
 		
 		this.state = nextGameState.build();
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {

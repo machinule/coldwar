@@ -1,5 +1,7 @@
 package com.berserkbentobox.coldwar.logic;
 
+import com.berserkbentobox.coldwar.Crisis.Choice;
+import com.berserkbentobox.coldwar.Crisis.CrisisMechanicMoves;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
@@ -13,8 +15,6 @@ import com.berserkbentobox.coldwar.MoveOuterClass.FundDissidentsMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.MilitaryMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.MoveOuterClass.PoliticalPressureMove;
-import com.berserkbentobox.coldwar.MoveOuterClass.USABerlinBlockadeAirliftMove;
-import com.berserkbentobox.coldwar.MoveOuterClass.USSRBerlinBlockadeLiftBlockadeMove;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 
@@ -114,22 +114,6 @@ public class MoveBuilder {
 		this.computeState();
 	}
 	
-	// Crises
-	
-	public void BerlinAirlift() {
-		this.moves.addMoves(
-				Move.newBuilder().setUsaBerlinBlockadeAirliftMove(USABerlinBlockadeAirliftMove.newBuilder()).build());
-		Logger.Dbg("Airlifting Berlin");
-		this.computeState();
-	}
-	
-	public void LiftBerlinBlockade() {
-		this.moves.addMoves(
-				Move.newBuilder().setUssrBerlinBlockadeLiftBlockadeMove(USSRBerlinBlockadeLiftBlockadeMove.newBuilder()).build());
-		Logger.Dbg("Airlifting Berlin");
-		this.computeState();
-	}
-	
 	public final ComputedGameState getComputedGameState() {
 		return this.computedState;
 	}
@@ -211,6 +195,15 @@ public class MoveBuilder {
 		Move.Builder move = Move.newBuilder();
 		move.getTreatyMechanicMovesBuilder().getDeescalateMoveBuilder();
 		this.moves.addMoves(move.build());
+		this.computeState();
 	}
 
+	// Crises
+	
+	public void addCrisisMove(String choice) {
+		this.moves.addMoves(
+				Move.newBuilder().setCrisisMechanicMoves(CrisisMechanicMoves.newBuilder()
+						.setChoice(Choice.newBuilder().setName(choice))));
+		this.computeState();
+	}	
 }

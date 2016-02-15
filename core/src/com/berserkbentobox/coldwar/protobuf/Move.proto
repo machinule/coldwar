@@ -9,6 +9,7 @@ import "Technology.proto";
 import "Policy.proto";
 import "Superpower.proto";
 import "Treaty.proto";
+import "Crisis.proto";
 //import "google/protobuf/descriptor.proto";
 
 //extend google.protobuf.MessageOptions {
@@ -109,8 +110,7 @@ message Move {
 
 	//Crises
 
-	optional USSRBerlinBlockadeLiftBlockadeMove ussr_berlin_blockade_lift_blockade_move = 2001;
-	optional USABerlinBlockadeAirliftMove usa_berlin_blockade_airlift_move = 2002;
+	optional CrisisMechanicMoves crisis_mechanic_moves = 220;
 }
 
 // ========== DIRECT INFLUENCE ACTIONS ==========
@@ -199,12 +199,4 @@ message LeaderLiarMove {
 }
 
 message LeaderRuthlessMove {
-}
-
-// =========== CRISES ==================
-
-message USSRBerlinBlockadeLiftBlockadeMove {
-}
-
-message USABerlinBlockadeAirliftMove {
 }

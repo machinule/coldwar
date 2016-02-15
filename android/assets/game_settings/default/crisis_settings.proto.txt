@@ -1,0 +1,59 @@
+init_crisis { 
+	name: "Berlin Blockade"
+}
+total_chance: 100
+base_chance: 1
+
+# Crises
+
+crises {
+	name: "Berlin Blockade"
+	type: JOINT
+	
+	ussr_options {
+		name: "maintain"
+		title: "Maintain the Blockade"
+	}
+	ussr_options {
+		name: "lift"
+		title: "Lift the Blockade"
+	}
+	
+	usa_options {
+		name: "airlift"
+		title: "Conduct the Berlin Airlift"
+		mil_cost: 5
+	}
+	usa_options {
+		name: "withdraw"
+		title: "Try to Hold Out"
+	}
+	
+	usa_info: "The Soviets are blockading the city. Watcha gonna do?"
+	ussr_info: "Our forces in East Germany have blockaded Berlin."
+	
+	start_year: 1948
+	end_year: 1948
+	chance_multiplier: 100
+	
+	effects {
+		ussr_choices: "lift"
+		
+		targets: EAST_GERMANY
+		influence_mod: -1
+	}
+	effects {
+		usa_choices: "airlift"
+		ussr_choices: "maintain"
+		
+		patriotism_mod: 5
+	}
+	effects {
+		usa_choices: "withdraw"
+		ussr_choices: "lift"
+		
+		patriotism_mod: -5
+	}
+	
+	repeatable: false
+}

@@ -1,6 +1,7 @@
 package com.berserkbentobox.coldwar.logic;
 
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
+import com.berserkbentobox.coldwar.logic.mechanics.crisis.CrisisMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.influence.InfluenceMechanic;
@@ -17,6 +18,7 @@ public class Mechanics {
 	private TreatyMechanic treaty;
 	private DeterrenceMechanic deterrence;
 	private InfluenceMechanic influence;
+	private CrisisMechanic crisis;
 	
 	public Mechanics(MechanicSettings settings, GameState state) {
 		this.technology = new TechnologyMechanic(settings.getTechnology(), state);
@@ -26,6 +28,7 @@ public class Mechanics {
 		this.treaty = new TreatyMechanic(settings.getTreaty(), state);
 		this.deterrence = new DeterrenceMechanic(settings.getDeterrence(), state);
 		this.influence = new InfluenceMechanic(settings.getInfluence(), state);
+		this.crisis = new CrisisMechanic(settings.getCrisis(), state);
 	}
 	
 	public TechnologyMechanic getTechnology() {
@@ -55,6 +58,10 @@ public class Mechanics {
 	public InfluenceMechanic getInfluence() {
 		return this.influence;
 	}
+	
+	public CrisisMechanic getCrisis() {
+		return this.crisis;
+	}
 
 	public GameState buildState() {
 		GameState.Builder state = GameState.newBuilder();
@@ -65,6 +72,7 @@ public class Mechanics {
 		state.setDeterrenceState(this.getDeterrence().buildState());
 		state.setTreatyState(this.getTreaty().buildState());
 		state.setInfluenceState(this.getInfluence().buildState());
+		state.setCrisisState(this.getCrisis().buildState());
 		return state.build();
 	}
 }
