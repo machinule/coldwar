@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic.mechanics.influence;
+package com.berserkbentobox.coldwar.logic.mechanics.influencestore;
 
 import com.berserkbentobox.coldwar.Influence.InfluenceStoreSettings;
 import com.berserkbentobox.coldwar.Influence.InfluenceStoreState;
@@ -12,10 +12,10 @@ import com.berserkbentobox.coldwar.logic.mechanics.technology.Technology.Setting
 public class InfluenceStore {
 	public static class Settings {
 		
-		private InfluenceMechanic.Settings parent;
+		private InfluenceStoreMechanic.Settings parent;
 		private InfluenceStoreSettings settings;
 		
-		public Settings(InfluenceMechanic.Settings parent, InfluenceStoreSettings settings) {
+		public Settings(InfluenceStoreMechanic.Settings parent, InfluenceStoreSettings settings) {
 			this.parent = parent;
 			this.settings = settings;
 		}
@@ -38,10 +38,10 @@ public class InfluenceStore {
 	}
 	
 	private Settings settings;
-	private InfluenceMechanic parent;
+	private InfluenceStoreMechanic parent;
 	private InfluenceStoreState.Builder state;
 	
-	public InfluenceStore(InfluenceMechanic parent, Settings settings, InfluenceStoreState.Builder state) {
+	public InfluenceStore(InfluenceStoreMechanic parent, Settings settings, InfluenceStoreState.Builder state) {
 		this.parent = parent;
 		this.settings = settings;
 		this.state = state;

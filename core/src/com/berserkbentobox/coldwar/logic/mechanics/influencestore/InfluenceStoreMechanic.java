@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic.mechanics.influence;
+package com.berserkbentobox.coldwar.logic.mechanics.influencestore;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
@@ -7,7 +7,7 @@ import com.berserkbentobox.coldwar.Influence.InfluenceMechanicState;
 import com.berserkbentobox.coldwar.logic.Status;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 
-public class InfluenceMechanic {
+public class InfluenceStoreMechanic {
 	
 	public static class Settings {
 		
@@ -56,7 +56,7 @@ public class InfluenceMechanic {
 	private InfluenceStore usaStore;
 	private InfluenceStore ussrStore;
 	
-	public InfluenceMechanic(Settings settings, GameStateOrBuilder state) {
+	public InfluenceStoreMechanic(Settings settings, GameStateOrBuilder state) {
 		this.settings = settings;
 		this.state = state.getInfluenceState().toBuilder();
 		this.usaStore = new InfluenceStore(this, this.getSettings().getUsaSettings(), this.state.getUsaStateBuilder());

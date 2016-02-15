@@ -4,7 +4,7 @@ import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.logic.mechanics.crisis.CrisisMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
-import com.berserkbentobox.coldwar.logic.mechanics.influence.InfluenceMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.influencestore.InfluenceStoreMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.superpower.SuperpowerMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyMechanic;
@@ -19,7 +19,7 @@ public class MechanicSettings {
 	private SuperpowerMechanic.Settings superpower;
 	private TreatyMechanic.Settings treaty;
 	private DeterrenceMechanic.Settings deterrence;
-	private InfluenceMechanic.Settings influence;
+	private InfluenceStoreMechanic.Settings influence;
 	private CrisisMechanic.Settings crisis;
 	
 	public MechanicSettings(GameSettings settings) {
@@ -29,7 +29,7 @@ public class MechanicSettings {
 		this.heat = new HeatMechanic.Settings(settings);
 		this.deterrence = new DeterrenceMechanic.Settings(settings);
 		this.treaty = new TreatyMechanic.Settings(settings);
-		this.influence = new InfluenceMechanic.Settings(settings);
+		this.influence = new InfluenceStoreMechanic.Settings(settings);
 		this.crisis = new CrisisMechanic.Settings(settings);
 	}
 	
@@ -57,7 +57,7 @@ public class MechanicSettings {
 		return this.deterrence;
 	}
 
-	public InfluenceMechanic.Settings getInfluence() {
+	public InfluenceStoreMechanic.Settings getInfluence() {
 		return this.influence;
 	}
 	

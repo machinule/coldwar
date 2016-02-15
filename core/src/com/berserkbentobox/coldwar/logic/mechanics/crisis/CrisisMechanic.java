@@ -18,7 +18,7 @@ import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 import com.berserkbentobox.coldwar.logic.Status;
-import com.berserkbentobox.coldwar.logic.mechanics.influence.InfluenceMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.influencestore.InfluenceStoreMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 
 public class CrisisMechanic {
@@ -104,10 +104,16 @@ public class CrisisMechanic {
 		}
 	}
 	
-	public void resolveCrisis(InfluenceMechanic influence) {
+	public void resolveCrisis(InfluenceStoreMechanic influence) {
 		for(CrisisState c : this.state.getCrisesList()) {
 			for(Effect e : this.getSettings().getCrisisSetting(c.getName()).getEffectsList()) {
-				// Conduct effect for every crisis
+				for(String usa : e.getUsaChoicesList()) {
+					for(String ussr : e.getUssrChoicesList()) {
+						if(usa.equals(usa_choice) && ussr.equals(ussr_choice)) {
+							// Resolve here
+						}
+					}
+				}
 			}
 		}
 	}
