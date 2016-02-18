@@ -5,12 +5,14 @@ import com.berserkbentobox.coldwar.logic.mechanics.crisis.CrisisMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.influencestore.InfluenceStoreMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.province.ProvinceMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.superpower.SuperpowerMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.treaty.TreatyMechanic;
 
 public class Mechanics {
+	private ProvinceMechanic provinces;
 	private HeatMechanic heat;
 	private TechnologyMechanic technology;
 	private SuperpowerMechanic superpower;
@@ -21,6 +23,7 @@ public class Mechanics {
 	private CrisisMechanic crisis;
 	
 	public Mechanics(MechanicSettings settings, GameState state) {
+		this.provinces = new ProvinceMechanic(settings.getProvinces(), state);
 		this.technology = new TechnologyMechanic(settings.getTechnology(), state);
 		this.pseudorandom = new PseudorandomMechanic(settings.getPseudorandom(), state);
 		this.superpower = new SuperpowerMechanic(settings.getSuperpower(), state);
@@ -29,6 +32,10 @@ public class Mechanics {
 		this.deterrence = new DeterrenceMechanic(settings.getDeterrence(), state);
 		this.influence = new InfluenceStoreMechanic(settings.getInfluence(), state);
 		this.crisis = new CrisisMechanic(settings.getCrisis(), state);
+	}
+	
+	public ProvinceMechanic getProvinces() {
+		return this.provinces;
 	}
 	
 	public TechnologyMechanic getTechnology() {

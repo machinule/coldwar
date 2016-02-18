@@ -23,6 +23,10 @@ public class GameStateManager {
 		Mechanics mechanics = new Mechanics(this.settings, this.initialState);
 		
 		for (Move move : usaMoves.getMovesList()) {
+			// Provinces
+			if(move.hasProvinceMechanicMoves()) {
+				mechanics.getProvinces().makeMoves(Player.USA, move.getProvinceMechanicMoves(), mechanics.getInfluence());
+			}
 			// Technology
 			if (move.hasTechnologyMechanicMoves()) {
 				mechanics.getTechnology().makeMoves(Player.USA, move.getTechnologyMechanicMoves());							
@@ -42,6 +46,10 @@ public class GameStateManager {
 		}
 		
 		for (Move move : ussrMoves.getMovesList()) {
+			// Provinces
+			if(move.hasProvinceMechanicMoves()) {
+				mechanics.getProvinces().makeMoves(Player.USSR, move.getProvinceMechanicMoves(), mechanics.getInfluence());
+			}
 			// Technology
 			if (move.hasTechnologyMechanicMoves()) {
 				mechanics.getTechnology().makeMoves(Player.USSR, move.getTechnologyMechanicMoves());							
@@ -67,7 +75,7 @@ public class GameStateManager {
 		return mechanics;
 	}
 	
-	public GameState computeNextGameState(Mechanics mechanics) {		
+	public GameState computeNextGameState(Mechanics mechanics) {
 		// Technology
 		mechanics.getTechnology().maybeMakeProgress(Player.USSR, mechanics.getPseudorandom());
 		mechanics.getTechnology().maybeMakeProgress(Player.USA, mechanics.getPseudorandom());

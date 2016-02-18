@@ -104,39 +104,11 @@ message Move {
 
 	optional EnactPolicyMove enact_policy_move = 160;
 
-	// Leaders
+	optional ProvinceMechanicMoves province_mechanic_moves = 180;
 	
 	optional SuperpowerMechanicMoves superpower_mechanic_moves = 200;
 
-	//Crises
-
 	optional CrisisMechanicMoves crisis_mechanic_moves = 220;
-}
-
-// ========== DIRECT INFLUENCE ACTIONS ==========
-
-// Influence by spending DIP points
-message DiplomacyMove {
-	optional ProvinceId province_id = 1;
-	optional int32 magnitude = 2;
-
-//	option (pol_cost) = 1;
-}
-
-// Influence by spending MIL points
-message MilitaryMove {
-	optional ProvinceId province_id = 1;
-	optional int32 magnitude = 2;
-
-//	option (mil_cost) = 1;
-}
-
-// Influence by spending COV points
-message CovertMove {
-	optional ProvinceId province_id = 1;
-	optional int32 magnitude = 2;
-
-//	option (cov_cost) = 1;
 }
 
 // ========== TARGETED ACTIONS ==========

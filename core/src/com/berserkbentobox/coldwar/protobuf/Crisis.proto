@@ -3,6 +3,7 @@ syntax = "proto2";
 package com.berserkbentobox.coldwar;
 
 import "Id.proto";
+import "Effect.proto";
 
 enum Type {
 	USA_ONLY = 1;
@@ -36,7 +37,7 @@ message CrisisSettings {
 	repeated string needs_flags = 9;
 	repeated string without_flags = 14;
 	
-	repeated Effect effects = 10;
+	repeated Consequence consequences = 10;
 	
 	optional bool repeatable = 11 [default = true];
 }
@@ -52,18 +53,11 @@ message Option {
 	optional string info = 6 [default = ""];
 }
 
-message Effect {
+message Consequence {
 	repeated string usa_choices = 1;
-	repeated string ussr_choices = 8;
-	repeated ProvinceId targets = 2;
+	repeated string ussr_choices = 2;
 	
-	optional int32 patriotism_mod = 3;
-	optional int32 party_unity_mod = 4;
-	
-	optional int32 influence_mod = 5;
-	
-	optional string set_flag = 6;
-	optional string unset_flag = 7;
+	repeated Effect effects = 3;
 }
 
 // ========== State ==========

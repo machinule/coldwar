@@ -2,6 +2,19 @@ syntax = "proto2";
 
 package com.berserkbentobox.coldwar;
 
+enum ProvinceRegion {
+	WESTERN_EUROPE = 1;
+	EASTERN_EUROPE = 2;
+	CENTRAL_AMERICA = 3;
+	SOUTH_AMERICA = 4;
+	AFRICA = 5;
+	MIDDLE_EAST = 6;
+	SOUTH_ASIA = 7;
+	EAST_ASIA = 8;
+
+	SUPERPOWERS = 9;
+}
+
 enum ProvinceId {
 	UNKNOWN_PROVINCE = 00;
 

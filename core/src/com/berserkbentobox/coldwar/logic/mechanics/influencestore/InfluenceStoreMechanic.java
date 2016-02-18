@@ -85,4 +85,27 @@ public class InfluenceStoreMechanic {
 	
 	// Logic
 	
+	public void spendPOL(Player player, int magnitude) {
+		this.getInfluenceStore(player).spendPOL(magnitude);
+	}
+	
+	public void spendMIL(Player player, int magnitude) {
+		this.getInfluenceStore(player).spendMIL(magnitude);
+	}
+	
+	public void spendCOV(Player player, int magnitude) {
+		this.getInfluenceStore(player).spendCOV(magnitude);
+	}
+	
+	public void addPOL(Player player, int magnitude) {
+		this.getInfluenceStore(player).addPOL(magnitude);
+	}	
+	
+	public void addMIL(Player player, int magnitude) {
+		this.getInfluenceStore(player).addMIL(magnitude);
+	}	
+	
+	public void addCOV(Player player, int magnitude) {
+		this.getInfluenceStore(player).addCOV(magnitude);
+	}
 }

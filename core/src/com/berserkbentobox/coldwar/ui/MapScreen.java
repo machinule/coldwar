@@ -12,7 +12,7 @@ import com.berserkbentobox.coldwar.ColdWarGame;
 import com.berserkbentobox.coldwar.Province.ProvinceSettings;
 import com.berserkbentobox.coldwar.Settings;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
-import com.berserkbentobox.coldwar.Province.ProvinceRegion;
+import com.berserkbentobox.coldwar.Id.ProvinceRegion;
 import com.berserkbentobox.coldwar.logic.Client;
 
 public class MapScreen extends AbstractScreen {

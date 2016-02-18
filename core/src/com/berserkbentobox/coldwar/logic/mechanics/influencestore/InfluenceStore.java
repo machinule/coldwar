@@ -54,4 +54,30 @@ public class InfluenceStore {
 	public Settings getSettings() {
 		return this.settings;
 	}
+	
+	// Logic
+	
+	public void spendPOL(int magnitude) {
+		this.getState().setPolitical(this.getState().getPolitical() - magnitude);
+	}
+	
+	public void spendMIL(int magnitude) {
+		this.getState().setPolitical(this.getState().getPolitical() - magnitude);
+	}
+	
+	public void spendCOV(int magnitude) {
+		this.getState().setPolitical(this.getState().getPolitical() - magnitude);
+	}
+	
+	public void addPOL(int magnitude) {
+		this.getState().setPolitical(this.getState().getPolitical() + magnitude);
+	}
+	
+	public void addMIL(int magnitude) {
+		this.getState().setPolitical(this.getState().getPolitical() + magnitude);
+	}
+	
+	public void addCOV(int magnitude) {
+		this.getState().setPolitical(this.getState().getPolitical() + magnitude);
+	}
 }

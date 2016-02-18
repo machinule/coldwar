@@ -1,0 +1,39 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+import "Id.proto";
+
+message Effect {
+	repeated MapEffect map_effects = 1;
+	repeated SuperpowerEffect superpower_effects = 2;
+	repeated MetaEffect meta_effects = 3;
+}
+
+message MapEffect {
+	repeated ProvinceId province_targets = 1;
+	repeated ProvinceRegion region_targets = 2;
+	
+	optional int32 influence_mod = 3;
+
+	optional bool roll_dissidents = 4;
+	optional int32 roll_dissident_multiplier = 5;
+	
+	optional bool add_dissidents = 6;
+}
+
+message SuperpowerEffect {
+	optional bool usa = 1 [default = false];
+	optional bool ussr = 2 [default = false];
+	
+	optional int32 vp_mod = 3;
+	optional int32 deterrence_mod = 4;
+	optional int32 heat_mod = 5;
+	
+	optional int32 length = 6 [default = 0];
+}
+
+message MetaEffect {
+	optional string set_flag = 1;
+	optional string unset_flag = 2;
+}

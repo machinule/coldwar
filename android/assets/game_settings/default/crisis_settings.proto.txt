@@ -36,23 +36,37 @@ crises {
 	end_year: 1948
 	chance_multiplier: 100
 	
-	effects {
+	consequences {
 		ussr_choices: "lift"
 		
-		targets: EAST_GERMANY
-		influence_mod: -1
+		effects {
+			map_effects {
+				province_targets: EAST_GERMANY
+				influence_mod: -1
+			}
+		}
 	}
-	effects {
+	consequences {
 		usa_choices: "airlift"
 		ussr_choices: "maintain"
 		
-		patriotism_mod: 5
+		effects {
+			superpower_effects {
+				usa: true
+				vp_mod: 5
+			}
+		}
 	}
-	effects {
+	consequences {
 		usa_choices: "withdraw"
 		ussr_choices: "lift"
 		
-		patriotism_mod: -5
+		effects {
+			superpower_effects {
+				usa: true
+				vp_mod: -5
+			}
+		}
 	}
 	
 	repeatable: false

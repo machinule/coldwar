@@ -6,13 +6,10 @@ import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
 import com.berserkbentobox.coldwar.GameSettingsFactory;
 import com.berserkbentobox.coldwar.Logger;
-import com.berserkbentobox.coldwar.EventOuterClass.BerlinBlockadeEvent;
-import com.berserkbentobox.coldwar.EventOuterClass.Event;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
 import com.berserkbentobox.coldwar.logic.mechanics.Conflict;
 import com.berserkbentobox.coldwar.logic.mechanics.Leader;
 import com.berserkbentobox.coldwar.logic.mechanics.Policy;
-import com.berserkbentobox.coldwar.logic.mechanics.Province;
 
 /**
  * Client manages the game state, making moves and taking turns.
@@ -44,11 +41,16 @@ public abstract class Client {
 		GameState.Builder state = GameState.newBuilder()
 				.setSettings(settings)
 				.setPolicyState(Policy.buildInitialState(settings.getPolicySettings()))
-				.setProvinceState(Province.buildInitialState(settings.getProvinceSettings()))
 				.setConflictState(Conflict.buildInitialState(settings.getConflictSettings()))
 				.setLeadersState(Leader.buildInitialState(settings.getLeaderSettings()))
 				.setTurn(0);
 
+
+		if (!this.settings.getProvinces().validate().ok()) {
+			Logger.Err("Initial settings invalid.");			
+		} else {
+			state.setProvinceState(this.settings.getProvinces().initialState());
+		}
 		if (!this.settings.getHeat().validate().ok()) {
 			Logger.Err("Initial settings invalid.");			
 		} else {
@@ -109,6 +111,7 @@ public abstract class Client {
 		// Hack while a bunch of stuff is still in ComputedGameState:
 		GameState managedGameState = manager.computeNextGameState(mechanics);
 		GameState.Builder nextGameState = computedState.nextState.toBuilder();
+		nextGameState.setProvinceState(managedGameState.getProvinceState());
 		nextGameState.setHeatState(managedGameState.getHeatState());
 		nextGameState.setTechnologyState(managedGameState.getTechnologyState());
 		nextGameState.setPseudorandomState(managedGameState.getPseudorandomState());

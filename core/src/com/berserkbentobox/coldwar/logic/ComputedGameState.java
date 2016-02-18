@@ -29,13 +29,11 @@ import com.berserkbentobox.coldwar.Province.ProvinceMechanicState;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.Leader.LeaderSettings;
 import com.berserkbentobox.coldwar.Leader.LeaderState;
-import com.berserkbentobox.coldwar.Province.ProvinceRegion;
+import com.berserkbentobox.coldwar.Id.ProvinceRegion;
 import com.berserkbentobox.coldwar.Province.ProvinceState;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.logic.Client.Player;
-import com.berserkbentobox.coldwar.logic.mechanics.Leader;
 import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
-import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyMechanic;
 
 /**
  * A ComputedGameState contains public, final variables representing variables computed from a given game state and move lists.
@@ -101,11 +99,14 @@ public class ComputedGameState {
 		
 	public final MechanicSettings settings;
 	
+	public Mechanics mechanics;
+	
 	public ComputedGameState(final GameState state, final MoveList usaMoves, final MoveList ussrMoves, final MechanicSettings settings, Mechanics mechanics) {
 		this.state = state;
 		this.usaMoves = usaMoves;
 		this.ussrMoves = ussrMoves;
 		this.settings = settings;
+		this.mechanics = mechanics;
 
 		Random r = new Random(this.state.getPseudorandomState().getSeed());
 			
@@ -1124,14 +1125,7 @@ public class ComputedGameState {
 	}
 	
 	public Player getAlly(ProvinceId province) {
-		if(totalInfluence.get(province) > getAllianceThreshold(province) &&
-				governments.get(province) != Government.COMMUNISM) {
-			return Player.USA;
-		} else if(totalInfluence.get(province) < -getAllianceThreshold(province) &&
-				governments.get(province) != Government.DEMOCRACY) {
-			return Player.USSR;
-		}
-		return null;
+		return mechanics.getProvinces().getProvince(province).getAlly();
 	}
 	
 	public int getNetStability(ProvinceId province) {

@@ -8,13 +8,13 @@ import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
 import com.berserkbentobox.coldwar.MoveOuterClass.ConflictOvertFundAttackerMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.ConflictOvertFundDefenderMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.CoupMove;
-import com.berserkbentobox.coldwar.MoveOuterClass.CovertMove;
-import com.berserkbentobox.coldwar.MoveOuterClass.DiplomacyMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.EstablishBaseMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.FundDissidentsMove;
-import com.berserkbentobox.coldwar.MoveOuterClass.MilitaryMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.MoveOuterClass.PoliticalPressureMove;
+import com.berserkbentobox.coldwar.Province.CovertMove;
+import com.berserkbentobox.coldwar.Province.DiplomacyMove;
+import com.berserkbentobox.coldwar.Province.MilitaryMove;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 
@@ -49,27 +49,6 @@ public class MoveBuilder {
 			this.mechanics = this.stateManager.computeDeterministicMechanics(MoveList.getDefaultInstance(), this.moves.build());
 			this.computedState = new ComputedGameState(this.state, MoveList.getDefaultInstance(), this.moves.build(), this.settings, this.mechanics);
 		}
-	}
-
-	public void influenceDip(final ProvinceId id, int magnitude) {
-		this.moves.addMoves(
-				Move.newBuilder().setDiaDipMove(DiplomacyMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
-		Logger.Dbg("Adding influence from political points in " + id + " with magnitude " + magnitude);
-		this.computeState();
-	}
-	
-	public void influenceMil(final ProvinceId id, int magnitude) {
-		this.moves.addMoves(
-				Move.newBuilder().setDiaMilMove(MilitaryMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
-		Logger.Dbg("Adding influence from military points in " + id + " with magnitude " + magnitude);
-		this.computeState();
-	}
-	
-	public void influenceCov(final ProvinceId id, int magnitude) {
-		this.moves.addMoves(
-				Move.newBuilder().setDiaCovMove(CovertMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
-		Logger.Dbg("Adding influence from covert points in " + id + " with magnitude " + magnitude);
-		this.computeState();
 	}
 	
 	public void FundDissidents(final ProvinceId id) {
@@ -165,6 +144,41 @@ public class MoveBuilder {
 
 	public int getStabilityModifier(ProvinceId provinceId) {
 		return this.computedState.stabilityModifier.getOrDefault(provinceId, 0);
+	}
+	
+	// Provinces
+	
+	public void influenceDip(final ProvinceId id, int magnitude) {
+		Move.Builder move = Move.newBuilder();
+		DiplomacyMove.Builder dipMove = DiplomacyMove.newBuilder();
+		dipMove
+			.setProvinceId(id)
+			.setMagnitude(magnitude);
+		move.getProvinceMechanicMovesBuilder().addDiplomacyMove(dipMove);
+		this.moves.addMoves(move.build());
+		this.computeState();
+	}
+	
+	public void influenceMil(final ProvinceId id, int magnitude) {
+		Move.Builder move = Move.newBuilder();
+		MilitaryMove.Builder milMove = MilitaryMove.newBuilder();
+		milMove
+			.setProvinceId(id)
+			.setMagnitude(magnitude);
+		move.getProvinceMechanicMovesBuilder().addMilitaryMove(milMove);
+		this.moves.addMoves(move.build());
+		this.computeState();
+	}
+	
+	public void influenceCov(final ProvinceId id, int magnitude) {
+		Move.Builder move = Move.newBuilder();
+		CovertMove.Builder covMove = CovertMove.newBuilder();
+		covMove
+			.setProvinceId(id)
+			.setMagnitude(magnitude);
+		move.getProvinceMechanicMovesBuilder().addCovertMove(covMove);
+		this.moves.addMoves(move.build());
+		this.computeState();
 	}
 	
 	// Elections

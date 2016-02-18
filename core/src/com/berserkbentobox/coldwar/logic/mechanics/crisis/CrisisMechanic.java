@@ -8,12 +8,13 @@ import java.util.Map;
 
 import com.berserkbentobox.coldwar.Crisis;
 import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.Crisis.Consequence;
 import com.berserkbentobox.coldwar.Crisis.CrisisMechanicMoves;
 import com.berserkbentobox.coldwar.Crisis.CrisisMechanicSettings;
 import com.berserkbentobox.coldwar.Crisis.CrisisMechanicState;
 import com.berserkbentobox.coldwar.Crisis.CrisisSettings;
 import com.berserkbentobox.coldwar.Crisis.CrisisState;
-import com.berserkbentobox.coldwar.Crisis.Effect;
+import com.berserkbentobox.coldwar.EffectOuterClass.Effect;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
 import com.berserkbentobox.coldwar.logic.Client.Player;
@@ -106,11 +107,11 @@ public class CrisisMechanic {
 	
 	public void resolveCrisis(InfluenceStoreMechanic influence) {
 		for(CrisisState c : this.state.getCrisesList()) {
-			for(Effect e : this.getSettings().getCrisisSetting(c.getName()).getEffectsList()) {
+			for(Consequence e : this.getSettings().getCrisisSetting(c.getName()).getConsequencesList()) {
 				for(String usa : e.getUsaChoicesList()) {
 					for(String ussr : e.getUssrChoicesList()) {
 						if(usa.equals(usa_choice) && ussr.equals(ussr_choice)) {
-							// Resolve here
+							// Resolve effects
 						}
 					}
 				}

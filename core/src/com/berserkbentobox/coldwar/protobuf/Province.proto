@@ -6,18 +6,7 @@ import "Leader.proto";
 import "Dissidents.proto";
 import "Id.proto";
 
-enum ProvinceRegion {
-	WESTERN_EUROPE = 1;
-	EASTERN_EUROPE = 2;
-	CENTRAL_AMERICA = 3;
-	SOUTH_AMERICA = 4;
-	AFRICA = 5;
-	MIDDLE_EAST = 6;
-	SOUTH_ASIA = 7;
-	EAST_ASIA = 8;
-
-	SUPERPOWERS = 9;
-}
+// ========== Settings ==========
 
 message ProvinceMechanicSettings {
 	repeated ProvinceSettings province = 1;
@@ -39,6 +28,8 @@ message ProvinceSettings {
 	optional bool coastal = 15 [default = false];
 }
 
+// ========== State ==========
+
 message ProvinceMechanicState {
 	repeated ProvinceState province_state = 1;
 }
@@ -52,4 +43,40 @@ message ProvinceState {
 	optional ProvinceId ally = 10;
 	optional bool has_dissidents = 13;
 	optional Dissidents dissidents = 14;
+}
+
+// ========== Moves ==========
+
+// The top-level moves proto included in Moves.
+
+message ProvinceMechanicMoves {
+	repeated DiplomacyMove diplomacy_move = 1;
+	repeated MilitaryMove military_move = 2;
+	repeated CovertMove covert_move = 3;
+}
+
+// <Direct Influence Actions>
+
+// Influence by spending DIP points
+message DiplomacyMove {
+	optional ProvinceId province_id = 1;
+	optional int32 magnitude = 2;
+
+//	option (pol_cost) = 1;
+}
+
+// Influence by spending MIL points
+message MilitaryMove {
+	optional ProvinceId province_id = 1;
+	optional int32 magnitude = 2;
+
+//	option (mil_cost) = 1;
+}
+
+// Influence by spending COV points
+message CovertMove {
+	optional ProvinceId province_id = 1;
+	optional int32 magnitude = 2;
+
+//	option (cov_cost) = 1;
 }

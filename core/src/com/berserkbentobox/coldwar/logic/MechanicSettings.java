@@ -5,6 +5,7 @@ import com.berserkbentobox.coldwar.logic.mechanics.crisis.CrisisMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.influencestore.InfluenceStoreMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.province.ProvinceMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.superpower.SuperpowerMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyMechanic;
@@ -13,6 +14,7 @@ import com.berserkbentobox.coldwar.logic.mechanics.treaty.TreatyMechanic;
 // MechanicSettings is a container for various MechanicSettings abstractions over the raw settings proto.
 public class MechanicSettings {
 
+	private ProvinceMechanic.Settings provinces;
 	private HeatMechanic.Settings heat;
 	private TechnologyMechanic.Settings technology;
 	private PseudorandomMechanic.Settings pseudorandom;
@@ -23,6 +25,7 @@ public class MechanicSettings {
 	private CrisisMechanic.Settings crisis;
 	
 	public MechanicSettings(GameSettings settings) {
+		this.provinces = new ProvinceMechanic.Settings(settings);
 		this.technology = new TechnologyMechanic.Settings(settings);
 		this.pseudorandom = new PseudorandomMechanic.Settings(settings);
 		this.superpower = new SuperpowerMechanic.Settings(settings);
@@ -31,6 +34,10 @@ public class MechanicSettings {
 		this.treaty = new TreatyMechanic.Settings(settings);
 		this.influence = new InfluenceStoreMechanic.Settings(settings);
 		this.crisis = new CrisisMechanic.Settings(settings);
+	}
+	
+	public ProvinceMechanic.Settings getProvinces() {
+		return this.provinces;
 	}
 	
 	public TechnologyMechanic.Settings getTechnology() {
