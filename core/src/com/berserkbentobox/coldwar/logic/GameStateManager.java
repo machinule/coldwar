@@ -41,7 +41,7 @@ public class GameStateManager {
 			}			
 			// Crisis
 			if (move.hasCrisisMechanicMoves()) {
-				mechanics.getCrisis().makeMoves(Player.USSR, move.getCrisisMechanicMoves());							
+				mechanics.getCrisis().makeMoves(Player.USA, move.getCrisisMechanicMoves());							
 			}
 		}
 		
@@ -60,11 +60,11 @@ public class GameStateManager {
 			}
 			// Superpower
 			if (move.hasSuperpowerMechanicMoves()) {
-				mechanics.getSuperpower().makeMoves(Player.USA, move.getSuperpowerMechanicMoves());							
+				mechanics.getSuperpower().makeMoves(Player.USSR, move.getSuperpowerMechanicMoves());							
 			}			
 			// Crisis
 			if (move.hasCrisisMechanicMoves()) {
-				mechanics.getCrisis().makeMoves(Player.USA, move.getCrisisMechanicMoves());							
+				mechanics.getCrisis().makeMoves(Player.USSR, move.getCrisisMechanicMoves());							
 			}
 		}		
 		
