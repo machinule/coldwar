@@ -9,9 +9,11 @@ import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
 import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomMechanicSettings;
 import com.berserkbentobox.coldwar.Pseudorandom.PseudorandomMechanicState;
+import com.berserkbentobox.coldwar.logic.Mechanic;
+import com.berserkbentobox.coldwar.logic.Mechanics;
 import com.berserkbentobox.coldwar.logic.Status;
 
-public class PseudorandomMechanic {
+public class PseudorandomMechanic extends Mechanic {
 
 	public static class Settings {
 		
@@ -38,7 +40,8 @@ public class PseudorandomMechanic {
 	private PseudorandomMechanicState.Builder state;
 	private Random random;
 	
-	public PseudorandomMechanic(Settings settings, GameStateOrBuilder state) {
+	public PseudorandomMechanic(Mechanics mechanics, Settings settings, GameStateOrBuilder state) {
+		super(mechanics);
 		this.settings = settings;
 		this.state = state.getPseudorandomState().toBuilder();
 		this.random = new Random(this.state.getSeed());

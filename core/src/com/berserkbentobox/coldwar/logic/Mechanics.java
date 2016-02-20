@@ -23,15 +23,15 @@ public class Mechanics {
 	private CrisisMechanic crisis;
 	
 	public Mechanics(MechanicSettings settings, GameState state) {
-		this.provinces = new ProvinceMechanic(settings.getProvinces(), state);
-		this.technology = new TechnologyMechanic(settings.getTechnology(), state);
-		this.pseudorandom = new PseudorandomMechanic(settings.getPseudorandom(), state);
-		this.superpower = new SuperpowerMechanic(settings.getSuperpower(), state);
-		this.heat = new HeatMechanic(settings.getHeat(), state);
-		this.treaty = new TreatyMechanic(settings.getTreaty(), state);
-		this.deterrence = new DeterrenceMechanic(settings.getDeterrence(), state);
-		this.influence = new InfluenceStoreMechanic(settings.getInfluence(), state);
-		this.crisis = new CrisisMechanic(settings.getCrisis(), state);
+		this.provinces = new ProvinceMechanic(this, settings.getProvinces(), state);
+		this.technology = new TechnologyMechanic(this, settings.getTechnology(), state);
+		this.pseudorandom = new PseudorandomMechanic(this, settings.getPseudorandom(), state);
+		this.superpower = new SuperpowerMechanic(this, settings.getSuperpower(), state);
+		this.heat = new HeatMechanic(this, settings.getHeat(), state);
+		this.treaty = new TreatyMechanic(this, settings.getTreaty(), state);
+		this.deterrence = new DeterrenceMechanic(this, settings.getDeterrence(), state);
+		this.influence = new InfluenceStoreMechanic(this, settings.getInfluence(), state);
+		this.crisis = new CrisisMechanic(this, settings.getCrisis(), state);
 	}
 	
 	public ProvinceMechanic getProvinces() {

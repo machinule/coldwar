@@ -14,10 +14,12 @@ import com.berserkbentobox.coldwar.Technology.TechnologyMechanicMoves;
 import com.berserkbentobox.coldwar.Technology.TechnologyMechanicSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyMechanicState;
 import com.berserkbentobox.coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.logic.Mechanic;
+import com.berserkbentobox.coldwar.logic.Mechanics;
 import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.Status;
 
-public class TechnologyMechanic {
+public class TechnologyMechanic extends Mechanic {
 	
 	public static class Settings {
 		
@@ -64,7 +66,8 @@ public class TechnologyMechanic {
 	private Map<String, TechnologyGroup> usaTechnologyGroups;
 	private Map<String, TechnologyGroup> ussrTechnologyGroups;
 	
-	public TechnologyMechanic(Settings settings, GameStateOrBuilder state) {
+	public TechnologyMechanic(Mechanics mechanics, Settings settings, GameStateOrBuilder state) {
+		super(mechanics);
 		this.settings = settings;
 		this.state = state.getTechnologyState().toBuilder();
 		this.usaTechnologyGroups = new LinkedHashMap<String, TechnologyGroup>();

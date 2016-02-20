@@ -111,7 +111,7 @@ public class SuperpowerMechanicTest {
 		GameState.Builder state = GameState.newBuilder();
 		SuperpowerMechanic.Settings settings = getSettings();
 		state.setSuperpowerState(settings.initialState());
-		return new SuperpowerMechanic(settings, state.build());
+		return new SuperpowerMechanic(null, settings, state.build());
 	}
 	
 	@Test

@@ -23,10 +23,12 @@ import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.logic.Status;
 import com.berserkbentobox.coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.logic.Mechanic;
+import com.berserkbentobox.coldwar.logic.Mechanics;
 import com.berserkbentobox.coldwar.logic.mechanics.influencestore.InfluenceStoreMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.superpower.UsaLeader;
 
-public class ProvinceMechanic {
+public class ProvinceMechanic extends Mechanic {
 
 	public static class Settings {
 		
@@ -69,7 +71,8 @@ public class ProvinceMechanic {
 	private ProvinceMechanicState.Builder state;
 	private Map<ProvinceId, Province> provinces;
 	
-	public ProvinceMechanic(Settings settings, GameStateOrBuilder state) {
+	public ProvinceMechanic(Mechanics mechanics, Settings settings, GameStateOrBuilder state) {
+		super(mechanics);
 		this.settings = settings;
 		this.state = state.getProvinceState().toBuilder();
 		provinces = new HashMap<ProvinceId, Province>();

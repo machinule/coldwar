@@ -4,9 +4,11 @@ import com.berserkbentobox.coldwar.Deterrence.DeterrenceMechanicSettings;
 import com.berserkbentobox.coldwar.Deterrence.DeterrenceMechanicState;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
+import com.berserkbentobox.coldwar.logic.Mechanic;
+import com.berserkbentobox.coldwar.logic.Mechanics;
 import com.berserkbentobox.coldwar.logic.Status;
 
-public class DeterrenceMechanic {
+public class DeterrenceMechanic extends Mechanic {
 	public static class Settings {
 		
 		private GameSettingsOrBuilder gameSettings;
@@ -35,7 +37,8 @@ public class DeterrenceMechanic {
 	private Settings settings;
 	private DeterrenceMechanicState.Builder state;
 	
-	public DeterrenceMechanic(Settings settings, GameStateOrBuilder state) {
+	public DeterrenceMechanic(Mechanics mechanics, Settings settings, GameStateOrBuilder state) {
+		super(mechanics);
 		this.settings = settings;
 		this.state = state.getDeterrenceState().toBuilder();
 	}

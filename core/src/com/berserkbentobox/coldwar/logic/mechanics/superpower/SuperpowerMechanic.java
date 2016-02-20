@@ -11,8 +11,10 @@ import com.berserkbentobox.coldwar.Superpower.UssrState;
 import com.berserkbentobox.coldwar.Treaty.TreatyMechanicMoves;
 import com.berserkbentobox.coldwar.logic.Status;
 import com.berserkbentobox.coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.logic.Mechanic;
+import com.berserkbentobox.coldwar.logic.Mechanics;
 
-public class SuperpowerMechanic {
+public class SuperpowerMechanic extends Mechanic {
 
 	public static class Settings {
 		
@@ -54,7 +56,8 @@ public class SuperpowerMechanic {
 	private Usa usa;
 	private Ussr ussr;
 	
-	public SuperpowerMechanic(Settings settings, GameStateOrBuilder state) {
+	public SuperpowerMechanic(Mechanics mechanics, Settings settings, GameStateOrBuilder state) {
+		super(mechanics);
 		this.settings = settings;
 		this.state = state.getSuperpowerState().toBuilder();
 		this.usa = new Usa(this, this.getSettings().getUsaSettings(), this.state.getUsaStateBuilder());
