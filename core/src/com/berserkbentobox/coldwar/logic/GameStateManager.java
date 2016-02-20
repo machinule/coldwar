@@ -25,7 +25,7 @@ public class GameStateManager {
 		for (Move move : usaMoves.getMovesList()) {
 			// Provinces
 			if(move.hasProvinceMechanicMoves()) {
-				mechanics.getProvinces().makeMoves(Player.USA, move.getProvinceMechanicMoves(), mechanics.getInfluence());
+				mechanics.getProvinces().makeMoves(Player.USA, move.getProvinceMechanicMoves());
 			}
 			// Technology
 			if (move.hasTechnologyMechanicMoves()) {
@@ -41,14 +41,14 @@ public class GameStateManager {
 			}			
 			// Crisis
 			if (move.hasCrisisMechanicMoves()) {
-				mechanics.getCrisis().makeMoves(Player.USSR, move.getCrisisMechanicMoves());							
+				mechanics.getCrisis().makeMoves(Player.USA, move.getCrisisMechanicMoves());							
 			}
 		}
 		
 		for (Move move : ussrMoves.getMovesList()) {
 			// Provinces
 			if(move.hasProvinceMechanicMoves()) {
-				mechanics.getProvinces().makeMoves(Player.USSR, move.getProvinceMechanicMoves(), mechanics.getInfluence());
+				mechanics.getProvinces().makeMoves(Player.USSR, move.getProvinceMechanicMoves());
 			}
 			// Technology
 			if (move.hasTechnologyMechanicMoves()) {
@@ -60,11 +60,11 @@ public class GameStateManager {
 			}
 			// Superpower
 			if (move.hasSuperpowerMechanicMoves()) {
-				mechanics.getSuperpower().makeMoves(Player.USA, move.getSuperpowerMechanicMoves());							
+				mechanics.getSuperpower().makeMoves(Player.USSR, move.getSuperpowerMechanicMoves());							
 			}			
 			// Crisis
 			if (move.hasCrisisMechanicMoves()) {
-				mechanics.getCrisis().makeMoves(Player.USA, move.getCrisisMechanicMoves());							
+				mechanics.getCrisis().makeMoves(Player.USSR, move.getCrisisMechanicMoves());							
 			}
 		}		
 		
@@ -79,8 +79,8 @@ public class GameStateManager {
 		int year = initialState.getTurn() + 1948;
 		
 		// Technology
-		mechanics.getTechnology().maybeMakeProgress(Player.USSR, mechanics.getPseudorandom());
-		mechanics.getTechnology().maybeMakeProgress(Player.USA, mechanics.getPseudorandom());
+		mechanics.getTechnology().maybeMakeProgress(Player.USSR);
+		mechanics.getTechnology().maybeMakeProgress(Player.USA);
 		
 		// Superpower
 	
@@ -94,7 +94,7 @@ public class GameStateManager {
 		mechanics.getSuperpower().getUssr().maybeKillLeader(year, mechanics.getPseudorandom());
 		
 		// Treaty
-		mechanics.getTreaty().maybeSignTreaty(mechanics.getPseudorandom(), mechanics.getHeat(), mechanics.getDeterrence());
+		mechanics.getTreaty().maybeSignTreaty();
 
 		//Crisis		
 		mechanics.getCrisis().resolveCrisis(mechanics.getInfluence());

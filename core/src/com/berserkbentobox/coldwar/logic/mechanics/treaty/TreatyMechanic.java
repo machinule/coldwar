@@ -15,12 +15,14 @@ import com.berserkbentobox.coldwar.Treaty.TreatySettings;
 import com.berserkbentobox.coldwar.Treaty.TreatyState;
 import com.berserkbentobox.coldwar.logic.Status;
 import com.berserkbentobox.coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.logic.Mechanic;
+import com.berserkbentobox.coldwar.logic.Mechanics;
 import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.Technology;
 
-public class TreatyMechanic {
+public class TreatyMechanic extends Mechanic {
 	
 	public static class Settings {
 		
@@ -67,7 +69,8 @@ public class TreatyMechanic {
 	private TreatyMechanicState.Builder state;
 	private Map<String, Treaty> treaties;
 	
-	public TreatyMechanic(Settings settings, GameStateOrBuilder state) {
+	public TreatyMechanic(Mechanics mechanics, Settings settings, GameStateOrBuilder state) {
+		super(mechanics);
 		this.settings = settings;
 		this.state = state.getTreatyState().toBuilder();
 		this.treaties = new LinkedHashMap<String, Treaty>();
@@ -120,19 +123,19 @@ public class TreatyMechanic {
 		}
 	}
 
-	public void maybeSignTreaty(PseudorandomMechanic random, HeatMechanic heat, DeterrenceMechanic deterrence) {
+	public void maybeSignTreaty() {
 		if (this.usaDeescalate) {
-			heat.decrease(this.getSettings().getSettings().getDeescalateAmount());
+			this.getMechanics().getHeat().decrease(this.getSettings().getSettings().getDeescalateAmount());
 		}
 		if (this.ussrDeescalate) {
-			heat.decrease(this.getSettings().getSettings().getDeescalateAmount());
+			this.getMechanics().getHeat().decrease(this.getSettings().getSettings().getDeescalateAmount());
 		}
 		if (!(this.usaDeescalate && this.ussrDeescalate)) {
 			return;
 		}
 		Treaty toSign = this.getFirstUnsignedTreaty();
-		if (random.happens(toSign.getSettings().getSettings().getSigningChance())) {
-			toSign.Sign(heat, deterrence);
+		if (this.getMechanics().getPseudorandom().happens(toSign.getSettings().getSettings().getSigningChance())) {
+			toSign.Sign(this.getMechanics().getHeat(), this.getMechanics().getDeterrence());
 		}
 	}
 	

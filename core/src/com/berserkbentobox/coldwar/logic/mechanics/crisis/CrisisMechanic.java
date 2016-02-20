@@ -18,11 +18,13 @@ import com.berserkbentobox.coldwar.EffectOuterClass.Effect;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
 import com.berserkbentobox.coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.logic.Mechanic;
+import com.berserkbentobox.coldwar.logic.Mechanics;
 import com.berserkbentobox.coldwar.logic.Status;
 import com.berserkbentobox.coldwar.logic.mechanics.influencestore.InfluenceStoreMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 
-public class CrisisMechanic {
+public class CrisisMechanic extends Mechanic {
 	public static class Settings {
 		
 		private GameSettingsOrBuilder gameSettings;
@@ -69,7 +71,8 @@ public class CrisisMechanic {
 	private String usa_choice;
 	private String ussr_choice;
 	
-	public CrisisMechanic(Settings settings, GameStateOrBuilder state) {
+	public CrisisMechanic(Mechanics mechanics, Settings settings, GameStateOrBuilder state) {
+		super(mechanics);
 		this.settings = settings;
 		this.state = state.getCrisisState().toBuilder();
 	}

@@ -4,9 +4,11 @@ import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
 import com.berserkbentobox.coldwar.Heat.HeatMechanicSettings;
 import com.berserkbentobox.coldwar.Heat.HeatMechanicState;
+import com.berserkbentobox.coldwar.logic.Mechanic;
+import com.berserkbentobox.coldwar.logic.Mechanics;
 import com.berserkbentobox.coldwar.logic.Status;
 
-public class HeatMechanic {
+public class HeatMechanic extends Mechanic {
 	public static class Settings {
 		
 		private GameSettingsOrBuilder gameSettings;
@@ -35,7 +37,8 @@ public class HeatMechanic {
 	private Settings settings;
 	private HeatMechanicState.Builder state;
 	
-	public HeatMechanic(Settings settings, GameStateOrBuilder state) {
+	public HeatMechanic(Mechanics mechanics, Settings settings, GameStateOrBuilder state) {
+		super(mechanics);
 		this.settings = settings;
 		this.state = state.getHeatState().toBuilder();
 	}

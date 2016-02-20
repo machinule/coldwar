@@ -68,7 +68,7 @@ public class TechnologyMechanicTest {
 		GameState.Builder state = GameState.newBuilder();
 		TechnologyMechanic.Settings settings = getSettings();
 		state.setTechnologyState(settings.initialState());
-		return new TechnologyMechanic(settings, state.build());
+		return new TechnologyMechanic(null, settings, state.build());
 	}
 	
 	@Test
@@ -245,7 +245,7 @@ public class TechnologyMechanicTest {
 		PseudorandomMechanic.Settings s = new PseudorandomMechanic.Settings(settings.build());
 		GameState.Builder state = GameState.newBuilder();
 		state.setPseudorandomState(s.initialState());
-		return new PseudorandomMechanic(s, state);
+		return new PseudorandomMechanic(null, s, state);
 	}
 	
 	@Test
@@ -255,7 +255,7 @@ public class TechnologyMechanicTest {
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getProgressChance(), 500000);
 		mechanic.makeResearchMove(Player.USA, ResearchMove.newBuilder().setTechnologyGroupId("GROUP_A").setMagnitude(5).build());
 		
-		mechanic.maybeMakeProgress(Player.USA, getPseudorandom());
+		mechanic.maybeMakeProgress(Player.USA);
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getTechnology("TECH_A_1").getState().getProgress(), 1);
 	}
 
@@ -268,7 +268,7 @@ public class TechnologyMechanicTest {
 		
 		PseudorandomMechanic random = getPseudorandom();
 		for (int i = 0; i < 100000; i++) {
-			mechanic.maybeMakeProgress(Player.USA, random);
+			mechanic.maybeMakeProgress(Player.USA);
 		}
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getTechnology("TECH_B_1").getState().getProgress() / 100000.0, .5, .01);
 	}
@@ -279,7 +279,7 @@ public class TechnologyMechanicTest {
 		initMechanic.getTechnologyGroup(Player.USA, "GROUP_A").makeProgress();
 		initMechanic.makeResearchMove(Player.USA, ResearchMove.newBuilder().setTechnologyGroupId("GROUP_A").setMagnitude(1).build());
 		GameState state = GameState.newBuilder().setTechnologyState(initMechanic.buildState()).build();
-		TechnologyMechanic mechanic = new TechnologyMechanic(initMechanic.getSettings(), state);
+		TechnologyMechanic mechanic = new TechnologyMechanic(null, initMechanic.getSettings(), state);
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getTechnology("TECH_A_1").getState().getProgress(), 1);
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getResearch(), 0);  // Research is not propagated.
 	}
