@@ -112,9 +112,9 @@ public class TechnologyMechanic extends Mechanic {
 
 	// Logic
 	
-	public void maybeMakeProgress(Player player, PseudorandomMechanic pseudorandomMechanic) {
+	public void maybeMakeProgress(Player player) {
 		for (TechnologyGroup group : this.getTechnologyGroups(player)) {
-			group.maybeMakeProgress(pseudorandomMechanic);
+			group.maybeMakeProgress(this.getMechanics().getPseudorandom());
 		}
 	}	
 	

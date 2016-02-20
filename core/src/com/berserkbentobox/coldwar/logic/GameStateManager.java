@@ -25,7 +25,7 @@ public class GameStateManager {
 		for (Move move : usaMoves.getMovesList()) {
 			// Provinces
 			if(move.hasProvinceMechanicMoves()) {
-				mechanics.getProvinces().makeMoves(Player.USA, move.getProvinceMechanicMoves(), mechanics.getInfluence());
+				mechanics.getProvinces().makeMoves(Player.USA, move.getProvinceMechanicMoves());
 			}
 			// Technology
 			if (move.hasTechnologyMechanicMoves()) {
@@ -48,7 +48,7 @@ public class GameStateManager {
 		for (Move move : ussrMoves.getMovesList()) {
 			// Provinces
 			if(move.hasProvinceMechanicMoves()) {
-				mechanics.getProvinces().makeMoves(Player.USSR, move.getProvinceMechanicMoves(), mechanics.getInfluence());
+				mechanics.getProvinces().makeMoves(Player.USSR, move.getProvinceMechanicMoves());
 			}
 			// Technology
 			if (move.hasTechnologyMechanicMoves()) {
@@ -77,8 +77,8 @@ public class GameStateManager {
 	
 	public GameState computeNextGameState(Mechanics mechanics) {
 		// Technology
-		mechanics.getTechnology().maybeMakeProgress(Player.USSR, mechanics.getPseudorandom());
-		mechanics.getTechnology().maybeMakeProgress(Player.USA, mechanics.getPseudorandom());
+		mechanics.getTechnology().maybeMakeProgress(Player.USSR);
+		mechanics.getTechnology().maybeMakeProgress(Player.USA);
 		
 		// Superpower
 		

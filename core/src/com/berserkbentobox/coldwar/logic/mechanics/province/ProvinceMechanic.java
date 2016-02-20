@@ -115,47 +115,47 @@ public class ProvinceMechanic extends Mechanic {
 	
 	// Moves
 	
-	public void makeMoves(Player player, ProvinceMechanicMoves moves, InfluenceStoreMechanic influenceStore) {
+	public void makeMoves(Player player, ProvinceMechanicMoves moves) {
 		if (moves.getDiplomacyMoveCount() > 0) {
-			makeDiplomacyMoves(player, moves.getDiplomacyMoveList(), influenceStore);
+			makeDiplomacyMoves(player, moves.getDiplomacyMoveList());
 		}
 		if (moves.getMilitaryMoveCount() > 0) {
-			makeMilitaryMoves(player, moves.getMilitaryMoveList(), influenceStore);
+			makeMilitaryMoves(player, moves.getMilitaryMoveList());
 		}
 		if (moves.getCovertMoveCount() > 0) {
-			makeCovertMoves(player, moves.getCovertMoveList(), influenceStore);
+			makeCovertMoves(player, moves.getCovertMoveList());
 		}
 	}	
 
-	public void makeDiplomacyMoves(Player player, List<DiplomacyMove> moves, InfluenceStoreMechanic influenceStore) {
+	public void makeDiplomacyMoves(Player player, List<DiplomacyMove> moves) {
 		int inflSign = 1;
 		if (player == Player.USSR)
 			inflSign = inflSign * -1;
 		for(DiplomacyMove m : moves) {
 			int magnitude = m.getMagnitude() * inflSign;
-			influenceStore.spendPOL(player, magnitude);
+			this.getMechanics().getInfluence().spendPOL(player, magnitude);
 			this.provinces.get(m.getProvinceId()).influence(magnitude);
 		}
 	}
 	
-	public void makeMilitaryMoves(Player player, List<MilitaryMove> moves, InfluenceStoreMechanic influenceStore) {
+	public void makeMilitaryMoves(Player player, List<MilitaryMove> moves) {
 		int inflSign = 1;
 		if (player == Player.USSR)
 			inflSign = inflSign * -1;
 		for(MilitaryMove m : moves) {
 			int magnitude = m.getMagnitude() * inflSign;
-			influenceStore.spendPOL(player, magnitude);
+			this.getMechanics().getInfluence().spendPOL(player, magnitude);
 			this.provinces.get(m.getProvinceId()).influence(magnitude);
 		}
 	}
 	
-	public void makeCovertMoves(Player player, List<CovertMove> moves, InfluenceStoreMechanic influenceStore) {
+	public void makeCovertMoves(Player player, List<CovertMove> moves) {
 		int inflSign = 1;
 		if (player == Player.USSR)
 			inflSign = inflSign * -1;
 		for(CovertMove m : moves) {
 			int magnitude = m.getMagnitude() * inflSign;
-			influenceStore.spendCOV(player, magnitude);
+			this.getMechanics().getInfluence().spendCOV(player, magnitude);
 			this.provinces.get(m.getProvinceId()).influence(magnitude);
 		}
 	}

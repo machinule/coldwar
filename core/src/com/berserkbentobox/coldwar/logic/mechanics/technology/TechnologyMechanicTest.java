@@ -255,7 +255,7 @@ public class TechnologyMechanicTest {
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getProgressChance(), 500000);
 		mechanic.makeResearchMove(Player.USA, ResearchMove.newBuilder().setTechnologyGroupId("GROUP_A").setMagnitude(5).build());
 		
-		mechanic.maybeMakeProgress(Player.USA, getPseudorandom());
+		mechanic.maybeMakeProgress(Player.USA);
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_A").getTechnology("TECH_A_1").getState().getProgress(), 1);
 	}
 
@@ -268,7 +268,7 @@ public class TechnologyMechanicTest {
 		
 		PseudorandomMechanic random = getPseudorandom();
 		for (int i = 0; i < 100000; i++) {
-			mechanic.maybeMakeProgress(Player.USA, random);
+			mechanic.maybeMakeProgress(Player.USA);
 		}
 		assertEquals(mechanic.getTechnologyGroup(Player.USA, "GROUP_B").getTechnology("TECH_B_1").getState().getProgress() / 100000.0, .5, .01);
 	}
