@@ -123,19 +123,19 @@ public class TreatyMechanic extends Mechanic {
 		}
 	}
 
-	public void maybeSignTreaty(PseudorandomMechanic random, HeatMechanic heat, DeterrenceMechanic deterrence) {
+	public void maybeSignTreaty() {
 		if (this.usaDeescalate) {
-			heat.decrease(this.getSettings().getSettings().getDeescalateAmount());
+			this.getMechanics().getHeat().decrease(this.getSettings().getSettings().getDeescalateAmount());
 		}
 		if (this.ussrDeescalate) {
-			heat.decrease(this.getSettings().getSettings().getDeescalateAmount());
+			this.getMechanics().getHeat().decrease(this.getSettings().getSettings().getDeescalateAmount());
 		}
 		if (!(this.usaDeescalate && this.ussrDeescalate)) {
 			return;
 		}
 		Treaty toSign = this.getFirstUnsignedTreaty();
-		if (random.happens(toSign.getSettings().getSettings().getSigningChance())) {
-			toSign.Sign(heat, deterrence);
+		if (this.getMechanics().getPseudorandom().happens(toSign.getSettings().getSettings().getSigningChance())) {
+			toSign.Sign(this.getMechanics().getHeat(), this.getMechanics().getDeterrence());
 		}
 	}
 	

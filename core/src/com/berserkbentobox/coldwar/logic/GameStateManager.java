@@ -93,7 +93,7 @@ public class GameStateManager {
 		mechanics.getSuperpower().getUssr().maybeKillLeader(year, mechanics.getPseudorandom());
 		
 		// Treaty
-		mechanics.getTreaty().maybeSignTreaty(mechanics.getPseudorandom(), mechanics.getHeat(), mechanics.getDeterrence());
+		mechanics.getTreaty().maybeSignTreaty();
 
 		//Crisis		
 		mechanics.getCrisis().resolveCrisis(mechanics.getInfluence());
