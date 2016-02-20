@@ -2,6 +2,7 @@ package com.berserkbentobox.coldwar.logic.mechanics.province;
 
 import java.util.stream.Collectors;
 
+import com.berserkbentobox.coldwar.DissidentsOuterClass.Dissidents;
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.Logger;
@@ -125,6 +126,10 @@ public class Province {
 		}
 	}
 	
+	public boolean hasDissidents() {
+		return this.state.hasDissidents();
+	}
+	
 	public Player getAlly() {
 		int infl = this.state.getInfluence();
 		if(infl > this.getAllianceThreshold() &&
@@ -141,6 +146,10 @@ public class Province {
 	// Logic
 	
 	public void influence(int magnitude) {
-		this.getState().setInfluence(this.getState().getInfluence() + magnitude);
+		this.state.setInfluence(this.getState().getInfluence() + magnitude);
+	}
+	
+	public void addDissidents(Dissidents diss) {
+		this.state.setDissidents(diss);
 	}
 }

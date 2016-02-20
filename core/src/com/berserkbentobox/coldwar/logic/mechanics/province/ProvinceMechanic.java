@@ -8,6 +8,7 @@ import java.util.Map;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.Province.CovertMove;
 import com.berserkbentobox.coldwar.Province.DiplomacyMove;
+import com.berserkbentobox.coldwar.Province.FundDissidentsMove;
 import com.berserkbentobox.coldwar.Province.MilitaryMove;
 import com.berserkbentobox.coldwar.Province.ProvinceMechanicMoves;
 import com.berserkbentobox.coldwar.Province.ProvinceMechanicSettings;
@@ -80,6 +81,7 @@ public class ProvinceMechanic extends Mechanic {
 			Province p = new Province(this, this.getSettings().getProvinceSettings(ps.getId()), ps);
 			this.provinces.put(p.getState().getId(), p);
 		}
+		ProvinceUtil.set(provinces, mechanics.getPseudorandom());
 	}
 	
 	public Status validate() {
@@ -103,14 +105,11 @@ public class ProvinceMechanic extends Mechanic {
 	// Logic
 	
 	public void influenceProvince(Player player, ProvinceId id, int magnitude) {
-		if(player == Player.USSR)
-			magnitude = magnitude * -1;
-		influenceProvince(id, magnitude);
+		InfluenceUtil.influenceProvince(player, id, magnitude);
 	}
 	
 	public void influenceProvince(ProvinceId id, int magnitude) {
-		Province target = this.provinces.get(id);
-		target.influence(magnitude);
+		InfluenceUtil.influenceProvince(id, magnitude);
 	}
 	
 	// Moves
@@ -128,36 +127,32 @@ public class ProvinceMechanic extends Mechanic {
 	}	
 
 	public void makeDiplomacyMoves(Player player, List<DiplomacyMove> moves) {
-		int inflSign = 1;
-		if (player == Player.USSR)
-			inflSign = inflSign * -1;
 		for(DiplomacyMove m : moves) {
-			int magnitude = m.getMagnitude() * inflSign;
+			int magnitude = m.getMagnitude();
 			this.getMechanics().getInfluence().spendPOL(player, magnitude);
-			this.provinces.get(m.getProvinceId()).influence(magnitude);
+			InfluenceUtil.influenceProvince(m.getProvinceId(), magnitude);
 		}
 	}
 	
 	public void makeMilitaryMoves(Player player, List<MilitaryMove> moves) {
-		int inflSign = 1;
-		if (player == Player.USSR)
-			inflSign = inflSign * -1;
 		for(MilitaryMove m : moves) {
-			int magnitude = m.getMagnitude() * inflSign;
+			int magnitude = m.getMagnitude();
 			this.getMechanics().getInfluence().spendPOL(player, magnitude);
-			this.provinces.get(m.getProvinceId()).influence(magnitude);
+			InfluenceUtil.influenceProvince(m.getProvinceId(), magnitude);
 		}
 	}
 	
 	public void makeCovertMoves(Player player, List<CovertMove> moves) {
-		int inflSign = 1;
-		if (player == Player.USSR)
-			inflSign = inflSign * -1;
 		for(CovertMove m : moves) {
-			int magnitude = m.getMagnitude() * inflSign;
+			int magnitude = m.getMagnitude();
 			this.getMechanics().getInfluence().spendCOV(player, magnitude);
-			this.provinces.get(m.getProvinceId()).influence(magnitude);
+			InfluenceUtil.influenceProvince(player, m.getProvinceId(), magnitude);
 		}
 	}
 	
+	public void makeFundDissidentMoves(Player player, List<FundDissidentsMove> moves) {
+		for(FundDissidentsMove m : moves) {
+			DissidentUtil.addDissidents(player, m.getProvinceId());
+		}
+	}
 }

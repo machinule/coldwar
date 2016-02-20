@@ -9,11 +9,11 @@ import com.berserkbentobox.coldwar.MoveOuterClass.ConflictOvertFundAttackerMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.ConflictOvertFundDefenderMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.CoupMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.EstablishBaseMove;
-import com.berserkbentobox.coldwar.MoveOuterClass.FundDissidentsMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.MoveOuterClass.PoliticalPressureMove;
 import com.berserkbentobox.coldwar.Province.CovertMove;
 import com.berserkbentobox.coldwar.Province.DiplomacyMove;
+import com.berserkbentobox.coldwar.Province.FundDissidentsMove;
 import com.berserkbentobox.coldwar.Province.MilitaryMove;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.logic.Client.Player;
@@ -51,13 +51,6 @@ public class MoveBuilder {
 			this.mechanics = this.stateManager.computeDeterministicMechanics(MoveList.getDefaultInstance(), this.moves.build());
 			this.computedState = new ComputedGameState(this.state, MoveList.getDefaultInstance(), this.moves.build(), this.settings, this.mechanics);
 		}
-	}
-	
-	public void FundDissidents(final ProvinceId id) {
-		this.moves.addMoves(
-				Move.newBuilder().setFundDissidentsMove(FundDissidentsMove.newBuilder().setProvinceId(id)).build());
-		Logger.Dbg("Funding dissidents in " + id);
-		this.computeState();
 	}
 	
 	public void EstablishBase(final ProvinceId id) {
@@ -187,6 +180,18 @@ public class MoveBuilder {
 			.setProvinceId(id)
 			.setMagnitude(magnitude);
 		move.getProvinceMechanicMovesBuilder().addCovertMove(covMove);
+		this.moves.addMoves(move.build());
+		this.computeState();
+	}
+	
+
+	
+	public void fundDissidents(final ProvinceId id) {
+		Move.Builder move = Move.newBuilder();
+		CovertMove.Builder dissMove = CovertMove.newBuilder();
+		dissMove
+			.setProvinceId(id);
+		move.getProvinceMechanicMovesBuilder().addCovertMove(dissMove);
 		this.moves.addMoves(move.build());
 		this.computeState();
 	}

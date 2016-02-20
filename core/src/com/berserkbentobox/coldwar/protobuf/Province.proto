@@ -41,8 +41,7 @@ message ProvinceState {
 	optional ProvinceId occupier = 6;
 	optional ProvinceId base = 9;
 	optional ProvinceId ally = 10;
-	optional bool has_dissidents = 13;
-	optional Dissidents dissidents = 14;
+	optional Dissidents dissidents = 11;
 }
 
 // ========== Moves ==========
@@ -53,6 +52,8 @@ message ProvinceMechanicMoves {
 	repeated DiplomacyMove diplomacy_move = 1;
 	repeated MilitaryMove military_move = 2;
 	repeated CovertMove covert_move = 3;
+	
+	repeated FundDissidentsMove fund_dissidents_move = 4;
 }
 
 // <Direct Influence Actions>
@@ -79,4 +80,10 @@ message CovertMove {
 	optional int32 magnitude = 2;
 
 //	option (cov_cost) = 1;
+}
+
+message FundDissidentsMove {
+	optional ProvinceId province_id = 1;
+	
+// option (cov_cost) = 1;
 }

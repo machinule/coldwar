@@ -113,12 +113,6 @@ message Move {
 
 // ========== TARGETED ACTIONS ==========
 
-message FundDissidentsMove {
-	optional ProvinceId province_id = 1;
-
-//	option (cov_cost) = 1;
-}
-
 message EstablishBaseMove {
 	optional ProvinceId province_id = 1;
 
