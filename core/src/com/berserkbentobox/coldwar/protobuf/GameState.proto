@@ -19,6 +19,7 @@ import "Heat.proto";
 import "Deterrence.proto";
 import "Influence.proto";
 import "Crisis.proto";
+import "Year.proto";
 
 message GameState {
   optional int32 turn = 1;
@@ -37,6 +38,7 @@ message GameState {
   optional EndState end_state = 21;
   optional DeterrenceMechanicState deterrence_state = 22;
   optional InfluenceMechanicState influence_state = 23;
+  optional YearMechanicState year_state = 24;
 }
 
 message TurnLogEntry {

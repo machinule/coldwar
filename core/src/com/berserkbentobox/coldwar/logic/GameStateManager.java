@@ -81,27 +81,20 @@ public class GameStateManager {
 		mechanics.getTechnology().maybeMakeProgress(Player.USA);
 		
 		// Superpower
-		
-		int year = initialState.getTurn() + 1948;
-		if(mechanics.getSuperpower().getUsa().isElectionYear(year)) {
-			mechanics.getSuperpower().getUsa().elections(year, mechanics.getPseudorandom());
-		}
-		mechanics.getSuperpower().getUsa().maybeKillVicePresident(year, mechanics.getPseudorandom());
-		mechanics.getSuperpower().getUsa().maybeKillPresident(year, mechanics.getPseudorandom());
-		
-		mechanics.getSuperpower().getUssr().troikaUpdate(mechanics.getPseudorandom());
-		mechanics.getSuperpower().getUssr().maybeKillLeader(year, mechanics.getPseudorandom());
+		mechanics.getSuperpower().updateLeaders();
 		
 		// Treaty
 		mechanics.getTreaty().maybeSignTreaty();
 
 		//Crisis		
 		mechanics.getCrisis().resolveCrisis(mechanics.getInfluence());
-		mechanics.getCrisis().generateCrisis(year, mechanics.getPseudorandom());
+		mechanics.getCrisis().generateCrisis(mechanics.getYear().getYear(), mechanics.getPseudorandom());
 		
 		// Pseudorandom
 		mechanics.getPseudorandom().reseed();
 		
+		// Year
+		mechanics.getYear().incrementYear();
 
 		return mechanics.buildState();
 	}

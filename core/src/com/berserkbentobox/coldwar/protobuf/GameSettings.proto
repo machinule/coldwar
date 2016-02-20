@@ -19,6 +19,7 @@ import "Version.proto";
 import "Deterrence.proto";
 import "Influence.proto";
 import "Crisis.proto";
+import "Year.proto";
 
 // GameSettings contains constants over the course of the game.
 // These are not logged each turn, but merely copied to the top level GameState.
@@ -38,4 +39,5 @@ message GameSettings {
 	optional DeterrenceMechanicSettings deterrence_settings = 13;
 	optional InfluenceMechanicSettings influence_settings = 14;
 	optional CrisisMechanicSettings crisis_settings = 15;
+	optional YearMechanicSettings year_settings = 16;
 }
