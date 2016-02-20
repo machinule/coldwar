@@ -76,8 +76,6 @@ public class GameStateManager {
 	}
 	
 	public GameState computeNextGameState(Mechanics mechanics) {
-		int year = initialState.getTurn() + 1948;
-		
 		// Technology
 		mechanics.getTechnology().maybeMakeProgress(Player.USSR);
 		mechanics.getTechnology().maybeMakeProgress(Player.USA);
@@ -89,8 +87,8 @@ public class GameStateManager {
 		mechanics.getTreaty().maybeSignTreaty();
 
 		//Crisis		
-		mechanics.getCrisis().resolveCrisis(mechanics.getInfluence());
-		mechanics.getCrisis().generateCrisis(mechanics.getYear().getYear(), mechanics.getPseudorandom());
+		mechanics.getCrisis().resolveCrisis();
+		mechanics.getCrisis().generateCrisis();
 		
 		// Pseudorandom
 		mechanics.getPseudorandom().reseed();
