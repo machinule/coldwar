@@ -93,6 +93,12 @@ public abstract class Client {
 		} else {
 			state.setYearState(this.settings.getYear().initialState());
 		}
+
+		if (!this.settings.getInfluence().validate().ok()) {
+			Logger.Err("Initial settings invalid.");			
+		} else {
+			state.setInfluenceState(this.settings.getInfluence().initialState());
+		}
 		
 		this.initialGameState = state.build();
 		//Logger.Vrb("Initial game state: " + this.initialGameState);

@@ -100,10 +100,6 @@ public class MoveBuilder {
 	}
 
 	public int getInfluence(final ProvinceId provinceId) {
-		Mechanics mechanic = this.mechanics;
-		ProvinceMechanic provinces = mechanic.getProvinces();
-		Province p = provinces.getProvince(provinceId);
-		int infl = p.getInfluence();
 		return this.mechanics.getProvinces().getProvince(provinceId).getInfluence();
 	}
 	
@@ -112,15 +108,15 @@ public class MoveBuilder {
 	}
 	
 	public int getPolStore() {
-		return this.computedState.polStore.get(this.player);
+		return this.getMechanics().getInfluence().getPolitical(this.player);
 	}
 	
 	public int getMilStore() {
-		return this.computedState.milStore.get(this.player);
+		return this.getMechanics().getInfluence().getMilitary(this.player);
 	}
 	
 	public int getCovStore() {
-		return this.computedState.covStore.get(this.player);
+		return this.getMechanics().getInfluence().getCovert(this.player);
 	}
 	
 	public int getHeat() {

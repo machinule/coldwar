@@ -60,11 +60,11 @@ public class InfluenceStore {
 	}
 	
 	public void spendMIL(int magnitude) {
-		this.getState().setPolitical(this.getState().getPolitical() - magnitude);
+		this.getState().setMilitary(this.getState().getMilitary() - magnitude);
 	}
 	
 	public void spendCOV(int magnitude) {
-		this.getState().setPolitical(this.getState().getPolitical() - magnitude);
+		this.getState().setCovert(this.getState().getCovert() - magnitude);
 	}
 	
 	public void addPOL(int magnitude) {
@@ -72,10 +72,28 @@ public class InfluenceStore {
 	}
 	
 	public void addMIL(int magnitude) {
-		this.getState().setPolitical(this.getState().getPolitical() + magnitude);
+		this.getState().setMilitary(this.getState().getMilitary() + magnitude);
 	}
 	
 	public void addCOV(int magnitude) {
-		this.getState().setPolitical(this.getState().getPolitical() + magnitude);
+		this.getState().setCovert(this.getState().getCovert() + magnitude);
+	}
+
+	public void applyIncome() {
+		this.addPOL(this.getPoliticalIncome());
+		this.addMIL(this.getMilitaryIncome());
+		this.addCOV(this.getCovertIncome());
+	}
+	
+	public int getPoliticalIncome() {
+		return this.getSettings().getSettings().getPoliticalIncomeBase();
+	}
+
+	public int getMilitaryIncome() {
+		return this.getSettings().getSettings().getMilitaryIncomeBase();
+	}
+
+	public int getCovertIncome() {
+		return this.getSettings().getSettings().getCovertIncomeBase();
 	}
 }

@@ -49,6 +49,7 @@ public class InfluenceStoreMechanic extends Mechanic {
 			InfluenceMechanicState.Builder state = InfluenceMechanicState.newBuilder();
 			state.setUsaState(this.usaSettings.initialState());
 			state.setUssrState(this.ussrSettings.initialState());
+			System.out.println(state.toString());
 			return state.build();
 		}
 	}
@@ -78,7 +79,7 @@ public class InfluenceStoreMechanic extends Mechanic {
 		return this.state.build();
 	}
 	
-	private InfluenceStore getInfluenceStore(Player player) {
+	public InfluenceStore getInfluenceStore(Player player) {
 		if (player == Player.USA) {
 			return this.usaStore;
 		} else {
@@ -110,5 +111,22 @@ public class InfluenceStoreMechanic extends Mechanic {
 	
 	public void addCOV(Player player, int magnitude) {
 		this.getInfluenceStore(player).addCOV(magnitude);
+	}
+
+	public int getPolitical(Player player) {
+		return this.getInfluenceStore(player).getState().getPolitical();
+	}
+
+	public int getMilitary(Player player) {
+		return this.getInfluenceStore(player).getState().getMilitary();
+	}
+	
+	public int getCovert(Player player) {
+		return this.getInfluenceStore(player).getState().getCovert();
+	}
+
+	public void applyIncome() {
+		this.usaStore.applyIncome();
+		this.ussrStore.applyIncome();
 	}
 }
