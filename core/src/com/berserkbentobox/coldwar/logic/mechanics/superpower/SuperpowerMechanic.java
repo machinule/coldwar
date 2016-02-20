@@ -102,5 +102,17 @@ public class SuperpowerMechanic extends Mechanic {
 		if (moves.hasNominateMove()) {
 			getUsa().setCandidate(moves.getNominateMove().getLeaderId());
 		}
+	}
+
+	public void updateLeaders() {
+		int year = this.getMechanics().getYear().getYear();
+		if(this.getUsa().isElectionYear(year)) {
+			this.getUsa().elections(year, this.getMechanics().getPseudorandom());
+		}
+		this.getUsa().maybeKillVicePresident(year, this.getMechanics().getPseudorandom());
+		this.getUsa().maybeKillPresident(year, this.getMechanics().getPseudorandom());
+		
+		this.getUssr().troikaUpdate(this.getMechanics().getPseudorandom());
+		this.getUssr().maybeKillLeader(year, this.getMechanics().getPseudorandom());
 	}	
 }

@@ -108,7 +108,7 @@ public class CrisisMechanic extends Mechanic {
 		}
 	}
 	
-	public void resolveCrisis(InfluenceStoreMechanic influence) {
+	public void resolveCrisis() {
 		for(CrisisState c : this.state.getCrisesList()) {
 			for(Consequence e : this.getSettings().getCrisisSetting(c.getName()).getConsequencesList()) {
 				for(String usa : e.getUsaChoicesList()) {
@@ -153,13 +153,14 @@ public class CrisisMechanic extends Mechanic {
 		return false;
 	}
 	
-	public void generateCrisis(int year, PseudorandomMechanic pseudorandom) {
+	public void generateCrisis() {
 		this.getState().clearCrises();
-		String crisis = chooseCrisisByType(year, Crisis.Type.JOINT, pseudorandom);
+		int year = this.getMechanics().getYear().getYear();
+		String crisis = chooseCrisisByType(year, Crisis.Type.JOINT, this.getMechanics().getPseudorandom());
 		if(!setCrisis(crisis)) {
-			String usa_crisis = chooseCrisisByType(year, Crisis.Type.USA_ONLY, pseudorandom);
+			String usa_crisis = chooseCrisisByType(year, Crisis.Type.USA_ONLY, this.getMechanics().getPseudorandom());
 			setCrisis(usa_crisis);
-			String ussr_crisis = chooseCrisisByType(year, Crisis.Type.USSR_ONLY, pseudorandom);
+			String ussr_crisis = chooseCrisisByType(year, Crisis.Type.USSR_ONLY, this.getMechanics().getPseudorandom());
 			setCrisis(ussr_crisis);
 		}
 	}

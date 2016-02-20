@@ -10,6 +10,7 @@ import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMech
 import com.berserkbentobox.coldwar.logic.mechanics.superpower.SuperpowerMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.treaty.TreatyMechanic;
+import com.berserkbentobox.coldwar.logic.year.YearMechanic;
 
 public class Mechanics {
 	private ProvinceMechanic provinces;
@@ -21,6 +22,7 @@ public class Mechanics {
 	private DeterrenceMechanic deterrence;
 	private InfluenceStoreMechanic influence;
 	private CrisisMechanic crisis;
+	private YearMechanic year;
 	
 	public Mechanics(MechanicSettings settings, GameState state) {
 		this.provinces = new ProvinceMechanic(this, settings.getProvinces(), state);
@@ -32,6 +34,7 @@ public class Mechanics {
 		this.deterrence = new DeterrenceMechanic(this, settings.getDeterrence(), state);
 		this.influence = new InfluenceStoreMechanic(this, settings.getInfluence(), state);
 		this.crisis = new CrisisMechanic(this, settings.getCrisis(), state);
+		this.year = new YearMechanic(this, settings.getYear(), state);
 	}
 	
 	public ProvinceMechanic getProvinces() {
@@ -69,6 +72,10 @@ public class Mechanics {
 	public CrisisMechanic getCrisis() {
 		return this.crisis;
 	}
+	
+	public YearMechanic getYear() {
+		return this.year;
+	}
 
 	public GameState buildState() {
 		GameState.Builder state = GameState.newBuilder();
@@ -81,6 +88,7 @@ public class Mechanics {
 		state.setTreatyState(this.getTreaty().buildState());
 		state.setInfluenceState(this.getInfluence().buildState());
 		state.setCrisisState(this.getCrisis().buildState());
+		state.setYearState(this.getYear().buildState());
 		return state.build();
 	}
 }

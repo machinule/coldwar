@@ -88,6 +88,18 @@ public abstract class Client {
 			state.setCrisisState(this.settings.getCrisis().initialState());
 		}
 		
+		if (!this.settings.getYear().validate().ok()) {
+			Logger.Err("Initial settings invalid.");			
+		} else {
+			state.setYearState(this.settings.getYear().initialState());
+		}
+
+		if (!this.settings.getInfluence().validate().ok()) {
+			Logger.Err("Initial settings invalid.");			
+		} else {
+			state.setInfluenceState(this.settings.getInfluence().initialState());
+		}
+		
 		this.initialGameState = state.build();
 		//Logger.Vrb("Initial game state: " + this.initialGameState);
 		return state;
@@ -121,6 +133,7 @@ public abstract class Client {
 		nextGameState.setTreatyState(managedGameState.getTreatyState());
 		nextGameState.setInfluenceState(managedGameState.getInfluenceState());
 		nextGameState.setCrisisState(managedGameState.getCrisisState());
+		nextGameState.setYearState(managedGameState.getYearState());
 		
 		this.state = nextGameState.build();
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {

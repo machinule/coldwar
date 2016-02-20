@@ -10,6 +10,7 @@ import "Policy.proto";
 import "Superpower.proto";
 import "Treaty.proto";
 import "Crisis.proto";
+import "Year.proto";
 //import "google/protobuf/descriptor.proto";
 
 //extend google.protobuf.MessageOptions {
@@ -109,6 +110,8 @@ message Move {
 	optional SuperpowerMechanicMoves superpower_mechanic_moves = 200;
 
 	optional CrisisMechanicMoves crisis_mechanic_moves = 220;
+
+	optional YearMechanicMoves year_mechanic_moves = 420;
 }
 
 // ========== TARGETED ACTIONS ==========
