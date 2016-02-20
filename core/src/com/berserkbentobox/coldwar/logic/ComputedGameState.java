@@ -261,64 +261,64 @@ public class ComputedGameState {
 				inflSign = -1;
 			}
 			for (Move move : moves.getMovesList()) {
-				if (move.hasDiaDipMove()) {
-					ProvinceId id = move.getDiaDipMove().getProvinceId();
-					if(isValidDiaDipMove(player, id)) {
-						final int mag = move.getDiaDipMove().getMagnitude();
-						final int mod;
-						if(governments.get(id) == Government.AUTOCRACY) mod = -1;
-						else mod = 0;
-						final int effect_multiplier;
-						if(getAlly(move.getDiaDipMove().getProvinceId()) == otherPlayer(player)) {
-							effect_multiplier = 2;
-						} else {
-							effect_multiplier = 1;
-						}
-						polInfluenceMap.compute(id, (i, infl) -> infl == null ? ((mag/effect_multiplier) + mod) * inflSign : infl + ((mag/effect_multiplier) + mod) * inflSign);
-						polStoreMap.compute(player, (p, pol) -> pol == null ? -mag : pol - mag);
-						int nonAdjCost = getNonAdjacentDiaMoveCost(player, id);
-						if(nonAdjCost != 0) {
-							Logger.Dbg("Adding non-adjacent cost of " + nonAdjCost);
-							polStoreMap.compute(player, (p, pol) -> pol == null ? -nonAdjCost : pol - nonAdjCost);
-						}
-						actedMap.put(id, true);
-					}
-					
-				}
-				if (move.hasDiaMilMove()) {
-					ProvinceId id = move.getDiaMilMove().getProvinceId();
-					if(isValidDiaMilMove(player, id)) {
-						final int mag = move.getDiaMilMove().getMagnitude();
-						final int mod;
-						if(governments.get(id) == Government.AUTOCRACY) mod = -1;
-						else mod = 0;
-						milInfluenceMap.compute(id, (i, infl) -> infl == null ? (mag + mod) * inflSign : infl + (mag + mod) * inflSign);
-						milStoreMap.compute(player, (p, mil) -> mil == null ? -mag : mil - mag);
-						int nonAdjCost = getNonAdjacentDiaMoveCost(player, id);
-						if(nonAdjCost != 0) {
-							Logger.Dbg("Adding non-adjacent cost of " + nonAdjCost);
-							polStoreMap.compute(player, (p, pol) -> pol == null ? -nonAdjCost : pol - nonAdjCost);
-						}
-						actedMap.put(id, true);
-					}
-				}
-				if (move.hasDiaCovMove()) {
-					ProvinceId id = move.getDiaCovMove().getProvinceId();
-					if(isValidDiaCovMove(player, id)) {
-						final int mag = move.getDiaCovMove().getMagnitude();
-						final int mod;
-						if(governments.get(id) == Government.AUTOCRACY) mod = -1;
-						else mod = 0;
-						covInfluenceMap.compute(id, (i, infl) -> infl == null ? (mag + mod) * inflSign : infl + (mag + mod) * inflSign);
-						covStoreMap.compute(player, (p, cov) -> cov == null ? -mag : cov - mag);
-						int nonAdjCost = getNonAdjacentDiaMoveCost(player, id);
-						if(nonAdjCost != 0) {
-							Logger.Dbg("Adding non-adjacent cost of " + nonAdjCost);
-							polStoreMap.compute(player, (p, pol) -> pol == null ? -nonAdjCost : pol - nonAdjCost);
-						}
-						actedMap.put(id, true);
-					}
-				}
+//				if (move.hasDiaDipMove()) {
+//					ProvinceId id = move.getDiaDipMove().getProvinceId();
+//					if(isValidDiaDipMove(player, id)) {
+//						final int mag = move.getDiaDipMove().getMagnitude();
+//						final int mod;
+//						if(governments.get(id) == Government.AUTOCRACY) mod = -1;
+//						else mod = 0;
+//						final int effect_multiplier;
+//						if(getAlly(move.getDiaDipMove().getProvinceId()) == otherPlayer(player)) {
+//							effect_multiplier = 2;
+//						} else {
+//							effect_multiplier = 1;
+//						}
+//						polInfluenceMap.compute(id, (i, infl) -> infl == null ? ((mag/effect_multiplier) + mod) * inflSign : infl + ((mag/effect_multiplier) + mod) * inflSign);
+//						polStoreMap.compute(player, (p, pol) -> pol == null ? -mag : pol - mag);
+//						int nonAdjCost = getNonAdjacentDiaMoveCost(player, id);
+//						if(nonAdjCost != 0) {
+//							Logger.Dbg("Adding non-adjacent cost of " + nonAdjCost);
+//							polStoreMap.compute(player, (p, pol) -> pol == null ? -nonAdjCost : pol - nonAdjCost);
+//						}
+//						actedMap.put(id, true);
+//					}
+//					
+//				}
+//				if (move.hasDiaMilMove()) {
+//					ProvinceId id = move.getDiaMilMove().getProvinceId();
+//					if(isValidDiaMilMove(player, id)) {
+//						final int mag = move.getDiaMilMove().getMagnitude();
+//						final int mod;
+//						if(governments.get(id) == Government.AUTOCRACY) mod = -1;
+//						else mod = 0;
+//						milInfluenceMap.compute(id, (i, infl) -> infl == null ? (mag + mod) * inflSign : infl + (mag + mod) * inflSign);
+//						milStoreMap.compute(player, (p, mil) -> mil == null ? -mag : mil - mag);
+//						int nonAdjCost = getNonAdjacentDiaMoveCost(player, id);
+//						if(nonAdjCost != 0) {
+//							Logger.Dbg("Adding non-adjacent cost of " + nonAdjCost);
+//							polStoreMap.compute(player, (p, pol) -> pol == null ? -nonAdjCost : pol - nonAdjCost);
+//						}
+//						actedMap.put(id, true);
+//					}
+//				}
+//				if (move.hasDiaCovMove()) {
+//					ProvinceId id = move.getDiaCovMove().getProvinceId();
+//					if(isValidDiaCovMove(player, id)) {
+//						final int mag = move.getDiaCovMove().getMagnitude();
+//						final int mod;
+//						if(governments.get(id) == Government.AUTOCRACY) mod = -1;
+//						else mod = 0;
+//						covInfluenceMap.compute(id, (i, infl) -> infl == null ? (mag + mod) * inflSign : infl + (mag + mod) * inflSign);
+//						covStoreMap.compute(player, (p, cov) -> cov == null ? -mag : cov - mag);
+//						int nonAdjCost = getNonAdjacentDiaMoveCost(player, id);
+//						if(nonAdjCost != 0) {
+//							Logger.Dbg("Adding non-adjacent cost of " + nonAdjCost);
+//							polStoreMap.compute(player, (p, pol) -> pol == null ? -nonAdjCost : pol - nonAdjCost);
+//						}
+//						actedMap.put(id, true);
+//					}
+//				}
 				if (move.hasFundDissidentsMove()) {
 					ProvinceId id = move.getFundDissidentsMove().getProvinceId();
 					if(isValidFundDissidentsMove(player, id)) {
@@ -337,49 +337,49 @@ public class ComputedGameState {
 						actedMap.put(id, true);
 					}
 				}
-				if (move.hasEstablishBaseMove()) {
-					ProvinceId id = move.getEstablishBaseMove().getProvinceId();
-					if(isValidEstablishBaseMove(player, id)) {
-						final int cost = getEstablishBaseMoveCost();
-						baseMap.put(id, player);
-						milStoreMap.compute(player,  (p, mil) -> mil == null ? -cost : mil - cost);
-						heat.increase(this.state.getSettings().getMoveSettings().getActionDissidentsHeat());
-						actedMap.put(id, true);
-					}
-				}
-				if (move.hasPoliticalPressureMove()) {
-					ProvinceId id = move.getPoliticalPressureMove().getProvinceId();
-					if(isValidPoliticalPressureMove(player, id)) {
-						final int cost = getPoliticalPressureMoveCost();
-						int netInfl = 0;
-						for (ProvinceId adj : provinceSettingsMap.get(id).getAdjacencyList()) {
-							Logger.Dbg("Seeing pressure from: " + adj);
-							if(getAlly(adj) == otherPlayer(player)) {
-								netInfl -= 1;
-								Logger.Dbg("Neighboring enemy ally -> -1");
-							} else if(getAlly(adj) == player) {
-								netInfl += 1;
-								Logger.Dbg("Neighboring friendly ally -> +1");
-							}
-							if(governmentMap.get(adj) == getIdealGov(player)) {
-								netInfl += 1;
-								Logger.Dbg("Neighboring friendly government -> +1");
-							} else if(governmentMap.get(adj) == getIdealGov(otherPlayer(player))) {
-								netInfl -= 1;
-								Logger.Dbg("Neighboring enemy government -> -1");
-							} 
-						}
-						Logger.Dbg("Net influence: " + netInfl);
-						final int finInfl = netInfl * inflSign;
-						polInfluenceMap.compute(id, (i, infl) -> infl == null ? finInfl : infl + finInfl);
-						polStoreMap.compute(player,  (p, pol) -> pol == null ? -cost : pol - cost);
-						if(getAlly(id) != null) {
-							heat.increase(this.state.getSettings().getMoveSettings().getActionPressureHeatExtra()); // More if enemy ally
-						}
-						heat.increase(this.state.getSettings().getMoveSettings().getActionPressureHeat());
-						actedMap.put(id, true);
-					}
-				}
+//				if (move.hasEstablishBaseMove()) {
+//					ProvinceId id = move.getEstablishBaseMove().getProvinceId();
+//					if(isValidEstablishBaseMove(player, id)) {
+//						final int cost = getEstablishBaseMoveCost();
+//						baseMap.put(id, player);
+//						milStoreMap.compute(player,  (p, mil) -> mil == null ? -cost : mil - cost);
+//						heat.increase(this.state.getSettings().getMoveSettings().getActionDissidentsHeat());
+//						actedMap.put(id, true);
+//					}
+////				}
+//				if (move.hasPoliticalPressureMove()) {
+//					ProvinceId id = move.getPoliticalPressureMove().getProvinceId();
+//					if(isValidPoliticalPressureMove(player, id)) {
+//						final int cost = getPoliticalPressureMoveCost();
+//						int netInfl = 0;
+//						for (ProvinceId adj : provinceSettingsMap.get(id).getAdjacencyList()) {
+//							Logger.Dbg("Seeing pressure from: " + adj);
+//							if(getAlly(adj) == otherPlayer(player)) {
+//								netInfl -= 1;
+//								Logger.Dbg("Neighboring enemy ally -> -1");
+//							} else if(getAlly(adj) == player) {
+//								netInfl += 1;
+//								Logger.Dbg("Neighboring friendly ally -> +1");
+//							}
+//							if(governmentMap.get(adj) == getIdealGov(player)) {
+//								netInfl += 1;
+//								Logger.Dbg("Neighboring friendly government -> +1");
+//							} else if(governmentMap.get(adj) == getIdealGov(otherPlayer(player))) {
+//								netInfl -= 1;
+//								Logger.Dbg("Neighboring enemy government -> -1");
+//							} 
+//						}
+//						Logger.Dbg("Net influence: " + netInfl);
+//						final int finInfl = netInfl * inflSign;
+//						polInfluenceMap.compute(id, (i, infl) -> infl == null ? finInfl : infl + finInfl);
+//						polStoreMap.compute(player,  (p, pol) -> pol == null ? -cost : pol - cost);
+//						if(getAlly(id) != null) {
+//							heat.increase(this.state.getSettings().getMoveSettings().getActionPressureHeatExtra()); // More if enemy ally
+//						}
+//						heat.increase(this.state.getSettings().getMoveSettings().getActionPressureHeat());
+//						actedMap.put(id, true);
+//					}
+//				}
 				if (move.hasCoupMove()) {
 					ProvinceId id = move.getCoupMove().getProvinceId();
 					if(isValidCoupMove(player, id)) {
@@ -512,7 +512,7 @@ public class ComputedGameState {
 						.addAllPossible(this.state.getConflictState().getPossibleList()));
 		
 		for (final ProvinceState.Builder province : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
-			allianceMap.put(province.getId(), getAlly(province.getId()));
+//			allianceMap.put(province.getId(), getAlly(province.getId()));
 			province.setGov(governmentMap.get(province.getId()));
 			province.setOccupier(occupierMap.get(province.getId()));
 			province.setInfluence(totalInfluenceMap.get(province.getId()));
@@ -691,39 +691,39 @@ public class ComputedGameState {
 								break;
 						}
 					} else {
-						switch (gov) {
-							case AUTOCRACY:
-								if(happens.apply(this.state.getSettings().getEventSettings().getInfluencedAutocracyNeutralDissidents()))
-									d.setGov(Government.REPUBLIC);
-								else if (result - this.state.getSettings().getEventSettings().getInfluencedAutocracyNeutralDissidents() < 
-										this.state.getSettings().getEventSettings().getInfluencedAutocracyOpposingDissidents())
-									d.setGov(getAlly(p.getId()) == Player.USA ? Government.DEMOCRACY : Government.COMMUNISM);
-								else
-									d.setGov(getIdealGov(getAlly(p.getId())));
-								break;
-							case REPUBLIC:
-								if(happens.apply(this.state.getSettings().getEventSettings().getInfluencedRepublicNeutralDissidents()))
-									d.setGov(Government.REPUBLIC);
-								else if (result - this.state.getSettings().getEventSettings().getInfluencedRepublicNeutralDissidents() < 
-										this.state.getSettings().getEventSettings().getInfluencedRepublicOpposingDissidents())
-									d.setGov(getAlly(p.getId()) == Player.USA ? Government.DEMOCRACY : Government.COMMUNISM);
-								else
-									d.setGov(getIdealGov(getAlly(p.getId())));
-								break;
-							case DEMOCRACY:
-								if(happens.apply(this.state.getSettings().getEventSettings().getInfluencedDemocracyDemocraticDissidents()))
-									d.setGov(Government.REPUBLIC);
-								else if (result - this.state.getSettings().getEventSettings().getInfluencedDemocracyDemocraticDissidents() < 
-										this.state.getSettings().getEventSettings().getInfluencedDemocracyCommunistDissidents())
-									d.setGov(getAlly(p.getId()) == Player.USA ? Government.DEMOCRACY : Government.COMMUNISM);
-								else
-									d.setGov(getIdealGov(getAlly(p.getId())));
-								break;
-							case COMMUNISM:
-								d.setGov(Government.DEMOCRACY);
-							default:
-								break;
-						}
+//						switch (gov) {
+//							case AUTOCRACY:
+//								if(happens.apply(this.state.getSettings().getEventSettings().getInfluencedAutocracyNeutralDissidents()))
+//									d.setGov(Government.REPUBLIC);
+//								else if (result - this.state.getSettings().getEventSettings().getInfluencedAutocracyNeutralDissidents() < 
+//										this.state.getSettings().getEventSettings().getInfluencedAutocracyOpposingDissidents())
+//									d.setGov(getAlly(p.getId()) == Player.USA ? Government.DEMOCRACY : Government.COMMUNISM);
+//								else
+//									d.setGov(getIdealGov(getAlly(p.getId())));
+//								break;
+//							case REPUBLIC:
+//								if(happens.apply(this.state.getSettings().getEventSettings().getInfluencedRepublicNeutralDissidents()))
+//									d.setGov(Government.REPUBLIC);
+//								else if (result - this.state.getSettings().getEventSettings().getInfluencedRepublicNeutralDissidents() < 
+//										this.state.getSettings().getEventSettings().getInfluencedRepublicOpposingDissidents())
+//									d.setGov(getAlly(p.getId()) == Player.USA ? Government.DEMOCRACY : Government.COMMUNISM);
+//								else
+//									d.setGov(getIdealGov(getAlly(p.getId())));
+//								break;
+//							case DEMOCRACY:
+//								if(happens.apply(this.state.getSettings().getEventSettings().getInfluencedDemocracyDemocraticDissidents()))
+//									d.setGov(Government.REPUBLIC);
+//								else if (result - this.state.getSettings().getEventSettings().getInfluencedDemocracyDemocraticDissidents() < 
+//										this.state.getSettings().getEventSettings().getInfluencedDemocracyCommunistDissidents())
+//									d.setGov(getAlly(p.getId()) == Player.USA ? Government.DEMOCRACY : Government.COMMUNISM);
+//								else
+//									d.setGov(getIdealGov(getAlly(p.getId())));
+//								break;
+//							case COMMUNISM:
+//								d.setGov(Government.DEMOCRACY);
+//							default:
+//								break;
+//						}
 					}
 					// TODO: Dissident leader
 					p.setDissidents(d.build());
@@ -890,24 +890,24 @@ public class ComputedGameState {
 		int ussrCentralAmerica = 0, usaCentralAmerica = 0,
 			ussrSouthAmerica = 0, usaSouthAmerica = 0;
 		
-		for (ProvinceSettings p : this.state.getSettings().getProvinceSettings().getProvinceList()) {
-			switch (p.getRegion()) {
-				case CENTRAL_AMERICA:
-					if (getAlly(p.getId()) == Player.USSR)
-						ussrCentralAmerica++;
-					if (getAlly(p.getId()) == Player.USA)
-						usaCentralAmerica++;
-					break;
-				case SOUTH_AMERICA:
-					if (getAlly(p.getId()) == Player.USSR)
-						ussrSouthAmerica++;
-					if (getAlly(p.getId()) == Player.USA)
-						usaSouthAmerica++;
-					break;
-				default:
-					break;
-			}
-		}
+//		for (ProvinceSettings p : this.state.getSettings().getProvinceSettings().getProvinceList()) {
+//			switch (p.getRegion()) {
+//				case CENTRAL_AMERICA:
+//					if (getAlly(p.getId()) == Player.USSR)
+//						ussrCentralAmerica++;
+//					if (getAlly(p.getId()) == Player.USA)
+//						usaCentralAmerica++;
+//					break;
+//				case SOUTH_AMERICA:
+//					if (getAlly(p.getId()) == Player.USSR)
+//						ussrSouthAmerica++;
+//					if (getAlly(p.getId()) == Player.USA)
+//						usaSouthAmerica++;
+//					break;
+//				default:
+//					break;
+//			}
+//		}
 		
 		Logger.Dbg("USA currently holds " + usaCentralAmerica + " provinces in Central America");
 		Logger.Dbg("USSR currently holds " + ussrCentralAmerica + " provinces in Central America");
@@ -939,7 +939,7 @@ public class ComputedGameState {
 	public boolean isValidDiaMilMove (Player player, ProvinceId id){
 		return milStore.get(player) >= getDiaMilMoveMin(id) &&
 			   polStore.get(player) >= getNonAdjacentDiaMoveCost(player, id) && 
-			   getAlly(id) != otherPlayer(player) && 
+//			   getAlly(id) != otherPlayer(player) && 
 			   !isInArmedConflict(id);
 	}
 	
@@ -958,7 +958,7 @@ public class ComputedGameState {
 	public boolean isValidEstablishBaseMove(Player player, ProvinceId id) {
 		return milStore.get(player) >= getEstablishBaseMoveCost() &&
 			   bases.get(id) == null &&
-			   getAlly(id) == player &&
+//			   getAlly(id) == player &&
 			   !isInArmedConflict(id);
 	}
 	
@@ -1052,7 +1052,7 @@ public class ComputedGameState {
 	}
 	
 	public int getDiaDipMoveIncrement(Player player, ProvinceId id) {
-		if(getAlly(id) == otherPlayer(player)) return 2;
+//		if(getAlly(id) == otherPlayer(player)) return 2;
 		return 1;
 	}
 	
@@ -1124,9 +1124,9 @@ public class ComputedGameState {
 		return acted.get(id);
 	}
 	
-	public Player getAlly(ProvinceId province) {
-		return mechanics.getProvinces().getProvince(province).getAlly();
-	}
+//	public Player getAlly(ProvinceId province) {
+//		return mechanics.getProvinces().getProvince(province).getAlly();
+//	}
 	
 	public int getNetStability(ProvinceId province) {
 		return stabilityBase.get(province) + stabilityModifier.getOrDefault(province, 0);

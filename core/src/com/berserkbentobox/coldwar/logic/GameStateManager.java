@@ -76,13 +76,14 @@ public class GameStateManager {
 	}
 	
 	public GameState computeNextGameState(Mechanics mechanics) {
+		int year = initialState.getTurn() + 1948;
+		
 		// Technology
 		mechanics.getTechnology().maybeMakeProgress(Player.USSR, mechanics.getPseudorandom());
 		mechanics.getTechnology().maybeMakeProgress(Player.USA, mechanics.getPseudorandom());
 		
 		// Superpower
-		
-		int year = initialState.getTurn() + 1948;
+	
 		if(mechanics.getSuperpower().getUsa().isElectionYear(year)) {
 			mechanics.getSuperpower().getUsa().elections(year, mechanics.getPseudorandom());
 		}
@@ -101,7 +102,6 @@ public class GameStateManager {
 		
 		// Pseudorandom
 		mechanics.getPseudorandom().reseed();
-		
 
 		return mechanics.buildState();
 	}

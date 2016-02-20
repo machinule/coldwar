@@ -72,6 +72,7 @@ public class Mechanics {
 
 	public GameState buildState() {
 		GameState.Builder state = GameState.newBuilder();
+		state.setProvinceState(this.getProvinces().buildState());
 		state.setTechnologyState(this.getTechnology().buildState());
 		state.setPseudorandomState(this.getPseudorandom().buildState());
 		state.setHeatState(this.getHeat().buildState());

@@ -100,10 +100,10 @@ public class ProvinceInfoCard extends Table {
 	}
 	
 	public Color getValidColor() {
-		if(client.getMoveBuilder().getComputedGameState().isInRange(client.getPlayer(), province.getId()))
+//		if(client.getMoveBuilder().getComputedGameState().isInRange(client.getPlayer(), province.getId()))
 			return getRegionColor(province.getRegion());
-		else
-			return getNonAdjColor(province.getRegion());
+//		else
+//			return getNonAdjColor(province.getRegion());
 	}
 	
 	protected Button createLayout() {
@@ -116,7 +116,10 @@ public class ProvinceInfoCard extends Table {
 		DynamicLabel stability = new DynamicLabel(client, c -> netStability(), skin);
 		DynamicLabel name = new DynamicLabel(client,
 				c -> province.getLabel(),
-				c -> c.getMoveBuilder().getComputedGameState().getAlly(province.getId()) == Player.USA ? Color.BLUE : c.getMoveBuilder().getComputedGameState().getAlly(province.getId()) == Player.USSR ? Color.RED : Color.BLACK, skin);
+				c -> c.getMoveBuilder().getAlly(province.getId()) == Player.USA ? Color.BLUE :
+					 c.getMoveBuilder().getAlly(province.getId()) == Player.USSR ? Color.RED :
+					 Color.BLACK,
+					 skin);
 		
 		name.setAlignment(1); //Center in cell
 		name.setFontScale((float)0.75);
