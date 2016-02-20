@@ -17,6 +17,8 @@ import com.berserkbentobox.coldwar.Province.DiplomacyMove;
 import com.berserkbentobox.coldwar.Province.MilitaryMove;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.logic.mechanics.province.Province;
+import com.berserkbentobox.coldwar.logic.mechanics.province.ProvinceMechanic;
 
 public class MoveBuilder {
 
@@ -98,7 +100,15 @@ public class MoveBuilder {
 	}
 
 	public int getInfluence(final ProvinceId provinceId) {
-		return this.computedState.totalInfluence.get(provinceId);
+		Mechanics mechanic = this.mechanics;
+		ProvinceMechanic provinces = mechanic.getProvinces();
+		Province p = provinces.getProvince(provinceId);
+		int infl = p.getInfluence();
+		return this.mechanics.getProvinces().getProvince(provinceId).getInfluence();
+	}
+	
+	public Player getAlly(final ProvinceId provinceId) {
+		return this.mechanics.getProvinces().getProvince(provinceId).getAlly();
 	}
 	
 	public int getPolStore() {

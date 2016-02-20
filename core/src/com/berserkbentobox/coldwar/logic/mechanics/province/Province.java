@@ -99,6 +99,10 @@ public class Province {
 		return this.settings;
 	}
 	
+	public int getInfluence() {
+		return this.state.getInfluence();
+	}
+	
 	public int getNetStability() {
 		int stab = this.settings.getSettings().getStabilityBase();
 		if(this.hasStrongGov())

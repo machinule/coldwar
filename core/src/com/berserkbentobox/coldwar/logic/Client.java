@@ -51,6 +51,7 @@ public abstract class Client {
 		} else {
 			state.setProvinceState(this.settings.getProvinces().initialState());
 		}
+		
 		if (!this.settings.getHeat().validate().ok()) {
 			Logger.Err("Initial settings invalid.");			
 		} else {

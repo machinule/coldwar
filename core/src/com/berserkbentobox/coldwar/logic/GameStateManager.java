@@ -76,6 +76,8 @@ public class GameStateManager {
 	}
 	
 	public GameState computeNextGameState(Mechanics mechanics) {
+		int year = initialState.getTurn() + 1948;
+		
 		// Technology
 		mechanics.getTechnology().maybeMakeProgress(Player.USSR);
 		mechanics.getTechnology().maybeMakeProgress(Player.USA);

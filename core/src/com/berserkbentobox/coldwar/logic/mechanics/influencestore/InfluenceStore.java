@@ -7,8 +7,6 @@ import com.berserkbentobox.coldwar.logic.Status;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyGroup;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.Technology.Settings;
 
-
-
 public class InfluenceStore {
 	public static class Settings {
 		
