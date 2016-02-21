@@ -1,4 +1,4 @@
-package com.berserkbentobox.coldwar.logic.year;
+package com.berserkbentobox.coldwar.logic.mechanics.year;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;

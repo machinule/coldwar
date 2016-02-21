@@ -20,6 +20,7 @@ import "Deterrence.proto";
 import "Influence.proto";
 import "Crisis.proto";
 import "Year.proto";
+import "Victory.proto";
 
 message GameState {
   optional int32 turn = 1;
@@ -31,14 +32,15 @@ message GameState {
   optional TreatyMechanicState treaty_state = 7;
   optional TechnologyMechanicState technology_state = 8;
   optional ConflictMechanicState conflict_state = 9;
-  optional LeaderMechanicState leaders_state = 12;
-  optional CrisisMechanicState crisis_state = 13;
-  optional TurnLogEntry turn_log = 10;
-  optional GameSettings settings = 11;
-  optional EndState end_state = 21;
-  optional DeterrenceMechanicState deterrence_state = 22;
-  optional InfluenceMechanicState influence_state = 23;
-  optional YearMechanicState year_state = 24;
+  optional LeaderMechanicState leaders_state = 10;
+  optional CrisisMechanicState crisis_state = 11;
+  optional TurnLogEntry turn_log = 12;
+  optional GameSettings settings = 13;
+  optional EndState end_state = 14;
+  optional DeterrenceMechanicState deterrence_state = 15;
+  optional InfluenceMechanicState influence_state = 16;
+  optional YearMechanicState year_state = 17;
+  optional VictoryMechanicState victory_state = 18;
 }
 
 message TurnLogEntry {

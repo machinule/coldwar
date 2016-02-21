@@ -18,6 +18,7 @@ import com.berserkbentobox.coldwar.Superpower.SuperpowerMechanicSettings;
 import com.berserkbentobox.coldwar.Technology.TechnologyMechanicSettings;
 import com.berserkbentobox.coldwar.Treaty.TreatyMechanicSettings;
 import com.berserkbentobox.coldwar.Version.VersionMechanicSettings;
+import com.berserkbentobox.coldwar.Victory.VictoryMechanicSettings;
 import com.berserkbentobox.coldwar.Year.YearMechanicSettings;
 import com.google.protobuf.TextFormat;
 import com.google.protobuf.TextFormat.ParseException;
@@ -45,7 +46,8 @@ public class GameSettingsFactory {
 			this.loadConflicts(gameName, settings.getConflictSettingsBuilder());
 			this.loadInfluence(gameName, settings.getInfluenceSettingsBuilder());
 			this.loadCrises(gameName, settings.getCrisisSettingsBuilder());
-			this.loadYear(gameName,  settings.getYearSettingsBuilder());
+			this.loadYear(gameName, settings.getYearSettingsBuilder());
+			this.loadVictory(gameName, settings.getVictorySettingsBuilder());
 			//this.loadPseudorandom(settings.getPseudorandomSettingsBuilder());
 		} catch (ParseException e) {
 			Logger.Info(e.toString());
@@ -132,6 +134,11 @@ public class GameSettingsFactory {
 	
 	protected void loadYear(String gameName, YearMechanicSettings.Builder settings) throws ParseException {
 		String input = loadFile(joinPath(gameName, "year_settings.proto.txt"));        
+        TextFormat.merge(input, settings);
+	}
+	
+	protected void loadVictory(String gameName, VictoryMechanicSettings.Builder settings) throws ParseException {
+		String input = loadFile(joinPath(gameName, "victory_settings.proto.txt"));        
         TextFormat.merge(input, settings);
 	}
 	

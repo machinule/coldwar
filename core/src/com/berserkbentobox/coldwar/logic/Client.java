@@ -100,6 +100,12 @@ public abstract class Client {
 			state.setInfluenceState(this.settings.getInfluence().initialState());
 		}
 		
+		if (!this.settings.getVictory().validate().ok()) {
+			Logger.Err("Initial settings invalid.");			
+		} else {
+			state.setVictoryState(this.settings.getVictory().initialState());
+		}
+		
 		this.initialGameState = state.build();
 		//Logger.Vrb("Initial game state: " + this.initialGameState);
 		return state;
@@ -134,6 +140,7 @@ public abstract class Client {
 		nextGameState.setInfluenceState(managedGameState.getInfluenceState());
 		nextGameState.setCrisisState(managedGameState.getCrisisState());
 		nextGameState.setYearState(managedGameState.getYearState());
+		nextGameState.setVictoryState(managedGameState.getVictoryState());
 		
 		this.state = nextGameState.build();
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {
