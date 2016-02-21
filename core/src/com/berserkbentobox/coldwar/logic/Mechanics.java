@@ -11,7 +11,7 @@ import com.berserkbentobox.coldwar.logic.mechanics.superpower.SuperpowerMechanic
 import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.treaty.TreatyMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.victory.VictoryMechanic;
-import com.berserkbentobox.coldwar.logic.year.YearMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.year.YearMechanic;
 
 public class Mechanics {
 	private ProvinceMechanic provinces;
