@@ -70,7 +70,7 @@ public class ActionPane extends FooterPane {
 		actionButtonMethods.put(militaryInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceMil(province.getId(), actionParamInput.getValue()) );
 		actionButtonMethods.put(covertInfluenceButton, () -> ActionPane.this.client.getMoveBuilder().influenceCov(province.getId(), actionParamInput.getValue()) );
 
-		actionButtonMethods.put(dissidentsButton, () -> ActionPane.this.client.getMoveBuilder().FundDissidents(province.getId()) );
+		actionButtonMethods.put(dissidentsButton, () -> ActionPane.this.client.getMoveBuilder().fundDissidents(province.getId()) );
 		actionButtonMethods.put(politicalPressureButton, () -> ActionPane.this.client.getMoveBuilder().PoliticalPressure(province.getId()) );
 		actionButtonMethods.put(establishBaseButton, () -> ActionPane.this.client.getMoveBuilder().EstablishBase(province.getId()) );
 

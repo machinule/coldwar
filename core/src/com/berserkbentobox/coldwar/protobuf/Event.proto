@@ -3,6 +3,7 @@ syntax = "proto2";
 package com.berserkbentobox.coldwar;
 
 import "Id.proto";
+import "Effect.proto";
 
 // ========== Settings ==========
 
@@ -12,6 +13,9 @@ message EventMechanicSettings {
   // Random events.
   // Chance value is out of 1e6. (e.g. 100000 = 10%, 1000000 = 100%)
   // Probability applies to a single eligible target, per turn.
+  
+  repeated EventSettings event = 1;
+  
   optional int32 random_leader_spawn_chance = 300 [default = 100000];
   optional int32 random_leader_death_chance = 301 [default = 100000];
   optional int32 random_province_coup_chance = 302 [default = 100000];
@@ -50,6 +54,26 @@ message EventMechanicSettings {
   optional int32 random_conflict_zone_war_start_chance = 315 [default = 100000];
   
   optional int32 random_decolonization_chance = 316 [default = 50000];
+}
+
+message EventSettings {
+	optional string name = 1;
+	optional string title = 2;
+	optional string info = 3;
+	
+	repeated Effect effect = 4;
+	optional bool repeatable = 5;
+}
+
+// =========== State =============
+
+message EventMechanicState {
+	repeated EventState event = 1;
+}
+
+message EventState {
+	optional string name = 1;
+	optional int32 fired = 2;
 }
 
 message Event {
