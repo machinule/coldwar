@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
 import com.berserkbentobox.coldwar.Province.CovertMove;
 import com.berserkbentobox.coldwar.Province.DiplomacyMove;
 import com.berserkbentobox.coldwar.Province.FundDissidentsMove;
@@ -19,9 +20,12 @@ import com.berserkbentobox.coldwar.Superpower.UsaLeaderState;
 import com.berserkbentobox.coldwar.Superpower.UsaState;
 import com.berserkbentobox.coldwar.Technology.ResearchMove;
 import com.berserkbentobox.coldwar.Technology.TechnologyMechanicMoves;
+import com.berserkbentobox.coldwar.EffectOuterClass.Effect;
+import com.berserkbentobox.coldwar.EffectOuterClass.ProvinceEffect;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
+import com.berserkbentobox.coldwar.Id.ProvinceRegion;
 import com.berserkbentobox.coldwar.logic.Status;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 import com.berserkbentobox.coldwar.logic.Mechanic;
@@ -102,6 +106,31 @@ public class ProvinceMechanic extends Mechanic {
 		return this.provinces.get(id);
 	}
 	
+	// Util
+	
+	public Player toPlayer(ProvinceId player) {
+		if(player == ProvinceId.USA) 
+			return Player.USA;
+		else if(player == ProvinceId.USSR)
+			return Player.USSR;
+		else return null;
+	}
+	
+	public ProvinceId toProvince(Player player) {
+		if(player == Player.USA) 
+			return ProvinceId.USA;
+		else if(player == Player.USSR)
+			return ProvinceId.USSR;
+		else return null;
+	}
+	
+	public Government getIdealGov(Player player) {
+		if(player == Player.USA)
+			return Government.DEMOCRACY;
+		else
+			return Government.COMMUNISM;
+	}
+	
 	// Logic
 	
 	public void influenceProvince(Player player, ProvinceId id, int magnitude) {
@@ -114,6 +143,38 @@ public class ProvinceMechanic extends Mechanic {
 	
 	// Moves
 	
+	public void processEffects(Collection<ProvinceEffect> effects) {
+		for(ProvinceEffect e : effects) {
+			this.processEffect(e);
+		}
+	}
+	
+	public void processEffect(ProvinceEffect e) {
+		List<ProvinceId> targets = e.getProvinceTargetsList();
+		for(ProvinceRegion r : e.getRegionTargetsList()) {
+			for(ProvinceId id : e.getProvinceTargetsList()) {
+				if(provinces.get(id).getSettings().getSettings().getRegion() == r) {
+					targets.add(id);
+				}
+			}
+		}
+		for(ProvinceId id : targets) {
+			if(e.getInfluenceMod() > 0) {
+				InfluenceUtil.influenceProvince(id, e.getInfluenceMod());
+			}
+			if(e.hasPerspective()) {
+				Player player = toPlayer(e.getPerspective());
+				if(e.hasAddDissidents())
+					DissidentUtil.addDissidents(id, getIdealGov(player));
+				if(e.hasRollDissidents()) {
+					DissidentUtil.addDissidents(id, player);
+				}
+			} else {
+				DissidentUtil.addDissidents(id);
+			}
+		}
+	}
+	
 	public void makeMoves(Player player, ProvinceMechanicMoves moves) {
 		if (moves.getDiplomacyMoveCount() > 0) {
 			makeDiplomacyMoves(player, moves.getDiplomacyMoveList());
@@ -124,7 +185,7 @@ public class ProvinceMechanic extends Mechanic {
 		if (moves.getCovertMoveCount() > 0) {
 			makeCovertMoves(player, moves.getCovertMoveList());
 		}
-	}	
+	}
 
 	public void makeDiplomacyMoves(Player player, List<DiplomacyMove> moves) {
 		for(DiplomacyMove m : moves) {
@@ -152,7 +213,7 @@ public class ProvinceMechanic extends Mechanic {
 	
 	public void makeFundDissidentMoves(Player player, List<FundDissidentsMove> moves) {
 		for(FundDissidentsMove m : moves) {
-			DissidentUtil.addDissidents(player, m.getProvinceId());
+			DissidentUtil.addDissidents(m.getProvinceId(), player);
 		}
 	}
 }

@@ -11,7 +11,7 @@ import com.berserkbentobox.coldwar.logic.Client.Player;
 
 public class DissidentUtil extends ProvinceUtil {
 	
-	public static void addDissidents(Player player, ProvinceId id) {
+	public static void addDissidents(ProvinceId id, Player player) {
 		Province target = provinces.get(id);
 		Dissidents.Builder diss = Dissidents.newBuilder();
 		// TODO: Pick a leader
@@ -27,6 +27,14 @@ public class DissidentUtil extends ProvinceUtil {
 		// TODO: Pick a leader
 		Map<Integer, Government> chances = ChanceUtil.getDissidentsChance(id);
 		int result = pseudorandom.roll((List<Integer>) chances.keySet());
+		target.addDissidents(diss.build());
+	}
+	
+	public static void addDissidents(ProvinceId id, Government gov) {
+		Province target = provinces.get(id);
+		Dissidents.Builder diss = Dissidents.newBuilder();
+		// TODO: Pick a leader
+		diss.setGov(gov);
 		target.addDissidents(diss.build());
 	}
 	

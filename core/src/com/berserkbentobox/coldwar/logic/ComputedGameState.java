@@ -599,7 +599,7 @@ public class ComputedGameState {
 						Logger.Vrb("Conflict in " + c.getLocation());
 						p.setInfluence(0);
 						coupMap.put(c.getLocation(), 0);
-						p.setBase(ProvinceId.UNKNOWN_PROVINCE);
+						p.setBase(ProvinceId.NONE);
 						p.setDissidents(Dissidents.getDefaultInstance());
 						stabilityModifierMap.put(c.getLocation(), 0);
 						if(c.getLength() != -1) {

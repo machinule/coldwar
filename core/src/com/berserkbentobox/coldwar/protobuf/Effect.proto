@@ -5,21 +5,24 @@ package com.berserkbentobox.coldwar;
 import "Id.proto";
 
 message Effect {
-	repeated MapEffect map_effects = 1;
+	repeated ProvinceEffect map_effects = 1;
 	repeated SuperpowerEffect superpower_effects = 2;
 	repeated MetaEffect meta_effects = 3;
 }
 
-message MapEffect {
+message ProvinceEffect {
 	repeated ProvinceId province_targets = 1;
 	repeated ProvinceRegion region_targets = 2;
 	
 	optional int32 influence_mod = 3;
 
 	optional bool roll_dissidents = 4;
-	optional int32 roll_dissident_multiplier = 5;
+	//optional int32 roll_dissident_multiplier = 5;
 	
 	optional bool add_dissidents = 6;
+	
+	// Superpowers/None only
+	optional ProvinceId perspective = 7;
 }
 
 message SuperpowerEffect {

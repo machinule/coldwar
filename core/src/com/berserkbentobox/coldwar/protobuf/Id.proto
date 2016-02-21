@@ -16,7 +16,7 @@ enum ProvinceRegion {
 }
 
 enum ProvinceId {
-	UNKNOWN_PROVINCE = 00;
+	NONE = 00;
 
 	// GODDAMN AUSTRIA
 	
