@@ -1,0 +1,24 @@
+syntax = "proto2";
+
+package com.berserkbentobox.coldwar;
+
+// ========== Settings ==========
+
+// The top-level settings proto included in GameSettings.
+// Immutable over the duration of a single game.
+message VictoryMechanicSettings {
+}
+
+// ========== State ==========
+
+// The top-level state proto included in GameState.
+// Mutated each turn based on moves.
+message VictoryMechanicState {
+}
+
+
+// ========== Moves ==========
+
+// The top-level moves proto included in Moves.
+message VictoryMechanicMoves {
+}

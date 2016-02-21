@@ -10,6 +10,7 @@ import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMech
 import com.berserkbentobox.coldwar.logic.mechanics.superpower.SuperpowerMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.technology.TechnologyMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.treaty.TreatyMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.victory.VictoryMechanic;
 import com.berserkbentobox.coldwar.logic.year.YearMechanic;
 
 // MechanicSettings is a container for various MechanicSettings abstractions over the raw settings proto.
@@ -25,6 +26,7 @@ public class MechanicSettings {
 	private InfluenceStoreMechanic.Settings influence;
 	private CrisisMechanic.Settings crisis;
 	private YearMechanic.Settings year;
+	private VictoryMechanic.Settings victory;
 	
 	public MechanicSettings(GameSettings settings) {
 		this.provinces = new ProvinceMechanic.Settings(settings);
@@ -37,6 +39,7 @@ public class MechanicSettings {
 		this.influence = new InfluenceStoreMechanic.Settings(settings);
 		this.crisis = new CrisisMechanic.Settings(settings);
 		this.year = new YearMechanic.Settings(settings);
+		this.victory = new VictoryMechanic.Settings(settings);
 	}
 	
 	public ProvinceMechanic.Settings getProvinces() {
@@ -77,5 +80,9 @@ public class MechanicSettings {
 	
 	public YearMechanic.Settings getYear() {
 		return this.year;
+	}
+	
+	public VictoryMechanic.Settings getVictory() {
+		return this.victory;
 	}
 }
