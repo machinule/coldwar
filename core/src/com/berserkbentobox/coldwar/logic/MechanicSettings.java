@@ -3,6 +3,7 @@ package com.berserkbentobox.coldwar.logic;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettings;
 import com.berserkbentobox.coldwar.logic.mechanics.crisis.CrisisMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.event.EventMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.influencestore.InfluenceStoreMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.province.ProvinceMechanic;
@@ -27,6 +28,7 @@ public class MechanicSettings {
 	private CrisisMechanic.Settings crisis;
 	private YearMechanic.Settings year;
 	private VictoryMechanic.Settings victory;
+	private EventMechanic.Settings event;
 	
 	public MechanicSettings(GameSettings settings) {
 		this.provinces = new ProvinceMechanic.Settings(settings);
@@ -40,6 +42,7 @@ public class MechanicSettings {
 		this.crisis = new CrisisMechanic.Settings(settings);
 		this.year = new YearMechanic.Settings(settings);
 		this.victory = new VictoryMechanic.Settings(settings);
+		this.event = new EventMechanic.Settings(settings);
 	}
 	
 	public ProvinceMechanic.Settings getProvinces() {
@@ -84,5 +87,9 @@ public class MechanicSettings {
 	
 	public VictoryMechanic.Settings getVictory() {
 		return this.victory;
+	}
+
+	public EventMechanic.Settings getEvent() {
+		return this.event;
 	}
 }
