@@ -3,6 +3,7 @@ package com.berserkbentobox.coldwar.logic.mechanics.crisis;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -124,29 +125,25 @@ public class CrisisMechanic extends Mechanic {
 	
 	public String chooseCrisisByType(int year, Crisis.Type type, PseudorandomMechanic pseudorandom) {
 		Collection<CrisisSettings> crises = this.getSettings().getCrisisSettings();
-		List<Integer> chances = new ArrayList<Integer>();
-		List<String> names = new ArrayList<String>();
+		LinkedHashMap<Object, Integer> chances = new LinkedHashMap<Object, Integer>();
 		int total = 0;
 		for(CrisisSettings c : crises) {
 			if(c.getStartYear() <= year && c.getEndYear() >= year && c.getType() == type) {
 				int weighted_chance = c.getChanceMultiplier() * this.getSettings().getSettings().getBaseChance();
-				chances.add(weighted_chance);
+				chances.put(c.getName(), weighted_chance);
 				total += weighted_chance;
-				names.add(c.getName());
 			}
 		}
-		names.add("");
 		int null_chance = this.getSettings().getSettings().getTotalChance() - total;
 		if(null_chance < 0)
 			Logger.Err("Total crisis chances add up over limit: " + null_chance + " > " + this.getSettings().getSettings().getTotalChance());
 		else
-			chances.add(null_chance);
-		int result = pseudorandom.roll(chances);
-		return names.get(result);
+			chances.put(null, null_chance);
+		return (String) pseudorandom.roll(chances);
 	}
 	
 	public boolean setCrisis(String name) {
-		if(name != "") {
+		if(name != null) {
 			this.getState().addCrises(CrisisState.newBuilder().setName(name));
 			return true;
 		}

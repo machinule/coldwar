@@ -5,11 +5,23 @@ package com.berserkbentobox.coldwar;
 import "Leader.proto";
 import "Dissidents.proto";
 import "Id.proto";
+import "Cost.proto";
 
 // ========== Settings ==========
 
 message ProvinceMechanicSettings {
 	repeated ProvinceSettings province = 1;
+	
+	optional Cost diplomacy_move_base_cost = 2;
+	optional Cost diplomacy_move_increment_cost = 3;
+	
+	optional Cost military_move_base_cost = 4;
+	optional Cost military_move_increment_cost = 5;
+	
+	optional Cost covert_move_base_cost = 6;
+	optional Cost covert_move_increment_cost = 7;
+	
+	optional Cost fund_dissidents_move_base_cost = 8;
 }
 
 message ProvinceSettings {
@@ -62,28 +74,27 @@ message ProvinceMechanicMoves {
 message DiplomacyMove {
 	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
-
-//	option (pol_cost) = 1;
+	optional Cost increment_cost = 3;
+	optional Cost base_cost = 4;
 }
 
 // Influence by spending MIL points
 message MilitaryMove {
 	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
-
-//	option (mil_cost) = 1;
+	optional Cost increment_cost = 3;
+	optional Cost base_cost = 4;
 }
 
 // Influence by spending COV points
 message CovertMove {
 	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
-
-//	option (cov_cost) = 1;
+	optional Cost increment_cost = 3;
+	optional Cost base_cost = 4;
 }
 
 message FundDissidentsMove {
 	optional ProvinceId province_id = 1;
-	
-// option (cov_cost) = 1;
+	optional Cost base_cost = 2;
 }

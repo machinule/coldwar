@@ -1,7 +1,9 @@
 package com.berserkbentobox.coldwar.logic.mechanics.pseudorandom;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import com.berserkbentobox.coldwar.Logger;
@@ -59,25 +61,27 @@ public class PseudorandomMechanic extends Mechanic {
 		return random.nextInt(1000000) < chance;
 	}
 	
-	public int roll(List<Integer> chances) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public Object roll(LinkedHashMap<Object, Integer> chances) {
 		Logger.Dbg("Rolling on " + chances.size() + " choices");
-		int total = 0;
 		List<Integer> weightedChances = new ArrayList<Integer>();
+		int total = 0;
 		weightedChances.add(0);
-		for (int c : chances) {
+		for (int c : chances.values()) {
 			weightedChances.add(total+c);
 			total = total + c;
 		}
+		List<Object> keys = new ArrayList(chances.keySet());
 		int result = random.nextInt(total);
 		Logger.Dbg("Roll result: " + result);
 		for (int i = 1; i<weightedChances.size()-1; i++) {
 			if (result >= weightedChances.get(i-1) && result < weightedChances.get(i)) {
-				Logger.Dbg("Returning " + (i-1));
-				return i-1;
+				Logger.Dbg("Returning " + keys.get(i-1));
+				return keys.get(i-1);
 			}
 		}
-		Logger.Dbg("Returning " + (weightedChances.size()-2));
-		return weightedChances.get(weightedChances.size()-2);
+		Logger.Dbg("Returning " + keys.get(weightedChances.size()-2));
+		return keys.get(weightedChances.size()-2);
 	}
 	
 	// Leader-specific

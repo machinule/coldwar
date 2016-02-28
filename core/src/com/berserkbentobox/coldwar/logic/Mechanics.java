@@ -27,9 +27,10 @@ public class Mechanics {
 	private VictoryMechanic victory;
 	
 	public Mechanics(MechanicSettings settings, GameState state) {
+		this.pseudorandom = new PseudorandomMechanic(this, settings.getPseudorandom(), state);
+		
 		this.provinces = new ProvinceMechanic(this, settings.getProvinces(), state);
 		this.technology = new TechnologyMechanic(this, settings.getTechnology(), state);
-		this.pseudorandom = new PseudorandomMechanic(this, settings.getPseudorandom(), state);
 		this.superpower = new SuperpowerMechanic(this, settings.getSuperpower(), state);
 		this.heat = new HeatMechanic(this, settings.getHeat(), state);
 		this.treaty = new TreatyMechanic(this, settings.getTreaty(), state);
@@ -86,9 +87,10 @@ public class Mechanics {
 
 	public GameState buildState() {
 		GameState.Builder state = GameState.newBuilder();
+		state.setPseudorandomState(this.getPseudorandom().buildState());
+		
 		state.setProvinceState(this.getProvinces().buildState());
 		state.setTechnologyState(this.getTechnology().buildState());
-		state.setPseudorandomState(this.getPseudorandom().buildState());
 		state.setHeatState(this.getHeat().buildState());
 		state.setSuperpowerState(this.getSuperpower().buildState());
 		state.setDeterrenceState(this.getDeterrence().buildState());

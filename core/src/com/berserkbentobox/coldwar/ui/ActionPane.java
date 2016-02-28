@@ -55,11 +55,11 @@ public class ActionPane extends FooterPane {
 		Map<DynamicButton, Runnable> actionButtonMethods = new HashMap<>();
 		Map<DynamicButton, Function<Client, Integer>> actionButtonCosts = new HashMap<>();
 		
-		diplomaticInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaDipMove(c.getPlayer(), province.getId()), "Diplomatic Outreach", this.skin);
-		militaryInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaMilMove(c.getPlayer(), province.getId()), "Arms Sales", this.skin);
-		covertInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidDiaCovMove(c.getPlayer(), province.getId()), "Support Party", this.skin);
+		diplomaticInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().isValidDiplomacyMove(c.getPlayer(), province.getId()), "Economic Aid", this.skin);
+		militaryInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().isValidMilitaryMove(c.getPlayer(), province.getId()), "Arms Sales", this.skin);
+		covertInfluenceButton = new DynamicButton(this.client, c -> c.getMoveBuilder().isValidCovertMove(c.getPlayer(), province.getId()), "Support Party", this.skin);
 		
-		dissidentsButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidFundDissidentsMove(c.getPlayer(), province.getId()), "Fund Dissidents", this.skin);
+		dissidentsButton = new DynamicButton(this.client, c -> c.getMoveBuilder().isValidFundDissidentsMove(c.getPlayer(), province.getId()), "Fund Dissidents", this.skin);
 		politicalPressureButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidPoliticalPressureMove(c.getPlayer(), province.getId()), "Political Pressure", this.skin);
 		establishBaseButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidEstablishBaseMove(c.getPlayer(), province.getId()), "Establish Military Base", this.skin);
 		
@@ -77,18 +77,18 @@ public class ActionPane extends FooterPane {
 		actionButtonMethods.put(coupButton, () -> ActionPane.this.client.getMoveBuilder().Coup(province.getId(), actionParamInput.getValue()) );
 		//actionButtons.put(invadeButton, () -> ActionPane.this.client.getMoveBuilder().Invade(province.getId()) );
 		
-		actionButtonCosts.put(diplomaticInfluenceButton, c -> state.getDiaDipMoveIncrement(client.getPlayer(), province.getId()) );
-		actionButtonCosts.put(militaryInfluenceButton, c -> state.getDiaMilMoveIncrement() );
-		actionButtonCosts.put(covertInfluenceButton, c -> state.getDiaCovMoveIncrement() );
+		actionButtonCosts.put(diplomaticInfluenceButton, c -> c.getMoveBuilder().getDiplomacyMoveIncrementCost(client.getPlayer(), province.getId()));
+		actionButtonCosts.put(militaryInfluenceButton, c -> c.getMoveBuilder().getMilitaryMoveIncrementCost(client.getPlayer(), province.getId()));
+		actionButtonCosts.put(covertInfluenceButton, c -> c.getMoveBuilder().getCovertMoveIncrementCost(client.getPlayer(), province.getId()));
 
-		actionButtonCosts.put(dissidentsButton, c -> state.getFundDissidentsMoveCost() );
+		actionButtonCosts.put(dissidentsButton, c -> c.getMoveBuilder().getFundDissidentsMoveBaseCost());
 		actionButtonCosts.put(politicalPressureButton, c -> state.getPoliticalPressureMoveCost() );
 		actionButtonCosts.put(establishBaseButton, c -> state.getEstablishBaseMoveCost() );
 
 		actionButtonCosts.put(coupButton, c -> state.getCoupMoveCost(province.getId()) );
 		//actionButtons.put(invadeButton, () -> ActionPane.this.client.getMoveBuilder().Invade(province.getId()) );
 		
-		submitButton = new DynamicButton(this.client, c -> !(c.getMoveBuilder().getComputedGameState().hasActed(province.getId()) || (selected == null)), "Submit", this.skin);
+		submitButton = new DynamicButton(this.client, c -> !(c.getMoveBuilder().hasActed(province.getId()) || (selected == null)), "Submit", this.skin);
 		
 		diplomaticInfluenceButton.addListener(new ChangeListener() {
 			@Override
@@ -98,7 +98,7 @@ public class ActionPane extends FooterPane {
 				requiresSlider = true;
 				actionParamInput.setBounds(state.getDiaDipMoveMin(client.getPlayer(), province.getId()), 
 						state.getDiaDipMoveMax(client.getPlayer(), province.getId()),
-						state.getDiaDipMoveIncrement(client.getPlayer(), province.getId()));
+						client.getMoveBuilder().getDiplomacyMoveIncrementCost(client.getPlayer(), province.getId()));
 			}
 		});
 		
@@ -110,7 +110,7 @@ public class ActionPane extends FooterPane {
 				requiresSlider = true;
 				actionParamInput.setBounds(state.getDiaMilMoveMin(province.getId()), 
 						state.getDiaMilMoveMax(client.getPlayer(), province.getId()),
-						state.getDiaMilMoveIncrement());
+						client.getMoveBuilder().getMilitaryMoveIncrementCost(client.getPlayer(), province.getId()));
 			}
 		});
 		
@@ -122,7 +122,7 @@ public class ActionPane extends FooterPane {
 				requiresSlider = true;
 				actionParamInput.setBounds(state.getDiaCovMoveMin(province.getId()), 
 						state.getDiaCovMoveMax(client.getPlayer(), province.getId()),
-						state.getDiaCovMoveIncrement());
+						client.getMoveBuilder().getCovertMoveIncrementCost(client.getPlayer(), province.getId()));
 			}
 		});
 

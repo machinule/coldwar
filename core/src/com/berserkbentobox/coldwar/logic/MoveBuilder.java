@@ -1,5 +1,8 @@
 package com.berserkbentobox.coldwar.logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.berserkbentobox.coldwar.Crisis.Choice;
 import com.berserkbentobox.coldwar.Crisis.CrisisMechanicMoves;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
@@ -29,6 +32,7 @@ public class MoveBuilder {
 	private final MechanicSettings settings;
 	private GameStateManager stateManager;
 	private Mechanics mechanics;
+	private List<ProvinceId> acted;
 	
 	public MoveBuilder(Player player, GameState state, MechanicSettings settings) {
 		this.player = player;
@@ -36,6 +40,7 @@ public class MoveBuilder {
 		this.moves = MoveList.newBuilder();
 		this.settings = settings;
 		this.stateManager = new GameStateManager(settings, state);
+		this.acted = new ArrayList<ProvinceId>();
 		this.computeState();
 	}
 
@@ -145,9 +150,62 @@ public class MoveBuilder {
 		return this.computedState.stabilityModifier.getOrDefault(provinceId, 0);
 	}
 	
+	// Validation
+	
+	public boolean hasActed(ProvinceId id) {
+		return acted.contains(id);
+	}
+	
+	public boolean isValidDiplomacyMove(Player player, ProvinceId id){
+		return !hasActed(id) && this.mechanics.getProvinces().isValidDiplomacyMove(player, id);
+	}
+	
+	public boolean isValidMilitaryMove(Player player, ProvinceId id){
+		return !hasActed(id) && this.mechanics.getProvinces().isValidMilitaryMove(player, id);
+	}
+
+	public boolean isValidCovertMove(Player player, ProvinceId id){
+		return !hasActed(id) && this.mechanics.getProvinces().isValidCovertMove(player, id);
+	}
+	
+	public boolean isValidFundDissidentsMove(Player player, ProvinceId id) {
+		return !hasActed(id) && this.mechanics.getProvinces().isValidFundDissidentsMove(player, id);
+	}
+	
+	// Cost
+	
+	public int getDiplomacyMoveBaseCost(Player player, ProvinceId id) {
+		return this.mechanics.getProvinces().getDiplomacyMoveBaseCost(player, id);
+	}
+	
+	public int getDiplomacyMoveIncrementCost(Player player, ProvinceId id) {
+		return this.mechanics.getProvinces().getDiplomacyMoveIncrementCost(player, id);
+	}
+
+	public int getMilitaryMoveBaseCost(Player player, ProvinceId id) {
+		return this.mechanics.getProvinces().getMilitaryMoveBaseCost(player, id);
+	}
+	
+	public int getMilitaryMoveIncrementCost(Player player, ProvinceId id) {
+		return this.mechanics.getProvinces().getMilitaryMoveIncrementCost(player, id);
+	}
+	
+	public int getCovertMoveBaseCost(Player player, ProvinceId id) {
+		return this.mechanics.getProvinces().getCovertMoveBaseCost(player, id);
+	}
+	
+	public int getCovertMoveIncrementCost(Player player, ProvinceId id) {
+		return this.mechanics.getProvinces().getCovertMoveIncrementCost(player, id);
+	}
+	
+	public int getFundDissidentsMoveBaseCost() {
+		return this.mechanics.getProvinces().getFundDissidentsMoveBaseCost();
+	}
+	
 	// Provinces
 	
 	public void influenceDip(final ProvinceId id, int magnitude) {
+		acted.add(id);
 		Move.Builder move = Move.newBuilder();
 		DiplomacyMove.Builder dipMove = DiplomacyMove.newBuilder();
 		dipMove
@@ -159,6 +217,7 @@ public class MoveBuilder {
 	}
 	
 	public void influenceMil(final ProvinceId id, int magnitude) {
+		acted.add(id);
 		Move.Builder move = Move.newBuilder();
 		MilitaryMove.Builder milMove = MilitaryMove.newBuilder();
 		milMove
@@ -170,6 +229,7 @@ public class MoveBuilder {
 	}
 	
 	public void influenceCov(final ProvinceId id, int magnitude) {
+		acted.add(id);
 		Move.Builder move = Move.newBuilder();
 		CovertMove.Builder covMove = CovertMove.newBuilder();
 		covMove
@@ -180,14 +240,13 @@ public class MoveBuilder {
 		this.computeState();
 	}
 	
-
-	
 	public void fundDissidents(final ProvinceId id) {
+		acted.add(id);
 		Move.Builder move = Move.newBuilder();
-		CovertMove.Builder dissMove = CovertMove.newBuilder();
+		FundDissidentsMove.Builder dissMove = FundDissidentsMove.newBuilder();
 		dissMove
 			.setProvinceId(id);
-		move.getProvinceMechanicMovesBuilder().addCovertMove(dissMove);
+		move.getProvinceMechanicMovesBuilder().addFundDissidentsMove(dissMove);
 		this.moves.addMoves(move.build());
 		this.computeState();
 	}

@@ -123,18 +123,17 @@ public class Usa {
 	
 	public List<String> getPresidentialEligible(int year, UsaLeaderParty party, int num, PseudorandomMechanic pseudorandom) {
 		List<String> eligible = getPresidentialEligible(year, party);
-		List<Integer> chances = new ArrayList<Integer>();
+		LinkedHashMap<Object, Integer> chances = new LinkedHashMap<Object, Integer>();
 		List<String> ret = new ArrayList<String>();
 		if (eligible.size() != 1) {
 			for (String l : eligible) {
-				chances.add(1);
+				chances.put(l, 1);
 			}
-			int result;
+			String result;
 			for (int j = 0; j < num; j++) {
-				result = pseudorandom.roll(chances);
-				ret.add(eligible.get(result));
+				result = (String) pseudorandom.roll(chances);
+				ret.add(result);
 				chances.remove(result);
-				eligible.remove(result);
 			}
 		} else {
 			ret.add(eligible.get(0));
@@ -217,11 +216,11 @@ public class Usa {
 	public void chooseVicePresident(int year, PseudorandomMechanic pseudorandomMechanic, boolean incumbent) {
 		if(!incumbent) {
 			List<String> candidates = getVicePresidentialEligible(year, leaders.get(this.getState().getPresident()).getSettings().getSettings().getParty());
-			ArrayList<Integer> candidateChances = new ArrayList<Integer>();
+			LinkedHashMap<Object, Integer> candidateChances = new LinkedHashMap<Object, Integer>();
 			for (String l : candidates) {
-				candidateChances.add(1);
+				candidateChances.put(l, 1);
 			}
-			String choice = candidates.get(pseudorandomMechanic.roll(candidateChances));
+			String choice = (String) pseudorandomMechanic.roll(candidateChances);
 			Logger.Dbg("Chosen vice president: " + choice);
 			getState().setVicePresident(choice);
 		}

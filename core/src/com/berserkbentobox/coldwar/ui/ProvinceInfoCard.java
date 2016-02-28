@@ -152,10 +152,9 @@ public class ProvinceInfoCard extends Table {
     	Table ret = new Table();
 		ret.add(new DynamicLabel(
 			client,
-			c -> c.getMoveBuilder().getComputedGameState().hasDissidents(province.getId()) ? "DISS" : "",
-			c -> !c.getMoveBuilder().getComputedGameState().hasDissidents(province.getId()) ? Color.BLACK :
-				 c.getMoveBuilder().getComputedGameState().getDissidentsGov(province.getId()) == Government.COMMUNISM ? Color.RED :
-				 c.getMoveBuilder().getComputedGameState().getDissidentsGov(province.getId()) == Government.DEMOCRACY ? Color.BLUE :
+			c -> c.getMoveBuilder().getMechanics().getProvinces().hasDissidents(province.getId()) ? "DISS" : "",
+			c -> c.getMoveBuilder().getMechanics().getProvinces().getDissidentsGovernment(province.getId()) == Government.COMMUNISM ? Color.RED :
+				 c.getMoveBuilder().getMechanics().getProvinces().getDissidentsGovernment(province.getId()) == Government.DEMOCRACY ? Color.BLUE :
 			 	 Color.BLACK,
 			skin
 		));

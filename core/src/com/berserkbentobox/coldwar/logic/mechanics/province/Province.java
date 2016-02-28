@@ -149,7 +149,7 @@ public class Province {
 		this.state.setInfluence(this.getState().getInfluence() + magnitude);
 	}
 	
-	public void addDissidents(Dissidents diss) {
+	public void addDissidents(Dissidents.Builder diss) {
 		this.state.setDissidents(diss);
 	}
 }

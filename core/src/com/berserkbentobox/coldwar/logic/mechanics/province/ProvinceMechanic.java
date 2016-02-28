@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.berserkbentobox.coldwar.Logger;
+import com.berserkbentobox.coldwar.DissidentsOuterClass.Dissidents;
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
 import com.berserkbentobox.coldwar.Province.CovertMove;
 import com.berserkbentobox.coldwar.Province.DiplomacyMove;
@@ -106,6 +107,82 @@ public class ProvinceMechanic extends Mechanic {
 		return this.provinces.get(id);
 	}
 	
+	public Government getGovernment(ProvinceId id) {
+		return this.getProvince(id).getState().getGov();
+	}
+	
+	public boolean hasDissidents(ProvinceId id) {
+		return this.getProvince(id).getState().getDissidents() != Dissidents.getDefaultInstance();
+	}
+	
+	public Dissidents getDissidents(ProvinceId id) {
+		return this.getProvince(id).getState().getDissidents();
+	}
+	
+	public Government getDissidentsGovernment(ProvinceId id) {
+		return this.getProvince(id).getState().getDissidents().getGov();
+	}
+	
+	// Validation
+	
+	public boolean isValidDiplomacyMove(Player player, ProvinceId id){
+		return true;
+//		return polStore.get(player) >= getDiaDipMoveMin(player, id) + getNonAdjacentDiaMoveCost(player, id) &&
+//			   !isInArmedConflict(id);
+	}
+//	
+	public boolean isValidMilitaryMove(Player player, ProvinceId id){
+		return true;
+//		return milStore.get(player) >= getDiaMilMoveMin(id) &&
+//			   polStore.get(player) >= getNonAdjacentDiaMoveCost(player, id) && 
+//			   getAlly(id) != otherPlayer(player) && 
+//			   !isInArmedConflict(id);
+	}
+//	
+	public boolean isValidCovertMove(Player player, ProvinceId id){
+		return true;
+//		return covStore.get(player) >= getDiaCovMoveMin(id) && 
+//			   polStore.get(player) >= getNonAdjacentDiaMoveCost(player, id) && 
+//			   !isInArmedConflict(id);
+	}
+//	
+	public boolean isValidFundDissidentsMove(Player player, ProvinceId id) {
+	return true;
+//		return covStore.get(player) >= getFundDissidentsMoveCost() &&
+//			   !(hasDissidents(id)) && 
+//			   !isInArmedConflict(id);
+	}
+	
+	// Cost
+	
+	public int getDiplomacyMoveBaseCost(Player player, ProvinceId id) {
+		return this.settings.settings.getDiplomacyMoveBaseCost().getPoliticalPoints();
+	}
+	
+	public int getDiplomacyMoveIncrementCost(Player player, ProvinceId id) {
+		return this.settings.settings.getDiplomacyMoveIncrementCost().getPoliticalPoints();
+	}
+
+	public int getMilitaryMoveBaseCost(Player player, ProvinceId id) {
+		return this.settings.settings.getMilitaryMoveBaseCost().getMilitaryPoints();
+	}
+	
+	public int getMilitaryMoveIncrementCost(Player player, ProvinceId id) {
+		return this.settings.settings.getMilitaryMoveIncrementCost().getMilitaryPoints();
+	}
+	
+	public int getCovertMoveBaseCost(Player player, ProvinceId id) {
+		return this.settings.settings.getCovertMoveBaseCost().getCovertPoints();
+	}
+	
+	public int getCovertMoveIncrementCost(Player player, ProvinceId id) {
+		return this.settings.settings.getCovertMoveIncrementCost().getCovertPoints();
+	}
+	
+	public int getFundDissidentsMoveBaseCost() {
+		return this.settings.settings.getFundDissidentsMoveBaseCost().getPoliticalPoints();
+	}
+	
 	// Util
 	
 	public Player toPlayer(ProvinceId player) {
@@ -184,6 +261,9 @@ public class ProvinceMechanic extends Mechanic {
 		}
 		if (moves.getCovertMoveCount() > 0) {
 			makeCovertMoves(player, moves.getCovertMoveList());
+		}
+		if (moves.getFundDissidentsMoveCount() > 0) {
+			makeFundDissidentMoves(player, moves.getFundDissidentsMoveList());
 		}
 	}
 

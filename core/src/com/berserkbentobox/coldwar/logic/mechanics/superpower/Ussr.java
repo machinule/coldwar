@@ -114,18 +114,17 @@ public class Ussr {
 	
 	public List<String> getAvailableLeaders(int year, int num, PseudorandomMechanic pseudorandom) {
 		List<String> eligible = getAvailableLeaders(year);
-		List<Integer> chances = new ArrayList<Integer>();
+		LinkedHashMap<Object, Integer> chances = new LinkedHashMap<Object, Integer>();
 		List<String> ret = new ArrayList<String>();
 		if (eligible.size() != 1) {
 			for (String l : eligible) {
-				chances.add(1);
+				chances.put(l, 1);
 			}
-			int result;
+			String result;
 			for (int j = 0; j < num; j++) {
-				result = pseudorandom.roll(chances);
-				ret.add(eligible.get(result));
+				result = (String) pseudorandom.roll(chances);
+				ret.add(result);
 				chances.remove(result);
-				eligible.remove(result);
 			}
 		} else {
 			ret.add(eligible.get(0));
@@ -186,13 +185,13 @@ public class Ussr {
 	public void troikaUpdate(PseudorandomMechanic pseudorandom) {
 		Logger.Dbg("Troika is " + hasTroika());
 		if(hasTroika()) {
-			List<Integer> chances = new ArrayList<Integer>();
+			LinkedHashMap<Object, Integer> chances = new LinkedHashMap<Object, Integer>();
 			int magnitude = 2; // TODO: Settings
 			for(String n : this.getState().getTroikaList()) {
-				chances.add(1);
+				chances.put(n, 1);
 			}
-			int result = pseudorandom.roll(chances);
-			UssrLeader l = leaders.get(this.getState().getTroika(result));
+			String result = (String) pseudorandom.roll(chances);
+			UssrLeader l = leaders.get(result);
 			Logger.Dbg("Reduing policial power of " + l);
 			l.getState().setPartySupport(l.getState().getPartySupport() - magnitude);
 			refreshTroika();

@@ -1,5 +1,7 @@
 package com.berserkbentobox.coldwar.logic.mechanics.province;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,19 +17,20 @@ public class DissidentUtil extends ProvinceUtil {
 		Province target = provinces.get(id);
 		Dissidents.Builder diss = Dissidents.newBuilder();
 		// TODO: Pick a leader
-		Map<Integer, Government> chances = ChanceUtil.getDissidentsChance(player, id);
-		int result = pseudorandom.roll((List<Integer>) chances.keySet());
-		diss.setGov(chances.get(result));
-		target.addDissidents(diss.build());
+		LinkedHashMap<Object, Integer> chances = new LinkedHashMap<Object, Integer>(ChanceUtil.getDissidentsChance(player, id));
+		Government result = (Government) pseudorandom.roll(chances);
+		diss.setGov(result);
+		target.addDissidents(diss);
 	}
 	
 	public static void addDissidents(ProvinceId id) {
 		Province target = provinces.get(id);
 		Dissidents.Builder diss = Dissidents.newBuilder();
 		// TODO: Pick a leader
-		Map<Integer, Government> chances = ChanceUtil.getDissidentsChance(id);
-		int result = pseudorandom.roll((List<Integer>) chances.keySet());
-		target.addDissidents(diss.build());
+		LinkedHashMap<Object, Integer> chances = new LinkedHashMap<Object, Integer>(ChanceUtil.getDissidentsChance(id));
+		Government result = (Government) pseudorandom.roll(chances);
+		diss.setGov(result);
+		target.addDissidents(diss);
 	}
 	
 	public static void addDissidents(ProvinceId id, Government gov) {
@@ -35,7 +38,7 @@ public class DissidentUtil extends ProvinceUtil {
 		Dissidents.Builder diss = Dissidents.newBuilder();
 		// TODO: Pick a leader
 		diss.setGov(gov);
-		target.addDissidents(diss.build());
+		target.addDissidents(diss);
 	}
 	
 	// Suppress Dissidents
