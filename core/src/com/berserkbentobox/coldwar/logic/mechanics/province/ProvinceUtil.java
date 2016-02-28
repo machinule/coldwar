@@ -6,11 +6,16 @@ import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 
 public class ProvinceUtil {
-	protected static Map<ProvinceId, Province> provinces;
-	protected static PseudorandomMechanic pseudorandom;
+	protected Map<ProvinceId, Province> provinces;
+	protected PseudorandomMechanic pseudorandom;
 	
-	public static void set(Map<ProvinceId, Province> provinces, PseudorandomMechanic pseudorandom) {
-		ProvinceUtil.provinces = provinces;
-		ProvinceUtil.pseudorandom = pseudorandom;
+	public ProvinceUtil(Map<ProvinceId, Province> provinces,PseudorandomMechanic pseudorandom) {
+		this.provinces = provinces;
+		this.pseudorandom = pseudorandom;
+	}
+	
+	public void set(Map<ProvinceId, Province> provinces, PseudorandomMechanic pseudorandom) {
+		this.provinces = provinces;
+		this.pseudorandom = pseudorandom;
 	}
 }
