@@ -106,15 +106,15 @@ public class MoveBuilder {
 	}
 	
 	public int getPolStore() {
-		return this.getMechanics().getInfluence().getPolitical(this.player);
+		return this.getMechanics().getInfluenceStore().getPolitical(this.player);
 	}
 	
 	public int getMilStore() {
-		return this.getMechanics().getInfluence().getMilitary(this.player);
+		return this.getMechanics().getInfluenceStore().getMilitary(this.player);
 	}
 	
 	public int getCovStore() {
-		return this.getMechanics().getInfluence().getCovert(this.player);
+		return this.getMechanics().getInfluenceStore().getCovert(this.player);
 	}
 	
 	public int getHeat() {
@@ -174,31 +174,19 @@ public class MoveBuilder {
 	
 	// Cost
 	
-	public int getDiplomacyMoveBaseCost(Player player, ProvinceId id) {
-		return this.mechanics.getProvinces().getDiplomacyMoveBaseCost(player, id);
-	}
-	
-	public int getDiplomacyMoveIncrementCost(Player player, ProvinceId id) {
-		return this.mechanics.getProvinces().getDiplomacyMoveIncrementCost(player, id);
+	public int getDiplomacyMoveCost(Player player, ProvinceId id, int magnitude) {
+		return this.mechanics.getProvinces().getDiplomacyMoveCost(player, id, magnitude);
 	}
 
-	public int getMilitaryMoveBaseCost(Player player, ProvinceId id) {
-		return this.mechanics.getProvinces().getMilitaryMoveBaseCost(player, id);
+	public int getMilitaryMoveCost(Player player, ProvinceId id, int magnitude) {
+		return this.mechanics.getProvinces().getMilitaryMoveCost(player, id, magnitude);
 	}
 	
-	public int getMilitaryMoveIncrementCost(Player player, ProvinceId id) {
-		return this.mechanics.getProvinces().getMilitaryMoveIncrementCost(player, id);
+	public int getCovertMoveCost(Player player, ProvinceId id, int magnitude) {
+		return this.mechanics.getProvinces().getCovertMoveCost(player, id, magnitude);
 	}
 	
-	public int getCovertMoveBaseCost(Player player, ProvinceId id) {
-		return this.mechanics.getProvinces().getCovertMoveBaseCost(player, id);
-	}
-	
-	public int getCovertMoveIncrementCost(Player player, ProvinceId id) {
-		return this.mechanics.getProvinces().getCovertMoveIncrementCost(player, id);
-	}
-	
-	public int getFundDissidentsMoveBaseCost() {
+	public int getFundDissidentsMoveCost() {
 		return this.mechanics.getProvinces().getFundDissidentsMoveBaseCost();
 	}
 	

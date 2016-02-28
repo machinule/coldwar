@@ -1,5 +1,7 @@
 package com.berserkbentobox.coldwar.logic.mechanics.province;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.berserkbentobox.coldwar.DissidentsOuterClass.Dissidents;
@@ -28,6 +30,8 @@ public class Province {
 		public Status validate() {
 			return Status.OK;
 		}
+		
+		// Getters
 		
 		public ProvinceSettings getSettings() {
 			return this.settings;
@@ -141,6 +145,17 @@ public class Province {
 			    this.state.getGov() != Government.COLONY)
 			return Player.USSR;
 		return null;
+	}
+	
+	public boolean isAdj(Player player) {
+		for(ProvinceId id : this.settings.settings.getAdjacencyList()) {
+			Province p = parent.getProvince(id);
+			if((p.getInfluence() > 0 && player == Player.USA) ||
+			   (p.getInfluence() < 0 && player == Player.USSR)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	// Logic

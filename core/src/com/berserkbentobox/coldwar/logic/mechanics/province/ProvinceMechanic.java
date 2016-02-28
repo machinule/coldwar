@@ -17,11 +17,6 @@ import com.berserkbentobox.coldwar.Province.ProvinceMechanicSettings;
 import com.berserkbentobox.coldwar.Province.ProvinceMechanicState;
 import com.berserkbentobox.coldwar.Province.ProvinceSettings;
 import com.berserkbentobox.coldwar.Province.ProvinceState;
-import com.berserkbentobox.coldwar.Superpower.UsaLeaderState;
-import com.berserkbentobox.coldwar.Superpower.UsaState;
-import com.berserkbentobox.coldwar.Technology.ResearchMove;
-import com.berserkbentobox.coldwar.Technology.TechnologyMechanicMoves;
-import com.berserkbentobox.coldwar.EffectOuterClass.Effect;
 import com.berserkbentobox.coldwar.EffectOuterClass.ProvinceEffect;
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
@@ -31,8 +26,6 @@ import com.berserkbentobox.coldwar.logic.Status;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 import com.berserkbentobox.coldwar.logic.Mechanic;
 import com.berserkbentobox.coldwar.logic.Mechanics;
-import com.berserkbentobox.coldwar.logic.mechanics.influencestore.InfluenceStoreMechanic;
-import com.berserkbentobox.coldwar.logic.mechanics.superpower.UsaLeader;
 
 public class ProvinceMechanic extends Mechanic {
 
@@ -110,7 +103,11 @@ public class ProvinceMechanic extends Mechanic {
 		return this.state.build();
 	}
 	
-	// Getters
+/*
+ * ==============================================================
+ * GETTERS
+ * ==============================================================
+ */
 	
 	public Province getProvince(ProvinceId id) {
 		return this.provinces.get(id);
@@ -132,12 +129,17 @@ public class ProvinceMechanic extends Mechanic {
 		return this.getProvince(id).getState().getDissidents().getGov();
 	}
 	
-	// Validation
+/*
+ * ==============================================================
+ * VALIDATION
+ * ==============================================================
+ */
 	
 	public boolean isValidDiplomacyMove(Player player, ProvinceId id){
+		if(1 > this.getDiplomacyMoveMaxValue(player, id)) {
+			return false;
+		}
 		return true;
-//		return polStore.get(player) >= getDiaDipMoveMin(player, id) + getNonAdjacentDiaMoveCost(player, id) &&
-//			   !isInArmedConflict(id);
 	}
 //	
 	public boolean isValidMilitaryMove(Player player, ProvinceId id){
@@ -162,37 +164,108 @@ public class ProvinceMechanic extends Mechanic {
 //			   !isInArmedConflict(id);
 	}
 	
-	// Cost
+/*
+ * ==============================================================
+ * COST
+ * ==============================================================
+ */
+	
+	// DiplomacyMove
 	
 	public int getDiplomacyMoveBaseCost(Player player, ProvinceId id) {
 		return this.settings.settings.getDiplomacyMoveBaseCost().getPoliticalPoints();
 	}
 	
 	public int getDiplomacyMoveIncrementCost(Player player, ProvinceId id) {
-		return this.settings.settings.getDiplomacyMoveIncrementCost().getPoliticalPoints();
+		int ret = this.settings.settings.getDiplomacyMoveIncrementCost().getPoliticalPoints();
+		if(!this.provinces.get(id).isAdj(player)) {
+			ret += this.settings.settings.getDiplomacyMoveNonAdjCost().getPoliticalPoints();
+		}
+		Logger.Dbg("Increment cost: " + ret);
+		return ret;
 	}
-
+	
+	public int getDiplomacyMoveMaxValue(Player player, ProvinceId id) {
+		return Math.min(this.getMechanics().getInfluenceStore().getPolitical(player) * this.getDiplomacyMoveIncrementCost(player, id)
+				+ this.getDiplomacyMoveBaseCost(player, id),
+				provinces.get(id).getNetStability() + 1);
+	}
+	
+	public int getDiplomacyMoveMinCost(Player player, ProvinceId id) {
+		return this.getDiplomacyMoveIncrementCost(player, id) + this.getDiplomacyMoveBaseCost(player, id);
+	}
+	
+	public int getDiplomacyMoveCost(Player player, ProvinceId id, int magnitude) {
+		return (magnitude * this.getDiplomacyMoveIncrementCost(player, id)) + this.getDiplomacyMoveBaseCost(player, id);
+	}
+	
+	// MilitaryMove
+	
 	public int getMilitaryMoveBaseCost(Player player, ProvinceId id) {
 		return this.settings.settings.getMilitaryMoveBaseCost().getMilitaryPoints();
 	}
 	
 	public int getMilitaryMoveIncrementCost(Player player, ProvinceId id) {
-		return this.settings.settings.getMilitaryMoveIncrementCost().getMilitaryPoints();
+		int ret = this.settings.settings.getMilitaryMoveIncrementCost().getMilitaryPoints();
+		if(!this.provinces.get(id).isAdj(player)) {
+			ret += this.settings.settings.getMilitaryMoveNonAdjCost().getMilitaryPoints();
+		}
+		return ret;
 	}
+	
+	public int getMilitaryMoveMaxValue(Player player, ProvinceId id) {
+		return Math.min(this.getMechanics().getInfluenceStore().getMilitary(player) * this.getMilitaryMoveIncrementCost(player, id)
+				+ this.getMilitaryMoveBaseCost(player, id),
+				provinces.get(id).getNetStability());
+	}
+	
+	public int getMilitaryMoveMinCost(Player player, ProvinceId id) {
+		return this.getMilitaryMoveIncrementCost(player, id) + this.getMilitaryMoveBaseCost(player, id);
+	}
+	
+	public int getMilitaryMoveCost(Player player, ProvinceId id, int magnitude) {
+		return magnitude * this.getMilitaryMoveIncrementCost(player, id) + this.getMilitaryMoveBaseCost(player, id);
+	}	
+	
+	// CovertMove
 	
 	public int getCovertMoveBaseCost(Player player, ProvinceId id) {
 		return this.settings.settings.getCovertMoveBaseCost().getCovertPoints();
 	}
 	
 	public int getCovertMoveIncrementCost(Player player, ProvinceId id) {
-		return this.settings.settings.getCovertMoveIncrementCost().getCovertPoints();
+		int ret = this.settings.settings.getCovertMoveIncrementCost().getCovertPoints();
+		if(!this.provinces.get(id).isAdj(player)) {
+			ret += this.settings.settings.getCovertMoveNonAdjCost().getCovertPoints();
+		}
+		return ret;
 	}
+	
+	public int getCovertMoveMaxValue(Player player, ProvinceId id) {
+		return Math.min(this.getMechanics().getInfluenceStore().getCovert(player) * this.getCovertMoveIncrementCost(player, id)
+				+ this.getCovertMoveBaseCost(player, id),
+				provinces.get(id).getNetStability());
+	}
+	
+	public int getCovertMoveMinCost(Player player, ProvinceId id) {
+		return this.getCovertMoveIncrementCost(player, id) + this.getCovertMoveBaseCost(player, id);
+	}
+	
+	public int getCovertMoveCost(Player player, ProvinceId id, int magnitude) {
+		return magnitude * this.getCovertMoveIncrementCost(player, id) + this.getCovertMoveBaseCost(player, id);
+	}
+	
+	// FundDissidentsMove
 	
 	public int getFundDissidentsMoveBaseCost() {
 		return this.settings.settings.getFundDissidentsMoveBaseCost().getPoliticalPoints();
 	}
 	
-	// Util
+/*
+ * ==============================================================
+ * UTIL
+ * ==============================================================
+ */
 	
 	public Player toPlayer(ProvinceId player) {
 		if(player == ProvinceId.USA) 
@@ -217,7 +290,11 @@ public class ProvinceMechanic extends Mechanic {
 			return Government.COMMUNISM;
 	}
 	
-	// Logic
+/*
+ * ==============================================================
+ * LOGIC
+ * ==============================================================
+ */
 	
 	public void influenceProvince(Player player, ProvinceId id, int magnitude) {
 		inflUtil.influenceProvince(player, id, magnitude);
@@ -227,7 +304,11 @@ public class ProvinceMechanic extends Mechanic {
 		inflUtil.influenceProvince(id, magnitude);
 	}
 	
-	// Moves
+/*
+ * ==============================================================
+ * MOVES
+ * ==============================================================
+ */
 	
 	public void processEffects(Collection<ProvinceEffect> effects) {
 		for(ProvinceEffect e : effects) {
@@ -279,7 +360,7 @@ public class ProvinceMechanic extends Mechanic {
 	public void makeDiplomacyMoves(Player player, List<DiplomacyMove> moves) {
 		for(DiplomacyMove m : moves) {
 			int magnitude = m.getMagnitude();
-			this.getMechanics().getInfluence().spendPOL(player, magnitude);
+			this.getMechanics().getInfluenceStore().spendPOL(player, this.getDiplomacyMoveCost(player, m.getProvinceId(), magnitude));
 			inflUtil.influenceProvince(m.getProvinceId(), magnitude);
 		}
 	}
@@ -287,7 +368,7 @@ public class ProvinceMechanic extends Mechanic {
 	public void makeMilitaryMoves(Player player, List<MilitaryMove> moves) {
 		for(MilitaryMove m : moves) {
 			int magnitude = m.getMagnitude();
-			this.getMechanics().getInfluence().spendPOL(player, magnitude);
+			this.getMechanics().getInfluenceStore().spendMIL(player, magnitude * this.getMilitaryMoveIncrementCost(player, m.getProvinceId()));
 			inflUtil.influenceProvince(m.getProvinceId(), magnitude);
 		}
 	}
@@ -295,7 +376,7 @@ public class ProvinceMechanic extends Mechanic {
 	public void makeCovertMoves(Player player, List<CovertMove> moves) {
 		for(CovertMove m : moves) {
 			int magnitude = m.getMagnitude();
-			this.getMechanics().getInfluence().spendCOV(player, magnitude);
+			this.getMechanics().getInfluenceStore().spendCOV(player, magnitude * this.getCovertMoveIncrementCost(player, m.getProvinceId()));
 			inflUtil.influenceProvince(player, m.getProvinceId(), magnitude);
 		}
 	}

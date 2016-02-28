@@ -9,7 +9,7 @@ public class ProvinceUtil {
 	protected Map<ProvinceId, Province> provinces;
 	protected PseudorandomMechanic pseudorandom;
 	
-	public ProvinceUtil(Map<ProvinceId, Province> provinces,PseudorandomMechanic pseudorandom) {
+	public ProvinceUtil(Map<ProvinceId, Province> provinces, PseudorandomMechanic pseudorandom) {
 		this.provinces = provinces;
 		this.pseudorandom = pseudorandom;
 	}

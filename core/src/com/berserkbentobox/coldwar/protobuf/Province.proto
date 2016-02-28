@@ -12,16 +12,19 @@ import "Cost.proto";
 message ProvinceMechanicSettings {
 	repeated ProvinceSettings province = 1;
 	
-	optional Cost diplomacy_move_base_cost = 2;
-	optional Cost diplomacy_move_increment_cost = 3;
+	optional Cost diplomacy_move_base_cost = 10;
+	optional Cost diplomacy_move_increment_cost = 11;
+	optional Cost diplomacy_move_non_adj_cost = 12;
 	
-	optional Cost military_move_base_cost = 4;
-	optional Cost military_move_increment_cost = 5;
+	optional Cost military_move_base_cost = 20;
+	optional Cost military_move_increment_cost = 21;
+	optional Cost military_move_non_adj_cost = 22;
 	
-	optional Cost covert_move_base_cost = 6;
-	optional Cost covert_move_increment_cost = 7;
+	optional Cost covert_move_base_cost = 30;
+	optional Cost covert_move_increment_cost = 31;
+	optional Cost covert_move_non_adj_cost = 32;
 	
-	optional Cost fund_dissidents_move_base_cost = 8;
+	optional Cost fund_dissidents_move_base_cost = 40;
 }
 
 message ProvinceSettings {

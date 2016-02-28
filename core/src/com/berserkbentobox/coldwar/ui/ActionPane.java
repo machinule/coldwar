@@ -77,11 +77,11 @@ public class ActionPane extends FooterPane {
 		actionButtonMethods.put(coupButton, () -> ActionPane.this.client.getMoveBuilder().Coup(province.getId(), actionParamInput.getValue()) );
 		//actionButtons.put(invadeButton, () -> ActionPane.this.client.getMoveBuilder().Invade(province.getId()) );
 		
-		actionButtonCosts.put(diplomaticInfluenceButton, c -> c.getMoveBuilder().getDiplomacyMoveIncrementCost(client.getPlayer(), province.getId()));
-		actionButtonCosts.put(militaryInfluenceButton, c -> c.getMoveBuilder().getMilitaryMoveIncrementCost(client.getPlayer(), province.getId()));
-		actionButtonCosts.put(covertInfluenceButton, c -> c.getMoveBuilder().getCovertMoveIncrementCost(client.getPlayer(), province.getId()));
+		actionButtonCosts.put(diplomaticInfluenceButton, c -> c.getMoveBuilder().getDiplomacyMoveCost(client.getPlayer(), province.getId(), actionParamInput.getValue()));
+		actionButtonCosts.put(militaryInfluenceButton, c -> c.getMoveBuilder().getMilitaryMoveCost(client.getPlayer(), province.getId(), actionParamInput.getValue()));
+		actionButtonCosts.put(covertInfluenceButton, c -> c.getMoveBuilder().getCovertMoveCost(client.getPlayer(), province.getId(), actionParamInput.getValue()));
 
-		actionButtonCosts.put(dissidentsButton, c -> c.getMoveBuilder().getFundDissidentsMoveBaseCost());
+		actionButtonCosts.put(dissidentsButton, c -> c.getMoveBuilder().getFundDissidentsMoveCost());
 		actionButtonCosts.put(politicalPressureButton, c -> state.getPoliticalPressureMoveCost() );
 		actionButtonCosts.put(establishBaseButton, c -> state.getEstablishBaseMoveCost() );
 
@@ -96,9 +96,9 @@ public class ActionPane extends FooterPane {
 				Logger.Info("\"Diplomatic Outreatch\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(diplomaticInfluenceButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(state.getDiaDipMoveMin(client.getPlayer(), province.getId()), 
-						state.getDiaDipMoveMax(client.getPlayer(), province.getId()),
-						client.getMoveBuilder().getDiplomacyMoveIncrementCost(client.getPlayer(), province.getId()));
+				actionParamInput.setBounds(1, 
+						client.getMoveBuilder().getMechanics().getProvinces().getDiplomacyMoveMaxValue(client.getPlayer(), province.getId()),
+						1);
 			}
 		});
 		
@@ -108,9 +108,9 @@ public class ActionPane extends FooterPane {
 				Logger.Info("\"Arms Sales\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(militaryInfluenceButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(state.getDiaMilMoveMin(province.getId()), 
-						state.getDiaMilMoveMax(client.getPlayer(), province.getId()),
-						client.getMoveBuilder().getMilitaryMoveIncrementCost(client.getPlayer(), province.getId()));
+				actionParamInput.setBounds(1, 
+						client.getMoveBuilder().getMechanics().getProvinces().getMilitaryMoveMaxValue(client.getPlayer(), province.getId()),
+						1);
 			}
 		});
 		
@@ -120,9 +120,9 @@ public class ActionPane extends FooterPane {
 				Logger.Info("\"Support Party\" button pressed on " + province.getId().getValueDescriptor().getName());
 				buttonSelect(covertInfluenceButton);
 				requiresSlider = true;
-				actionParamInput.setBounds(state.getDiaCovMoveMin(province.getId()), 
-						state.getDiaCovMoveMax(client.getPlayer(), province.getId()),
-						client.getMoveBuilder().getCovertMoveIncrementCost(client.getPlayer(), province.getId()));
+				actionParamInput.setBounds(1, 
+						client.getMoveBuilder().getMechanics().getProvinces().getCovertMoveMaxValue(client.getPlayer(), province.getId()),
+						1);
 			}
 		});
 
@@ -180,7 +180,7 @@ public class ActionPane extends FooterPane {
 		Table innerConfirm = new Table();
 		
 		DynamicLabel actionParamLabel = new DynamicLabel(client, c -> requiresSlider ? "Value: " + actionParamInput.getValue() + " " : "", skin);
-		DynamicLabel costLabel = new DynamicLabel(client, c -> requiresSlider ? "Cost: " + actionParamInput.getValue() + " " : selected != null ? "Cost: " + actionButtonCosts.get(selected).apply(client) + " " : "", skin);
+		DynamicLabel costLabel = new DynamicLabel(client, c -> selected != null ? "Cost: " + actionButtonCosts.get(selected).apply(client) + " " : "", skin);
 
 		innerConfirm.add(submitButton).left();
 		innerConfirm.add(actionParamLabel).expand().right();

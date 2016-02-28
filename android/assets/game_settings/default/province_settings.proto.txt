@@ -1,15 +1,25 @@
 diplomacy_move_increment_cost {
 	political_points: 1
 }
+diplomacy_move_non_adj_cost {
+	political_points: 1
+}
 military_move_increment_cost {
+	military_points: 1
+}
+military_move_non_adj_cost {
 	military_points: 1
 }
 covert_move_increment_cost {
 	covert_points: 1
 }	
+covert_move_non_adj_cost {
+	covert_points: 1
+}
 fund_dissidents_move_base_cost {
 	political_points: 2
 }
+
 
 province {
     id: USA

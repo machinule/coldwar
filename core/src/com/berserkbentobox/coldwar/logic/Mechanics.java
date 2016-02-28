@@ -72,7 +72,7 @@ public class Mechanics {
 		return this.treaty;
 	}
 
-	public InfluenceStoreMechanic getInfluence() {
+	public InfluenceStoreMechanic getInfluenceStore() {
 		return this.influence;
 	}
 	
@@ -102,7 +102,7 @@ public class Mechanics {
 		state.setSuperpowerState(this.getSuperpower().buildState());
 		state.setDeterrenceState(this.getDeterrence().buildState());
 		state.setTreatyState(this.getTreaty().buildState());
-		state.setInfluenceState(this.getInfluence().buildState());
+		state.setInfluenceState(this.getInfluenceStore().buildState());
 		state.setCrisisState(this.getCrisis().buildState());
 		state.setYearState(this.getYear().buildState());
 		state.setVictoryState(this.getVictory().buildState());

@@ -97,7 +97,7 @@ public class GameStateManager {
 		mechanics.getYear().incrementYear();
 		
 		// Influence Store
-		mechanics.getInfluence().applyIncome();
+		mechanics.getInfluenceStore().applyIncome();
 
 		return mechanics.buildState();
 	}
