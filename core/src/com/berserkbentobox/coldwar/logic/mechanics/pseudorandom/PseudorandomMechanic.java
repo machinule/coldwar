@@ -1,6 +1,8 @@
 package com.berserkbentobox.coldwar.logic.mechanics.pseudorandom;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,8 +63,26 @@ public class PseudorandomMechanic extends Mechanic {
 		return random.nextInt(1000000) < chance;
 	}
 	
+	public Object howIRoll(Map<Object, Integer> possibilities) {
+		Object[] idx = new Object[possibilities.size()];
+		int[] pdf = new int[possibilities.size()];
+
+		int i = 0;
+		int sum = 0;
+		for (Map.Entry<Object, Integer> entry : possibilities.entrySet()) {
+			if (entry.getValue() <= 0) continue;
+			sum += entry.getValue();
+			pdf[i] = sum;
+			idx[i] = entry.getKey();
+			i++;
+		}
+		if (sum == 0) return null;
+		int choice = Arrays.binarySearch(pdf, 0, i, random.nextInt(sum) + 1);
+		if (choice >= 0) return idx[choice];
+		return idx[-(choice + 1)];
+	}
+	
 	public Object roll(LinkedHashMap<Object, Integer> chances) {
-		Logger.Dbg("Rolling on " + chances.size() + " choices");
 		List<Integer> weightedChances = new ArrayList<Integer>();
 		int total = 0;
 		weightedChances.add(0);
@@ -72,14 +92,11 @@ public class PseudorandomMechanic extends Mechanic {
 		}
 		List<Object> keys = new ArrayList<Object>(chances.keySet());
 		int result = random.nextInt(total);
-		Logger.Dbg("Roll result: " + result);
 		for (int i = 1; i<weightedChances.size()-1; i++) {
 			if (result >= weightedChances.get(i-1) && result < weightedChances.get(i)) {
-				Logger.Dbg("Returning " + keys.get(i-1));
 				return keys.get(i-1);
 			}
 		}
-		Logger.Dbg("Returning " + keys.get(weightedChances.size()-2));
 		return keys.get(weightedChances.size()-2);
 	}
 	
