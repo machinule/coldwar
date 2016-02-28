@@ -77,6 +77,11 @@ public class ProvinceMechanic extends Mechanic {
 	private ProvinceMechanicState.Builder state;
 	private Map<ProvinceId, Province> provinces;
 	
+	private ProvinceUtil provUtil;
+	private InfluenceUtil inflUtil;
+	private DissidentUtil dissUtil;
+	private ChanceUtil chncUtil;
+	
 	public ProvinceMechanic(Mechanics mechanics, Settings settings, GameStateOrBuilder state) {
 		super(mechanics);
 		this.settings = settings;
@@ -86,7 +91,11 @@ public class ProvinceMechanic extends Mechanic {
 			Province p = new Province(this, this.getSettings().getProvinceSettings(ps.getId()), ps);
 			this.provinces.put(p.getState().getId(), p);
 		}
-		ProvinceUtil.set(provinces, mechanics.getPseudorandom());
+		
+		provUtil = new ProvinceUtil(provinces, mechanics.getPseudorandom());
+		inflUtil = new InfluenceUtil(provUtil);
+		dissUtil = new DissidentUtil(provUtil);
+		chncUtil = new ChanceUtil(provUtil);
 	}
 	
 	public Status validate() {
@@ -211,11 +220,11 @@ public class ProvinceMechanic extends Mechanic {
 	// Logic
 	
 	public void influenceProvince(Player player, ProvinceId id, int magnitude) {
-		InfluenceUtil.influenceProvince(player, id, magnitude);
+		inflUtil.influenceProvince(player, id, magnitude);
 	}
 	
 	public void influenceProvince(ProvinceId id, int magnitude) {
-		InfluenceUtil.influenceProvince(id, magnitude);
+		inflUtil.influenceProvince(id, magnitude);
 	}
 	
 	// Moves
@@ -237,17 +246,17 @@ public class ProvinceMechanic extends Mechanic {
 		}
 		for(ProvinceId id : targets) {
 			if(e.getInfluenceMod() > 0) {
-				InfluenceUtil.influenceProvince(id, e.getInfluenceMod());
+				inflUtil.influenceProvince(id, e.getInfluenceMod());
 			}
 			if(e.hasPerspective()) {
 				Player player = toPlayer(e.getPerspective());
 				if(e.hasAddDissidents())
-					DissidentUtil.addDissidents(id, getIdealGov(player));
+					dissUtil.addDissidents(id, getIdealGov(player));
 				if(e.hasRollDissidents()) {
-					DissidentUtil.addDissidents(id, player);
+					dissUtil.addDissidents(id, player);
 				}
 			} else {
-				DissidentUtil.addDissidents(id);
+				dissUtil.addDissidents(id);
 			}
 		}
 	}
@@ -271,7 +280,7 @@ public class ProvinceMechanic extends Mechanic {
 		for(DiplomacyMove m : moves) {
 			int magnitude = m.getMagnitude();
 			this.getMechanics().getInfluence().spendPOL(player, magnitude);
-			InfluenceUtil.influenceProvince(m.getProvinceId(), magnitude);
+			inflUtil.influenceProvince(m.getProvinceId(), magnitude);
 		}
 	}
 	
@@ -279,7 +288,7 @@ public class ProvinceMechanic extends Mechanic {
 		for(MilitaryMove m : moves) {
 			int magnitude = m.getMagnitude();
 			this.getMechanics().getInfluence().spendPOL(player, magnitude);
-			InfluenceUtil.influenceProvince(m.getProvinceId(), magnitude);
+			inflUtil.influenceProvince(m.getProvinceId(), magnitude);
 		}
 	}
 	
@@ -287,13 +296,13 @@ public class ProvinceMechanic extends Mechanic {
 		for(CovertMove m : moves) {
 			int magnitude = m.getMagnitude();
 			this.getMechanics().getInfluence().spendCOV(player, magnitude);
-			InfluenceUtil.influenceProvince(player, m.getProvinceId(), magnitude);
+			inflUtil.influenceProvince(player, m.getProvinceId(), magnitude);
 		}
 	}
 	
 	public void makeFundDissidentMoves(Player player, List<FundDissidentsMove> moves) {
 		for(FundDissidentsMove m : moves) {
-			DissidentUtil.addDissidents(m.getProvinceId(), player);
+			dissUtil.addDissidents(m.getProvinceId(), player);
 		}
 	}
 }

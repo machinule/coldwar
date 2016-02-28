@@ -13,7 +13,11 @@ import com.berserkbentobox.coldwar.logic.Client.Player;
 
 public class DissidentUtil extends ProvinceUtil {
 	
-	public static void addDissidents(ProvinceId id, Player player) {
+	public DissidentUtil(ProvinceUtil parent) {
+		super(parent.provinces, parent.pseudorandom);
+	}
+
+	public void addDissidents(ProvinceId id, Player player) {
 		Province target = provinces.get(id);
 		Dissidents.Builder diss = Dissidents.newBuilder();
 		// TODO: Pick a leader
@@ -23,7 +27,7 @@ public class DissidentUtil extends ProvinceUtil {
 		target.addDissidents(diss);
 	}
 	
-	public static void addDissidents(ProvinceId id) {
+	public void addDissidents(ProvinceId id) {
 		Province target = provinces.get(id);
 		Dissidents.Builder diss = Dissidents.newBuilder();
 		// TODO: Pick a leader
@@ -33,7 +37,7 @@ public class DissidentUtil extends ProvinceUtil {
 		target.addDissidents(diss);
 	}
 	
-	public static void addDissidents(ProvinceId id, Government gov) {
+	public void addDissidents(ProvinceId id, Government gov) {
 		Province target = provinces.get(id);
 		Dissidents.Builder diss = Dissidents.newBuilder();
 		// TODO: Pick a leader
@@ -43,7 +47,7 @@ public class DissidentUtil extends ProvinceUtil {
 	
 	// Suppress Dissidents
 	
-	public static void suppressDissidents(ProvinceId id) {
+	public void suppressDissidents(ProvinceId id) {
 		Province p = provinces.get(id);
 		if(p.hasDissidents())
 			maybeSuppressDissidents(p);
@@ -51,13 +55,13 @@ public class DissidentUtil extends ProvinceUtil {
 			Logger.Err(id + " has no dissidents!");
 	}
 	
-	public static void maybeSuppressDissidents() {
+	public void maybeSuppressDissidents() {
 		for(Province p : provinces.values()) {
-			DissidentUtil.maybeSuppressDissidents(p);
+			this.maybeSuppressDissidents(p);
 		}
 	}
 	
-	public static void maybeSuppressDissidents(Province p) {
+	public void maybeSuppressDissidents(Province p) {
 		
 	}
 	

@@ -8,11 +8,16 @@ import com.berserkbentobox.coldwar.DissidentsOuterClass.Government;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
 import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.logic.Client.Player;
+import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
 
 public class ChanceUtil extends ProvinceUtil {
 	
 	// TODO: Implement actual chances
 	
+	public ChanceUtil(ProvinceUtil parent) {
+		super(parent.provinces, parent.pseudorandom);
+	}
+
 	public static LinkedHashMap<Government, Integer> getDissidentsChance(ProvinceId id) {
 		LinkedHashMap<Government, Integer> ret = new LinkedHashMap<Government, Integer>();
 		ret.put(Government.DEMOCRACY, 1);
