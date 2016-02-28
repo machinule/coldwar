@@ -61,7 +61,6 @@ public class PseudorandomMechanic extends Mechanic {
 		return random.nextInt(1000000) < chance;
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Object roll(LinkedHashMap<Object, Integer> chances) {
 		Logger.Dbg("Rolling on " + chances.size() + " choices");
 		List<Integer> weightedChances = new ArrayList<Integer>();
@@ -71,7 +70,7 @@ public class PseudorandomMechanic extends Mechanic {
 			weightedChances.add(total+c);
 			total = total + c;
 		}
-		List<Object> keys = new ArrayList(chances.keySet());
+		List<Object> keys = new ArrayList<Object>(chances.keySet());
 		int result = random.nextInt(total);
 		Logger.Dbg("Roll result: " + result);
 		for (int i = 1; i<weightedChances.size()-1; i++) {
