@@ -41,6 +41,7 @@ message GameState {
   optional InfluenceMechanicState influence_state = 16;
   optional YearMechanicState year_state = 17;
   optional VictoryMechanicState victory_state = 18;
+  optional EventMechanicState event_state = 19;
 }
 
 message TurnLogEntry {

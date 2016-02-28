@@ -106,6 +106,12 @@ public abstract class Client {
 			state.setVictoryState(this.settings.getVictory().initialState());
 		}
 		
+		if (!this.settings.getEvent().validate().ok()) {
+			Logger.Err("Initial settings invalid.");			
+		} else {
+			state.setEventState(this.settings.getEvent().initialState());
+		}
+		
 		this.initialGameState = state.build();
 		//Logger.Vrb("Initial game state: " + this.initialGameState);
 		return state;
@@ -141,6 +147,7 @@ public abstract class Client {
 		nextGameState.setCrisisState(managedGameState.getCrisisState());
 		nextGameState.setYearState(managedGameState.getYearState());
 		nextGameState.setVictoryState(managedGameState.getVictoryState());
+		nextGameState.setEventState(managedGameState.getEventState());
 		
 		this.state = nextGameState.build();
 		for (String msg : ComputedGameState.getEventMessages(this.state, Player.USA)) {

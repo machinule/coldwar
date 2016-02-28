@@ -1,0 +1,8 @@
+usa_settings {
+	init_victory_points: 0
+	max_victory_points: 100
+}
+ussr_settings {
+	init_victory_points: 0
+	max_victory_points: 100
+}

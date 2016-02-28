@@ -3,6 +3,7 @@ package com.berserkbentobox.coldwar.logic;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameState;
 import com.berserkbentobox.coldwar.logic.mechanics.crisis.CrisisMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
+import com.berserkbentobox.coldwar.logic.mechanics.event.EventMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.influencestore.InfluenceStoreMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.province.ProvinceMechanic;
@@ -25,6 +26,7 @@ public class Mechanics {
 	private CrisisMechanic crisis;
 	private YearMechanic year;
 	private VictoryMechanic victory;
+	private EventMechanic event;
 	
 	public Mechanics(MechanicSettings settings, GameState state) {
 		this.pseudorandom = new PseudorandomMechanic(this, settings.getPseudorandom(), state);
@@ -39,6 +41,7 @@ public class Mechanics {
 		this.crisis = new CrisisMechanic(this, settings.getCrisis(), state);
 		this.year = new YearMechanic(this, settings.getYear(), state);
 		this.victory = new VictoryMechanic(this, settings.getVictory(), state);
+		this.event = new EventMechanic(this, settings.getEvent(), state);
 	}
 	
 	public ProvinceMechanic getProvinces() {
@@ -84,6 +87,10 @@ public class Mechanics {
 	public VictoryMechanic getVictory() {
 		return this.victory;
 	}
+	
+	public EventMechanic getEvent() {
+		return this.event;
+	}
 
 	public GameState buildState() {
 		GameState.Builder state = GameState.newBuilder();
@@ -99,6 +106,7 @@ public class Mechanics {
 		state.setCrisisState(this.getCrisis().buildState());
 		state.setYearState(this.getYear().buildState());
 		state.setVictoryState(this.getVictory().buildState());
+		state.setEventState(this.getEvent().buildState());
 		return state.build();
 	}
 }
