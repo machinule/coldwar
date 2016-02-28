@@ -38,7 +38,7 @@ public class ActionPane extends FooterPane {
 		
 		DynamicButton dissidentsButton;
 		DynamicButton politicalPressureButton;
-		DynamicButton establishBaseButton;
+		DynamicButton establishSpyNetworkButton;
 		
 		DynamicButton coupButton;
 		DynamicButton invadeButton;
@@ -61,7 +61,7 @@ public class ActionPane extends FooterPane {
 		
 		dissidentsButton = new DynamicButton(this.client, c -> c.getMoveBuilder().isValidFundDissidentsMove(c.getPlayer(), province.getId()), "Fund Dissidents", this.skin);
 		politicalPressureButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidPoliticalPressureMove(c.getPlayer(), province.getId()), "Political Pressure", this.skin);
-		establishBaseButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidEstablishBaseMove(c.getPlayer(), province.getId()), "Establish Military Base", this.skin);
+		establishSpyNetworkButton = new DynamicButton(this.client, c -> c.getMoveBuilder().isValidEstablishSpyNetworkMove(c.getPlayer(), province.getId()), "Establish Spy Network", this.skin);
 		
 		coupButton = new DynamicButton(this.client, c -> c.getMoveBuilder().getComputedGameState().isValidCoupMove(c.getPlayer(), province.getId()), "Initiate Coup", this.skin);
 		invadeButton = new DynamicButton(this.client, c -> false, "Conduct Military Action", this.skin);
@@ -72,7 +72,7 @@ public class ActionPane extends FooterPane {
 
 		actionButtonMethods.put(dissidentsButton, () -> ActionPane.this.client.getMoveBuilder().fundDissidents(province.getId()) );
 		actionButtonMethods.put(politicalPressureButton, () -> ActionPane.this.client.getMoveBuilder().PoliticalPressure(province.getId()) );
-		actionButtonMethods.put(establishBaseButton, () -> ActionPane.this.client.getMoveBuilder().EstablishBase(province.getId()) );
+		actionButtonMethods.put(establishSpyNetworkButton, () -> ActionPane.this.client.getMoveBuilder().establishSpyNetwork(province.getId()) );
 
 		actionButtonMethods.put(coupButton, () -> ActionPane.this.client.getMoveBuilder().Coup(province.getId(), actionParamInput.getValue()) );
 		//actionButtons.put(invadeButton, () -> ActionPane.this.client.getMoveBuilder().Invade(province.getId()) );
@@ -81,9 +81,9 @@ public class ActionPane extends FooterPane {
 		actionButtonCosts.put(militaryInfluenceButton, c -> c.getMoveBuilder().getMilitaryMoveCost(client.getPlayer(), province.getId(), actionParamInput.getValue()));
 		actionButtonCosts.put(covertInfluenceButton, c -> c.getMoveBuilder().getCovertMoveCost(client.getPlayer(), province.getId(), actionParamInput.getValue()));
 
-		actionButtonCosts.put(dissidentsButton, c -> c.getMoveBuilder().getFundDissidentsMoveCost());
+		actionButtonCosts.put(dissidentsButton, c -> c.getMoveBuilder().getFundDissidentsMoveCost(client.getPlayer(), province.getId()));
 		actionButtonCosts.put(politicalPressureButton, c -> state.getPoliticalPressureMoveCost() );
-		actionButtonCosts.put(establishBaseButton, c -> state.getEstablishBaseMoveCost() );
+		actionButtonCosts.put(establishSpyNetworkButton, c -> c.getMoveBuilder().getEstablishSpyNetworkMoveCost(client.getPlayer(), province.getId()) );
 
 		actionButtonCosts.put(coupButton, c -> state.getCoupMoveCost(province.getId()) );
 		//actionButtons.put(invadeButton, () -> ActionPane.this.client.getMoveBuilder().Invade(province.getId()) );
@@ -135,11 +135,11 @@ public class ActionPane extends FooterPane {
 			}
 		});
 		
-		establishBaseButton.addListener(new ChangeListener() {
+		establishSpyNetworkButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(final ChangeEvent event, final Actor actor) {
-				Logger.Info("\"Establish Base\" button pressed on " + province.getId().getValueDescriptor().getName());
-				buttonSelect(establishBaseButton);
+				Logger.Info("\"Establish Spy Network\" button pressed on " + province.getId().getValueDescriptor().getName());
+				buttonSelect(establishSpyNetworkButton);
 				requiresSlider = false;
 			}
 		});
@@ -228,7 +228,7 @@ public class ActionPane extends FooterPane {
 			.size(sizeX, sizeY)
 			.right()
 			.padTop(5);
-		innerAction.add(establishBaseButton)
+		innerAction.add(establishSpyNetworkButton)
 			.size(sizeX, sizeY)
 			.left()
 			.padTop(5)

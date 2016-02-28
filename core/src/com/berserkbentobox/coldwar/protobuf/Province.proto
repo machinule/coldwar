@@ -25,6 +25,13 @@ message ProvinceMechanicSettings {
 	optional Cost covert_move_non_adj_cost = 32;
 	
 	optional Cost fund_dissidents_move_base_cost = 40;
+	optional Cost fund_dissidents_move_stability_cost = 41;
+	
+	optional Cost establish_spy_network_move_base_cost = 50;
+	optional Cost establish_spy_network_move_stability_cost = 51;
+	
+	optional Cost coup_move_base_cost = 60;
+	optional Cost coup_move_stability_cost = 61;
 }
 
 message ProvinceSettings {
@@ -57,6 +64,11 @@ message ProvinceState {
 	optional ProvinceId base = 9;
 	optional ProvinceId ally = 10;
 	optional Dissidents dissidents = 11;
+	optional SpyNetwork spy_network = 12;
+}
+
+message SpyNetwork {
+	optional ProvinceId owner = 1;
 }
 
 // ========== Moves ==========
@@ -68,7 +80,9 @@ message ProvinceMechanicMoves {
 	repeated MilitaryMove military_move = 2;
 	repeated CovertMove covert_move = 3;
 	
-	repeated FundDissidentsMove fund_dissidents_move = 4;
+	repeated EstablishSpyNetworkMove establish_spy_network_move = 4;
+	repeated FundDissidentsMove fund_dissidents_move = 5;
+	repeated CoupMove coup_move = 6;
 }
 
 // <Direct Influence Actions>
@@ -77,27 +91,28 @@ message ProvinceMechanicMoves {
 message DiplomacyMove {
 	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
-	optional Cost increment_cost = 3;
-	optional Cost base_cost = 4;
 }
 
 // Influence by spending MIL points
 message MilitaryMove {
 	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
-	optional Cost increment_cost = 3;
-	optional Cost base_cost = 4;
 }
 
 // Influence by spending COV points
 message CovertMove {
 	optional ProvinceId province_id = 1;
 	optional int32 magnitude = 2;
-	optional Cost increment_cost = 3;
-	optional Cost base_cost = 4;
 }
 
 message FundDissidentsMove {
 	optional ProvinceId province_id = 1;
-	optional Cost base_cost = 2;
+}
+
+message EstablishSpyNetworkMove {
+	optional ProvinceId province_id = 1;
+}
+
+message CoupMove {
+	optional ProvinceId province_id = 1;
 }

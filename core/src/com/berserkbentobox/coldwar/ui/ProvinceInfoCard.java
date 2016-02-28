@@ -156,14 +156,13 @@ public class ProvinceInfoCard extends Table {
 			c -> c.getMoveBuilder().getMechanics().getProvinces().getDissidentsGovernment(province.getId()) == Government.COMMUNISM ? Color.RED :
 				 c.getMoveBuilder().getMechanics().getProvinces().getDissidentsGovernment(province.getId()) == Government.DEMOCRACY ? Color.BLUE :
 			 	 Color.BLACK,
-			skin
+			 	 skin
 		));
 		ret.add(new DynamicLabel(
 				client,
-				c -> c.getMoveBuilder().getBaseOwner(province.getId()) != null ? "BASE" : "",
-				c -> c.getMoveBuilder().getBaseOwner(province.getId()) == Player.USSR ? Color.RED :
-					 c.getMoveBuilder().getBaseOwner(province.getId()) == Player.USA ? Color.BLUE :
-					 Color.BLACK,
+				c -> c.getMoveBuilder().getMechanics().getProvinces().hasSpyNetwork(province.getId()) ? "SPY" : "",
+				c -> c.getMoveBuilder().getMechanics().getProvinces().getSpyNetworkOwner(province.getId()) == c.getPlayer() ? Color.YELLOW :
+				Color.CLEAR,
 				skin
 		));
 		// TODO: Unique proto for each government to include string label?

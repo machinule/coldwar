@@ -10,12 +10,12 @@ import com.berserkbentobox.coldwar.Logger;
 import com.berserkbentobox.coldwar.MoveOuterClass.MoveList;
 import com.berserkbentobox.coldwar.MoveOuterClass.ConflictOvertFundAttackerMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.ConflictOvertFundDefenderMove;
-import com.berserkbentobox.coldwar.MoveOuterClass.CoupMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.EstablishBaseMove;
 import com.berserkbentobox.coldwar.MoveOuterClass.Move;
 import com.berserkbentobox.coldwar.MoveOuterClass.PoliticalPressureMove;
 import com.berserkbentobox.coldwar.Province.CovertMove;
 import com.berserkbentobox.coldwar.Province.DiplomacyMove;
+import com.berserkbentobox.coldwar.Province.EstablishSpyNetworkMove;
 import com.berserkbentobox.coldwar.Province.FundDissidentsMove;
 import com.berserkbentobox.coldwar.Province.MilitaryMove;
 import com.berserkbentobox.coldwar.Id.ProvinceId;
@@ -73,10 +73,10 @@ public class MoveBuilder {
 	}
 	
 	public void Coup(final ProvinceId id, final int magnitude) {
-		this.moves.addMoves(
-				Move.newBuilder().setCoupMove(CoupMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
-		Logger.Dbg("Preparing coup in " + id + " with extra support " + magnitude);
-		this.computeState();
+//		this.moves.addMoves(
+//				Move.newBuilder().setCoupMove(CoupMove.newBuilder().setProvinceId(id).setMagnitude(magnitude)).build());
+//		Logger.Dbg("Preparing coup in " + id + " with extra support " + magnitude);
+//		this.computeState();
 	}
 	
 	public void FundDefender(final ProvinceId id) {
@@ -172,6 +172,10 @@ public class MoveBuilder {
 		return !hasActed(id) && this.mechanics.getProvinces().isValidFundDissidentsMove(player, id);
 	}
 	
+	public boolean isValidEstablishSpyNetworkMove(Player player, ProvinceId id) {
+		return !hasActed(id) && this.mechanics.getProvinces().isValidEstablishSpyNetworkMove(player, id);
+	}
+	
 	// Cost
 	
 	public int getDiplomacyMoveCost(Player player, ProvinceId id, int magnitude) {
@@ -186,8 +190,12 @@ public class MoveBuilder {
 		return this.mechanics.getProvinces().getCovertMoveCost(player, id, magnitude);
 	}
 	
-	public int getFundDissidentsMoveCost() {
-		return this.mechanics.getProvinces().getFundDissidentsMoveBaseCost();
+	public int getFundDissidentsMoveCost(Player player, ProvinceId id) {
+		return this.mechanics.getProvinces().getFundDissidentsMoveCost(player, id);
+	}
+		
+	public int getEstablishSpyNetworkMoveCost(Player player, ProvinceId id) {
+		return this.mechanics.getProvinces().getEstablishSpyNetworkMoveCost(player, id);
 	}
 	
 	// Provinces
@@ -235,6 +243,17 @@ public class MoveBuilder {
 		dissMove
 			.setProvinceId(id);
 		move.getProvinceMechanicMovesBuilder().addFundDissidentsMove(dissMove);
+		this.moves.addMoves(move.build());
+		this.computeState();
+	}
+	
+	public void establishSpyNetwork(final ProvinceId id) {
+		acted.add(id);
+		Move.Builder move = Move.newBuilder();
+		EstablishSpyNetworkMove.Builder spyMove = EstablishSpyNetworkMove.newBuilder();
+		spyMove
+			.setProvinceId(id);
+		move.getProvinceMechanicMovesBuilder().addEstablishSpyNetworkMove(spyMove);
 		this.moves.addMoves(move.build());
 		this.computeState();
 	}

@@ -131,11 +131,6 @@ message PoliticalPressureMove {
 //	option (pol_cost) = 2;
 }
 
-message CoupMove {
-	optional ProvinceId province_id = 1;
-	optional int32 magnitude = 2;
-}
-
 // ========= CONFLICT ACTIONS ==========
 
 message ConflictOvertFundAttackerMove {

@@ -14,6 +14,7 @@ import com.berserkbentobox.coldwar.Province.ProvinceSettingsOrBuilder;
 import com.berserkbentobox.coldwar.Province.ProvinceMechanicState;
 import com.berserkbentobox.coldwar.Province.ProvinceMechanicStateOrBuilder;
 import com.berserkbentobox.coldwar.Province.ProvinceState;
+import com.berserkbentobox.coldwar.Province.SpyNetwork;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 import com.berserkbentobox.coldwar.logic.Status;
 
@@ -166,5 +167,14 @@ public class Province {
 	
 	public void addDissidents(Dissidents.Builder diss) {
 		this.state.setDissidents(diss);
+	}
+	
+	public boolean addSpyNetwork(SpyNetwork.Builder spy) {
+		if(this.state.getSpyNetwork() != SpyNetwork.getDefaultInstance()) {
+			this.state.setSpyNetwork(SpyNetwork.getDefaultInstance());
+			return false;
+		}
+		this.state.setSpyNetwork(spy);
+		return true;
 	}
 }

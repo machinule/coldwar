@@ -19,7 +19,9 @@ covert_move_non_adj_cost {
 fund_dissidents_move_base_cost {
 	political_points: 2
 }
-
+establish_spy_network_move_stability_cost {
+	covert_points: 1
+}
 
 province {
     id: USA
