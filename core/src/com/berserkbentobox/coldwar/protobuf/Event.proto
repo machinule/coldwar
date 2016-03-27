@@ -57,11 +57,8 @@ message EventMechanicSettings {
 }
 
 message EventSettings {
-	optional string name = 1;
-	optional string title = 2;
-	optional string info = 3;
-	
-	repeated Effect effect = 4;
+	optional string id = 1;
+	optional int32 weight = 2;
 	optional bool repeatable = 5;
 }
 

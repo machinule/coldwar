@@ -1,39 +1,95 @@
-random_leader_spawn_chance: 100000
-random_leader_death_chance: 100000
-random_province_coup_chance: 100000
-random_province_democracy_chance: 100000
-random_province_communism_chance: 100000
-random_province_autocracy_chance: 100000
-random_province_republic_chance: 100000
-random_province_faux_pas_chance: 00000 # TODO: Temporarily set to 0
-
-random_communism_dissidents_chance: 15000
-random_democracy_dissidents_chance: 15000
-random_autocracy_dissidents_chance: 15000
-random_province_default_dissidents_chance: 30000
-
-neutral_autocracy_democratic_dissidents: 333333
-neutral_autocracy_communist_dissidents: 333333
-influenced_autocracy_neutral_dissidents: 250000
-influenced_autocracy_opposing_dissidents: 600000
-
-neutral_republic_democratic_dissidents: 333333
-neutral_republic_communist_dissidents: 333333
-influenced_republic_neutral_dissidents: 333333
-influenced_republic_opposing_dissidents: 500000
-
-neutral_democracy_democratic_dissidents: 500000
-neutral_democracy_communist_dissidents: 250000
-influenced_democracy_democratic_dissidents: 500000
-influenced_democracy_communist_dissidents: 250000
-
-random_province_democracy_dissidents_suppressed_chance: 100000
-random_province_default_dissidents_suppressed_chance: 50000
-
-random_us_ally_democracy_chance: 100000
-random_us_ally_communism_chance: 100000
-
-random_colonial_war_start_chance: 100000
-random_conflict_zone_war_start_chance: 100000
-
-random_decolonization_chance: 50000
+event {
+	id: "LEADER_SPAWN"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "LEADER_DEATH"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "COUP"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "PROVINCE_BECOMES_DEMOCRATIC"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "PROVINCE_BECOMES_COMMUNIST"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "PROVINCE_BECOMES_AUTOCRATIC"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "PROVINCE_BECOMES_REPUBLIC"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "FAUX_PAS"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "COMMUNISM_SPAWNS_DISSIDENTS"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "DEMOCRACY_SPAWNS_DISSIDENTS"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "AUTOCRACY_SPAWNS_DISSIDENTS"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "PROVINCE_SPAWNS_DISSIDENTS"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "PROVINCE_SUPPRESSES_DISSIDENTS"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "DEMOCRACY_SUPPRESSES_DISSIDENTS"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "ALLY_BECOMES_DEMOCRATIC"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "ALLY_BECOMES_COMMUNIST"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "COLONIAL_WAR_STARTS"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "CONFLICT_ZONE_WAR_STARTS"
+	weight: 10000
+	repeatable: true
+}
+event {
+	id: "COLONY_DECOLONIZES"
+	weight: 10000
+	repeatable: true
+}

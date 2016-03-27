@@ -517,74 +517,7 @@ public class ComputedGameState {
 			}
 		}
 		
-		// RANDOM EVENTS
-	
-		// TODO: LeaderSpawn
-		// TODO: LeaderDeath
-		// TODO: ProvinceCoup
-		// TODO: ProvinceDemocracy
-		// TODO: ProvinceCommunism
-		// TODO: ProvinceAutocracy
-		// ProvinceRepublic
-		for (ProvinceState.Builder p : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
-			if (p.getGov() == Government.AUTOCRACY) {
-				if (happens.apply(this.state.getSettings().getEventSettings().getRandomProvinceRepublicChance())) {
-					p.setGov(Government.REPUBLIC);
-					nextStateBuilder.getTurnLogBuilder()
-						.addEvents(Event.newBuilder()
-							.setProvinceRepublic(ProvinceRepublicEvent.newBuilder()
-								.setProvinceId(p.getId())
-								.build())
-							.build());
-				}
-			}
-		}
-		// ProvinceFauxPas
-		for (ProvinceState.Builder p : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
-			if (p.getInfluence() != 0) {
-				if (happens.apply(this.state.getSettings().getEventSettings().getRandomProvinceFauxPasChance())) {
-					int sgn;
-				    if (p.getInfluence() < 0) {
-				    	sgn = -1;
-				    } else {
-				    	sgn = 1;
-				    }
-				    int mag = Math.min(Math.abs(p.getInfluence()), r.nextInt(2) + 1);
-				    p.setInfluence(sgn * (Math.abs(p.getInfluence()) - mag));
-					p.setGov(Government.REPUBLIC);
-					nextStateBuilder.getTurnLogBuilder()
-						.addEvents(Event.newBuilder()
-							.setProvinceFauxPas(ProvinceFauxPasEvent.newBuilder()
-								.setProvinceId(p.getId())
-								.setMagnitude(mag)
-								.build())
-							.build());
-				}
-			}
-		}
-		// ProvinceDissidentsSuppressed
-		for (ProvinceState.Builder p : nextStateBuilder.getProvinceStateBuilder().getProvinceStateBuilderList()) {
-			if (hasDissidents(p.getId())) {
-				int chance;
-				if (p.getGov() == Government.DEMOCRACY) {
-					chance = this.state.getSettings().getEventSettings().getRandomProvinceDemocracyDissidentsSuppressedChance();
-				} else {
-					chance = this.state.getSettings().getEventSettings().getRandomProvinceDefaultDissidentsSuppressedChance();
-				}
-				if (happens.apply(chance)) {
-					Logger.Vrb("Dissidents suppressed in " + p.getId());
-					p.setDissidents(Dissidents.getDefaultInstance());
-					nextStateBuilder.getTurnLogBuilder()
-						.addEvents(Event.newBuilder()
-							.setProvinceDissidentsSuppressed(ProvinceDissidentsSuppressedEvent.newBuilder()
-								.setProvinceId(p.getId())
-								.build())
-							.build());
-				}
-			}
-		}
-		// TODO: UsAllyDemocracy
-		// TODO: UssrAllyCommunism		
+		// RANDOM EVENTS	
 		
 		// ACTION CONSEQUENCES
 		
