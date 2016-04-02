@@ -7,17 +7,6 @@ package com.berserkbentobox.coldwar;
 // The top-level settings proto included in GameSettings.
 // Immutable over the duration of a single game.
 message TreatyMechanicSettings {
-	repeated TreatySettings treaty = 1;
-	optional int32 deescalate_amount = 2;
-}
-
-// Settings for a single treaty.
-message TreatySettings {
-	optional string id = 1;
-	optional int32 deterrence_reduction = 2;
-	optional int32 heat_reduction = 3;
-	optional int32 signing_chance = 4;
-	optional bool init_signed = 5;
 }
 
 // ========== State ==========
@@ -25,22 +14,74 @@ message TreatySettings {
 // The top-level state proto included in GameState.
 // Mutated each turn based on moves.
 message TreatyMechanicState {
-	repeated TreatyState treaty = 1;
+	repeated Treaty ratified_treaty = 1;
+	optional Treaty proposed_treaty = 2;
+	optional AvailableTermList available_ussr_terms = 3;
+	optional AvailableTermList available_usa_terms = 4;
+	optional AvailableTermList available_neutral_terms = 5;
 }
 
-// The state for a single Treaty.
-message TreatyState {
-	optional string id = 1;
-	optional bool signed = 2;
+message ProvinceSpec {
+	// This should be more central...
+	enum Province {
+		VENEZUELA = 1;
+		CONGO = 2;
+		// ...
+	}
+	optional Province region = 1;
+}
+
+message RegionSpec {
+	// This should be more central...
+	enum Region {
+		SOUTH_AMERICA = 1;
+		AFRICA = 2;
+		// ...
+	}
+	optional Region region = 1;
+}
+
+message RegionalCoupBanTerm {
+	optional RegionSpec region_spec = 1;
+}
+
+message Term {
+	optional RegionalCoupBanTerm regional_coup_ban_term = 1;
+}
+
+// Effects that occur when the treaty is passed, in addition to the terms.
+message TreatyEffects {
+	optional int32 heat_modifier = 1;
+}
+
+message Treaty {
+	repeated Term term = 1;
+	optional TreatyEffects treaty_effects = 2;
+}
+
+message AvailableTermList {
+	repeated Term term = 1;
+}
+
+message TreatyAmendment {
+	repeated int32 removed_term_index = 1;
+	repeated int32 added_ussr_term_index = 2;
+	repeated int32 added_usa_term_index = 3;
+	repeated int32 added_neutral_term_index = 4;
 }
 
 // ========== Moves ==========
 
 // The top-level moves proto included in Moves.
 
-message TreatyMechanicMoves {
-	optional DeescalateMove deescalate_move = 1;
+message TreatyMechanicMove {
+	optional RatifyMove ratify_move = 1;
+	optional AmendMove amend_move = 2;
 }
 
-message DeescalateMove {
+message RatifyMove {
+}
+
+message AmendMove {
+	optional TreatyAmendment treaty_delta = 1;
 }

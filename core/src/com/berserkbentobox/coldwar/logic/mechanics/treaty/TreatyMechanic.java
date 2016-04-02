@@ -1,26 +1,26 @@
 package com.berserkbentobox.coldwar.logic.mechanics.treaty;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import com.berserkbentobox.coldwar.GameSettingsOuterClass.GameSettingsOrBuilder;
 import com.berserkbentobox.coldwar.GameStateOuterClass.GameStateOrBuilder;
-import com.berserkbentobox.coldwar.Technology.TechnologyMechanicMoves;
-import com.berserkbentobox.coldwar.Treaty.DeescalateMove;
-import com.berserkbentobox.coldwar.Treaty.TreatyMechanicMoves;
-import com.berserkbentobox.coldwar.Treaty.TreatyMechanicSettings;
-import com.berserkbentobox.coldwar.Treaty.TreatyMechanicState;
-import com.berserkbentobox.coldwar.Treaty.TreatySettings;
-import com.berserkbentobox.coldwar.Treaty.TreatyState;
+import com.berserkbentobox.coldwar.TreatyOuterClass;
+import com.berserkbentobox.coldwar.TreatyOuterClass.AmendMove;
+import com.berserkbentobox.coldwar.TreatyOuterClass.RatifyMove;
+import com.berserkbentobox.coldwar.TreatyOuterClass.Term;
+import com.berserkbentobox.coldwar.TreatyOuterClass.TreatyAmendment;
+import com.berserkbentobox.coldwar.TreatyOuterClass.TreatyMechanicMove;
+import com.berserkbentobox.coldwar.TreatyOuterClass.TreatyMechanicSettings;
+import com.berserkbentobox.coldwar.TreatyOuterClass.TreatyMechanicState;
 import com.berserkbentobox.coldwar.logic.Status;
 import com.berserkbentobox.coldwar.logic.Client.Player;
 import com.berserkbentobox.coldwar.logic.Mechanic;
 import com.berserkbentobox.coldwar.logic.Mechanics;
-import com.berserkbentobox.coldwar.logic.mechanics.deterrance.DeterrenceMechanic;
-import com.berserkbentobox.coldwar.logic.mechanics.heat.HeatMechanic;
 import com.berserkbentobox.coldwar.logic.mechanics.pseudorandom.PseudorandomMechanic;
-import com.berserkbentobox.coldwar.logic.mechanics.technology.Technology;
 
 public class TreatyMechanic extends Mechanic {
 	
@@ -28,16 +28,10 @@ public class TreatyMechanic extends Mechanic {
 		
 		private GameSettingsOrBuilder gameSettings;
 		private TreatyMechanicSettings settings;
-		private Map<String, Treaty.Settings> treatySettings;
 		
 		public Settings(GameSettingsOrBuilder gameSettings) {
 			this.gameSettings = gameSettings;
 			this.settings = gameSettings.getTreatySettings();
-			this.treatySettings = new LinkedHashMap<String, Treaty.Settings>();
-			for (TreatySettings t : this.settings.getTreatyList()) {
-				Treaty.Settings ts = new Treaty.Settings(this, t);
-				this.treatySettings.put(ts.getSettings().getId(), ts);
-			}
 		}
 		
 		public Status validate() {
@@ -47,37 +41,20 @@ public class TreatyMechanic extends Mechanic {
 		public TreatyMechanicSettings getSettings() {
 			return this.settings;
 		}
-		
-		public Collection<Treaty.Settings> getTreatySettings() {
-			return this.treatySettings.values();
-		}
-		
-		public Treaty.Settings getTreatySettings(String id) {
-			return this.treatySettings.get(id);
-		}
-		
-		public TreatyMechanicState initialState() {
+			
+		public TreatyMechanicState initialState(PseudorandomMechanic r) {
 			TreatyMechanicState.Builder state = TreatyMechanicState.newBuilder();
-			for (Treaty.Settings ts : this.getTreatySettings()) {
-				state.addTreaty(ts.initialState());				
-			}
 			return state.build();
 		}
 	}
 	
 	private Settings settings;
 	private TreatyMechanicState.Builder state;
-	private Map<String, Treaty> treaties;
 	
 	public TreatyMechanic(Mechanics mechanics, Settings settings, GameStateOrBuilder state) {
 		super(mechanics);
 		this.settings = settings;
 		this.state = state.getTreatyState().toBuilder();
-		this.treaties = new LinkedHashMap<String, Treaty>();
-		for (TreatyState.Builder ts : this.state.getTreatyBuilderList()) {
-			Treaty t = new Treaty(this, this.getSettings().getTreatySettings(ts.getId()), ts);
-			this.treaties.put(t.getState().getId(), t);
-		}
 	}
 		
 	public Status validate() {
@@ -92,63 +69,111 @@ public class TreatyMechanic extends Mechanic {
 		return this.state.build();
 	}
 	
-	private Map<String, Treaty> getTreatyMap() {
-		return this.treaties;
-	}
+	// Move builder helpers.
 	
-	public Collection<Treaty> getTreaties() {
-		return this.getTreatyMap().values();
-	}
-	
-	public Treaty getTreaty(String id) {
-		return this.getTreatyMap().get(id);
+	public TreatyMechanicMove makeRatifyMove() {
+		return TreatyMechanicMove.newBuilder()
+				.setRatifyMove(RatifyMove.newBuilder().build())
+				.build();
 	}
 
+	public TreatyMechanicMove makeAmendMove(AmendMove.Builder move) {
+		return TreatyMechanicMove.newBuilder()
+				.setAmendMove(move.build())
+				.build();
+	}
+	
 	// Logic
 	
-	public void makeMoves(Player player, TreatyMechanicMoves moves) {
-		if (moves.hasDeescalateMove()) {
-			makeDeescalateMove(player, moves.getDeescalateMove());
+	public void makeMove(Player player, TreatyMechanicMove move) {
+		if (move.hasRatifyMove()) {
+			makeRatifyMove(player, move.getRatifyMove());
 		}
-	}	
+		if (move.hasAmendMove()) {
+			makeAmendMove(player, move.getAmendMove());
+		}
+	}
 
-	boolean usaDeescalate = false;
-	boolean ussrDeescalate = false;
+	boolean usaRatified = false;
+	boolean ussrRatified = false;
+	TreatyAmendment usaAmendment = null;
+	TreatyAmendment ussrAmendment = null;
 	
-	public void makeDeescalateMove(Player player, DeescalateMove move) {
+	public void makeRatifyMove(Player player, RatifyMove move) {
 		if (player == Player.USA) {
-			usaDeescalate = true;
+			usaRatified = true;
 		} else {
-			ussrDeescalate = true;
+			ussrRatified = true;
+		}
+	}
+	
+	public void makeAmendMove(Player player, AmendMove move) {
+		if (player == Player.USA) {
+			usaAmendment = move.getTreatyDelta();
+		} else {
+			ussrAmendment = move.getTreatyDelta();
 		}
 	}
 
-	public void maybeSignTreaty() {
-		if (this.usaDeescalate) {
-			this.getMechanics().getHeat().decrease(this.getSettings().getSettings().getDeescalateAmount());
-		}
-		if (this.ussrDeescalate) {
-			this.getMechanics().getHeat().decrease(this.getSettings().getSettings().getDeescalateAmount());
-		}
-		if (!(this.usaDeescalate && this.ussrDeescalate)) {
-			return;
-		}
-		Treaty toSign = this.getFirstUnsignedTreaty();
-		if (this.getMechanics().getPseudorandom().happens(toSign.getSettings().getSettings().getSigningChance())) {
-			toSign.Sign(this.getMechanics().getHeat(), this.getMechanics().getDeterrence());
+	public void resolveTreaty() {
+		if (usaRatified && ussrRatified) {
+			this.ratify();
+		} else if (usaRatified) {
+			this.halfRatify(Player.USA);
+			this.halfAmend(Player.USSR);
+		} else if (ussrRatified) {
+			this.halfRatify(Player.USSR);			
+			this.halfAmend(Player.USA);
+		} else {
+			this.amend(usaAmendment, ussrAmendment);
 		}
 	}
-	
-	public Treaty getFirstUnsignedTreaty() {
-		for (Treaty t : this.getTreaties()) {
-			if (!t.isSigned()) {
-				return t;
-			}
+
+	private void halfAmend(Player player) {
+		if (player == Player.USA) {
+			this.amend(this.usaAmendment, TreatyAmendment.newBuilder().build());
+		} else {
+			this.amend(TreatyAmendment.newBuilder().build(), this.ussrAmendment);
 		}
-		return null;
 	}
-	
-	public boolean hasAnyUnsignedTreaties() {
-		return this.getFirstUnsignedTreaty() != null;
+
+	private void amend(TreatyAmendment usa, TreatyAmendment ussr) {
+		SortedSet<Integer> toRemove = new TreeSet<Integer>(Collections.reverseOrder());
+		toRemove.addAll(usa.getRemovedTermIndexList());
+		toRemove.addAll(ussr.getRemovedTermIndexList());
+		for (int i : toRemove) {
+			this.state.getProposedTreatyBuilder().removeTerm(i);
+		}
+
+		Set<Integer> toAdd = new HashSet<Integer>();
+		toRemove.addAll(usa.getAddedNeutralTermIndexList());
+		toRemove.addAll(ussr.getAddedNeutralTermIndexList());
+		for (int i : toAdd) {
+			this.state.getProposedTreatyBuilder().addTerm(this.state.getAvailableNeutralTerms().getTerm(i));
+		}		
+		
+		for (int i : usa.getAddedUsaTermIndexList()) {
+			this.state.getProposedTreatyBuilder().addTerm(this.state.getAvailableUsaTerms().getTerm(i));
+		}
+		
+		for (int i : ussr.getAddedUssrTermIndexList()) {
+			this.state.getProposedTreatyBuilder().addTerm(this.state.getAvailableUssrTerms().getTerm(i));
+		}
 	}
+
+	private void halfRatify(Player player) {
+		this.getMechanics().getInfluenceStore().addPOL(player, 5);
+	}
+
+	private void ratify() {
+		for (TreatyOuterClass.Term term : state.getProposedTreaty().getTermList()) {
+			this.enforceTerm(term);
+		}
+		state.addRatifiedTreaty(state.getProposedTreaty());
+	}
+
+	private void enforceTerm(Term term) {
+		
+	}
+
 }

@@ -102,7 +102,7 @@ message Move {
 	optional ConflictOvertFundDefenderMove conflict_overt_fund_defender_move = 111;
 	
 	optional TechnologyMechanicMoves technology_mechanic_moves = 150;
-	optional TreatyMechanicMoves treaty_mechanic_moves = 151;
+	optional TreatyMechanicMove treaty_mechanic_moves = 151;
 
 	optional EnactPolicyMove enact_policy_move = 160;
 
